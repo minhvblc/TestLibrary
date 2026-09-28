@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TestLib (tên tạm, Q-01) — sitemap. Nguồn: docs/go-to-market/seo-meta.md §1 (chỉ route index; KHÔNG bao giờ liệt kê route noindex ở §4).
+     Placeholder domain: https://<domain> (Q-01). Trong <loc> ký tự < > phải escape, nên placeholder được viết là &lt;domain&gt; — thay cả dạng này.
+     /tests/<slug>: sinh lúc build, một <url> cho mỗi bài published (API-CAT-01), gồm cả bài sensitive (index, tên trung thực — Q-06).
+     Hai dòng /tests/... trong comment bên dưới chỉ là ví dụ, không bật lên nếu bài chưa tồn tại. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://&lt;domain&gt;/</loc>
+  </url>
+  <url>
+    <loc>https://&lt;domain&gt;/tests</loc>
+  </url>
+  <!-- Trang chủ đề (index, tự canonical — seo-meta.md §1). Giá trị topic theo khoá chủ đề của API-CAT-01; bỏ chủ đề chưa có bài. -->
+  <url>
+    <loc>https://&lt;domain&gt;/tests?topic=personality</loc>
+  </url>
+  <url>
+    <loc>https://&lt;domain&gt;/tests?topic=relationships</loc>
+  </url>
+  <url>
+    <loc>https://&lt;domain&gt;/tests?topic=career</loc>
+  </url>
+  <url>
+    <loc>https://&lt;domain&gt;/tests?topic=wellbeing</loc>
+  </url>
+  <!-- ví dụ: <url><loc>https://&lt;domain&gt;/tests/big-five-personality-test</loc></url> -->
+  <!-- ví dụ: <url><loc>https://&lt;domain&gt;/tests/anxiety-test</loc></url> -->
+  <url>
+    <loc>https://&lt;domain&gt;/pricing</loc>
+  </url>
+  <url>
+    <loc>https://&lt;domain&gt;/help</loc>
+  </url>
+  <url>
+    <loc>https://&lt;domain&gt;/legal/privacy</loc>
+  </url>
+  <url>
+    <loc>https://&lt;domain&gt;/legal/terms</loc>
+  </url>
+  <url>
+    <loc>https://&lt;domain&gt;/legal/subscriptions</loc>
+  </url>
+  <url>
+    <loc>https://&lt;domain&gt;/legal/cookies</loc>
+  </url>
+</urlset>

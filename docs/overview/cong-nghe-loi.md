@@ -1,0 +1,92 @@
+# Công nghệ cốt lõi — TestLib (web)
+> Basis: `research/core-tech.md` (TC-01 · TC-02). Đây là SPEC: nêu đích danh framework / vendor. Số nào chưa chốt → `Q-xx`, KHÔNG ghi như đã quyết. Stack BE theo chuẩn team: NestJS + TypeORM + PostgreSQL `postgres:16-alpine`, một schema `public` (basis in-house).
+**Changelog** (mới nhất trước)
+- 2026-09-27 · v1.1 · claude-opus-5-5 · §4 thêm 7 loại dữ liệu (log, liên hệ, lý do huỷ, đánh giá report, consent gia hạn, đơn hàng/webhook, file export) theo review của writer go-to-market.
+- 2026-09-27 · v1 · claude-opus-5-5 · TD-01..TD-04 từ core-tech §7 + quyết định Q-08 (human).
+
+## 1. Capability → lựa chọn
+
+| TD-xx | Capability (TC-xx) | Cách làm | Vì sao (so với đối thủ đo được) | Basis (TC-xx · EV / Q-xx) | Status |
+|---|---|---|---|---|---|
+| TD-01 | Engine làm test (TC-01) | **Hybrid.** Flow câu hỏi + tiến độ chạy ở client (localStorage theo `attemptId` cho khách; autosave lên server khi đã đăng nhập). **Chấm điểm ở server** khi nộp bài (NestJS service `ScoringService`, thang đo versioned trong DB). Nộp bài idempotent theo `attemptId`; có hàng đợi nộp lại khi rớt mạng | Đối thủ chấm ở client và kết quả không phụ thuộc câu trả lời (RS·F-14 · F-31). Mình giữ ưu điểm offline/resume của họ (TK-04 · TK-05), còn chấm điểm thì phải thật và không bị sửa được | TC-01 · EV-TLW-138 · EV-TLW-061 · EV-TLW-065 · Q-10 | Đề xuất (Q-10) |
+| TD-02 | Report (TC-02) | **Nội dung viết sẵn** theo (bài × type/dải điểm × thang con), lưu versioned trong DB (`report_blocks`). Server ráp report theo rule khi user có quyền. Biên tập trước khi phát hành. Không gọi LLM lúc chạy | Q-08 (human chốt). Đối thủ có report 9 chương (RS·F-23), nhưng không kiểm chứng được mức cá nhân hoá | TC-02 · EV-TLW-245 · Q-08 | Đã chốt |
+| TD-03 | Export PDF (TC-02) | **Playwright (Chromium headless) phía server** render route in của report (`/app/reports/:reportId?print=1`) → PDF. Cache ở object storage theo (`reportId`, `contentVersion`, `locale`), tải bằng signed URL 10 phút. Fallback: nút "Print / Save as PDF" dùng print stylesheet | Đối thủ render bằng Skia/PDF headless (RS·F-34); PDF của họ 11 trang trong khi hứa 20 (RS·F-23). Mình ghi đúng số trang thật ở trang mở khoá | TC-02 · EV-TLW-261 · Q-08 · Q-19 | Đã chốt (cách làm) · spike §7 #2 |
+| TD-04 | Tracking & consent | Consent manager first-party (GC-ConsentBanner · SYS-CONSENT) quyết định việc tải script. Analytics: Firebase Analytics (web) qua cổng `AppTracking` duy nhất (chuẩn xteam-tracking), **chỉ sau consent analytics**. **Không pixel quảng cáo phía client** trong MVP. Route của bài `sensitive` không tải analytics. Không gửi câu trả lời/điểm/type kết quả | Đối thủ bắn ~2 event Meta Pixel mỗi câu trả lời, không có cookie banner (RS·F-13 · F-02) | EV-TLW-059 · EV-TLW-002 · Q-12 · Q-13 | Đề xuất (Q-12 · Q-13) |
+
+## 2. Ngân sách phi chức năng
+
+| TD-xx | Latency mục tiêu (p50 / p95) | Streaming? | Input tối đa | Batch tối đa | Ngôn ngữ | Trình duyệt tối thiểu | Neo đối thủ (core-tech §3) |
+|---|---|---|---|---|---|---|---|
+| TD-01 | nộp bài → kết quả hiện: p50 ≤ 800 ms · p95 ≤ 2 s (basis in-house) | không | 1 attempt ≤ 200 câu; payload nộp ≤ 32 KB | autosave gom ≤ 10 câu/lần | en-US (Q-14) | 2 bản gần nhất của Chrome · Safari · Edge · Firefox; cần localStorage (thiếu thì chạy trong bộ nhớ) | 2690 ms median câu cuối → kết quả `[LIVE:browser · EV-TLW-181 · 2026-09-27]` |
+| TD-02 | mở report: p50 ≤ 1 s · p95 ≤ 2,5 s (basis in-house) | không | — | — | en-US | như trên | không đo (behind-paywall) |
+| TD-03 | tạo PDF: p95 ≤ 10 s (lần đầu) · ≤ 1 s khi đã cache (basis in-house · spike §7 #2) | không (job + trạng thái) | report ≤ 40 trang | 1 PDF / user / lần | en-US | như trên | PDF đối thủ 11 trang `[LIVE:browser · EV-TLW-261 · 2026-09-27]` |
+| TD-04 | không chặn render: script analytics tải sau `load` và sau consent | không | — | — | — | như trên | trang đối thủ tải 30 request bên thứ ba `[LIVE:browser · EV-TLW-262 · 2026-09-27]` |
+
+## 3. Degradation contract
+
+| Tình huống | App làm gì | Copy VERBATIM (en-US) | Retry? | SCR / FLOW hiện thực |
+|---|---|---|---|---|
+| Mất mạng khi đang trả lời | vẫn trả lời tiếp (client); hiện banner offline; tiến độ lưu local | "You're offline. Keep going — we'll save your answers and submit when you're back online." | tự động khi online | SCR-TEST-01 · FLOW-lam-bai-mien-phi (case rớt mạng) |
+| Mất mạng / timeout khi nộp bài (> 10 s) | giữ câu trả lời, đưa bài nộp vào hàng đợi, tự gửi lại với cùng `attemptId` | "We couldn't submit your answers yet. We'll retry automatically — your answers are safe on this device." + nút "Retry now" | có (idempotent) | SCR-TEST-01 |
+| Server chấm điểm lỗi (5xx) | như trên + ghi log; sau 3 lần hiện nút liên hệ | "Something went wrong while scoring. Your answers are saved. Please try again." | có | SCR-TEST-01 |
+| Trình duyệt chặn localStorage (private mode) | chạy trong bộ nhớ; cảnh báo nhẹ trước câu 1 | "Private browsing is on, so your progress won't be saved if you close this tab." | không | SCR-TEST-01 |
+| Kết quả đã hết hạn / token không khớp (khách đổi trình duyệt) | 404 thân thiện + CTA làm lại / đăng nhập | "This result isn't available on this device. Sign in if you saved it, or take the test again." | không | SCR-TEST-02 |
+| Chưa có quyền đọc report | state Locked + CTA mở khoá | "Unlock the full report to read every chapter." | không | SCR-APP-03 · SCR-PAY-01 |
+| Webhook thanh toán chưa về | màn chờ; hỏi lại trạng thái 2 s/lần trong 30 s, sau đó báo sẽ gửi email | "Confirming your payment…" → mua lẻ: "Your payment is still processing. We'll email you as soon as your report is unlocked." · Plus: "Your payment is still processing. We'll email you as soon as your Plus plan is active." | có (poll) | SCR-PAY-02 · FLOW-mo-khoa-report · FLOW-dang-ky-plus (case pending) |
+| Thanh toán thất bại / huỷ ở provider | quay về với lỗi + nút thử lại, không mở quyền | "Your payment didn't go through. You haven't been charged." | có (user bấm) | SCR-PAY-02 |
+| Tạo PDF lỗi / quá 10 s | chuyển sang trạng thái "đang tạo" + email link khi xong; fallback in trình duyệt | "Your PDF is taking longer than usual. We'll email it to you — or use Print → Save as PDF." | có | SCR-APP-03 |
+| JavaScript tắt | trang public (SSR) vẫn đọc được; trang làm bài báo cần JS | "Please enable JavaScript to take this test." | không | SCR-PUB-03 · SCR-TEST-01 |
+| Quá rate limit (429) | báo chờ, không thử lại liên tục | "Too many requests. Please wait a moment and try again." | sau `Retry-After` | mọi màn (tieu-chuan-chung §2) |
+
+## 4. Luồng dữ liệu & riêng tư
+
+| Dữ liệu | Rời trình duyệt? | Đi đâu (vendor · region) | Lưu bao lâu | Cần consent? | Khai báo ở | Basis |
+|---|---|---|---|---|---|---|
+| Câu trả lời đang làm (khách) | không (localStorage) | — | tới khi nộp; xoá khỏi máy sau khi nộp thành công | không | legal-consent §1 | TD-01 |
+| Câu trả lời đang làm (đã đăng nhập, autosave) | có | server của mình (PostgreSQL, region = Q-05) | tới khi nộp / 30 ngày nếu bỏ dở | không (hợp đồng) | legal-consent §1 | TD-01 · Q-05 |
+| Câu trả lời đã nộp + kết quả | có | server của mình | khách: 30 ngày nếu chưa lưu (BR-APP-08); tài khoản: tới khi xoá | bài `sensitive`: **consent tường minh** trước câu 1 (BR-APP-06); bài thường: hợp đồng | legal-consent §1 | BR-APP-06 · BR-APP-08 · Q-05 |
+| Check-in cảm xúc | có | server của mình | tới khi xoá tài khoản | không (hợp đồng); coi là dữ liệu nhạy cảm → không gửi analytics | legal-consent §1 | BR-APP-05 |
+| Email, tên, timezone (nguồn: form, hoặc hồ sơ Google khi đăng nhập Google) | có | server của mình + vendor email giao dịch (Q-16) | tới khi xoá tài khoản | không (hợp đồng) | legal-consent §1 | Q-16 · Q-11 |
+| Dữ liệu thẻ / thanh toán | có | **chỉ provider/MoR** (Q-04), không qua server mình | theo provider | không (hợp đồng) | legal-consent §1 | BR-APP-01 · Q-04 |
+| Event analytics (không có dữ liệu bài) | có | Firebase Analytics (Google) | theo cấu hình retention analytics (đề xuất 14 tháng) | **có** (analytics) | legal-consent §2 · tracking-events | TD-04 · BR-APP-05 |
+| Bản ghi consent cookie | có | server của mình | 12 tháng, sau đó hỏi lại | không (nghĩa vụ pháp lý) | legal-consent §3 | SYS-CONSENT |
+| File PDF report | có | object storage của mình (cùng region) | cache 30 ngày, tạo lại khi cần | không | legal-consent §1 | TD-03 |
+| Log máy chủ / bảo mật (IP, user agent, thời điểm) | có | server của mình (+ CDN/WAF nếu dùng, Q-09) | 30 ngày | không (lợi ích hợp pháp: bảo mật, chống lạm dụng, rate limit) | legal-consent §1 | in-house |
+| Tin nhắn liên hệ (email, chủ đề, nội dung) | có | server của mình | 24 tháng sau khi đóng yêu cầu | không (trả lời yêu cầu của user) | legal-consent §1 | API-HELP-01 |
+| Lý do huỷ gia hạn (tuỳ chọn, chữ tự do) | có | server của mình | tách khỏi danh tính sau 90 ngày | không (tuỳ chọn) | legal-consent §1 | SCR-PAY-04 |
+| Đánh giá report (1–5) | có | server của mình | tới khi xoá tài khoản; không gửi analytics | không | legal-consent §1 | SCR-APP-03 · BR-APP-05 |
+| Bản ghi consent gia hạn (`consent_version`, thời điểm, IP) | có | server của mình + provider | theo thời hạn chứng từ (Q-05) | không (nghĩa vụ pháp lý: chứng minh đồng ý tự gia hạn) | legal-consent §1 | BR-APP-03 |
+| Đơn hàng + event webhook thanh toán (email, planKey, số tiền, trạng thái) | có | server của mình + provider/MoR (Q-04) | theo luật kế toán của pháp nhân bán (Q-05) | không (hợp đồng + nghĩa vụ pháp lý) | legal-consent §1 | API-HOOK-01 · SYS-ENTITLEMENT |
+| File export dữ liệu | có | object storage của mình | link + file xoá sau 7 ngày | không | legal-consent §1 | BR-APP-11 |
+
+> Bảng này là nguồn của `go-to-market/legal-consent.md` và tài liệu BE. Sai ở đây thì khai báo pháp lý cũng sai.
+
+## 5. Chi phí vận hành
+
+| TD-xx | Đơn giá / op | Op / user / tháng (ước) | COGS / user | Ràng buộc lên bậc giá (`overview §2`) | Q-xx Group A |
+|---|---|---|---|---|---|
+| TD-01 | CPU server, không vendor (`[INFERRED]`) | ~10 lần nộp | ≈ 0 | không | Q-19 |
+| TD-02 | 0 lúc chạy; soạn nội dung là chi phí một lần (`[INFERRED]`) | ~10 report | ≈ 0 | không | Q-19 |
+| TD-03 | container Chromium (`[INFERRED]`, đo ở spike §7 #2) | ~2 PDF | nhỏ | không | Q-19 |
+| TD-04 | Firebase Analytics gói miễn phí (`[INFERRED]`) | — | 0 | không | Q-19 |
+
+## 6. Rủi ro & fallback
+
+| # | Rủi ro | Fallback | Trigger để đổi |
+|---|---|---|---|
+| 1 | Thang đo tự soạn không phân hoá (kết quả dồn một type) | dùng item bank public domain đã kiểm định (Q-07); chạy kit TK-01..03 trong CI | kit báo GT-01 `answer-insensitive` hoặc > 60% kết quả cùng một type sau 1000 lượt |
+| 2 | Chromium trên server tốn RAM / chậm | hàng đợi job + giới hạn song song; fallback print stylesheet | p95 tạo PDF > 10 s hoặc RAM > 1 GB/job |
+| 3 | Bị coi là "health app" ở một số vùng | tắt bài `sensitive` theo vùng bằng feature flag | yêu cầu pháp lý (Q-05) |
+| 4 | Webhook provider trễ / lặp | idempotent theo event id; màn chờ + email | tỉ lệ pending > 30 s vượt 1% |
+
+## 7. Spike phải làm trước FREEZE
+
+| # | Câu hỏi | Cách đo (code của mình) | Chặn gate nào |
+|---|---|---|---|
+| 1 | Scoring có `answer-sensitive` + reverse-keying đúng không | chạy TK-01..03 (research/tech-kit) trên API chấm điểm của mình; GT-01 phải ≥ 1 thang khác, GT-02 < tổng số thang | G-tech-feasible (TD-01) · API-FREEZE |
+| 2 | PDF 20+ trang tạo trong bao lâu, tốn bao nhiêu RAM | Playwright render 1 report mẫu 5 lần, ghi p50/p95 + peak RAM | TD-03 · Q-19 · economy-FREEZE |
+| 3 | Hàng đợi nộp bài khi rớt mạng | bật offline giữa bài (giống TK-05), nộp, online → đúng 1 kết quả | API-FREEZE |
+
+## 8. AI Notices
+- Latency/chi phí ở §2 và §5 là mục tiêu `[INFERRED]` (basis in-house). Phải thay bằng số đo của spike §7 trước FREEZE.
+- Không dùng tên vendor của đối thủ làm lý do. Lựa chọn vendor của mình ghi ở đây với basis riêng.

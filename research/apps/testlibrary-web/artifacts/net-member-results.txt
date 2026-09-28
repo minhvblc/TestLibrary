@@ -1,0 +1,15 @@
+net since "member-results" · 26 requests · in 67 KB · up 6 KB · 6 upload(s) · 0 stream(s) · 0 failed · window 7.14s
+host                                 class                    n       in       up  types · slowest
+testlibrary.com                      1st-party               11    40 KB      0 B  fetch×4 other×1 script×6 · 1.78s POST /api/quiz/save-result
+img.testlibrary.com                  1st-party                1    21 KB      0 B  image×1 · 96ms GET /cdn-cgi/image/w=800,h=598,format=auto,quality=80/dashboard-report-blank.png
+www.facebook.com                     other                    2     64 B     5 KB  document×2 · 37ms POST /tr/
+data.testlibrary.com                 1st-party                2     3 KB      0 B  fetch×2 · 551ms GET /d15gsjbkfteh
+www.googleadservices.com             ads-pixel                2     2 KB      0 B  fetch×2 · 52ms GET /pagead/conversion/:id/
+bat.bing.com                         ads-pixel                3    364 B    930 B  xhr×2 ping×1 · 594ms POST /p/conversions/c/a
+www.google.com.vn                    other                    5      0 B      0 B  fetch×5 · 141ms GET /pagead/1p-conversion/:id/
+upload: POST testlibrary.com/api/quiz/save-result size unknown · 1.78s · 200
+upload: POST www.facebook.com/tr/ 2 KB · 35ms · 200
+upload: POST bat.bing.com/p/conversions/c/a 382 B · 353ms · 204
+upload: POST bat.bing.com/p/conversions/c/a size unknown · 256ms · 204
+upload: POST www.facebook.com/tr/ 2 KB · 37ms · 200
+upload: POST bat.bing.com/p/conversions/c/a 548 B · 594ms · 204

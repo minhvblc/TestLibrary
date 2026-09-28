@@ -1,0 +1,180 @@
+{
+ "url": "https://testlibrary.com/personality-test/offer?q=96&total=100&sid=405c61f5-69df-4b8b-9306-956ebd367f4a",
+ "title": "Your Results Are Ready | Test Library",
+ "capturedAt": "2026-09-27T11:52:47.878Z",
+ "viewport": {
+  "w": 1280,
+  "h": 800,
+  "mobile": false,
+  "dpr": 1
+ },
+ "lang": "en-US",
+ "full": false,
+ "action": "wait 3000",
+ "changed": "yes",
+ "settle": {
+  "ok": true,
+  "ms": 0,
+  "why": "none"
+ },
+ "walls": [],
+ "headings": [
+  {
+   "level": "h1",
+   "text": "Your Personality Report is Ready!",
+   "off": "in",
+   "y": 124
+  },
+  {
+   "level": "h2",
+   "text": "What you'll receive",
+   "off": "in",
+   "y": 210
+  },
+  {
+   "level": "h2",
+   "text": "Premium Personality Report",
+   "off": "in",
+   "y": 292
+  },
+  {
+   "level": "h2",
+   "text": "Get your personalized 20-page report",
+   "off": "down",
+   "y": 1027.515625
+  },
+  {
+   "level": "h2",
+   "text": "Your Premium Personality Report",
+   "off": "down",
+   "y": 1686.765625
+  },
+  {
+   "level": "h2",
+   "text": "Rated 4.8/5 by our customers",
+   "off": "down",
+   "y": 2374.015625
+  },
+  {
+   "level": "h1",
+   "text": "Your Personality Report is Ready!",
+   "off": "down",
+   "y": 3124.015625
+  },
+  {
+   "level": "h2",
+   "text": "Premium Personality Report",
+   "off": "down",
+   "y": 3300.015625
+  },
+  {
+   "level": "h2",
+   "text": "Learn how to",
+   "off": "down",
+   "y": 3318.265625
+  }
+ ],
+ "elements": [
+  {
+   "role": "link",
+   "name": "Download report $1.95",
+   "href": "https://testlibrary.com/personality-test/checkout-2-bubbles?q=96&total=100&sid=405c61f5-69df-4b8b-9306-956ebd367f4a&from=offer",
+   "x": 354.5,
+   "y": 613,
+   "w": 468,
+   "h": 56,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e1",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "Unlock my report",
+   "href": "https://testlibrary.com/personality-test/checkout-2-bubbles?q=96&total=100&sid=405c61f5-69df-4b8b-9306-956ebd367f4a&from=offer",
+   "x": 632.4921875,
+   "y": 1322.515625,
+   "w": 237,
+   "h": 56,
+   "off": "down",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e2",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "Unlock my results",
+   "href": "https://testlibrary.com/personality-test/checkout-2-bubbles?q=96&total=100&sid=405c61f5-69df-4b8b-9306-956ebd367f4a&from=offer",
+   "x": 632.5,
+   "y": 2186.015625,
+   "w": 259,
+   "h": 56,
+   "off": "down",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e3",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "Access My Report",
+   "href": "https://testlibrary.com/personality-test/checkout-2-bubbles?q=96&total=100&sid=405c61f5-69df-4b8b-9306-956ebd367f4a&from=offer",
+   "x": 632.5,
+   "y": 2974.015625,
+   "w": 400,
+   "h": 60,
+   "off": "down",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e4",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "Download report $1.95",
+   "href": "https://testlibrary.com/personality-test/checkout-2-bubbles?q=96&total=100&sid=405c61f5-69df-4b8b-9306-956ebd367f4a&from=offer",
+   "x": 354.5,
+   "y": 3621.015625,
+   "w": 468,
+   "h": 56,
+   "off": "down",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e5",
+   "guard": ""
+  }
+ ],
+ "frames": []
+}

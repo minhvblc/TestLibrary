@@ -1,0 +1,9 @@
+2/38
+
+There are 10 fish in a tank. 4 die. How many are left in the tank?
+
+10
+6
+8
+0
+0:15

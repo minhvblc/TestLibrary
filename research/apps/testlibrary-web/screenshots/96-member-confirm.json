@@ -1,0 +1,73 @@
+{
+ "url": "https://testlibrary.com/personality-test/confirmation?q=96&total=100",
+ "title": "Personality Test - Get Accurate Personality Type Report",
+ "capturedAt": "2026-09-27T12:05:54.007Z",
+ "viewport": {
+  "w": 1280,
+  "h": 800,
+  "mobile": false,
+  "dpr": 1
+ },
+ "lang": "en-US",
+ "full": false,
+ "action": "clicktext Next",
+ "changed": "yes",
+ "settle": {
+  "ok": true,
+  "ms": 1293,
+  "why": "quiet",
+  "detail": ""
+ },
+ "walls": [],
+ "headings": [
+  {
+   "level": "h2",
+   "text": "Well done!",
+   "off": "in",
+   "y": 313
+  }
+ ],
+ "elements": [
+  {
+   "role": "button",
+   "name": "Get My Results",
+   "href": "",
+   "x": 370,
+   "y": 471,
+   "w": 300,
+   "h": 60,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "button",
+   "type": "button",
+   "value": "",
+   "ref": "e1",
+   "guard": ""
+  },
+  {
+   "role": "button",
+   "name": "Edit my answers",
+   "href": "",
+   "x": 370,
+   "y": 529,
+   "w": 300,
+   "h": 24,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "button",
+   "type": "button",
+   "value": "",
+   "ref": "e2",
+   "guard": ""
+  }
+ ],
+ "frames": []
+}

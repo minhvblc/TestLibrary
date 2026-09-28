@@ -1,0 +1,9 @@
+Before you begin
+Rate each statement based on your personal opinion
+Each statement has 5 options explained below
+Strongly Disagree
+Disagree
+Neutral
+Agree
+Strongly Agree
+Start test

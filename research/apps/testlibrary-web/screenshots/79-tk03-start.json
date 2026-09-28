@@ -1,0 +1,73 @@
+{
+ "url": "https://testlibrary.com/free-tests/personality-test",
+ "title": "Free Personality Test",
+ "capturedAt": "2026-09-27T11:55:52.942Z",
+ "viewport": {
+  "w": 1280,
+  "h": 800,
+  "mobile": false,
+  "dpr": 1
+ },
+ "lang": "en-US",
+ "full": false,
+ "action": "goto https://testlibrary.com/free-tests/personality-test",
+ "changed": "yes",
+ "settle": {
+  "ok": true,
+  "ms": 8147,
+  "why": "quiet",
+  "detail": ""
+ },
+ "walls": [],
+ "headings": [
+  {
+   "level": "h1",
+   "text": "Discover your Personality type",
+   "off": "in",
+   "y": 291.5
+  }
+ ],
+ "elements": [
+  {
+   "role": "button",
+   "name": "Male",
+   "href": "",
+   "x": 177,
+   "y": 521.5,
+   "w": 180,
+   "h": 60,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "button",
+   "type": "button",
+   "value": "",
+   "ref": "e1",
+   "guard": ""
+  },
+  {
+   "role": "button",
+   "name": "Female",
+   "href": "",
+   "x": 369,
+   "y": 521.5,
+   "w": 180,
+   "h": 60,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "button",
+   "type": "button",
+   "value": "",
+   "ref": "e2",
+   "guard": ""
+  }
+ ],
+ "frames": []
+}

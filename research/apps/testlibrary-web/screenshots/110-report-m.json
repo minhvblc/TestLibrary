@@ -1,0 +1,243 @@
+{
+ "url": "https://testlibrary.com/reports/personality-test",
+ "title": "",
+ "capturedAt": "2026-09-27T12:09:09.496Z",
+ "viewport": {
+  "w": 390,
+  "h": 844,
+  "mobile": true,
+  "dpr": 2
+ },
+ "lang": "en-US",
+ "full": false,
+ "action": "goto https://testlibrary.com/reports/personality-test",
+ "changed": "yes",
+ "settle": {
+  "ok": true,
+  "ms": 3325,
+  "why": "quiet",
+  "detail": ""
+ },
+ "walls": [],
+ "headings": [
+  {
+   "level": "h1",
+   "text": "The Reformer",
+   "off": "in",
+   "y": 298
+  },
+  {
+   "level": "h2",
+   "text": "Your Scores",
+   "off": "down",
+   "y": 872
+  },
+  {
+   "level": "h2",
+   "text": "The Crooked Frame Test",
+   "off": "down",
+   "y": 4456
+  },
+  {
+   "level": "h2",
+   "text": "Why Rules Feel Like Rest",
+   "off": "down",
+   "y": 5062
+  },
+  {
+   "level": "h2",
+   "text": "What You Do Better",
+   "off": "down",
+   "y": 5698
+  },
+  {
+   "level": "h2",
+   "text": "When You Say It's Handled",
+   "off": "down",
+   "y": 6364
+  },
+  {
+   "level": "h2",
+   "text": "The Voice That Never Praises",
+   "off": "down",
+   "y": 7060
+  },
+  {
+   "level": "h2",
+   "text": "Where the Precision Misfires",
+   "off": "down",
+   "y": 7726
+  },
+  {
+   "level": "h2",
+   "text": "Jaw, Shoulders, Midnight Cleaning",
+   "off": "down",
+   "y": 8392
+  },
+  {
+   "level": "h2",
+   "text": "Not Judging You",
+   "off": "down",
+   "y": 9120
+  },
+  {
+   "level": "h2",
+   "text": "Love as Maintenance",
+   "off": "down",
+   "y": 9976
+  },
+  {
+   "level": "h2",
+   "text": "The Itemized Case",
+   "off": "down",
+   "y": 10642
+  }
+ ],
+ "elements": [
+  {
+   "role": "link",
+   "name": "Contact us",
+   "href": "https://testlibrary.com/contact-us",
+   "x": 322.1171875,
+   "y": 20,
+   "w": 104,
+   "h": 24,
+   "off": "in",
+   "flags": [
+    "newtab"
+   ],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e1",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "",
+   "href": "https://testlibrary.com/dashboard",
+   "x": 77.5,
+   "y": 79,
+   "w": 123,
+   "h": 26,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e2",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "",
+   "href": "https://testlibrary.com/profile",
+   "x": 302,
+   "y": 79,
+   "w": 40,
+   "h": 40,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e3",
+   "guard": ""
+  },
+  {
+   "role": "button",
+   "name": "",
+   "href": "",
+   "x": 354,
+   "y": 79,
+   "w": 40,
+   "h": 40,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "button",
+   "type": "button",
+   "value": "",
+   "ref": "e4",
+   "guard": ""
+  },
+  {
+   "role": "button",
+   "name": "Download report",
+   "href": "",
+   "x": 195,
+   "y": 468,
+   "w": 358,
+   "h": 48,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "button",
+   "type": "button",
+   "value": "",
+   "ref": "e5",
+   "guard": ""
+  },
+  {
+   "role": "button",
+   "name": "TABLE OF CONTENTS:",
+   "href": "",
+   "x": 195,
+   "y": 1878,
+   "w": 310,
+   "h": 20,
+   "off": "down",
+   "flags": [
+    "expanded"
+   ],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "button",
+   "type": "button",
+   "value": "",
+   "ref": "e6",
+   "guard": ""
+  },
+  {
+   "role": "button",
+   "name": "Download report",
+   "href": "",
+   "x": 194.9921875,
+   "y": 18692,
+   "w": 197,
+   "h": 48,
+   "off": "down",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "button",
+   "type": "button",
+   "value": "",
+   "ref": "e7",
+   "guard": ""
+  }
+ ],
+ "frames": []
+}

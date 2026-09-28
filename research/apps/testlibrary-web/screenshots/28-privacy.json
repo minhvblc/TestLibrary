@@ -1,0 +1,179 @@
+{
+ "url": "https://testlibrary.com/legal/privacy-policy",
+ "title": "Privacy Policy",
+ "capturedAt": "2026-09-27T11:42:45.344Z",
+ "viewport": {
+  "w": 1280,
+  "h": 800,
+  "mobile": false,
+  "dpr": 1
+ },
+ "lang": "en-US",
+ "full": false,
+ "action": "goto https://testlibrary.com/legal/privacy-policy",
+ "changed": "yes",
+ "settle": {
+  "ok": true,
+  "ms": 1757,
+  "why": "quiet",
+  "detail": ""
+ },
+ "walls": [],
+ "headings": [
+  {
+   "level": "h1",
+   "text": "Privacy Policy",
+   "off": "in",
+   "y": 123
+  },
+  {
+   "level": "h3",
+   "text": "Privacy Policy",
+   "off": "in",
+   "y": 233
+  },
+  {
+   "level": "h3",
+   "text": "1. Personal Information We Collect",
+   "off": "down",
+   "y": 1832.1875
+  },
+  {
+   "level": "h3",
+   "text": "2. How We Use Your Personal Information",
+   "off": "down",
+   "y": 4044.375
+  },
+  {
+   "level": "h3",
+   "text": "3. How We Share Your Personal Information",
+   "off": "down",
+   "y": 5766.5625
+  },
+  {
+   "level": "h3",
+   "text": "4. Your Rights And Choices",
+   "off": "down",
+   "y": 7854.25
+  },
+  {
+   "level": "h3",
+   "text": "5. Complaints",
+   "off": "down",
+   "y": 9868.9375
+  },
+  {
+   "level": "h3",
+   "text": "6. Use of Cookies and other Tracking Technologies",
+   "off": "down",
+   "y": 10568.625
+  },
+  {
+   "level": "h3",
+   "text": "7. Security And Retention of Your Information",
+   "off": "down",
+   "y": 12280.3125
+  },
+  {
+   "level": "h3",
+   "text": "8. Our Data Policy on Children",
+   "off": "down",
+   "y": 13567.5
+  },
+  {
+   "level": "h3",
+   "text": "9. Third-Party Websites",
+   "off": "down",
+   "y": 14312.1875
+  },
+  {
+   "level": "h3",
+   "text": "10. Amendments To The Policy",
+   "off": "down",
+   "y": 15011.875
+  }
+ ],
+ "elements": [
+  {
+   "role": "link",
+   "name": "Back",
+   "href": "https://testlibrary.com/",
+   "x": 295.078125,
+   "y": 76,
+   "w": 61,
+   "h": 24,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e1",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "www.testlibrary.com",
+   "href": "http://www.testlibrary.com/",
+   "x": 853.921875,
+   "y": 517.1875,
+   "w": 173,
+   "h": 21,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e2",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "https://business.safety.google/privacy/",
+   "href": "https://business.safety.google/privacy/",
+   "x": 428.15625,
+   "y": 7107.75,
+   "w": 327,
+   "h": 21,
+   "off": "down",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e3",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "support@testlibrary.com",
+   "href": "mailto:support@testlibrary.com",
+   "x": 422.890625,
+   "y": 15735.75,
+   "w": 207,
+   "h": 21,
+   "off": "down",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e4",
+   "guard": ""
+  }
+ ],
+ "frames": []
+}

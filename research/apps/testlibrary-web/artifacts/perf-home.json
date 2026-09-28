@@ -1,0 +1,67 @@
+{
+ "url": "https://testlibrary.com/",
+ "capturedAt": "2026-09-27T13:05:03.448Z",
+ "viewport": {
+  "w": 1280,
+  "h": 800,
+  "mobile": false
+ },
+ "net": "online",
+ "runs": [
+  {
+   "url": "https://testlibrary.com/",
+   "ttfb": 508.8000000715256,
+   "fcp": 1208,
+   "dcl": 1272.2000000476837,
+   "load": 2436.899999976158,
+   "lcp": 1208,
+   "cls": 0.006,
+   "requests": 88,
+   "bytes": 1869156,
+   "jsBytes": 1056303,
+   "thirdPartyRequests": 28,
+   "thirdPartyBytes": 242885
+  },
+  {
+   "url": "https://testlibrary.com/",
+   "ttfb": 70.19999992847443,
+   "fcp": 424,
+   "dcl": 905.3999999761581,
+   "load": 1021.2999999523163,
+   "lcp": 492,
+   "cls": 0.006,
+   "requests": 88,
+   "bytes": 1856833,
+   "jsBytes": 1045446,
+   "thirdPartyRequests": 30,
+   "thirdPartyBytes": 242468
+  },
+  {
+   "url": "https://testlibrary.com/",
+   "ttfb": 67.89999997615814,
+   "fcp": 368,
+   "dcl": 905.7000000476837,
+   "load": 1088.8000000715256,
+   "lcp": 404,
+   "cls": 0.006,
+   "requests": 88,
+   "bytes": 1856887,
+   "jsBytes": 1045878,
+   "thirdPartyRequests": 30,
+   "thirdPartyBytes": 242642
+  }
+ ],
+ "median": {
+  "ttfb": 70.19999992847443,
+  "fcp": 424,
+  "lcp": 492,
+  "dcl": 905.7000000476837,
+  "load": 1088.8000000715256,
+  "cls": 0.006,
+  "requests": 88,
+  "bytes": 1856887,
+  "jsBytes": 1045878,
+  "thirdPartyRequests": 30,
+  "thirdPartyBytes": 242642
+ }
+}

@@ -1,0 +1,198 @@
+{
+ "url": "https://testlibrary.com/checkout?from=pricing&product=7&sessionId=REDACTED",
+ "capturedAt": "2026-09-27T11:41:49.370Z",
+ "meta": {
+  "description": "Complete your purchase securely to unlock your full access to Test Library.",
+  "generator": null,
+  "robots": null,
+  "ogTitle": null,
+  "ogDescription": null,
+  "ogImage": null,
+  "twitterCard": null,
+  "themeColor": null,
+  "viewport": "width=device-width, initial-scale=1",
+  "appleItunesApp": null,
+  "canonical": "https://testlibrary.com/checkout?from=pricing&product=7&sessionId=a3ee1797833245f5b2d28a73814c6e1f",
+  "manifest": null,
+  "hreflang": [],
+  "cspMeta": null
+ },
+ "markers": [
+  "nuxt"
+ ],
+ "globals": [
+  {
+   "name": "dataLayer",
+   "hint": "tag-manager"
+  },
+  {
+   "name": "fbq",
+   "hint": "ads-pixel"
+  },
+  {
+   "name": "uetq",
+   "hint": "ads-pixel"
+  }
+ ],
+ "hosts": [
+  {
+   "host": "testlibrary.com",
+   "class": "1st-party",
+   "via": {
+    "other": 1,
+    "stylesheet": 2,
+    "script": 33,
+    "font": 1,
+    "fetch": 2,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "img.testlibrary.com",
+   "class": "1st-party",
+   "via": {
+    "image": 1
+   }
+  },
+  {
+   "host": "load.data.testlibrary.com",
+   "class": "1st-party",
+   "via": {
+    "script": 3,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "data.testlibrary.com",
+   "class": "1st-party",
+   "via": {
+    "fetch": 2,
+    "document": 1
+   }
+  },
+  {
+   "host": "googleads.g.doubleclick.net",
+   "class": "ads",
+   "via": {
+    "script": 1,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "bat.bing.com",
+   "class": "ads-pixel",
+   "via": {
+    "script": 4,
+    "ping": 2,
+    "image": 2,
+    "xhr": 2,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "connect.facebook.net",
+   "class": "ads-pixel",
+   "via": {
+    "script": 2,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "www.googleadservices.com",
+   "class": "ads-pixel",
+   "via": {
+    "fetch": 4,
+    "image": 1
+   }
+  },
+  {
+   "host": "applepay.cdn-apple.com",
+   "class": "other",
+   "via": {
+    "script": 3,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "pay.google.com",
+   "class": "other",
+   "via": {
+    "script": 1,
+    "document": 1,
+    "xhr": 1,
+    "script-tag": 1,
+    "iframe": 1
+   }
+  },
+  {
+   "host": "www.google.com",
+   "class": "other",
+   "via": {
+    "fetch": 3,
+    "image": 1
+   }
+  },
+  {
+   "host": "www.gstatic.com",
+   "class": "other",
+   "via": {
+    "script": 4,
+    "other": 2
+   }
+  },
+  {
+   "host": "play.google.com",
+   "class": "other",
+   "via": {
+    "fetch": 8
+   }
+  },
+  {
+   "host": "www.facebook.com",
+   "class": "other",
+   "via": {
+    "image": 3
+   }
+  },
+  {
+   "host": "www.google.com.vn",
+   "class": "other",
+   "via": {
+    "image": 2,
+    "fetch": 6
+   }
+  }
+ ],
+ "cookieNames": [
+  "_ga",
+  "_fbp",
+  "FPLC",
+  "FPAU",
+  "FPGSID",
+  "locale",
+  "_gcl_au",
+  "_uetsid",
+  "_uetvid",
+  "_ga_GZ7803TJYM"
+ ],
+ "storageKeys": {
+  "local": [
+   "lastExternalReferrerTime",
+   "_uetvid_exp",
+   "_uetsid_exp",
+   "_uetvid",
+   "lastExternalReferrer",
+   "_gcl_ls",
+   "_uetsid",
+   "_xsd"
+  ],
+  "session": [
+   "user-country",
+   "country-fetched",
+   "_cltk"
+  ]
+ },
+ "serviceWorker": "not-controlling",
+ "jsonLd": [],
+ "lang": "en-US"
+}

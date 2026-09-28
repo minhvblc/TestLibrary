@@ -1,0 +1,129 @@
+Back
+Subscription Policy
+Subscription Policy
+
+Last updated August 17, 2026.
+
+This Subscription Policy (the “Subscription Policy”) sets out the contractual terms governing Trial Memberships, Subscriptions, automatic renewals, billing, cancellations, and refunds offered through the website www.testlibrary.com (the “Website”), the related software application (the “Application”), and any associated services (collectively, the “Services”).
+
+The Services are provided by Aura Health LLC, a limited liability company incorporated under the laws of the State of Wyoming, with its registered address at 30 N Gould St Ste R, Sheridan, Wyoming 82801, United States of America, or Testing Solutions LLC, a limited liability company incorporated under the laws of the State of Delaware, with its registered address at 8 The Green Suite #6008, Dover, Kent County, Delaware 19901, United States of America (each a “Platform Operator”, “We”, “Our”, or “Us”). Depending on the payment infrastructure used to process Your purchase, either Platform Operator may act as the seller of a limited-duration paid trial offering temporary access to the Services (the “Trial Membership”) or an automatically renewing paid membership that provides ongoing access to the Services (the “Subscription”). The identity of the applicable Platform Operator will be communicated to You in the order confirmation following a successful purchase. The applicable Platform Operator operates the Website, provides the technical platform, manages the Trial Membership and Subscription, and facilitates access to the Services.
+
+Depending on Your place of residence, jurisdiction, selected payment method, or other operational factors disclosed at checkout, payments for the Trial Membership, the Subscription, or other paid features may be processed, collected, or facilitated by an affiliated or authorized payment processing entity (each, a “Payment Processing Entity”). The Payment Processing Entities that may be used in connection with the Services are identified in the Terms and may be updated from time to time in accordance with the Terms and applicable law.
+
+Any such Payment Processing Entity acts solely in relation to payment processing, billing, charge collection, and related administrative functions and is not responsible for the quality, performance, legality, or conformity of the Services themselves, which remain the responsibility of the applicable Platform Operator unless expressly stated otherwise at checkout.
+
+The applicable Payment Processing Entity, where relevant, may be identified during checkout, on the payment screen, in the order confirmation, and/or through the payment descriptor appearing on Your payment statement. This Subscription Policy forms an integral part of the Terms and Conditions (the “Terms”) governing Your use of the Services and should be read together with the Terms. Unless otherwise expressly defined herein, all capitalized terms used in this Subscription Policy shall have the meanings assigned to them in the Terms.
+
+This Subscription Policy does not replace the Terms. Rather, it consolidates in a single document the provisions of the Terms specifically applicable to Trial Memberships and Subscriptions. In the event of any inconsistency between this Subscription Policy and the Terms, the Terms shall prevail, unless applicable law requires otherwise.
+
+By purchasing a Trial Membership or Subscription, authorizing recurring payments, or otherwise using the Services, You acknowledge that You have read, understood, and agree to be bound by this Subscription Policy and the Terms.
+
+1. Fees, Trial & Subscription Plans
+
+Fees and Payment Authorization
+
+1.1. Certain parts of the Services are offered for a fee (“Fees”). The applicable Fees, currency, billing terms, the Trial Membership duration, the Subscription duration (the “Subscription Period”), and renewal conditions will be disclosed to You prior to purchase, including during the checkout process and/or on the payment screen. By providing Your payment information and completing a purchase, You authorize the Platform Operator and/or Payment Processing Entity to charge Your selected payment method for all applicable Fees, including any recurring Subscription charges, in accordance with the Terms and the disclosures presented at checkout.
+
+1.2. You agree to provide current, complete, and accurate payment and account information and to promptly update such information as necessary to ensure successful payment processing. Fees may be charged in the currency displayed at checkout or in the order confirmation. Any currency conversions, foreign transaction fees, bank commissions, or additional charges imposed by Your payment provider remain Your sole responsibility. The specific amount and currency charged are determined based on Your detected jurisdiction, selected payment method, and the regional pricing applicable at the time of checkout. You are responsible for reviewing the final summary on the payment screen before authorizing the transaction.
+
+1.3. We reserve the right to correct any pricing, currency display, billing, or checkout errors, inaccuracies, or omissions, even if payment has already been requested or received. In the event of such an error, we may cancel, void, or adjust the affected transaction and, where applicable, issue a refund or request the correct payment amount, to the extent permitted by applicable law.
+
+Trial Membership
+
+1.4. New Users may be offered a one-time paid Trial Membership that provides limited access to the Services for the period disclosed at checkout. The applicable Trial Membership fee, currency, included features, and duration will be presented to You before payment authorization and may also be additionally confirmed in the order confirmation message. The Trial Membership duration is seven (7) days, and access to the Services is granted immediately upon successful payment.
+
+1.5. The Trial Membership is intended to allow Users to access certain Reports, features, and/or explore the Services. Unless You cancel before the end of the Trial Membership period, the Trial Membership will automatically convert into the paid Subscription under the billing terms disclosed at checkout and confirmed in the order confirmation.
+
+Subscription and Automatic Renewal
+
+1.6. After the Trial Membership period, Your access to the Services will automatically continue under the Subscription unless You cancel in accordance with the Terms. Each Subscription Period is twenty-eight (28) days. The Subscription fee, currency, the Subscription Period, and renewal terms will be additionally disclosed to You at checkout and/or in the order confirmation. You acknowledge that the Subscription constitutes a recurring payment obligation and that renewal charges will be applied automatically at the beginning of each new Subscription Period unless You cancel prior to renewal.
+
+1.7. By purchasing the Trial Membership or the Subscription, You expressly acknowledge and agree that Your selected payment method will be charged automatically for each Subscription Period without further authorization and that the Subscription will continue until You cancel it. We may change the Subscription fees from time to time and will notify You in advance of any such changes. Updated Fees will not apply to the current Subscription Period, and if You do not agree to the revised Fees, You must cancel the Subscription before the changes take effect.
+
+1.7.1. Following the purchase of the Trial Membership or the Subscription, You may receive an order confirmation by email or through the Services. Such confirmation may include, where applicable, the purchased plan, the amount charged, the currency, the applicable billing interval, the renewal terms, the applicable Platform Operator, including its contact details, and the applicable Payment Processing Entity that processed or facilitated the payment. In the event of any discrepancy between the checkout disclosures and the order confirmation, the checkout disclosures shall prevail unless applicable law requires otherwise.
+
+Timing of Charges and Billing date
+
+1.8. The billing date for the Subscription is generally the date on which the applicable Subscription fee is successfully charged to Your payment method. The Subscription fees are typically charged in advance for each Subscription Period. Where a renewal charge is collected after one or more failed attempts, the next billing date may be calculated from the date on which the renewal payment is successfully collected, unless otherwise stated at checkout or required by applicable law.
+
+1.9. You acknowledge that billing cycles and payment collection timing may vary due to calendar differences, payment processing delays, failed renewal attempts, technical adjustments, fraud-prevention checks, processor requirements, or operational considerations. Neither the Platform Operator nor the applicable Payment Processing Entity guarantees that any payment will be successfully processed on the first attempt or at any specific time. If a payment attempt is declined by Your financial institution, the Platform Operator and/or the applicable Payment Processing Entity may re-submit the charge at a later time or date, or apply the process described in Section 1.10, to ensure the continuity of Your Services. The Platform Operator and the applicable Payment Processing Entity are responsible for payment failures caused by insufficient funds, bank restrictions, expired payment methods, or other factors outside its control, except to the extent otherwise required by applicable law.
+
+1.10. If a payment is declined, reversed, fails authorization, or otherwise cannot be successfully collected for any reason, the Platform Operator and/or the applicable Payment Processing Entity may, to the fullest extent permitted by applicable law, attempt to reprocess the payment multiple times using the same payment method, stored payment credentials, tokenized payment information, or any other payment method validly associated with the Account, at different times and over an extended collection period.
+
+1.11. Where permitted by applicable law and payment processor rules, failed or declined recurring Subscription charges may additionally be transferred, assigned, or submitted to an authorized third-party payment recovery provider for further collection and recovery attempts. Such recovery attempts may be performed using previously authorized payment credentials or payment method tokens associated with the Account. Such third-party recovery providers act solely as independent payment recovery and billing service providers and do not assume responsibility for the operation, quality, legality, or performance of the Services.
+
+1.12. You acknowledge and agree that payment recovery or rebilling attempts may appear under a different payment descriptor than the original transaction descriptor and may include references to an authorized billing partner, Payment Processing Entity, or recovery provider.
+
+1.13. During any failed-payment or collection period, the Platform Operator may, at its sole discretion and to the extent permitted by applicable law, continue the Subscription, maintain access to the Services, apply a temporary discounted renewal amount, reduced recovery charge, or other promotional pricing intended to facilitate successful renewal, and continue payment collection attempts until the Subscription is cancelled by You in accordance with Section 2 or otherwise terminated where required by law. The Platform Operator may continue payment collection attempts indefinitely, unless and until the Subscription is formally cancelled by You in accordance with Section 2. A failure to collect payment does not constitute a termination of the Subscription by the Platform Operator and does not waive the User’s obligation to pay any validly incurred Fees or outstanding Subscription charges.
+
+1.13.1. To ensure transaction security and optimize payment processing, any purchase (including the Trial Membership or the Subscription renewal) may be processed as one or more separate transaction entries on Your payment statement. For example, a single order may be split into two distinct charges: one representing the fee for digital report generation or onboarding, and the other for ongoing access to the Services. The total amount charged will not exceed the price disclosed to You at checkout, regardless of the number of transaction entries. For the avoidance of doubt, transaction descriptors displayed on Your payment card or bank statement may vary depending on the payment processor, Payment Processing Entity, recovery provider, acquiring bank, or billing infrastructure used to process the transaction.
+
+1.13.2. To facilitate the Subscription continuity, payment recovery, fraud prevention, dispute handling, and billing administration, the Platform Operator and/or an authorized Payment Processing Entity may share limited transaction-related information, payment status data, billing identifiers, and tokenized payment credentials with authorized payment recovery or billing service providers in accordance with the Privacy Policy, applicable law, and industry security standards.
+
+1.14. You may cancel the Trial Membership or the Subscription at any time in accordance with Section 2 of this Subscription Policy. To avoid being charged for the next Trial Membership conversion or the next Subscription Period, cancellation must be completed before the applicable renewal or conversion date disclosed to You at checkout, in the order confirmation, or within the Account settings.
+
+1.15. Cancellation stops future recurring charges only from the effective cancellation date and does not affect any Fees already charged or validly authorized prior to cancellation, except where required by applicable law.
+
+2. Cancellation
+
+2.1. You may cancel the Trial Membership or the Subscription at any time before the end of the applicable Trial Membership or Subscription Period. Cancellation may be completed either by logging into the Account and using the available cancellation functionality within the platform, or by contacting customer support at support@testlibrary.com using the email address associated with the Account.
+
+2.2. To prevent the next recurring charge, cancellation must be completed before the applicable renewal or conversion date. If cancellation is submitted after that date, the next charge may still be processed and the cancellation will take effect from the end of the then-current paid or successfully collected Subscription Period, except where required otherwise by applicable law.
+
+2.3. Upon successful cancellation, the Subscription will not renew again, and no further recurring Fees will be initiated after the end of the then-current paid or successfully collected Subscription Period. Unless otherwise required by applicable law or expressly stated in the Services, cancellation of the Subscription does not automatically delete the Account. The Account deletion may be requested separately in accordance with the Terms or Privacy Policy. For the avoidance of doubt, where a renewal payment is successfully collected after one or more failed attempts, access to the Services may continue for the corresponding Subscription Period.
+
+2.4. The Subscriptions are personal to the User and may not be assigned, transferred, or shared with any third party without our prior written consent. The Services are offered only to Users who meet our eligibility requirements, including minimum age and geographic restrictions.
+
+2.5. We reserve the right, at our sole discretion, to modify, update, or discontinue the Subscription terms, benefits, pricing, promotions, eligibility requirements, or available features at any time. Any such changes will apply prospectively and will not affect the current Subscription period. In the event of a material change, such as an increase in the Subscription pricing, we will provide reasonable advance notice (no less than 30 days) via email, giving You the opportunity to cancel the Subscription before the updated terms take effect. Continued use of the Subscription after the effective date of the changes constitutes Your acceptance of the updated Subscription Policy and, where applicable, the updated Terms.
+
+3. Refund Policy
+
+3.1. All Trial Memberships and Subscriptions constitute digital services that are made available immediately after purchase. Except where required by applicable law, refunds are not guaranteed and are assessed on a case-by-case basis at the reasonable discretion of the Platform Operator. Any refunds that may be issued are granted solely at our discretion and on a case-by-case basis.
+
+3.2. If You believe You are entitled to a refund, You must contact customer support at support@testlibrary.com and provide the email address associated with the Account, details of the relevant purchase, and a clear explanation of the reasons for Your refund request. Refund requests will not be considered unless submitted directly to customer support.
+
+3.3. Initiating a chargeback, payment dispute, or refund request through a payment provider, financial institution, card issuer, or third-party platform without first contacting customer support may result in the suspension or termination of the Account, restriction of access to the Services, or cancellation of ongoing the Subscription benefits, and does not guarantee a refund.
+
+3.4. You agree that initiating a chargeback, payment dispute, retrieval request, or claim with Your credit card issuer, payment provider, or bank in relation to a validly authorized transaction, recurring the Subscription renewal, or payment recovery attempt processed in accordance with the Terms may constitute a material breach of the Terms. If You initiate a chargeback for a transaction that was authorized in accordance with the Terms (including recurring Subscription charges), we reserve the right to:
+
+3.4.1. Immediately suspend or terminate the Account and access to the Services;
+
+3.4.2. Dispute the chargeback or payment dispute by providing evidence of Your authorization, acceptance of the Terms, recurring billing consent, use of the Services, access logs, payment recovery records, transaction metadata, device identifiers, and generated or accessed Reports;
+
+3.4.3. Report relevant account, billing, payment recovery, and transaction information to payment processors, fraud prevention providers, recovery service providers, card network monitoring systems, and risk management services, in accordance with applicable law; and
+
+3.4.4. Pursue recovery of the disputed amount together with any applicable chargeback fees, administrative costs, collection expenses, or third-party recovery costs incurred by the Platform Operator and/or the applicable Payment Processing Entity, to the extent permitted by applicable law.
+
+3.4.5. For the avoidance of doubt, the recurring Subscription charges, renewal payments, and payment recovery attempts processed using previously authorized payment credentials or tokenized payment methods shall be deemed authorized transactions where the original Subscription purchase and recurring billing consent were validly obtained in accordance with the Terms and applicable law.
+
+3.5. Trial Membership fees are generally non-refundable, as access to the Services and the generated Report is provided immediately upon purchase.
+
+3.6. The Subscription fees are charged in advance for each paid Subscription Period. Once the Subscription Period has started, the applicable Subscription fee is non-refundable, except where required by applicable law. We do not offer partial refunds, credits, or reimbursements for unused time within the Subscription Period.
+
+3.7. If You are a consumer residing in the European Union, You typically have the right to withdraw from distance contracts within fourteen (14) days. However, by purchasing the Trial Membership or the Subscription, You request immediate access to the digital content (Services and Reports):
+
+3.7.1. Performance of the contract begins immediately upon Your payment and account activation; and
+
+3.7.2. You thereby expressly waive and lose Your right of withdrawal from the moment the performance of the Service has begun. Therefore, once access to the Services is granted, You generally cannot cancel the purchase to receive a refund for that specific billing period under the right of withdrawal regulations.
+
+4. Final Provisions
+
+4.1. This Subscription Policy forms an integral part of the Terms and should be read together with the Terms and the Privacy Policy.
+
+4.2. The Platform Operator may amend this Subscription Policy from time to time to reflect changes in the Services, applicable law, payment practices, business operations, or the Terms. Any material changes will be communicated in accordance with the Terms where required by applicable law.
+
+4.3. Continued use of the Services after the effective date of an updated Subscription Policy constitutes Your acceptance of the updated Subscription Policy, unless applicable law requires additional consent.
+
+4.4. If You have any questions regarding this Subscription Policy, please contact us at: support@testlibrary.com.
+
+4.5. Platform Operators:
+
+1. Aura Health LLC
+30 N Gould ST STE R,
+Sheridan, Wyoming 82801,
+United States of America. 2. Testing Solutions LLC
+8 The Green Suite #6008 Dover,
+Kent County, Delaware 19901,
+United States of America.
+
+The applicable Platform Operator responsible for Your purchase will be identified in the order confirmation following a successful purchase.

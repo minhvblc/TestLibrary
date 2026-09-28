@@ -1,0 +1,34 @@
+<!-- TestLib (tên tạm, Q-01) — head meta cho route "/" (SCR-PUB-01).
+     Giá trị chép từ dòng "/" của docs/go-to-market/seo-meta.md; không soạn copy ở đây (sửa seo-meta.md trước, rồi chép lại).
+     Placeholder: <domain> (Q-01) · theme-color (FND-tokens, Q-17) · legalName + email (Q-05) · file ảnh OG.
+     Route index khác có block riêng lấy từ seo-meta.md §1; route public phải render phía server / tĩnh để crawler không chạy JS đọc được (Q-09).
+     KHÔNG đặt thẻ analytics / quảng cáo ở đây: AppTracking chỉ tải Firebase Analytics sau consent (TD-04, SYS-CONSENT). -->
+<title>Free Psychology Tests, Actually Scored · TestLib</title>
+<meta name="description" content="Free personality, relationship and career tests, scored from your answers. Every score explained. Clear prices. Your answers never go to advertisers." />
+<link rel="canonical" href="https://<domain>/" />
+<meta name="robots" content="index,follow" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="TestLib" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:title" content="Free psychology tests, actually scored" />
+<meta property="og:description" content="Take a free test and see every score explained. Clear prices, no surprise charges." />
+<meta property="og:image" content="https://<domain>/og/home.png" /><!-- 1200×630 -->
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://<domain>/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#FFFFFF" /><!-- placeholder: màu từ base-ui/FND-tokens.md (Q-17) -->
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<!-- hreflang: không có — en-US là locale duy nhất (Q-14). Khi có locale thứ hai: thêm link alternate cho từng locale + x-default. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "TestLib",
+  "legalName": "placeholder: legal entity (Q-05)",
+  "url": "https://<domain>/",
+  "logo": "https://<domain>/icons/icon-512.png",
+  "email": "support@<domain>"
+}
+</script>

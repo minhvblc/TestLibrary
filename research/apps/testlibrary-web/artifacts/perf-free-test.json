@@ -1,0 +1,67 @@
+{
+ "url": "https://testlibrary.com/free-tests/personality-test",
+ "capturedAt": "2026-09-27T13:05:16.293Z",
+ "viewport": {
+  "w": 1280,
+  "h": 800,
+  "mobile": false
+ },
+ "net": "online",
+ "runs": [
+  {
+   "url": "https://testlibrary.com/free-tests/personality-test",
+   "ttfb": 390.10000002384186,
+   "fcp": 708,
+   "dcl": 702,
+   "load": 1339.8000000715256,
+   "lcp": 708,
+   "cls": 0,
+   "requests": 56,
+   "bytes": 1139318,
+   "jsBytes": 1011921,
+   "thirdPartyRequests": 22,
+   "thirdPartyBytes": 254904
+  },
+  {
+   "url": "https://testlibrary.com/free-tests/personality-test",
+   "ttfb": 210.5,
+   "fcp": 516,
+   "dcl": 487.39999997615814,
+   "load": 1215.2999999523163,
+   "lcp": 600,
+   "cls": 0,
+   "requests": 56,
+   "bytes": 1140256,
+   "jsBytes": 1012588,
+   "thirdPartyRequests": 22,
+   "thirdPartyBytes": 255401
+  },
+  {
+   "url": "https://testlibrary.com/free-tests/personality-test",
+   "ttfb": 176.20000004768372,
+   "fcp": 312,
+   "dcl": 445.5,
+   "load": 1380.1000000238419,
+   "lcp": 312,
+   "cls": 0,
+   "requests": 56,
+   "bytes": 1139771,
+   "jsBytes": 1012309,
+   "thirdPartyRequests": 22,
+   "thirdPartyBytes": 254939
+  }
+ ],
+ "median": {
+  "ttfb": 210.5,
+  "fcp": 516,
+  "lcp": 600,
+  "dcl": 487.39999997615814,
+  "load": 1339.8000000715256,
+  "cls": 0,
+  "requests": 56,
+  "bytes": 1139771,
+  "jsBytes": 1012309,
+  "thirdPartyRequests": 22,
+  "thirdPartyBytes": 254939
+ }
+}

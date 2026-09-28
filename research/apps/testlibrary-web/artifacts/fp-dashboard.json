@@ -1,0 +1,190 @@
+{
+ "url": "https://testlibrary.com/dashboard",
+ "capturedAt": "2026-09-27T12:09:00.314Z",
+ "meta": {
+  "description": null,
+  "generator": null,
+  "robots": null,
+  "ogTitle": null,
+  "ogDescription": null,
+  "ogImage": null,
+  "twitterCard": null,
+  "themeColor": null,
+  "viewport": "width=device-width, initial-scale=1",
+  "appleItunesApp": null,
+  "canonical": "https://testlibrary.com/dashboard",
+  "manifest": null,
+  "hreflang": [],
+  "cspMeta": null
+ },
+ "markers": [
+  "nuxt"
+ ],
+ "globals": [
+  {
+   "name": "dataLayer",
+   "hint": "tag-manager"
+  },
+  {
+   "name": "fbq",
+   "hint": "ads-pixel"
+  },
+  {
+   "name": "uetq",
+   "hint": "ads-pixel"
+  }
+ ],
+ "hosts": [
+  {
+   "host": "testlibrary.com",
+   "class": "1st-party",
+   "via": {
+    "other": 2,
+    "stylesheet": 3,
+    "script": 40,
+    "font": 1,
+    "fetch": 7,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "load.data.testlibrary.com",
+   "class": "1st-party",
+   "via": {
+    "script": 3,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "data.testlibrary.com",
+   "class": "1st-party",
+   "via": {
+    "fetch": 2,
+    "document": 1
+   }
+  },
+  {
+   "host": "img.testlibrary.com",
+   "class": "1st-party",
+   "via": {
+    "image": 2
+   }
+  },
+  {
+   "host": "ad.doubleclick.net",
+   "class": "ads",
+   "via": {
+    "fetch": 1
+   }
+  },
+  {
+   "host": "googleads.g.doubleclick.net",
+   "class": "ads",
+   "via": {
+    "script": 1,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "bat.bing.com",
+   "class": "ads-pixel",
+   "via": {
+    "script": 4,
+    "ping": 1,
+    "image": 1,
+    "xhr": 1,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "connect.facebook.net",
+   "class": "ads-pixel",
+   "via": {
+    "script": 2,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "www.googleadservices.com",
+   "class": "ads-pixel",
+   "via": {
+    "fetch": 1
+   }
+  },
+  {
+   "host": "vyynofnoabzsywbgmfal.supabase.co",
+   "class": "backend-as-a-service",
+   "via": {
+    "fetch": 1
+   }
+  },
+  {
+   "host": "www.google.com",
+   "class": "other",
+   "via": {
+    "fetch": 3,
+    "image": 1
+   }
+  },
+  {
+   "host": "www.facebook.com",
+   "class": "other",
+   "via": {
+    "image": 1
+   }
+  },
+  {
+   "host": "www.google.com.vn",
+   "class": "other",
+   "via": {
+    "image": 3,
+    "fetch": 1
+   }
+  }
+ ],
+ "cookieNames": [
+  "_ga",
+  "_fbp",
+  "FPLC",
+  "FPAU",
+  "_gcl_au",
+  "sb-vyynofnoabzsywbgmfal-auth-token",
+  "_conv_v",
+  "_conv_s",
+  "__kla_id",
+  "FPGSID",
+  "_ga_GZ7803TJYM",
+  "_uetsid",
+  "_uetvid"
+ ],
+ "storageKeys": {
+  "local": [
+   "_uetvid_exp",
+   "_gcl_ls",
+   "_uetsid",
+   "_xsd",
+   "iq-test-progress",
+   "__kl_key",
+   "quiz-personality-test",
+   "klaviyoOnsite",
+   "lastExternalReferrerTime",
+   "$referrer",
+   "iq-test-sid",
+   "_uetsid_exp",
+   "$last_referrer",
+   "activity-tracked",
+   "quiz-sid-personality-test",
+   "_uetvid",
+   "lastExternalReferrer"
+  ],
+  "session": [
+   "_cltk",
+   "klaviyoPagesVisitCountV2",
+   "country-fetched",
+   "user-country"
+  ]
+ },
+ "serviceWorker": "not-controlling",
+ "jsonLd": [],
+ "lang": "en-US"
+}

@@ -1,0 +1,36 @@
+net since "free-answers-q10-q19" · 66 requests · in 69 KB · up 56 KB · 27 upload(s) · 0 stream(s) · 0 failed · window 25.22s
+host                                 class                    n       in       up  types · slowest
+testlibrary.com                      1st-party               31    58 KB      0 B  script×28 fetch×1 stylesheet×2 · 218ms GET /_nx/C7AVJu5G.js
+www.facebook.com                     other                   22    325 B    54 KB  document×20 image×2 · 122ms POST /tr/
+img.testlibrary.com                  1st-party                2     6 KB      0 B  image×2 · 1.01s GET /cdn-cgi/image/w=120,h=120,format=auto,quality=80/avatar-personality-reformer-male.png
+bat.bing.com                         ads-pixel                7    884 B     2 KB  xhr×6 ping×1 · 560ms POST /p/conversions/c/h
+data.testlibrary.com                 1st-party                1     2 KB      0 B  fetch×1 · 220ms GET /d15gsjbkfteh
+www.googleadservices.com             ads-pixel                1     1 KB      0 B  fetch×1 · 91ms GET /pagead/conversion/:id/
+www.google.com.vn                    other                    2      0 B      0 B  fetch×2 · 69ms GET /pagead/1p-conversion/:id/
+upload: POST www.facebook.com/tr/ 3 KB · — · 200
+upload: POST www.facebook.com/tr/ 3 KB · — · 200
+upload: POST bat.bing.com/p/conversions/c/h 259 B · 560ms · 204
+upload: POST www.facebook.com/tr/ 3 KB · 63ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · 63ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · 122ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · 121ms · 200
+upload: POST bat.bing.com/p/conversions/c/h 289 B · 283ms · 204
+upload: POST www.facebook.com/tr/ 3 KB · 32ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · 32ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · 33ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · 32ms · 200
+upload: POST bat.bing.com/p/conversions/c/h 292 B · 308ms · 204
+upload: POST www.facebook.com/tr/ 3 KB · 97ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · 98ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · 29ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · 31ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · 33ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · 34ms · 200
+upload: POST bat.bing.com/p/conversions/c/h 301 B · 316ms · 204
+upload: POST www.facebook.com/tr/ 3 KB · 97ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · 99ms · 200
+upload: POST bat.bing.com/p/conversions/c/h 284 B · 293ms · 204
+upload: POST www.facebook.com/tr/ 3 KB · 49ms · 200
+upload: POST www.facebook.com/tr/ 3 KB · — · 200
+upload: POST bat.bing.com/p/conversions/c/h size unknown · 306ms · 204
+upload: POST bat.bing.com/p/conversions/c/h 549 B · 346ms · 204

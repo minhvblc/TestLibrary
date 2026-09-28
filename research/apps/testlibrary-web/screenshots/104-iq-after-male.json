@@ -1,0 +1,25 @@
+{
+ "url": "https://testlibrary.com/iq-test/loader?access=REDACTED",
+ "title": "IQ Test - Find Your Score in 10 Minutes",
+ "capturedAt": "2026-09-27T12:08:00.806Z",
+ "viewport": {
+  "w": 1280,
+  "h": 800,
+  "mobile": false,
+  "dpr": 1
+ },
+ "lang": "en-US",
+ "full": false,
+ "action": "clicktext Male",
+ "changed": "yes",
+ "settle": {
+  "ok": true,
+  "ms": 1931,
+  "why": "quiet",
+  "detail": ""
+ },
+ "walls": [],
+ "headings": [],
+ "elements": [],
+ "frames": []
+}

@@ -1,0 +1,32 @@
+{
+ "url": "https://testlibrary.com/personality-test/analyzing?q=96&total=100",
+ "title": "Personality Test - Get Accurate Personality Type Report",
+ "capturedAt": "2026-09-27T11:52:38.061Z",
+ "viewport": {
+  "w": 1280,
+  "h": 800,
+  "mobile": false,
+  "dpr": 1
+ },
+ "lang": "en-US",
+ "full": false,
+ "action": "clicktext Get My Results",
+ "changed": "yes",
+ "settle": {
+  "ok": true,
+  "ms": 1761,
+  "why": "quiet",
+  "detail": ""
+ },
+ "walls": [],
+ "headings": [
+  {
+   "level": "h2",
+   "text": "Analyzing your profile...",
+   "off": "in",
+   "y": 123
+  }
+ ],
+ "elements": [],
+ "frames": []
+}

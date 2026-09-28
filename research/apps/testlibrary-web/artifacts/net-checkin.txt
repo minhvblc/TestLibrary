@@ -1,0 +1,7 @@
+net since "checkin" · 3 requests · in 561 B · up 270 B · 2 upload(s) · 0 stream(s) · 0 failed · window 2.45s
+host                                 class                    n       in       up  types · slowest
+testlibrary.com                      1st-party                1    423 B     51 B  fetch×1 · 1.03s POST /api/checkins
+bat.bing.com                         ads-pixel                1    121 B    219 B  xhr×1 · 268ms POST /p/conversions/c/a
+www.facebook.com                     other                    1     17 B      0 B  image×1 · 19ms GET /tr/
+upload: POST testlibrary.com/api/checkins 51 B · 1.03s · 200
+upload: POST bat.bing.com/p/conversions/c/a 219 B · 268ms · 204

@@ -1,0 +1,98 @@
+flowchart TD
+  subgraph T1["Public header @1280 · «'Home' · 'About Us' · 'Librar…»"]
+    SC_TLW_01["SC-TLW-01 · Home"]
+    SC_TLW_06["SC-TLW-06 · Subscription Policy · Terms & Conditions · Priv…"]
+    SC_TLW_07["SC-TLW-07 · Cancel Your Subscription"]
+    SC_TLW_08["SC-TLW-08 · Frequently Asked Questions"]
+    SC_TLW_10["SC-TLW-10 · Let's Get You the Answers You Need Contact"]
+  end
+  subgraph T2["Public header @1280 · «'Home' · 'About Us' · 'Librar…»"]
+    SC_TLW_09["SC-TLW-09 · About Testlibrary"]
+  end
+  subgraph T3["Public header @1280 · «'Home' · 'About Us' · 'Librar…»"]
+    SC_TLW_11["SC-TLW-11 · Find out more about yourself. One test at a tim…"]
+  end
+  subgraph T4["Public header @1280 · «'Home' · 'About Us' · 'Librar…»"]
+    SC_TLW_04{{"SC-TLW-04 · Full Access. Unlimited Insights Pricing"}}
+  end
+  subgraph T5["Public header @1280 · «'Home' · 'About Us' · 'Librar…»"]
+    SC_TLW_02["SC-TLW-02 · Log in to your account"]
+  end
+  subgraph T6["Funnel free test / complete test / offer · «chỉ logo, trang…"]
+    SC_TLW_12["SC-TLW-12 · Discover your Personality type free test — chọn…"]
+    SC_TLW_13["SC-TLW-13 · Câu hỏi free test 'N/19'"]
+    SC_TLW_14["SC-TLW-14 · Your result free"]
+  end
+  subgraph T7["Funnel free test / complete test / offer · «chỉ logo, trang…"]
+    SC_TLW_15["SC-TLW-15 · Discover your Personality type complete test — …"]
+    SC_TLW_16["SC-TLW-16 · Preparing your personality test... loader"]
+    SC_TLW_17["SC-TLW-17 · Before you begin"]
+    SC_TLW_18["SC-TLW-18 · Select how well each statement applies to you t…"]
+    SC_TLW_19["SC-TLW-19 · Well done!"]
+    SC_TLW_20["SC-TLW-20 · Analyzing your profile..."]
+    SC_TLW_21{{"SC-TLW-21 · Your Personality Report is Ready! offer"}}
+    SC_TLW_22{{"SC-TLW-22 · Secure Checkout funnel"}}
+  end
+  subgraph T8["Checkout · «header trống không nav · 'Bac…»"]
+    SC_TLW_05{{"SC-TLW-05 · Secure Checkout từ pricing"}}
+  end
+  subgraph T9["Member header @1280 · «'Home' · 'Test library' · 'Yo…»"]
+    SC_TLW_03["SC-TLW-03 · Hi ‹tên›, Dashboard"]
+    SC_TLW_26["SC-TLW-26 · Profile"]
+    SC_TLW_27["SC-TLW-27 · Plan details"]
+  end
+  subgraph T10["Member header @1280 · «'Home' · 'Test library' · 'Yo…»"]
+    SC_TLW_23["SC-TLW-23 · Test library member"]
+    SC_TLW_28["SC-TLW-28 · Discover Your IQ Score IQ test"]
+  end
+  subgraph T11["Member header @1280 · «'Home' · 'Test library' · 'Yo…»"]
+    SC_TLW_24["SC-TLW-24 · Your reports"]
+    SC_TLW_25["SC-TLW-25 · Your result — report Personality Test"]
+  end
+  SC_TLW_01 -->|"nút header 'Login' phải header — … · push"| SC_TLW_02
+  SC_TLW_01 -->|"card 'Try now' mọi card — link · push"| SC_TLW_04
+  SC_TLW_01 -->|"link footer 'Subscription Policy'… · push"| SC_TLW_06
+  SC_TLW_01 -->|"link footer 'Cancel Subscription' · push"| SC_TLW_07
+  SC_TLW_01 -->|"link footer 'FAQ' · header 'About… · push"| SC_TLW_08
+  SC_TLW_01 -->|"link header 'About Us' · push"| SC_TLW_09
+  SC_TLW_01 -->|"link top bar 'Contacts' · push"| SC_TLW_10
+  SC_TLW_01 -->|"link header 'Library' / 'Explore … · push"| SC_TLW_11
+  SC_TLW_11 -->|"link 'Personality Test' danh sách… · push"| SC_TLW_12
+  SC_TLW_04 -->|"link 'Try now' gói 7-day nút tô đ… · push"| SC_TLW_05
+  SC_TLW_04 -->|"link 'Try now' gói One Time / 28-… · push"| SC_TLW_05
+  SC_TLW_02 -->|"human đăng nhập Email + Password … · replace"| SC_TLW_03
+  SC_TLW_12 -->|"nút 'Male' trái, dưới headline · push"| SC_TLW_13
+  SC_TLW_15 -->|"nút 'Male' · push"| SC_TLW_16
+  SC_TLW_03 -->|"tab header 'Test library' · tab"| SC_TLW_23
+  SC_TLW_03 -->|"icon profile phải header · push"| SC_TLW_26
+  SC_TLW_03 -->|"link top bar 'Contact us' · external"| SC_TLW_10
+  SC_TLW_23 -->|"nút 'Take the test' card Personal… · push"| SC_TLW_15
+  SC_TLW_23 -->|"nút 'Take the test' card IQ Test · push"| SC_TLW_28
+  SC_TLW_24 -->|"link 'Read more' card 'Recently c… · push"| SC_TLW_25
+  SC_TLW_13 -->|"nút đáp án ở câu 19/19 · push"| SC_TLW_14
+  SC_TLW_16 -->|"tự chuyển sau loader · replace"| SC_TLW_17
+  SC_TLW_26 -->|"link 'Plan details' · push"| SC_TLW_27
+  X1(["↗ tải file PDF"])
+  SC_TLW_25 -->|"nút 'Download report' dưới headli… · external"| X1
+  SC_TLW_14 -->|"link 'Start Complete Test — $1.95… · push"| SC_TLW_15
+  SC_TLW_17 -->|"nút 'Start test' · push"| SC_TLW_18
+  SC_TLW_18 -->|"nút 'Next' ở trang 20/20 · push"| SC_TLW_19
+  SC_TLW_19 -->|"nút 'Get My Results' · push"| SC_TLW_20
+  SC_TLW_19 -->|"nút 'Get My Results' member · replace"| SC_TLW_24
+  SC_TLW_20 -->|"tự chuyển hết 'Analyzing your pro… · push"| SC_TLW_21
+  SC_TLW_21 -->|"link 'Download report $1.95' và '… · push"| SC_TLW_22
+  %% ── chú thích tay (teardown §4.5 · §9) ──
+  PARK_PAY["PARK · sau thanh toán: đặt mật khẩu · order confirmation · upsell? — BLOCKED payment (human trả trước phiên)"]
+  SC_TLW_22 -.->|"human trả $1.95 (ngoài phiên)"| PARK_PAY
+  SC_TLW_05 -.->|"human trả (không quan sát)"| PARK_PAY
+  PARK_PAY -.->|"tài khoản trial đã có"| SC_TLW_03
+  NOTE_BACK["Bẫy back: back từ offer → Analyzing → tự về offer (F-19)"]
+  SC_TLW_21 -.- NOTE_BACK
+  NOTE_FREE["Kết quả free không phụ thuộc câu trả lời (F-14)"]
+  SC_TLW_14 -.- NOTE_FREE
+  classDef pay fill:#ffe6e6,stroke:#cc0000,stroke-width:2px,color:#000;
+  classDef paid fill:#e6f7e6,stroke:#2e7d32,stroke-width:2px,color:#000;
+  classDef park fill:#fff3cd,stroke:#b8860b,stroke-width:1px,color:#000;
+  class SC_TLW_04,SC_TLW_05,SC_TLW_21,SC_TLW_22 pay;
+  class SC_TLW_03,SC_TLW_23,SC_TLW_24,SC_TLW_26,SC_TLW_28,SC_TLW_25,SC_TLW_27 paid;
+  class PARK_PAY,NOTE_BACK,NOTE_FREE park;

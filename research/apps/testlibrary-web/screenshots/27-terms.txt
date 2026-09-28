@@ -1,0 +1,377 @@
+Back
+Terms & Conditions
+Terms and Conditions
+
+Last updated August 17, 2026.
+
+These Terms and Conditions (“Terms”) govern Your access to and use of the website available at www.testlibrary.com (the “Website”), the “TestLibrary” software application (the “Application”), and all related features, content, assessment tests, reports, subscriptions, and services offered therein (collectively, the “Services”) by Aura Health LLC, a limited liability company incorporated under the laws of the State of Wyoming, with its registered address at 30 N Gould St Ste R, Sheridan, Wyoming 82801, United States of America, or Testing Solutions LLC, a limited liability company incorporated under the laws of the State of Delaware, with registered address at 8 The Green Suite #6008 Dover, Kent County, Delaware 19901, United States of America (each a “Platform Operator”). Depending on the payment infrastructure used to process Your purchase, either Platform Operator may act as the seller of the Trial Membership or Subscription. The identity of the applicable Platform Operator will be communicated to You in the order confirmation following a successful purchase.
+
+1. Important information and disclaimers
+
+The Terms constitute a legally binding agreement between You (“You”, “Your”, or “User”) and the Platform Operator providing the Services in relation to Your purchase. The identity of the applicable Platform Operator will be communicated to You in the order confirmation following a successful purchase. By accessing the Website, completing any test, creating an account (the “Account”), purchasing a trial membership or subscription, or otherwise using the Services, You acknowledge that You have read, understood, and agree to be bound by the Terms. If You do not agree to the Terms, You must not access or use the Website, the Application or the Services.
+
+The Services are offered subject to Your acceptance of the Terms. Your use of the Services, including the purchase of a limited-duration paid trial offering temporary access to the Services (the “Trial Membership”) or an automatically renewing paid membership that provides ongoing access to the Services (the “Subscription”), constitutes Your express consent to the Terms.
+
+The Platform Operator develops, owns, licenses, operates, and maintains the Application and provides the Services, including all substantive content, assessment tests, and reports. The Platform Operator is responsible for the overall operation, functionality, content, performance, quality, and legal compliance of the Application and the Services, as well as for payment collection, billing, and Subscription management. The Platform Operator does not guarantee the accuracy, outcomes, or suitability of any tests or reports, except as required by applicable law.
+
+By accessing or using the Website or the Services, You confirm that You are legally capable of entering into a binding agreement and that You agree to comply with the Terms in full. The Terms contain important provisions governing dispute resolution, limitations of liability, and Your legal rights, and You are encouraged to review them carefully.
+
+By completing a payment for the Trial Membership or the Subscription, You enter into a binding agreement with the Platform Operator providing the Services in relation to Your purchase. The identity of the applicable Platform Operator will be communicated to You in the order confirmation following a successful purchase. Upon completion of such purchase, a separate service contract for the use of the Application and Services is formed directly between You and the Platform Operator, who is solely responsible for the provision of the Services in accordance with the Terms.
+
+Depending on Your place of residence, jurisdiction, selected payment method, or other operational factors disclosed at checkout, payments for the Trial Membership, the Subscription, or other paid features may be processed, collected, or facilitated by one of its affiliated or authorized payment processing entities (each, a “Payment Processing Entity”). Any such Payment Processing Entity acts solely in relation to payment processing, billing, charge collection, and related administrative functions, and is not responsible for the quality, performance, legality, or conformity of the Services themselves, which remain the sole responsibility of the Platform Operator unless expressly stated otherwise at checkout.
+
+Each time You place an order through the Website or the Application, the entity responsible for charging Your selected payment method, together with the applicable amount, currency, billing interval, and renewal terms, may be disclosed to You during checkout, on the payment screen, and/or in the order confirmation message sent after purchase. The descriptor appearing on Your payment statement may reflect the applicable Payment Processing Entity.
+
+For the purposes of these Terms, Payment Processing Entity may include any of the following entities, depending on Your location, jurisdiction, selected payment method, or the operational setup disclosed at checkout:
+
+Aura Health LLC, a limited liability company incorporated under the laws of the State of Wyoming, with its registered address at 30 N Gould St Ste R, Sheridan, Wyoming 82801, United States of America;
+Testing Solutions LLC, a limited liability company incorporated under the laws of the State of Delaware, with registered address at 8 The Green Suite #6008 Dover, Kent County, Delaware 19901, United States of America;
+Revuelto S.à r.l., a private limited liability company incorporated and existing under the laws of the Grand Duchy of Luxembourg, registration number: B303230 having its registered office address at 10, Rue Mathias Hardt L-1717, the Grand Duchy of Luxembourg;
+Haur B.V., a private limited liability company incorporated and existing under the laws of the Netherlands, registration number: 96442654, having its registered office address at John M. Keynesplein 1, 1066EP Amsterdam, the Netherlands. The list of Payment Processing Entity may be updated from time to time in accordance with the Terms and applicable law.
+Haur Media Limited, a private limited company incorporated under laws of England and Wales, having its registered office at 85 Great Portland Street, 1st floor, London, England.
+
+For the avoidance of doubt, if a recurring payment, renewal charge, or other validly authorized the Subscription-related charge is declined, reversed, or otherwise cannot be successfully collected, the Platform Operator and/or the applicable Payment Processing Entity may, after internal payment re-attempts, assign, transfer, disclose, or otherwise make available the relevant payment obligation and associated transaction data to an authorized third-party payment recovery service provider for the purpose of recovering the outstanding payment and processing validly authorized recurring charges.
+
+Such recovery provider may process or facilitate additional payment collection attempts using payment credentials, tokens, transaction identifiers, or other payment method information validly associated with the Account, strictly in accordance with applicable law, payment processor requirements, card network rules, and the Terms.
+
+You acknowledge and agree that payment recovery attempts may be processed under a payment descriptor that differs from “testlibrary.com” and may include the name of an authorized Payment Processing Entity, billing provider, or recovery service provider disclosed in connection with the transaction.
+
+You are solely responsible for ensuring that Your device meets the minimum technical requirements necessary to access and use the Application, including compatible operating systems, sufficient storage, and internet connectivity. We are not responsible for any inability to access or use the Application due to device incompatibility, technical limitations, or connectivity issues on Your end.
+
+We do not guarantee that the Services will be compatible with all devices, browsers, or operating systems, and we are not responsible for any limitations in functionality resulting from Your device configuration.
+
+If You do not agree to the Terms, You must not access or use the Website or the Application, purchase the Trial Membership or the Subscription, or disclose Your personal information.
+
+2. Eligibility
+
+2.1. You must be at least eighteen (18) years old or have reached the age of legal majority in Your jurisdiction, to access or use the Services, create the Account, or purchase the Trial Membership or the Subscription.
+
+2.2. By using the Services, You represent and warrant that:
+
+2.2.1. You meet the applicable age requirements;
+
+2.2.2. You have the legal capacity to enter into a binding agreement; and
+
+2.2.3. Your use of the Services complies with all applicable laws and regulations.
+
+2.3. If You are accessing or using the Services on behalf of a company, organization, or other legal entity, You represent and warrant that You have the authority to bind that entity to the Terms. In such case, references to “You” or “Your” shall refer to that entity.
+
+2.4. The Services are not intended for use by children. We do not knowingly collect personal data from individuals under the age of eighteen (18). If we become aware that personal data of a minor has been collected without appropriate consent, we reserve the right to delete such information and terminate the associated Account.
+
+3. Data Protection & Privacy
+
+3.1. We take Your privacy and the protection of Your personal data seriously. The collection, use, disclosure, and protection of personal information in connection with Your use of the Website, the Application, and the Services are governed by our privacy policy (the “Privacy Policy”), which forms an integral part of these Terms.
+
+3.2. The Privacy Policy explains what personal information we collect, how and why we process it, how it is shared, the rights available to You under applicable data protection laws, and how You may exercise those rights.
+
+3.3. By accessing or using the Services, completing any test, creating the Account, or purchasing the Trial Membership or the Subscription, You acknowledge that You have read, understood, and agree to the practices described in the Privacy Policy.
+
+3.4. The Privacy Policy is available at: https://testlibrary.com/legal/privacy-policy
+
+4. Dispute Resolution
+
+PLEASE READ THIS SECTION CAREFULLY
+
+4.1. This section contains an arbitration agreement and a waiver of class actions and jury trials. By agreeing to the Terms, You acknowledge that You are waiving certain legal rights.
+
+Informal Dispute Resolution
+
+4.2. Most concerns or disputes regarding the Services can be resolved informally by contacting our customer support team. Before initiating any formal legal proceedings, You agree to first attempt to resolve any dispute, claim, or controversy arising out of or relating to the Terms (each, a “Claim”) by contacting us at: support@testlibrary.com
+
+4.3. Your notice must include:
+
+4.3.1. Your name and contact details;
+
+4.3.2. A description of the nature and basis of the Claim; and
+
+4.3.3. The specific relief You are seeking, including any monetary amount.
+
+4.4. If the Claim is not resolved within sixty (60) days of receipt of Your notice, either party may proceed as described below.
+
+Governing Law
+
+4.5. The Terms, and any claim, dispute, or cause of action arising out of or relating to the Terms or the Services, shall be governed by and construed in accordance with the laws of the State of Wyoming, without regard to its conflict of law principles. This choice of law does not deprive consumers of any mandatory rights, protections, or legal remedies afforded to them under applicable federal, state, or local laws of their country or state of residence, including, for Users residing in the United States, applicable United States federal law and the laws of the User’s state of residence.
+
+4.6. Except where prohibited by applicable law or where mandatory consumer protection laws provide otherwise, arbitration shall be the exclusive means of resolving any Claim, and You expressly waive any right to seek relief in a court of law, including the right to a jury trial, except as expressly permitted under this section.
+
+Arbitration Agreement
+
+4.7. Arbitration shall be conducted only on an individual basis. The arbitrator may not consolidate claims, hear class or representative actions, or award relief on a non-individual basis.
+
+4.8. The arbitrator’s authority is limited to awarding actual, proven damages incurred by You individually. To the maximum extent permitted by law, the arbitrator may not award punitive damages, statutory multipliers, or damages measured by reference to the alleged harm of others.
+
+4.9. Each party shall bear its own legal fees and costs, unless the arbitrator determines that applicable law expressly requires otherwise.
+
+4.10. Opting out of arbitration does not affect the validity or enforceability of the class action waiver, jury trial waiver, or any other limitation of remedies contained in the Terms.
+
+4.11. You may opt out of this arbitration agreement by providing written notice to the Platform Operator within thirty (30) days of first accepting these Terms. Your opt-out notice must be sent to support@testlibrary.com and must include Your full name, email address associated with the Account, and a clear statement that You wish to opt out of the arbitration agreement. If You opt out, all other provisions of the Terms shall continue to apply.
+
+Waiver of Class Actions and Jury Trial
+
+4.12. To the fullest extent permitted by applicable law, all Claims must be brought solely in an individual capacity. You expressly agree that You will not bring, seek to bring, or participate in any Claim as a plaintiff, claimant, or class member in any class action, collective action, representative action, consolidated action, private attorney general action, or similar proceeding.
+
+4.13. No Claim may be joined or consolidated with another person’s claim, and no Claim may be brought on behalf of the general public or other Users.
+
+4.14. Where applicable law does not permit the waiver of certain collective or representative proceedings, You agree that:
+
+4.14.1. Any permitted Claim shall be limited strictly to Your individual, personal relief;
+
+4.14.2. You waive any right to seek or obtain injunctive, declaratory, or non-individual relief on a class, collective, representative, or public basis;
+
+4.14.3. You may not act as a representative, private attorney general, or member of any consumer organization bringing claims against the Platform Operator.
+
+4.15. Claims may not be assigned, transferred, aggregated, or pursued by third parties, including claims acquisition vehicles, consumer associations, litigation funders, or representative entities, except where such restriction is expressly prohibited by mandatory law.
+
+4.16. If any portion of this waiver is found unenforceable with respect to a particular Claim or remedy, such provision shall be severed only to the minimum extent required, and the remaining provisions shall remain in full force and effect.
+
+Court Action to Assist Arbitration
+
+4.17. Notwithstanding the foregoing arbitration provisions, either party may seek temporary, preliminary, or injunctive relief in a court of competent jurisdiction solely for the purpose of protecting its rights, enforcing intellectual property or confidentiality obligations, or preserving the status quo pending the completion of arbitration. Such court action shall not be deemed a waiver of, nor be inconsistent with, the obligation to resolve all Claims through binding arbitration as set forth in the Terms.
+
+EU Users – Online Dispute Resolution
+
+4.18. If You are a consumer residing in the European Union, You may, where applicable, submit a complaint through the European Commission’s Online Dispute Resolution (ODR) platform, available at: https://ec.europa.eu/consumers/odr
+
+4.19. Participation in the ODR platform is voluntary and does not limit, replace, or otherwise affect Your statutory rights or remedies available under applicable consumer protection laws.
+
+5. Your use of the Service
+
+5.1. Subject to Your compliance with the Terms and all applicable laws, the Platform Operator grants You a limited, non-exclusive, non-transferable, non-sublicensable, and revocable license to access and use the Services solely for Your personal, non-commercial use. This license permits You to use the Services only as expressly allowed under the Terms and does not grant You any ownership rights or other proprietary interests.
+
+5.2. You may not copy, reproduce, modify, distribute, sell, lease, sublicense, or otherwise exploit any part of the Services or their content, except where expressly permitted under the Terms or with the Platform Operator’s prior written consent. All rights not expressly granted to You are reserved by the Platform Operator.
+
+Account Registration and Security
+
+5.3. Access to certain features of the Services may require You to create a User Account. The Account may be created automatically following Your purchase of the Trial Membership or the Subscription. Upon successful payment, account access credentials may be provided to You via email.
+
+5.4. You are solely responsible for maintaining the confidentiality and security of the Account credentials and for all activities conducted through the Account. You represent and warrant that all information You provide in connection with the Account is accurate, complete, and kept up to date, and You agree not to impersonate any other person or entity or misrepresent Your affiliation.
+
+5.5. If You believe that the Account has been accessed or used without authorization, You must notify us immediately at support@testlibrary.com. We reserve the right, in our sole discretion, to suspend, restrict, or terminate the Account or deny access to the Services if we reasonably suspect unauthorized use, fraud, security breaches, or violations of the Terms.
+
+How the Services Work
+
+5.6. The Services enable Users to complete digital assessment tests and receive personalized reports generated based on their responses (the “Report(s)”). A typical User experience involves accessing the Website, completing one or more tests by answering the provided questions, and receiving a personalized report generated automatically by the Services.
+
+5.7. To access the generated report and related features, Users may be offered paid Trial Membership. Upon successful payment of the applicable Trial Membership fee, Users are granted immediate access to the Services. Following payment, Users may receive an email containing the Account login credentials and a copy of the generated report.
+
+5.8. While the Trial Membership or the Subscription remains active, Users may complete additional tests within the Services at no additional charge, unless otherwise stated. Reports and test results are generated automatically based on User-provided information and are provided for informational and educational purposes only.
+
+5.9. You agree to use the Services only for lawful purposes and in full compliance with the Terms and all applicable laws and regulations. You are solely responsible for the accuracy of the information You provide when using the Services and for any decisions or actions You take based on reports or other outputs generated through the Services.
+
+5.10. You acknowledge and agree that the Services do not provide medical, psychological, legal, or other professional advice, and that any reliance on reports or test results is at Your own risk. The Platform Operator does not guarantee any specific personal, psychological, emotional, behavioral, relationship, wellness, or self-improvement outcomes resulting from the use of the Services.
+
+Prohibited Uses
+
+5.11. You agree not to misuse the Services or permit others to do so. Prohibited conduct includes, without limitation, creating multiple Accounts, transferring or selling the Account, accessing the Services through another User’s Account without authorization, providing false or misleading information, or using the Services for commercial purposes without express written consent.
+
+5.12. You further agree not to copy, scrape, harvest, or collect content or data from the Services through automated means; reverse engineer, decompile, or otherwise attempt to derive source code; upload or transmit malware or other harmful code, interfere with the integrity, performance, or security of the Services; access systems or data not intended for You, impersonate others, or violate any applicable law, regulation, or third-party rights.
+
+5.13. Any violation of this section may result in the immediate suspension or termination of the Account.
+
+Suspension and Termination of Access
+
+5.14. We reserve the right, at our sole discretion and without prior notice, to suspend, restrict, or terminate Your access to the Services and the Account if we determine that You have violated the Terms, engaged in fraudulent, abusive, unlawful, or high-risk conduct, posed a security or legal risk, or where such action is required by law, a regulatory authority, a payment processor, or fraud-prevention requirements. For the avoidance of doubt, a failed payment attempt alone does not automatically require immediate suspension or termination of access and does not automatically terminate the Subscription.
+
+5.15. Suspension or termination of access does not relieve You of any payment obligations validly incurred prior to such action and does not entitle You to any refund, except where required by applicable law.
+
+6. Fees, Trial & Subscription Plans
+
+Fees and Payment Authorization
+
+6.1. Certain parts of the Services are offered for a fee (“Fees”). The applicable Fees, currency, billing terms, the Trial Membership duration, the Subscription duration (the “Subscription Period”), and renewal conditions will be disclosed to You prior to purchase, including during the checkout process and/or on the payment screen. By providing Your payment information and completing a purchase, You authorize the Platform Operator and/or Payment Processing Entity to charge Your selected payment method for all applicable Fees, including any recurring Subscription charges, in accordance with the Terms and the disclosures presented at checkout.
+
+6.2. You agree to provide current, complete, and accurate payment and account information and to promptly update such information as necessary to ensure successful payment processing. Fees may be charged in the currency displayed at checkout or in the order confirmation. Any currency conversions, foreign transaction fees, bank commissions, or additional charges imposed by Your payment provider remain Your sole responsibility. The specific amount and currency charged are determined based on Your detected jurisdiction, selected payment method, and the regional pricing applicable at the time of checkout. You are responsible for reviewing the final summary on the payment screen before authorizing the transaction.
+
+6.3. The currency displayed on the Website may differ from the currency in which the payment is ultimately processed. Prices displayed in local currencies are provided for convenience and may not represent an exact currency conversion. Depending on the payment method or payment provider, Your payment may be processed in a different currency. The final amount and currency presented during checkout before You authorize the payment shall prevail over any price or currency displayed on the Website.
+
+6.4. We reserve the right to correct any pricing, currency display, billing, or checkout errors, inaccuracies, or omissions, even if payment has already been requested or received. In the event of such an error, we may cancel, void, or adjust the affected transaction and, where applicable, issue a refund or request the correct payment amount, to the extent permitted by applicable law. Nothing in these Terms shall prevent the Platform Operator from displaying localized prices that may differ from exact currency conversion rates, provided that the final amount and currency payable are clearly disclosed before You complete the purchase.
+
+Trial Membership
+
+6.5. New Users may be offered a one-time paid Trial Membership that provides limited access to the Services for the period disclosed at checkout. The applicable Trial Membership fee, currency, included features, and duration will be presented to You before payment authorization and may also be additionally confirmed in the order confirmation message. The Trial Membership duration is seven (7) days, and access to the Services is granted immediately upon successful payment.
+
+6.6. The Trial Membership is intended to allow Users to access certain Reports, features, and/or explore the Services. Unless You cancel before the end of the Trial Membership period, the Trial Membership will automatically convert into a paid Subscription under the billing terms disclosed at checkout and confirmed in the order confirmation.
+
+Subscription and Automatic Renewal
+
+6.7. After the Trial Membership period, Your access to the Services will automatically continue under the Subscription unless You cancel in accordance with the Terms. Each Subscription Period is twenty-eight (28) days. The Subscription fee, currency, the Subscription Period, and renewal terms will be additionally disclosed to You at checkout and/or in the order confirmation. You acknowledge that the Subscription constitutes a recurring payment obligation and that renewal charges will be applied automatically at the beginning of each new Subscription Period unless You cancel prior to renewal.
+
+6.8. By purchasing the Trial Membership or the Subscription, You expressly acknowledge and agree that Your selected payment method will be charged automatically for each Subscription Period without further authorization and that the Subscription will continue until You cancel it. We may change the Subscription fees from time to time and will notify You in advance of any such changes. Updated Fees will not apply to the current Subscription Period, and if You do not agree to the revised Fees, You must cancel the Subscription before the changes take effect.
+
+6.8.1. Following the purchase of the Trial Membership or the Subscription, You may receive an order confirmation by email or through the Services. Such confirmation may include, where applicable, the purchased plan, the amount charged, the currency, the applicable billing interval, the renewal terms, the applicable Platform Operator, including its contact details, and the entity that processed the payment. In the event of any discrepancy between the checkout disclosures and the order confirmation, the checkout disclosures shall prevail unless applicable law requires otherwise.
+
+Timing of Charges and Billing date
+
+6.9. The billing date for the Subscription is generally the date on which the applicable Subscription fee is successfully charged to Your payment method. The Subscription fees are typically charged in advance for each Subscription Period. Where a renewal charge is collected after one or more failed attempts, the next billing date may be calculated from the date on which the renewal payment is successfully collected, unless otherwise stated at checkout or required by applicable law.
+
+6.10. You acknowledge that billing cycles and payment collection timing may vary due to calendar differences, payment processing delays, failed renewal attempts, technical adjustments, fraud-prevention checks, processor requirements, or operational considerations. The Platform Operator does not guarantee that any payment will be successfully processed on the first attempt or at any specific time. If a payment attempt is declined by Your financial institution, we reserve the right to re-submit the charge at a later time or date, or to apply the process as described in Section 6.11, to ensure the continuity of Your Services. The Platform Operator is not responsible for payment failures caused by insufficient funds, bank restrictions, expired payment methods, or other factors outside its control.
+
+6.11. If a payment is declined, reversed, fails authorization, or otherwise cannot be successfully collected for any reason, the Platform Operator and/or the applicable Payment Processing Entity may, to the fullest extent permitted by applicable law, attempt to reprocess the payment multiple times using the same payment method, stored payment credentials, tokenized payment information, or any other payment method validly associated with the Account, at different times and over an extended collection period.
+
+6.12. Where permitted by applicable law and payment processor rules, failed or declined recurring Subscription charges may additionally be transferred, assigned, or submitted to an authorized third-party payment recovery provider for further collection and recovery attempts. Such recovery attempts may be performed using previously authorized payment credentials or payment method tokens associated with the Account. Such third-party recovery providers act solely as independent payment recovery and billing service providers and do not assume responsibility for the operation, quality, legality, or performance of the Services.
+
+6.13. You acknowledge and agree that payment recovery or rebilling attempts may appear under a different payment descriptor than the original transaction descriptor and may include references to an authorized billing partner, Payment Processing Entity, or recovery provider.
+
+6.14. During any failed-payment or collection period, the Platform Operator may, at its sole discretion and to the extent permitted by applicable law, continue the Subscription, maintain access to the Services, apply a temporary discounted renewal amount, reduced recovery charge, or other promotional pricing intended to facilitate successful renewal, and continue payment collection attempts until the Subscription is cancelled by You in accordance with Section 7 or otherwise terminated where required by law. The Platform Operator may continue payment collection attempts indefinitely, unless and until the Subscription is formally cancelled by You in accordance with Section 7. A failure to collect payment does not constitute a termination of the Subscription by the Platform Operator and does not waive the User’s obligation to pay any validly incurred Fees or outstanding Subscription charges.
+
+6.14.1. To ensure transaction security and optimize payment processing, any purchase (including the Trial Membership or the Subscription renewal) may be processed as one or more separate transaction entries on Your payment statement. For example, a single order may be split into two distinct charges: one representing the fee for digital report generation or onboarding, and the other for ongoing access to the Services. The total amount charged will not exceed the price disclosed to You at checkout, regardless of the number of transaction entries. For the avoidance of doubt, transaction descriptors displayed on Your payment card or bank statement may vary depending on the payment processor, Payment Processing Entity, recovery provider, acquiring bank, or billing infrastructure used to process the transaction.
+
+6.14.2. To facilitate the Subscription continuity, payment recovery, fraud prevention, dispute handling, and billing administration, the Platform Operator and/or authorized Payment Processing Entity may share limited transaction-related information, payment status data, billing identifiers, and tokenized payment credentials with authorized payment recovery or billing service providers in accordance with the Privacy Policy, applicable law, and industry security standards.
+
+6.15. You may cancel the Trial Membership or the Subscription at any time in accordance with Section 7 of the Terms. To avoid being charged for the next Trial Membership conversion or the next Subscription Period, cancellation must be completed before the applicable renewal or conversion date disclosed to You at checkout, in the order confirmation, or within the Account settings.
+
+6.16. Cancellation stops future recurring charges only from the effective cancellation date and does not affect any Fees already charged or validly authorized prior to cancellation, except where required by applicable law.
+
+7. Cancellation
+
+7.1. You may cancel the Trial Membership or the Subscription at any time before the end of the applicable Trial Membership or Subscription Period. Cancellation may be completed either by logging into the Account and using the available cancellation functionality within the platform, or by contacting customer support at support@testlibrary.com using the email address associated with the Account.
+
+7.2. To prevent the next recurring charge, cancellation must be completed before the applicable renewal or conversion date. If cancellation is submitted after that date, the next charge may still be processed and the cancellation will take effect from the end of the then-current paid or successfully collected Subscription Period, except where required otherwise by applicable law.
+
+7.3. Upon successful cancellation, the Subscription will not renew again, and no further recurring Fees will be initiated after the end of the then-current paid or successfully collected Subscription Period. Unless otherwise required by applicable law or expressly stated in the Services, cancellation of the Subscription does not automatically delete the Account. The Account deletion may be requested separately in accordance with the Terms or Privacy Policy. For the avoidance of doubt, where a renewal payment is successfully collected after one or more failed attempts, access to the Services may continue for the corresponding Subscription Period.
+
+7.4. The Subscriptions are personal to the User and may not be assigned, transferred, or shared with any third party without our prior written consent. The Services are offered only to Users who meet our eligibility requirements, including minimum age and geographic restrictions.
+
+7.5. We reserve the right, at our sole discretion, to modify, update, or discontinue the Subscription terms, benefits, pricing, promotions, eligibility requirements, or available features at any time. Any such changes will apply prospectively and will not affect the current Subscription period. In the event of a material change, such as an increase in the Subscription pricing, we will provide reasonable advance notice (no less than 30 days) via email, giving You the opportunity to cancel the Subscription before the updated terms take effect. Continued use of the Subscription after the effective date of the changes constitutes Your acceptance of the updated Terms.
+
+8. Refund Policy
+
+8.1. All Trial Memberships and Subscriptions constitute digital services that are made available immediately after purchase. Except where required by applicable law, refunds are not guaranteed and are assessed on a case-by-case basis at the reasonable discretion of the Platform Operator. Any refunds that may be issued are granted solely at our discretion and on a case-by-case basis.
+
+8.2. If You believe You are entitled to a refund, You must contact customer support at support@testlibrary.com and provide the email address associated with the Account, details of the relevant purchase, and a clear explanation of the reasons for Your refund request. Refund requests will not be considered unless submitted directly to customer support.
+
+8.3. Initiating a chargeback, payment dispute, or refund request through a payment provider, financial institution, card issuer, or third-party platform without first contacting customer support may result in the suspension or termination of the Account, restriction of access to the Services, or cancellation of ongoing the Subscription benefits, and does not guarantee a refund.
+
+8.4. You agree that initiating a chargeback, payment dispute, retrieval request, or claim with Your credit card issuer, payment provider, or bank in relation to a validly authorized transaction, recurring the Subscription renewal, or payment recovery attempt processed in accordance with the Terms may constitute a material breach of the Terms. If You initiate a chargeback for a transaction that was authorized in accordance with the Terms (including recurring Subscription charges), we reserve the right to:
+
+8.4.1. Immediately suspend or terminate the Account and access to the Services;
+
+8.4.2. Dispute the chargeback or payment dispute by providing evidence of Your authorization, acceptance of the Terms, recurring billing consent, use of the Services, access logs, payment recovery records, transaction metadata, device identifiers, and generated or accessed Reports;
+
+8.4.3. Report relevant account, billing, payment recovery, and transaction information to payment processors, fraud prevention providers, recovery service providers, card network monitoring systems, and risk management services, in accordance with applicable law; and
+
+8.4.4. Pursue recovery of the disputed amount together with any applicable chargeback fees, administrative costs, collection expenses, or third-party recovery costs incurred by the Platform Operator.
+
+8.4.5. For the avoidance of doubt, recurring the Subscription charges, renewal payments, and payment recovery attempts processed using previously authorized payment credentials or tokenized payment methods shall be deemed authorized transactions where the original Subscription purchase and recurring billing consent were validly obtained in accordance with the Terms and applicable law.
+
+8.5. Trial Membership fees are generally non-refundable, as access to the Services and the generated Report is provided immediately upon purchase.
+
+8.6. The Subscription fees are charged in advance for each recurring period for which Subscription is active and paid Subscription Period. Once the Subscription Period has started, the applicable Subscription fee is non-refundable, except where required by applicable law. We do not offer partial refunds, credits, or reimbursements for unused time within the Subscription Period.
+
+8.7. If You are a consumer residing in the European Union, You typically have the right to withdraw from distance contracts within fourteen (14) days. However, by purchasing the Trial Membership or the Subscription, You request immediate access to the digital content (Services and Reports):
+
+8.7.1. Performance of the contract begins immediately upon Your payment and account activation; and
+
+8.7.2. You thereby expressly waive and lose Your right of withdrawal from the moment the performance of the Service has begun. Therefore, once access to the Services is granted, You generally cannot cancel the purchase to receive a refund for that specific billing period under the right of withdrawal regulations.
+
+9. Third Party Websites
+
+9.1. The Services may contain links to third-party websites, services, or content (“Third-Party Websites”) that are not owned or controlled by the Platform Operator.
+
+9.2. We do not control, endorse, or assume responsibility for any Third-Party Websites, including their content, accuracy, availability, privacy practices, or terms of use. Certain third-party providers may additionally support payment processing, recurring billing, payment recovery, fraud prevention, analytics, customer support, hosting, or other operational functions related to the Services. Accessing Third Party Websites is done at Your own risk.
+
+9.3. You acknowledge and agree that we shall not be responsible or liable, directly or indirectly, for any damage, loss, or harm caused or alleged to be caused by or in connection with Your use of or reliance on any Third-Party Websites.
+
+9.4. Your interactions with Third Party Websites are governed solely by the terms and policies of those third parties, and not by the Terms.
+
+10. Intellectual Property
+
+10.1. All rights, title, and interest in and to the Services, including without limitation the Website, the Application, assessment tests, methodologies, questions, algorithms, scoring logic, reports (including their structure, format, and presentation), software, text, graphics, images, illustrations, icons, logos, trademarks, service names, and all other related materials and content (collectively, the “Intellectual Property”), are owned by or licensed to the Platform Operator and are protected by applicable intellectual property, trademark, and copyright laws.
+
+10.2. The name “TestLibrary” and all related brand elements are the exclusive property of the Platform Operator and may not be used, reproduced, or displayed without prior written consent, which may be withheld at our sole discretion. Except for the limited license expressly granted to You under the Terms, nothing in the Terms grants You any right, title, or interest in or to any Intellectual Property.
+
+10.3. Subject to Your ongoing compliance with the Terms, You are granted a limited, non-exclusive, non-transferable, non-sublicensable, and revocable license to access and use the Services and any Reports solely for Your personal, non-commercial use.
+
+10.4. This license does not permit You to copy, reproduce, modify, distribute, publish, sell, sublicense, commercially exploit, or otherwise misuse any part of the Services or Reports, nor to remove, alter, or obscure any proprietary notices or intellectual property rights contained therein, unless expressly authorized in writing by the Platform Operator.
+
+10.5. You retain ownership of the information You voluntarily submit when completing assessment tests. However, by submitting such information and using the Services, You grant the Platform Operator a non-exclusive, worldwide, royalty-free license to use, process, store, and analyze such information solely for the purposes of providing, operating, maintaining, improving, and securing the Services, generating Reports, complying with legal obligations, and enforcing the Terms.
+
+10.6. Reports generated through the Services are provided exclusively for Your personal use. You may not publish, distribute, resell, license, or otherwise commercially exploit Reports or their content without prior written consent. Any unauthorized use of Reports may constitute a violation of intellectual property laws and the Terms.
+
+10.7. If You submit any feedback, suggestions, ideas, or other input regarding the Services, You grant the Platform Operator a perpetual, irrevocable, worldwide, royalty-free, and fully sublicensable license to use, reproduce, modify, adapt, publish, and incorporate such feedback into the Services or other products without compensation, attribution, or restriction.
+
+10.8. The Services may display names, trademarks, service marks, or content belonging to third parties. Such third-party intellectual property remains the exclusive property of its respective owners, and no rights are granted to You in relation to such materials.
+
+10.9. For Your convenience, the Website and the Application may include links to third-party websites. We do not control, endorse, or assume responsibility for the content, availability, or practices of such third-party websites, and Your access to them is at Your own risk.
+
+10.10. You are solely responsible for any damage, loss, or liability arising from Your infringement or misuse of any intellectual property rights, including unauthorized copying, distribution, modification, or use of trademarks, content, software, or Reports in violation of the Terms or applicable law. We reserve the right to take any legal action available to protect our Intellectual Property.
+
+11. Not Healthcare Advice
+
+11.1. The Services, including all tests, Reports, and related content, are provided strictly for entertainment, informational, educational, and wellness purposes only. While our assessment tests rely on psychological frameworks, they are not clinical tools and should be viewed as a tool for self-discovery and entertainment. The Website and the Application, and any claims made through them, have not been evaluated or approved by any regulatory authority for the diagnosis, treatment, cure, or prevention of any disease. The Services do not constitute, and are not intended to replace, medical, psychological, psychiatric, diagnostic, therapeutic, or other professional advice, diagnosis, or treatment. Test results and Reports are not intended to diagnose, treat, cure, or prevent any disease or condition. No content provided through the Services is intended to constitute regulated medical or psychological advice, and the Services are not intended to be used for diagnostic or clinical purposes.
+
+11.2. You acknowledge and agree that the Services are not a substitute for professional medical or mental health care and that You should always consult with a qualified physician or other licensed healthcare professional before making decisions regarding Your health, diagnosis, treatment options, or the use of the Services. You should not rely on information provided through the Services as a replacement for consultation with Your healthcare provider, and You should never disregard, delay, or avoid seeking professional medical advice based on information You find on the Website or within the Application.
+
+11.3. Before starting any new dietary, fitness, or other health-related program, especially if You are pregnant, nursing, have a pre-existing medical condition, or are taking any medications, You must consult with a qualified healthcare professional. Do not use the Services to self-diagnose or self-treat medical conditions, prescribe medication, or start any treatment program. Any reliance on the Services or Reports is solely at Your own risk, and individual results may vary depending on personal characteristics, lifestyle, and other factors; therefore, outcomes are not guaranteed.
+
+11.4. For avoidance of doubt, any reviews, comments, or ratings made available through the Services reflect only the personal opinions of the individuals who submitted them and do not represent the views of the Platform Operator and should not be considered medical advice.
+
+12. Disclaimer Of Warranties
+
+12.1. TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, THE SERVICES ARE PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS, WITHOUT ANY REPRESENTATIONS OR WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR STATUTORY.
+
+12.2. The Platform Operator expressly disclaims all warranties, including, without limitation, any implied warranties of merchantability, fitness for a particular purpose, title, non-infringement, accuracy, reliability, or availability. Without limiting the foregoing, we do not warrant that the Services will be uninterrupted, timely, secure, error-free, or free from defects, that any defects will be corrected, that the Services will meet Your expectations, or that any results, Reports, or outputs generated through the Services will be accurate, complete, reliable, or suitable for Your needs.
+
+12.3. The Platform Operator develops, operates, and maintains the Application and the Services. However, to the fullest extent permitted by applicable law, the Platform Operator does not guarantee the accuracy, completeness, reliability, or suitability of the Services, including any content, assessment tests, or Reports generated through the Services. Any use of the Services is at Your sole risk. You assume full responsibility and risk for Your use of the Services and any decisions or actions taken based on Reports, recommendations, or other outputs generated through the Services.
+
+12.4. Some jurisdictions do not allow the exclusion of certain warranties. To the extent such exclusions are not permitted by applicable law, the above disclaimers shall apply only to the maximum extent permitted.
+
+13. LIMITATION OF LIABILITY
+
+13.1. TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE PLATFORM OPERATOR OR THEIR RESPECTIVE DIRECTORS, OFFICERS, EMPLOYEES, AGENTS, AFFILIATES, LICENSORS, OR SERVICE PROVIDERS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, INCLUDING, WITHOUT LIMITATION, LOSS OF PROFITS, LOSS OF INCOME, LOSS OF DATA, LOSS OF GOODWILL, BUSINESS INTERRUPTION, OR ANY CLAIMS RELATED TO HEALTH OR WELLNESS OUTCOMES, ARISING OUT OF OR RELATING TO YOUR USE OF, OR INABILITY TO USE, THE SERVICES, INCLUDING ANY FAILED PAYMENTS, PAYMENT RECOVERY ATTEMPTS, BANK DECLINES, PROCESSOR ERRORS, CHARGEBACKS, PAYMENT DESCRIPTOR DIFFERENCES, THIRD-PARTY BILLING PROVIDERS, OR THIRD-PARTY PAYMENT RECOVERY ACTIVITIES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+13.2. Without limiting the foregoing, and to the maximum extent permitted by applicable law, the total aggregate liability of the Platform Operator for any claim arising out of or relating to the Services or the Terms, regardless of the form of action, shall not exceed the greater of (a) USD 100, or (b) the total amount paid by You for the Services during the thirty (30) days immediately preceding the event giving rise to the claim.
+
+13.3. Nothing in the Terms shall exclude or limit liability for gross negligence or willful misconduct, death or personal injury caused by negligence, fraud or fraudulent misrepresentation, or any other liability that cannot be excluded or limited under applicable law. For Users residing in the European Union, the European Economic Area, or the United Kingdom, these limitations apply only to the extent permitted by mandatory consumer protection laws.
+
+13.4. For the avoidance of doubt, the Platform Operator is responsible for the provision and operation of the Application and the Services. However, except as expressly required by applicable law, any claims relating to the quality, effectiveness, content, performance, or outcomes of the Application, the Services, or any Reports are expressly disclaimed and are made at the User’s own risk.
+
+14. INDEMNIFICATION
+
+14.1. To the fullest extent permitted by applicable law, You agree to indemnify, defend, and hold harmless the Platform Operator, and their respective officers, directors, employees, agents, affiliates, licensors, service providers, successors, and assigns from and against any and all claims, demands, actions, damages, losses, liabilities, costs, and expenses (including reasonable attorneys’ fees) arising out of or relating to Your access to or use of the Services.
+
+14.2. This indemnification obligation includes, without limitation, claims arising from Your violation of the Terms, misuse of the Services or Reports, reliance on test results, violation of any applicable law or regulation, or infringement of any third-party rights. This obligation survives the termination or expiration of the Terms and Your use of the Services.
+
+15. MODIFICATIONS TO THE TERMS
+
+15.1. We reserve the right to modify or update the Terms at any time.
+
+15.2. Any changes will be posted on the Website, and the “Last updated” date will be revised accordingly. Changes will become effective upon posting unless stated otherwise.
+
+15.3. Your continued use of the Services after the effective date of the updated Terms constitutes Your acceptance of the revised Terms. If You do not agree to the updated Terms, You must stop using the Services and cancel the Subscription.
+
+16. GOVERNING LAW & JURISDICTION
+
+16.1. The Terms shall be governed by and construed in accordance with the laws of the State of Wyoming, United States of America, without regard to its conflict of law principles.
+
+17. MISCELLANEOUS
+
+17.1. The Terms, together with any other legal notices or policies referenced herein, constitute the entire agreement between You and the Platform Operator regarding Your access to and use of the Services and supersede all prior or contemporaneous agreements, understandings, negotiations, or representations, whether written or oral. In the event of any conflict between these Terms and any other policy or document referenced herein, these Terms shall prevail unless expressly stated otherwise.
+
+17.2. If any provision of the Terms is held by a court or other authority of competent jurisdiction to be invalid, illegal, or unenforceable, such provision shall be severed to the minimum extent necessary, and the remaining provisions shall remain in full force and effect.
+
+17.3. Any failure or delay by us in exercising any right, power, or remedy under the Terms shall not operate as a waiver of that right or remedy. A waiver on one occasion shall not be construed as a waiver of any right or remedy on any other occasion.
+
+17.4. The Platform Operator shall not be liable for any failure or delay in performance under the Terms resulting from events beyond reasonable control, including, without limitation, acts of God, natural disasters, war, terrorism, governmental actions, labor disputes, epidemics, power outages, or failures of telecommunications, internet, payment processors, banking systems, or other third-party infrastructure.
+
+17.5. You may not assign or transfer any of Your rights or obligations under the Terms, whether by operation of law or otherwise, without our prior written consent. We may assign or transfer our rights and obligations under the Terms without restriction, including in connection with a merger, acquisition, corporate reorganization, or sale of all or substantially all assets.
+
+17.6. The headings and section titles used in the Terms are for convenience only and shall not affect the interpretation of any provision.
+
+18. CONTACT INFORMATION
+
+For questions regarding the Services, billing, cancellations, refunds, or the Terms, please contact us at:
+
+Support Email: support@testlibrary.com
+
+Platform Operator:
+
+1. Aura Health LLC
+30 N Gould ST STE R,
+Sheridan, Wyoming 82801,
+United States of America. 2. Testing Solutions LLC
+8 The Green Suite #6008 Dover,
+Kent County, Delaware 19901,
+United States of America.
+
+The applicable Platform Operator responsible for Your purchase will be identified in the order confirmation following a successful purchase.

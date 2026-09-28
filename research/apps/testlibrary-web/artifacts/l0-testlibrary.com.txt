@@ -1,0 +1,41 @@
+# L0 public surface · https://testlibrary.com · 2026-09-27T11:22:23Z · plain HTTPS GET (curl, no cookies, no browser)
+
+## 1. redirect chain + response headers (Set-Cookie values omitted)
+final: 403 https://testlibrary.com/
+HTTP/2 403 
+date: Sun, 27 Sep 2026 11:22:23 GMT
+content-type: text/html; charset=UTF-8
+content-length: 5363
+accept-ch: Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA
+cf-mitigated: challenge
+content-security-policy: default-src 'none'; script-src 'nonce-WXQbBjEKh5BL30j4S19P3c' 'unsafe-eval' https://challenges.cloudflare.com; script-src-attr 'none'; style-src 'unsafe-inline'; img-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com blob:; child-src 'self' https://challenges.cloudflare.com blob:; worker-src blob:; form-action http: https:; base-uri 'self'
+server: cloudflare
+critical-ch: Sec-CH-UA-Bitness, Sec-CH-UA-Arch, Sec-CH-UA-Full-Version, Sec-CH-UA-Mobile, Sec-CH-UA-Model, Sec-CH-UA-Platform-Version, Sec-CH-UA-Full-Version-List, Sec-CH-UA-Platform, Sec-CH-UA, UA-Bitness, UA-Arch, UA-Full-Version, UA-Mobile, UA-Model, UA-Platform-Version, UA-Platform, UA
+cross-origin-embedder-policy: require-corp
+cross-origin-opener-policy: same-origin
+cross-origin-resource-policy: same-origin
+origin-agent-cluster: ?1
+permissions-policy: accelerometer=(),camera=(),clipboard-read=(),clipboard-write=(),geolocation=(),gyroscope=(),hid=(),magnetometer=(),microphone=(),payment=(),publickey-credentials-get=(),screen-wake-lock=(),serial=(),sync-xhr=(),usb=(),xr-spatial-tracking=*
+referrer-policy: same-origin
+server-timing: chlray;desc="a41a215bbfa7fe8a"
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+speculation-rules: "/cdn-cgi/speculation"
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=%2BCWfeeaE%2Fj4wI6uKUXSgKP5o7lum8rUv%2BjRBKn7cCVWQ39SYkWG9fygzvUgesO2JkzrJIEKi9IHeCmqIvL7EhJvlTnkjYHnlc1uE7%2FTeGd%2B0Oe7HWgpS2NZ3RaV6OMgw1w%3D%3D"}]}
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-ray: a41a215bbfa7fe8a-SIN
+alt-svc: h3=":443"; ma=86400
+
+
+## 2. third-party domains named by the Content-Security-Policy (class = hint, attribution stays [INFERRED])
+  challenges.cloudflare.com	captcha
+
+## /robots.txt → HTTP 200
+  User-Agent: *
+  Disallow:
+
+## /sitemap.xml → HTTP 403
+
+## /.well-known/security.txt → HTTP 404
+
+## /llms.txt → HTTP 404

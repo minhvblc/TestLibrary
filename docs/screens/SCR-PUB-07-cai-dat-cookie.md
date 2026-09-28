@@ -1,0 +1,110 @@
+# [SCR-PUB-07] Cài đặt cookie
+**Meta**
+
+| id | module | doc level | platforms | route | access | indexable | viewports | related FLOW | status | design | tracking | api | Evidence / visual basis |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| SCR-PUB-07 | PUB | Short | Web | `/cookie-settings` | public | noindex | 390 · 768 · 1280 | FLOW-quyen-rieng-tu | Draft | (sau design) | `tracking-events.md` → `cookie_settings` · ft_consent | §5 (inline) | **EV-TLW-002 · EV-TLW-015 · basis RS·F-02 · Q-13 · SYS-CONSENT** |
+
+**Changelog** (mới nhất trước)
+- 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
+
+## 1. Purpose
+
+Trang để xem và đổi lựa chọn cookie bất kỳ lúc nào: bật/tắt "Analytics" và "Marketing", "Necessary" luôn bật; "Reject all" ngang hàng "Accept all". Đối thủ không có banner hay trang cài đặt nào, pixel quảng cáo chạy ngay từ lần vào đầu (RS·F-02 · EV-TLW-002). Đây là trang có route, không phải dialog, để link được từ footer, banner, văn bản cookie và tài khoản, và đóng được bằng back trình duyệt (00-overview §3). · basis RS·F-02 · Q-13 · SYS-CONSENT
+
+## 2. Điều hướng
+
+### 2.1 Vào
+
+| Vào qua | Từ | Trigger |
+|---|---|---|
+| NAV-PUB-05-1 | SCR-PUB-05 | "Cookie settings" (doc `cookies`) |
+| NAV-ACC-01-3 | SCR-ACC-01 | "Cookie settings" |
+| footer | "Cookie settings" ở mọi trang | SYS-NAV §1 |
+| banner | GC-ConsentBanner, nút "Manage" | SYS-CONSENT |
+
+### 2.2 Ra
+
+| NAV-ID | Tới (SCR-ID · tham số) | Trigger (CMP-ID "nhãn") | Kiểu | URL / history | Animation | Back / đóng → | Guard / điều kiện | Nền tảng | Basis |
+|---|---|---|---|---|---|---|---|---|---|
+| NAV-PUB-07-1 | SCR-PUB-05 · `doc=cookies` | CMP-07 "Cookie policy" | push | `/legal/cookies` (push) | mặc định | back trình duyệt → SCR-PUB-07 | — | Web | SYS-CONSENT |
+| NAV-PUB-07-2 | (cùng màn) lưu lựa chọn | CMP-04 "Save choices" / CMP-05 "Reject all" / CMP-06 "Accept all" | overlay | không đổi URL | mặc định | toast tự tắt | — | Web | BR-APP-05 |
+
+## 3. Layout & components
+
+- **Bố cục @390 (top→bottom):**
+  - header;
+  - H1 + đoạn giới thiệu;
+  - 3 nhóm cookie (tên nhóm · mô tả · switch bên phải);
+  - hàng nút: "Reject all" + "Accept all" (hai nút bằng nhau, cùng hàng), dưới là "Save choices" full width;
+  - link "Cookie policy";
+  - footer.
+
+| CMP-ID | Component | Type / GC- | Behavior & rules | Basis (EV / Q / in-house) |
+|---|---|---|---|---|
+| CMP-01 | Header | GC-SiteHeader (public) | theo GC | SYS-NAV §1 |
+| CMP-02 | Giới thiệu | H1 + đoạn | H1 "Cookie settings" · "Choose which cookies we can use." · "You can change this at any time." | SYS-CONSENT |
+| CMP-03 | 3 nhóm cookie | switch ×3 | "Necessary" — luôn bật, khoá: "Keeps you signed in, remembers your choices and protects forms. Always on." · "Analytics" — mặc định tắt: "Helps us see which pages people use. Never includes your answers, scores or results." · "Marketing" — mặc định tắt: "We don't use marketing cookies yet. If we add any, we'll ask you first." Giá trị ban đầu = lựa chọn đã lưu trong `tl_consent`; chưa có thì tắt | SYS-CONSENT · BR-APP-05 · Q-12 |
+| CMP-04 | Nút "Save choices" | button chính | lưu đúng trạng thái 3 switch đang hiện; lưu xong → toast "Your cookie choices are saved." (NAV-PUB-07-2) | BR-PUB-14 |
+| CMP-05 | Nút "Reject all" | button, cùng cỡ / màu / độ đậm với CMP-06 | analytics = denied · marketing = denied, lưu ngay, cùng toast như CMP-04 | BR-PUB-13 |
+| CMP-06 | Nút "Accept all" | button, cùng cỡ / màu / độ đậm với CMP-05 | analytics = granted · marketing = granted, lưu ngay, cùng toast như CMP-04 | BR-PUB-13 |
+| CMP-07 | Link "Cookie policy" | link | → `/legal/cookies` (NAV-PUB-07-1) | SYS-CONSENT |
+| CMP-08 | Footer | GC-SiteFooter | theo GC | SYS-NAV §1 |
+
+## 4. States
+
+| State | Trigger | Hiển thị | EV / basis |
+|---|---|---|---|
+| Default | luôn | đủ CMP-01…08; switch theo `tl_consent`, chưa có thì tắt | SYS-CONSENT |
+| Loading | đang lưu (API-CON-01) | 3 nút disable; nút vừa bấm có spinner (chỉ khi > 300 ms) | tieu-chuan-chung §3 |
+| Empty | N/A — luôn có 3 nhóm | — | SYS-CONSENT |
+| Error | API-CON-01 lỗi mạng / 5xx | vẫn ghi cookie `tl_consent` trên trình duyệt và áp dụng ngay; bản ghi server gửi lại ngầm ở lần tải trang kế; toast "Saved on this device." | cong-nghe-loi §4 · in-house |
+| Locked | N/A — trang public | — | 00-overview §3 |
+
+## 5. API
+
+| API | Method | When called |
+|---|---|---|
+| API-CON-01 | POST | bấm CMP-04 / CMP-05 / CMP-06; body `analytics` · `marketing` (`granted` / `denied`) · `consentVersion` · `source` = `settings`; `Idempotency-Key` = UUID mỗi lần lưu; đã đăng nhập thì server gắn tài khoản từ `tl_session` |
+
+Lỗi riêng: không có copy riêng — mọi lỗi đi vào state Error (lưu local trước, gửi server sau). Còn lại theo `00-quy-uoc-api` §4.
+
+## 6. Tracking
+
+| Event | Note |
+|---|---|
+| `screen_active` · `cookie_settings` | chỉ bắn khi analytics đã granted từ trước lúc mở trang |
+| ft_consent · start | mở trang khi analytics đã granted (tracking-events: chỉ bắn được khi analytics đã được cho phép) |
+| ft_consent · save | lưu với analytics = granted; param `analytics` · `marketing`; lưu với analytics = denied thì không có event nào |
+
+## 7. Business rules & edge cases
+
+| BR-ID | Rule | Basis |
+|---|---|---|
+| BR-PUB-13 | "Reject all" và "Accept all" cùng cấp độ thị giác (legal-consent §3) | tieu-chuan-chung §10 · RS·F-02 |
+| BR-PUB-14 | Lưu → API-CON-01 + cookie `tl_consent`; rút analytics → gỡ SDK ở lần tải trang kế (SYS-CONSENT) | SYS-CONSENT · TD-04 |
+
+| EC-xx | Tình huống | Handling | Basis |
+|---|---|---|---|
+| EC-01 | Đổi switch rồi rời trang mà không bấm lưu | không lưu gì; quay lại thấy giá trị đã lưu trước đó | in-house |
+| EC-02 | Chưa trả lời banner, vào trang từ footer | switch mặc định tắt; lưu ở đây coi như đã trả lời banner, banner không hiện lại tới khi đổi version | SYS-CONSENT |
+| EC-03 | Rút analytics khi SDK đang chạy | `AppTracking` ngừng gửi ngay lúc lưu; gỡ SDK + xoá cookie analytics ở lần tải trang kế | BR-PUB-14 · SYS-CONSENT |
+| EC-04 | Cho phép analytics lần đầu tại trang này | tải SDK ngay, không cần reload, rồi bắn ft_consent save; không bắn bù `screen_active` cho trang hiện tại | TD-04 · tracking-events |
+| EC-05 | Analytics = granted nhưng user đang ở route bài `sensitive` | vẫn không tải analytics trên route đó | BR-APP-06 |
+| EC-06 | Hai tab mở cùng lúc | tab còn lại áp dụng lựa chọn mới ở lần điều hướng kế tiếp (đọc lại `tl_consent`) | in-house |
+
+## 8. Responsive deltas
+
+| Aspect | 390 (gốc) | 768 | 1280 |
+|---|---|---|---|
+| Nhóm cookie | xếp dọc, switch bên phải tên nhóm | như 390 | như 390, cột nội dung rộng tối đa 720 |
+| Nút | hàng 1: "Reject all" + "Accept all" (2 cột bằng nhau); hàng 2: "Save choices" full width | 3 nút cùng hàng, "Reject all" và "Accept all" cùng độ rộng | như 768 |
+
+## 9. Keyboard & focus
+
+Mỗi nhóm là `role="switch"` (Space bật/tắt; mô tả gắn `aria-describedby`). "Necessary" vẫn nhận focus, đọc "Always on", không đổi được. Toast đọc qua `aria-live="polite"`; focus giữ ở nút vừa bấm. Còn lại theo `tieu-chuan-chung §5`.
+
+## 10. AI Notices
+- Nhóm "Marketing" vẫn hiện dù MVP chưa có script marketing (Q-12), để lựa chọn có sẵn khi cần. Nếu Q-12 chốt không bao giờ chạy ads thì có thể bỏ nhóm này (đổi version, hỏi lại).
+- Mô tả từng nhóm phải khớp bảng cookie trong `doc=cookies` và `go-to-market/legal-consent.md` §2 (chưa viết). Cookie tạm `tl_oauth` của luồng Google (xem `docs/api/SCR-AUTH-01-api.md`) thuộc nhóm "Necessary".
+- Chưa có quyết định về việc tôn trọng tín hiệu Global Privacy Control (văn bản đối thủ có nhắc, EV-TLW-045).

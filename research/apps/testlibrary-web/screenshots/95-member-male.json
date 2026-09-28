@@ -1,0 +1,25 @@
+{
+ "url": "https://testlibrary.com/personality-test/loader",
+ "title": "Personality Test - Get Accurate Personality Type Report",
+ "capturedAt": "2026-09-27T12:02:35.039Z",
+ "viewport": {
+  "w": 1280,
+  "h": 800,
+  "mobile": false,
+  "dpr": 1
+ },
+ "lang": "en-US",
+ "full": false,
+ "action": "clicktext Male",
+ "changed": "yes",
+ "settle": {
+  "ok": true,
+  "ms": 1981,
+  "why": "quiet",
+  "detail": ""
+ },
+ "walls": [],
+ "headings": [],
+ "elements": [],
+ "frames": []
+}

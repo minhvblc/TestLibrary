@@ -1,0 +1,52 @@
+{
+ "url": "https://testlibrary.com/personality-test/instructions",
+ "title": "Personality Test - Get Accurate Personality Type Report",
+ "capturedAt": "2026-09-27T11:47:56.602Z",
+ "viewport": {
+  "w": 1280,
+  "h": 800,
+  "mobile": false,
+  "dpr": 1
+ },
+ "lang": "en-US",
+ "full": false,
+ "action": "wait 6000",
+ "changed": "no",
+ "settle": {
+  "ok": true,
+  "ms": 0,
+  "why": "none"
+ },
+ "walls": [],
+ "headings": [
+  {
+   "level": "h2",
+   "text": "Before you begin",
+   "off": "in",
+   "y": 187
+  }
+ ],
+ "elements": [
+  {
+   "role": "button",
+   "name": "Start test",
+   "href": "",
+   "x": 640,
+   "y": 549,
+   "w": 492,
+   "h": 60,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "button",
+   "type": "button",
+   "value": "",
+   "ref": "e1",
+   "guard": ""
+  }
+ ],
+ "frames": []
+}

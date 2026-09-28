@@ -1,0 +1,163 @@
+{
+ "url": "https://testlibrary.com/legal/subscription-policy",
+ "title": "Subscription Policy",
+ "capturedAt": "2026-09-27T11:42:40.858Z",
+ "viewport": {
+  "w": 1280,
+  "h": 800,
+  "mobile": false,
+  "dpr": 1
+ },
+ "lang": "en-US",
+ "full": false,
+ "action": "goto https://testlibrary.com/legal/subscription-policy",
+ "changed": "yes",
+ "settle": {
+  "ok": true,
+  "ms": 2312,
+  "why": "quiet",
+  "detail": ""
+ },
+ "walls": [],
+ "headings": [
+  {
+   "level": "h1",
+   "text": "Subscription Policy",
+   "off": "in",
+   "y": 123
+  },
+  {
+   "level": "h2",
+   "text": "Subscription Policy",
+   "off": "in",
+   "y": 233
+  },
+  {
+   "level": "h3",
+   "text": "1. Fees, Trial & Subscription Plans",
+   "off": "down",
+   "y": 1753.5
+  },
+  {
+   "level": "h3",
+   "text": "2. Cancellation",
+   "off": "down",
+   "y": 5744.1875
+  },
+  {
+   "level": "h3",
+   "text": "3. Refund Policy",
+   "off": "down",
+   "y": 6778.375
+  },
+  {
+   "level": "h3",
+   "text": "4. Final Provisions",
+   "off": "down",
+   "y": 8639.0625
+  }
+ ],
+ "elements": [
+  {
+   "role": "link",
+   "name": "Back",
+   "href": "https://testlibrary.com/",
+   "x": 295.078125,
+   "y": 76,
+   "w": 61,
+   "h": 24,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e1",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "www.testlibrary.com",
+   "href": "http://www.testlibrary.com/",
+   "x": 693.296875,
+   "y": 416,
+   "w": 173,
+   "h": 21,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e2",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "support@testlibrary.com",
+   "href": "mailto:support@testlibrary.com",
+   "x": 368.125,
+   "y": 5901.875,
+   "w": 207,
+   "h": 21,
+   "off": "down",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e3",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "support@testlibrary.com",
+   "href": "mailto:support@testlibrary.com",
+   "x": 368.125,
+   "y": 7010.5625,
+   "w": 207,
+   "h": 21,
+   "off": "down",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e4",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "support@testlibrary.com",
+   "href": "mailto:support@testlibrary.com",
+   "x": 368.125,
+   "y": 9020.25,
+   "w": 207,
+   "h": 21,
+   "off": "down",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e5",
+   "guard": ""
+  }
+ ],
+ "frames": []
+}

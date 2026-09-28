@@ -1,0 +1,15 @@
+# TestLib (tên tạm, Q-01) — robots.txt
+# Nguồn: docs/go-to-market/seo-meta.md (§1 route index · §4 route noindex). Thay <domain> trước khi ra mắt (Q-01).
+# Disallow chỉ là gợi ý crawl; thẻ noindex / X-Robots-Tag trên từng route mới là cơ chế giữ route khỏi kết quả tìm kiếm.
+User-agent: *
+Allow: /
+Disallow: /app
+Disallow: /account
+Disallow: /results/
+Disallow: /unlock/
+Disallow: /checkout/
+Disallow: /login
+Disallow: /cookie-settings
+Disallow: /tests/*/take
+
+Sitemap: https://<domain>/sitemap.xml

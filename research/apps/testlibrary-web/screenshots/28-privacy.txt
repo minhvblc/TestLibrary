@@ -1,0 +1,275 @@
+Back
+Privacy Policy
+Privacy Policy
+
+Last updated August 17, 2026.
+
+This Privacy Policy (the “Policy”) defines the practices of Aura Health LLC, a limited liability company incorporated under the laws of the State of Wyoming, with its registered address at 30 N Gould St Ste R, Sheridan, Wyoming 82801, United States of America, or Testing Solutions LLC, a limited liability company incorporated under the laws of the State of Delaware, with its registered address at 8 The Green Suite #6008, Dover, Kent County, Delaware 19901, United States of America (each a “Platform Operator,” “We,” “Our,” or “Us”) regarding the collection, use, disclosure, and protection of your personal information as a user (“You”) of the website www.testlibrary.com (the “Website”), the related software application (the “Application”), and any associated services (collectively, the “Services”). Depending on the payment infrastructure used to process your purchase, either Platform Operator may act as the seller of the Trial Membership or Subscription. The identity of the applicable Platform Operator will be communicated to you in the order confirmation following a successful purchase. The applicable Platform Operator operates the Website, provides the technical platform, manages user accounts, subscriptions, and payment processing, and facilitates access to the Application. The applicable Platform Operator owns, licenses, operates, and provides the Website, the Application, and the Services, including assessment tests, methodologies, generated reports (“Reports”), subscriptions, billing systems, and related platform functionality.
+
+Depending on your location, jurisdiction, selected payment method, or other operational factors disclosed at checkout, certain payment processing, recurring billing, failed payment recovery, charge collection, fraud prevention, or related payment administration activities may be performed or facilitated by an affiliated or authorized payment processing entity (each, a “Payment Processing Entity”), third-party payment processor, billing provider, acquiring bank, fraud prevention provider, or payment recovery service provider.
+
+The Payment Processing Entities that may be used in connection with the Services are identified in the Terms and may be updated from time to time in accordance with the Terms and applicable law.
+
+Where applicable, such Payment Processing Entities and other authorized payment service providers may process transaction-related information, billing identifiers, tokenized payment credentials, payment status data, and related payment information for the purposes described in this Policy, the Terms, and applicable law. When you visit the Website, complete tests, purchase a trial membership (the “Trial Membership”) or subscription (the “Subscription”), or otherwise use the Services, you enter into a binding agreement with the Platform Operator providing the Services in relation to your purchase. The identity of the applicable Platform Operator will be communicated to you in the order confirmation following a successful purchase. Your use of the Services is governed by this Policy and by our Terms and Conditions (the “Terms”). By accessing or using the Services, you acknowledge that you have read, understood, and agree to be bound by both the Policy and the Terms.
+
+We are committed to protecting your privacy and handling your personal data in a transparent and secure manner, in full compliance with the General Data Protection Regulation (EU) 2016/679 (“GDPR”) and applicable national data protection laws. Where applicable, we also process personal information of users located in the United States in accordance with applicable U.S. federal and state privacy laws, including, where relevant, the California Consumer Privacy Act (“CCPA”) as amended by the California Privacy Rights Act (“CPRA”).
+
+Please review this Policy and the Terms carefully before using the Website, completing any test, or purchasing the Trial Membership or the Subscription.
+
+1. Personal Information We Collect
+
+Personal Information You Provide to Us
+
+1.1. For the purposes of this Policy, “personal information” means any information that identifies you or can reasonably be linked to you. To provide access to the Website, the Application, and the Services, and to fulfil our contractual and legal obligations, the Platform Operator collects and processes the following categories of personal information that you provide directly:
+
+1.1.1. your email address and, where applicable, your name and other contact details used to create and manage your Account;
+
+1.1.2. information you voluntarily submit when completing assessment tests through the Application, including answers to questions required to generate Reports;
+
+1.1.3. payment-related information necessary to process the Trial Memberships and the Subscriptions, cancellations, refunds, fraud prevention activities, including transaction identifiers, billing details, payment status information, tokenized payment credentials, payment processor identifiers, and related transaction metadata (note that payment card data is processed directly by third-party payment service providers and is not stored by the Platform Operator);
+
+1.1.4. records of your communications with us, including customer support inquiries, cancellation requests, refund requests, and feedback.
+
+1.2. You are responsible for ensuring that all personal information you provide is accurate, complete, and kept up to date.
+
+1.3. You are responsible for maintaining the security of your device, internet connection, and Account credentials. While the Platform Operator implements reasonable safeguards designed to protect the Services, no system can guarantee complete protection against unauthorized access, cybersecurity incidents, or third-party attacks beyond reasonable control.
+
+Information Collected Automatically
+
+1.4. When you access or use the Website or the Application, we may automatically collect certain technical and usage-related information, including:
+
+1.4.1. device type, browser type, operating system, and unique device identifiers;
+
+1.4.2. IP address and general location information derived from such IP address;
+
+1.4.3. information about how you interact with the Website and the Services, including pages viewed, features used, session duration, and navigation paths;
+
+1.4.4. information collected through cookies and similar tracking technologies.
+
+1.5. This information is collected to operate the Services, ensure security, analyse performance, and improve user experience.
+
+1.6. We may receive personal information from Payment Processing Entities and other third-party service providers and partners that support the operation of the Services, including payment processors, billing providers, analytics providers, fraud prevention services, hosting providers, and customer support tools. Such information is processed only for the purposes described in this Policy and in accordance with applicable law.
+
+1.7. For users located in the United States, and within the last 12 months, the Platform Operator may have collected the following categories of personal information, as defined under applicable U.S. privacy laws, including CCPA as amended by the CPRA:
+
+1.7.1. identifiers, such as email address, IP address, and similar identifiers;
+
+1.7.2. commercial information, including records of the Trial Memberships and the Subscriptions purchased;
+
+1.7.3. internet or other electronic network activity information, including interactions with the Website and Application;
+
+1.7.4. general geolocation data derived from IP address;
+
+1.7.5. customer service and communications information;
+
+1.7.6. payment billing, Subscription renewal, and transaction information processed through secure third-party providers;
+
+1.7.7. sensitive personal information, strictly limited to the responses you provide in assessment tests necessary to generate your Reports.
+
+1.8. We collect and process sensitive personal information (such as health-related information or responses to assessment tests) solely when you voluntarily provide it to us for the purpose of generating Reports and providing the Services. We process this sensitive information based on your explicit consent, which is obtained when you choose to submit such information within the Application.
+
+2. How We Use Your Personal Information
+
+2.1. We process your personal information for specific and legitimate purposes related to the operation of the Website, the Application, and the provision of the Services. The purposes for which personal information is processed depend on how you interact with the Services and are limited to what is necessary and proportionate.
+
+2.2. We use your personal information to provide, operate, and maintain the Website, the Application, and the Services. This includes enabling you to access and use the Services, complete assessment tests, generate personalized Reports based on your inputs, and access additional features available under the active Trial Membership or Subscription. This processing is necessary for the performance of a contract between you and the Platform Operator.
+
+2.3. Personal information is used to create and manage your Account, authenticate access, provide login credentials, and communicate with you regarding your Account, including confirmations, service-related notices, security alerts, billing information, cancellation confirmations, refund-related communications, and customer support responses. Where communications relate directly to the provision of the Services, processing is based on contractual necessity; for general inquiries and support requests initiated by you, processing is based on our legitimate interests in maintaining service quality and user support.
+
+2.4. We process personal information necessary to facilitate payments, manage the Trial Memberships and the Subscriptions, process renewals, cancellations, refunds, chargeback management, fraud prevention, and billing administration. This may include the use and sharing of tokenized payment credentials, transaction identifiers, payment status information, billing metadata, and related payment processing information with authorized payment processors, the applicable Payment Processing Entity, billing providers, acquiring banks, and fraud prevention services. Full payment card details are processed securely by third-party payment service providers and are not stored by the Platform Operator. This processing is necessary for the performance of a contract, fraud prevention, legitimate business interests, and compliance with legal and accounting obligations.
+
+2.5. We use technical and usage-related information to analyse how users interact with the Website and the Application, monitor performance, troubleshoot issues, and improve the functionality, usability, and security of the Services. This processing is carried out based on our legitimate interests in developing and maintaining an efficient, secure, and user-friendly platform.
+
+2.6. Personal information may be processed to protect the Website, the Application, and users against fraud, unauthorized access, misuse, and other unlawful or abusive activities. This may include monitoring transactions, detecting suspicious behaviour, enforcing the Terms, monitoring suspicious billing activity, investigating chargebacks or unauthorized transaction disputes, and ensuring the integrity and security of the Services and payment processes.
+
+2.7. We may process personal information to comply with applicable laws, regulations, court orders, or lawful requests from authorities, as well as to establish, exercise, or defend legal claims. This includes processing required for accounting, tax, and record-keeping purposes and for enforcing our contractual rights under the Terms.
+
+2.8. Where permitted by applicable law, and subject to your preferences and consent where required, we may use your contact information to send you marketing or promotional communications related to the Services. You may opt out of such communications at any time using the unsubscribe mechanism provided in the messages or by contacting us directly. Opting out of marketing communications does not affect service-related or transactional communications.
+
+2.9. We may use limited automated processes, such as systems designed to detect fraud or ensure transaction security. We do not use automated decision-making that produces legal or similarly significant effects on you solely by automated means, unless permitted by law and with appropriate safeguards in place.
+
+3. How We Share Your Personal Information
+
+3.1. We share personal information only where necessary to operate the Website and the Application, provide the Services, fulfil contractual obligations, and comply with applicable law. Any sharing of personal information is carried out in accordance with the principle of data minimization and subject to appropriate safeguards.
+
+3.2. When you complete assessment tests, access Reports, or otherwise use the substantive features of the Services, personal information may be processed by the Platform Operator to provide the Application, generate Reports, and deliver the Services in accordance with this Policy.
+
+3.3. The Platform Operator takes reasonable measures to ensure the secure transmission and handling of personal data in connection with the Services. The Platform Operator processes personal data only for the purposes and in the manner described in the Terms and the applicable Privacy Policy. To the extent permitted by applicable law, the Platform Operator shall not be responsible for unauthorized access, misuse, or security incidents arising from factors beyond its reasonable control.
+
+3.4. We share necessary payment and transaction-related information with the applicable Payment Processing Entity and authorized third-party payment service providers to authorize and process payments for the Trial Memberships and the Subscriptions. Payment service providers process personal information in accordance with their own privacy policies and applicable law. The Platform Operator does not store full payment card details.
+
+3.5. We may share personal information with trusted third-party service providers who perform services on our behalf, including:
+
+3.5.1. hosting and cloud infrastructure providers;
+
+3.5.2. customer support and communication tools;
+
+3.5.3. analytics and performance monitoring providers;
+
+3.5.4. fraud detection, security, and compliance services;
+
+3.5.5. payment processing, billing, acquiring, payment recovery, and related payment administration providers.
+
+3.6. These third parties process personal information solely for the purpose of providing services to us and are subject to contractual obligations requiring appropriate confidentiality, security, and data protection measures, including data processing agreements where required by law.
+
+3.6.1. Where Google services are used in connection with the Website or the Services, including Google Analytics, Google Ads, Google Tag Manager, Google Consent Mode, or similar Google technologies, certain personal information, technical information, online identifiers, usage information, cookie data, and conversion-related information may be shared with Google for purposes including analytics, measurement, fraud prevention, consent management, website performance monitoring, advertising attribution, and related functionality. Such data is transferred to Google and processed under Google’s Business Data Responsibility Terms, which can be reviewed at: https://business.safety.google/privacy/.
+
+3.7. Where permitted by applicable law, we may share limited personal information with analytics providers, billing infrastructure providers, and advertising partners to measure performance, improve the Services, and, where applicable, deliver interest-based advertising. Under certain United States state privacy laws, such disclosures may be considered “sharing” for targeted advertising purposes, even where no monetary consideration is exchanged. Where required by law, you are provided with the ability to opt out of such sharing.
+
+3.8. We may disclose personal information where required to do so by law, regulation, court order, or lawful request from public authorities. We may also disclose personal information where necessary to enforce the Terms, investigate potential violations, prevent fraud or security incidents, or protect the rights, property, or safety of the Platform Operator, users, or others.
+
+3.9. If the Platform Operator is involved in a merger, acquisition, reorganization, financing, bankruptcy, or sale of all or part of its assets, personal information may be disclosed or transferred as part of that transaction, subject to appropriate safeguards and in accordance with applicable law.
+
+3.10. Within the last 12 months, personal information may have been disclosed to the following categories of recipients: payment service providers, billing infrastructure providers, hosting, infrastructure and IT service providers, analytics and performance measurement providers; advertising partners (where applicable), customer support providers, and legal, compliance, and fraud prevention partners.
+
+4. Your Rights And Choices
+
+4.1. Depending on your place of residence and applicable data protection laws, you may have certain rights regarding the personal information we process about you. These rights may vary by jurisdiction and are subject to legal limitations and exceptions.
+
+4.2. If you are located in the European Economic Area or the United Kingdom, you may have the following rights under the GDPR or UK GDPR:
+
+4.2.1. Right of access – to obtain confirmation as to whether personal data concerning you is being processed and to request a copy of such data;
+
+4.2.2. Right to rectification – to request correction of inaccurate or incomplete personal data;
+
+4.2.3. Right to erasure – to request deletion of personal data where legally permitted;
+
+4.2.4. Right to restriction of processing – to request that processing of your personal data be restricted under certain circumstances;
+
+4.2.5. Right to data portability – to receive your personal data in a structured, commonly used, and machine-readable format and to transmit it to another controller;
+
+4.2.6. Right to object – to object to processing based on legitimate interests, including processing for direct marketing purposes;
+
+4.2.7. Right to withdraw consent – where processing is based on your consent, including the processing of sensitive personal information provided through assessment tests, to withdraw such consent at any time without affecting the lawfulness of processing prior to withdrawal.
+
+4.3. If you are a resident of the United States, and where applicable under U.S. federal or state privacy laws (including the CCPA as amended by the CPRA), you may have the following rights, subject to applicable limitations:
+
+4.3.1. Right to know and access the categories and specific pieces of personal information collected about you;
+
+4.3.2. Right to delete personal information collected from you, subject to legal exceptions;
+
+4.3.3. Right to correct inaccurate personal information;
+
+4.3.4. Right to opt out of the sale or sharing of personal information for targeted advertising purposes, where applicable;
+
+4.3.5. Right to limit the use or disclosure of sensitive personal information, where applicable;
+
+4.3.6. Right to non-discrimination for exercising your privacy rights.
+
+4.3.7. Right to opt out of certain uses of personal information related to targeted advertising, analytics sharing, or cross-context behavioural advertising, where such rights are provided under applicable U.S. state privacy laws.
+
+4.4. We do not sell personal information for monetary consideration. Certain disclosures to analytics or advertising partners and billing infrastructure providers may be considered “sharing” under applicable U.S. state law.
+
+4.5. To exercise any of your rights, please contact us using the contact details provided in the Contact Information section of this Policy. We may require additional information to verify your identity before processing your request, in order to protect the security of your personal information.
+
+4.6. We may decline or limit requests where permitted by law, including where a request is manifestly unfounded, excessive, repetitive, or would adversely affect the rights and freedoms of others. Where allowed by law, we may charge a reasonable fee or refuse to act on a request.
+
+4.7. Where permitted by applicable U.S. law, you may designate an authorized agent to submit a request on your behalf. We may require proof that the agent is authorized to act for you and may require you to verify your identity directly with us.
+
+4.8. We will respond to verified requests within the timeframes required by applicable law. Where permitted or required, you may have the right to appeal our decision regarding your request. Instructions for submitting an appeal will be provided in our response, where applicable.
+
+5. Complaints
+
+5.1. If you have any questions, concerns, or complaints regarding how your personal information is collected, used, or otherwise processed in connection with the Services, we encourage you to first contact the Platform Operator directly using the contact details provided in the Contact Information section of this Policy. This allows us to address your concerns promptly and, where possible, resolve the matter without delay. Nothing in this section limits any mandatory rights you may have under applicable consumer protection or data protection laws.
+
+5.2. You always have the right to lodge a complaint with the competent data protection authority in your country of residence, place of work, or the location where an alleged infringement of applicable data protection laws has occurred.
+
+5.3. If you are located in the United States and have a concern or complaint regarding our handling of your personal information, we encourage you to contact us directly so that we may attempt to resolve the matter in a timely and efficient manner. Where required by applicable U.S. state privacy laws, you may also have the right to appeal a decision we have made in response to your privacy request.
+
+5.4. Nothing in this Privacy Policy is intended to limit, replace, or override any dispute resolution mechanisms set forth in the Terms. To the extent permitted by applicable law, disputes relating to the processing of personal information may be subject to binding arbitration or other dispute resolution procedures as described in the Terms.
+
+6. Use of Cookies and other Tracking Technologies
+
+6.1. The Website uses cookies and similar tracking technologies, including technologies provided by third-party partners such as Google, to operate, personalize, and improve the Services, analyse performance, measure effectiveness, and, where permitted by applicable law, support marketing and advertising activities. A cookie is a small data file placed on your device that enables our systems to recognize your browser or device when you revisit the Website or use the Application.
+
+6.2. We may use the following categories of cookies and similar technologies:
+
+6.2.1. Strictly Necessary Cookies – these cookies are essential for the operation of the Website and the provision of the Services. They enable core functionality such as account authentication, session management, fraud prevention, Subscription management, and payment processing.
+
+6.2.2. Performance and Analytics Cookies – these cookies collect aggregated information about how users interact with the Website and the Application, such as pages visited, features used, and traffic sources. This information is used to analyse performance, monitor operational reliability, evaluate subscription conversion, and improve the overall user experience of the Services. Analytics technologies may also be used to measure website performance, subscription conversion rates, user engagement, and service reliability.
+
+6.2.3. The Website and the Services utilize Google services, including Google Analytics, Google Ads, Google Tag Manager, and Google Consent Mode. These technologies collect and process information relating to your device, browser, IP address, online identifiers, website interactions, and service usage. This data helps us analyze user behavior, measure ad effectiveness, and manage user consent state dynamically. Google processes this business data to provide and improve their services, subject to their independent privacy practices and data responsibility standards.
+
+6.2.4. Targeting and Advertising Cookies – where applicable, these cookies track your browsing behaviour across websites to build a profile of your interests and display relevant advertisements. Certain advertising and analytics technologies may involve disclosures that could be considered “sharing” under applicable U.S. state privacy laws. The use of such cookies is subject to your prior consent where required by law.
+
+6.3. You may manage or disable cookies through your browser or device settings at any time. Instructions for managing cookies can typically be found in the help sections of browsers such as Chrome, Firefox, Safari, or Edge.
+
+6.4. For users located in the United States, cookies and similar tracking technologies may be used for purposes including operating and improving the Website, understanding how users interact with the Services, subscription administration, billing operations, fraud prevention, and service analytics.
+
+6.5. Under certain U.S. state privacy laws, the use of cookies or similar technologies for targeted advertising or cross-context behavioral advertising may be considered “sharing” of personal information, even where no monetary consideration is exchanged. Where such laws apply, you have the right to opt out of such sharing.
+
+6.6. Where required by applicable law, we provide mechanisms that allow you to exercise your right to opt out of targeted advertising or other cookie-based data processing activities, including through browser-based opt-out signals (such as the Global Privacy Control), where technically feasible.
+
+6.7. Please note that disabling certain cookies or tracking technologies may affect the availability, functionality, or performance of some features of the Website or the Services.
+
+6.8. WE ARE NOT RESPONSIBLE for any loss of functionality, degraded performance, or inability to access features resulting from your browser, device, or cookie preference settings.
+
+7. Security And Retention of Your Information
+
+7.1. We implement and maintain appropriate administrative, technical, and organizational security measures designed to protect your personal information against accidental or unlawful destruction, loss, alteration, unauthorized access, or disclosure. These measures take into account the nature of the personal information processed, the purposes of processing, and applicable legal requirements.
+
+7.2. However, no method of transmission over the Internet or method of electronic storage is completely secure. TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, WE EXPRESSLY DISCLAIM LIABILITY for any unauthorized access, hacking, data loss, or other security incidents resulting from causes beyond our reasonable control, including criminal acts of third parties, sophisticated cyber-attacks, vulnerabilities in third-party software or infrastructure, or failures of internet or payment service providers.
+
+7.3. You acknowledge that you are solely responsible for maintaining the security of your devices, network connections, and Account credentials. The Platform Operator shall not be liable for any security incidents arising from your failure to secure your device, use of unsecured or public networks, malware infections, or sharing of login credentials.
+
+7.4. We retain personal information only for as long as is reasonably necessary to fulfil the purposes for which it was collected, including to provide the Services, manage Accounts, recurring Subscriptions, billing disputes, chargebacks, fraud prevention activities, generate Reports, comply with legal and regulatory obligations, resolve disputes, and enforce the Terms.
+
+7.5. Retention periods may vary depending on the type of personal information, the purpose of processing, and applicable legal requirements. Certain information, such as transaction and billing records, may be retained for longer periods where required by law or for accounting, tax, or legal compliance purposes. Certain payment-related, billing, Subscription renewal, fraud prevention, and transaction security records may additionally be retained for the establishment, exercise, or defence of legal claims, enforcement of contractual rights, dispute resolution, chargeback handling, audit obligations, or compliance with payment processor and card network requirements.
+
+7.6. For users located in the United States, personal information is retained for as long as reasonably necessary to provide the Services, comply with legal obligations, resolve disputes, enforce agreements, and protect our legal rights. Retention periods may differ depending on the nature of the data and the context in which it was collected.
+
+7.7. While we take reasonable steps to protect personal information, you acknowledge and agree that the Platform Operator cannot guarantee absolute security. WE DO NOT WARRANT that personal information will be completely protected against unauthorized access, loss, or misuse, including incidents involving third-party payment processors, billing providers, hosting providers, or external infrastructure providers, and you use the Services at your own risk.
+
+8. Our Data Policy on Children
+
+8.1. The Website, the Application, and the Services are intended solely for individuals who are at least eighteen (18) years old.
+
+8.2. By accessing or using the Services, You represent and warrant that You are at least eighteen (18) years old.
+
+8.3. The Platform Operator does not knowingly collect, solicit, process, or maintain personal information from individuals under the age of eighteen (18), nor does the Platform Operator knowingly permit such individuals to create Accounts or use the Services.
+
+8.4. If the Platform Operator becomes aware that an individual under the age of eighteen (18) has provided personal information, created an Account, or otherwise used the Services, the Platform Operator may, at its sole discretion, delete the relevant personal information, suspend or terminate the Account, and restrict further access to the Services.
+
+8.5. The Platform Operator reserves the right to implement reasonable age-verification, identity-verification, account-authentication, payment-verification, fraud-prevention, or eligibility-verification measures to confirm compliance with this Policy and the Terms.
+
+8.6. If You believe that an individual under the age of eighteen (18) has provided personal information through the Services or created an Account, please contact us using the contact details provided in this Policy.
+
+9. Third-Party Websites
+
+9.1. The Website and the Application may contain links to third-party websites, payment providers, billing providers, analytics tools, services, or resources that are provided solely for your convenience. Such third-party websites are not operated, controlled, or maintained by the Platform Operator.
+
+9.2. We do not endorse, monitor, or assume any responsibility for the content, accuracy, availability, security, or privacy practices of any third-party websites. This includes third-party payment processors, billing infrastructure providers, fraud prevention services, analytics providers, and advertising technologies that may support the operation of the Services. YOUR INTERACTIONS WITH ANY THIRD-PARTY WEBSITE ARE SOLELY BETWEEN YOU AND THAT THIRD PARTY, and you access such websites entirely at your own risk.
+
+9.3. The inclusion of any link does not imply affiliation, endorsement, or approval by the Platform Operator. We encourage you to review the terms, conditions, and privacy policies of any third-party websites you choose to visit, as their data processing practices may differ from those described in this Policy. We encourage users to review the privacy practices of any third-party payment or billing provider used in connection with the Services.
+
+9.4. This section applies equally to users located in the European Union, the United States, and other jurisdictions.
+
+10. Amendments To The Policy
+
+10.1. We reserve the right to amend, modify, or update this Privacy Policy at any time to reflect changes in our practices, the Services, applicable laws, payment processor requirements, card network compliance obligations, or for other operational, legal, or regulatory reasons. Any updated version of the Policy will be published on the Website and will indicate the date on which it was last revised.
+
+10.2. Your continued access to or use of the Website, the Application, or the Services after the updated Policy has been published constitutes your acknowledgment of and agreement to the revised Policy, to the extent permitted by applicable law.
+
+10.3. Where required by applicable law, including certain U.S. federal or state privacy laws, we will provide additional notice of material changes to this Policy, such as by email or through a prominent notice on the Website. Such notice will be provided in a manner consistent with legal requirements.
+
+10.4. The “Last updated” at the top of this Policy indicates when it was most recently updated.
+
+11. Contact Information
+
+If you have any questions, concerns, or requests regarding this Privacy Policy or the processing of your personal information, please contact the Platform Operator using the details below:
+
+Email: support@testlibrary.com
+
+1. Aura Health LLC
+30 N Gould ST STE R,
+Sheridan, Wyoming 82801,
+United States of America. 2. Testing Solutions LLC
+8 The Green Suite #6008 Dover,
+Kent County, Delaware 19901,
+United States of America.
+
+The applicable Platform Operator responsible for Your purchase will be identified in the order confirmation following a successful purchase.
+
+This Contact Information applies to all privacy-related inquiries, including requests to exercise your rights under the GDPR, the CCPA/CPRA, and other applicable data protection laws.
+
+When contacting us, please specify that your request relates to personal data, privacy, payment processing, recurring billing, or the Subscription-related data practices, and include sufficient information to allow us to verify your identity and process your request in accordance with applicable legal requirements.

@@ -1,0 +1,202 @@
+{
+ "url": "https://testlibrary.com/",
+ "capturedAt": "2026-09-27T11:39:43.001Z",
+ "meta": {
+  "description": "Explore our collection of personality, career, and social assessments designed to help you understand yourself better.",
+  "generator": null,
+  "robots": null,
+  "ogTitle": null,
+  "ogDescription": null,
+  "ogImage": null,
+  "twitterCard": null,
+  "themeColor": null,
+  "viewport": "width=device-width, initial-scale=1",
+  "appleItunesApp": null,
+  "canonical": "https://testlibrary.com/",
+  "manifest": null,
+  "hreflang": [],
+  "cspMeta": null
+ },
+ "markers": [
+  "nuxt"
+ ],
+ "globals": [
+  {
+   "name": "dataLayer",
+   "hint": "tag-manager"
+  },
+  {
+   "name": "fbq",
+   "hint": "ads-pixel"
+  },
+  {
+   "name": "uetq",
+   "hint": "ads-pixel"
+  }
+ ],
+ "hosts": [
+  {
+   "host": "testlibrary.com",
+   "class": "1st-party",
+   "via": {
+    "other": 3,
+    "stylesheet": 2,
+    "script": 37,
+    "font": 1,
+    "xhr": 1,
+    "fetch": 7,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "img.testlibrary.com",
+   "class": "1st-party",
+   "via": {
+    "image": 5
+   }
+  },
+  {
+   "host": "load.data.testlibrary.com",
+   "class": "1st-party",
+   "via": {
+    "script": 3,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "data.testlibrary.com",
+   "class": "1st-party",
+   "via": {
+    "fetch": 1,
+    "document": 1
+   }
+  },
+  {
+   "host": "ad.doubleclick.net",
+   "class": "ads",
+   "via": {
+    "fetch": 1
+   }
+  },
+  {
+   "host": "googleads.g.doubleclick.net",
+   "class": "ads",
+   "via": {
+    "script": 1,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "stats.g.doubleclick.net",
+   "class": "ads",
+   "via": {
+    "image": 1
+   }
+  },
+  {
+   "host": "bat.bing.com",
+   "class": "ads-pixel",
+   "via": {
+    "script": 4,
+    "ping": 1,
+    "image": 1,
+    "xhr": 1,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "connect.facebook.net",
+   "class": "ads-pixel",
+   "via": {
+    "script": 2,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "www.googleadservices.com",
+   "class": "ads-pixel",
+   "via": {
+    "fetch": 1
+   }
+  },
+  {
+   "host": "static.cloudflareinsights.com",
+   "class": "analytics",
+   "via": {
+    "script": 1,
+    "script-tag": 1
+   }
+  },
+  {
+   "host": "analytics.google.com",
+   "class": "analytics",
+   "via": {
+    "fetch": 1,
+    "image": 1
+   }
+  },
+  {
+   "host": "cloudflareinsights.com",
+   "class": "analytics",
+   "via": {
+    "preflight": 2,
+    "ping": 2,
+    "xhr": 3
+   }
+  },
+  {
+   "host": "www.google.com",
+   "class": "other",
+   "via": {
+    "fetch": 3,
+    "image": 1
+   }
+  },
+  {
+   "host": "www.facebook.com",
+   "class": "other",
+   "via": {
+    "document": 1
+   }
+  },
+  {
+   "host": "www.google.com.vn",
+   "class": "other",
+   "via": {
+    "image": 2,
+    "fetch": 1
+   }
+  }
+ ],
+ "cookieNames": [
+  "_gcl_au",
+  "_ga_GZ7803TJYM",
+  "_ga",
+  "_fbp",
+  "_uetsid",
+  "FPLC",
+  "FPAU",
+  "FPGSID",
+  "_uetvid"
+ ],
+ "storageKeys": {
+  "local": [
+   "lastExternalReferrerTime",
+   "_uetvid_exp",
+   "_uetsid_exp",
+   "_uetvid",
+   "lastExternalReferrer",
+   "_gcl_ls",
+   "_uetsid",
+   "_xsd"
+  ],
+  "session": [
+   "user-country",
+   "country-fetched",
+   "_cltk"
+  ]
+ },
+ "serviceWorker": "not-controlling",
+ "jsonLd": [],
+ "lang": "en-US"
+}

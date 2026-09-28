@@ -1,0 +1,119 @@
+{
+ "url": "https://testlibrary.com/login",
+ "title": "",
+ "capturedAt": "2026-09-27T11:23:24.786Z",
+ "viewport": {
+  "w": 1280,
+  "h": 800,
+  "mobile": false,
+  "dpr": 1
+ },
+ "lang": "en-US",
+ "full": false,
+ "action": "back",
+ "changed": "yes",
+ "settle": {
+  "ok": true,
+  "ms": 2281,
+  "why": "quiet",
+  "detail": ""
+ },
+ "walls": [
+  "auth"
+ ],
+ "headings": [
+  {
+   "level": "h1",
+   "text": "Log in to your account",
+   "off": "in",
+   "y": 187
+  }
+ ],
+ "elements": [
+  {
+   "role": "textbox",
+   "name": "Email",
+   "href": "",
+   "x": 640,
+   "y": 357,
+   "w": 412,
+   "h": 60,
+   "off": "in",
+   "flags": [
+    "required"
+   ],
+   "secret": false,
+   "pii": true,
+   "consentBox": false,
+   "authForm": true,
+   "tag": "input",
+   "type": "email",
+   "value": "",
+   "ref": "e1",
+   "guard": "pii"
+  },
+  {
+   "role": "textbox",
+   "name": "Password",
+   "href": "",
+   "x": 640,
+   "y": 433,
+   "w": 412,
+   "h": 60,
+   "off": "in",
+   "flags": [
+    "required"
+   ],
+   "secret": true,
+   "pii": false,
+   "consentBox": false,
+   "authForm": true,
+   "tag": "input",
+   "type": "password",
+   "value": "",
+   "ref": "e2",
+   "guard": "secret"
+  },
+  {
+   "role": "button",
+   "name": "Log in",
+   "href": "",
+   "x": 640,
+   "y": 515,
+   "w": 412,
+   "h": 56,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": true,
+   "tag": "button",
+   "type": "submit",
+   "value": "",
+   "ref": "e3",
+   "guard": ""
+  },
+  {
+   "role": "link",
+   "name": "Forgot password?",
+   "href": "https://testlibrary.com/forgot-password",
+   "x": 640,
+   "y": 579.5,
+   "w": 149,
+   "h": 21,
+   "off": "in",
+   "flags": [],
+   "secret": false,
+   "pii": false,
+   "consentBox": false,
+   "authForm": false,
+   "tag": "a",
+   "type": "",
+   "value": "",
+   "ref": "e4",
+   "guard": ""
+  }
+ ],
+ "frames": []
+}
