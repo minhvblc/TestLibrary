@@ -1,5 +1,6 @@
 # [RS-testlibrary] Teardown — Testlibrary (web)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · phiên cloud không drive được (egress chặn testlibrary.com); thêm nguồn S15 (`web-evidence.md`, `[LIVE:web]`), finding F-35–F-43 ở đó, ghi chú F-04 · F-06 · F-10 · F-20, cập nhật §9 PARK. Kế hoạch drive tiếp: `next-drive-plan.md`.
 - 2026-09-27 · v1 · claude-opus-5-5 · teardown LIVE ~70 màn (ẩn danh + research account trial của human, 1280 + 390), 263 EV `EV-TLW-*` + 6 EV kit `EV-KIT-*`; phụ lục pháp lý `legal-extract.md`.
 
 ## 0. Meta
@@ -47,6 +48,7 @@
 | S12 | Perf | `/` · `/free-tests/personality-test` | EV-TLW-262 · 263 | 2026-09-27 | `[LIVE:browser]` |
 | S13 | Review / bài viết bên thứ ba (qua web search, KHÔNG drive) | trustpilot.com/review/testlibrary.com · sensorstechforum.com/testlibrary-scam · youtube "Is TestLibrary com Legit…" · facebook group post | — (search summary) | 2026-09-27 | `[LIVE:web]` |
 | S14 | Lời kể của human (tạo mật khẩu sau thanh toán) | — | — | 2026-09-27 | `[INFERRED]` (không phải capture) |
+| S15 | Bằng chứng ngoài site qua WebSearch: Trustpilot, BBB + Scam Tracker, ProductReview, blog cảnh báo, search index của testlibrary.com, sổ đăng ký pháp nhân (W-01…W-23) | `web-evidence.md` §1 | — (search summary, không mở trang) | 2026-09-28 | `[LIVE:web]` |
 
 ## 3. Tổng quan & positioning
 
@@ -355,13 +357,13 @@ PWA: không manifest, không service worker `[LIVE:browser · EV-TLW-015]` · kh
 | F-01 | Cloudflare chặn client không phải browser (403 `cf-mitigated: challenge`); browser thật qua được im lặng | EV-TLW-001 · EV-TLW-002 | `[LIVE:browser]` | cao |
 | F-02 | Không có cookie banner ở first visit (IP VN) trong khi Meta Pixel, Bing UET, Google Ads, GA4 chạy ngay; hành vi với IP EU chưa biết | EV-TLW-002 · EV-TLW-015 | `[LIVE:browser]` (+ geo `[BLOCKED · geo]`) | cao (VN) |
 | F-03 | Site gốc "trả trước": mọi "Try now" ở landing + library → `/pricing`; khách không làm được bài nào từ nav chính | EV-TLW-012 · EV-TLW-050 · EV-TLW-051 | `[LIVE:browser]` | cao |
-| F-04 | 25 funnel SEO `/free-tests/<slug>` chỉ lộ ở nút footer "Free Tests"; slug nhắm từ khoá lâm sàng, tên hiển thị "mềm" | EV-TLW-052 | `[LIVE:browser]` | cao |
+| F-04 | 25 funnel SEO `/free-tests/<slug>` chỉ lộ ở nút footer "Free Tests"; slug nhắm từ khoá lâm sàng, tên hiển thị "mềm" — *2026-09-28: không URL `/free-tests/` nào có trong search index; bề mặt được index là root funnel trả phí từng bài (F-39, `web-evidence.md` §6)* | EV-TLW-052 | `[LIVE:browser]` | cao |
 | F-05 | Giá: One Time $57.00 · 7-day $1.95 → $39.95/4 tuần · 28-day $39.95 → $39.95/4 tuần · USD · không thuế · en-US/IP VN · logged-out | EV-TLW-025 | `[LIVE:browser]` | cao |
-| F-06 | FAQ hứa "Lifetime plan" (truy cập vĩnh viễn) không tồn tại trên pricing; "One Time" = 1 bài | EV-TLW-021 · EV-TLW-025 | `[LIVE:browser]` | cao |
+| F-06 | FAQ hứa "Lifetime plan" (truy cập vĩnh viễn) không tồn tại trên pricing; "One Time" = 1 bài — *2026-09-28: bài blog 2026-06 còn ghi gói Lifetime $99.95 (F-38, `[LIVE:web]`), có thể gói đã bị gỡ* | EV-TLW-021 · EV-TLW-025 | `[LIVE:browser]` | cao |
 | F-07 | i18n ≥ 11 ngôn ngữ bằng path prefix, nhưng giá vẫn USD và dòng gia hạn + tên gói "One Time" không dịch (vd `/de/pricing`) | EV-TLW-026 · EV-TLW-027 · EV-TLW-028 | `[LIVE:browser]` | cao |
 | F-08 | Checkout từ pricing có 2 checkbox bắt buộc không tick sẵn, nêu rõ $1.95 → $39.95/4 tuần + cách huỷ + descriptor | EV-TLW-033 · EV-TLW-034 | `[LIVE:browser]` | cao |
 | F-09 | Lỗi copy consent: 28-day ghi "for my 7-day trial"; One Time mang câu huỷ subscription | EV-TLW-037 · EV-TLW-039 | `[LIVE:browser]` | cao |
-| F-10 | Checkout first-party: email + Apple Pay + Google Pay + thẻ; logo "stripe" trong dải trust; không "Powered by" → PSP `[INFERRED]` | EV-TLW-033 · EV-TLW-035 | `[LIVE:browser]` / `[INFERRED]` | trung bình |
+| F-10 | Checkout first-party: email + Apple Pay + Google Pay + thẻ; logo "stripe" trong dải trust; không "Powered by" → PSP `[INFERRED]` — *2026-09-28: khiếu nại nêu PayPal, Google Wallet, thẻ; khoản gia hạn hiện tên "NordicaLab" trên sao kê (F-37, `[LIVE:web]`)* | EV-TLW-033 · EV-TLW-035 | `[LIVE:browser]` / `[INFERRED]` | trung bình |
 | F-11 | Huỷ qua `/cancel-sub` bằng email + link xác minh; "All cancellations take effect immediately. You will lose access to premium features once cancelled." | EV-TLW-046 | `[LIVE:browser]` | cao |
 | F-12 | Pháp nhân phân tán: Contact ghi Revuelto Sàrl (LU); văn bản ghi Aura Health LLC (WY) / Testing Solutions LLC (DE) + 3 PPE; seller chỉ báo sau mua | EV-TLW-049 · EV-TLW-043 · EV-TLW-041 | `[LIVE:browser]` | cao |
 | F-13 | Bài free: 19 câu 1/màn, URL không đổi, progress localStorage (resume sau reload), chạy offline, 0 request first-party mang câu trả lời; mỗi câu bắn ~2 event Meta Pixel | EV-TLW-054 · EV-TLW-059 · EV-TLW-061 · EV-TLW-065 · EV-TLW-066 | `[LIVE:browser]` | cao |
@@ -371,7 +373,7 @@ PWA: không manifest, không service worker `[LIVE:browser · EV-TLW-015]` · kh
 | F-17 | Offer: đồng hồ "Results saved for: 15:00" chỉ chạy khi trang mở và giữ giá trị khi rời trang; ticker "<Tên> just bought. Personality type: <Type>" xoay vòng; logo "featured in" (Harvard, CBS, Stanford, FOX, Cambridge, NBC); "Trusted by 20,000+", "Rated 4.8/5"; **không có chữ nào về gia hạn/subscription/trial** | EV-TLW-107 · EV-TLW-108 · EV-TLW-109 · EV-TLW-114 · EV-TLW-116 · EV-TLW-205 | `[LIVE:browser]` | cao |
 | F-18 | Checkout funnel khác checkout pricing: không checkbox; gia hạn chỉ trong 1 đoạn chữ; summary neo "$15.00 · Discount (-87%)" và không có dòng $39.95 | EV-TLW-110 · EV-TLW-111 · EV-TLW-112 | `[LIVE:browser]` | cao |
 | F-19 | Bẫy back: back từ offer → "Analyzing…" → tự về offer | EV-TLW-114 · EV-TLW-115 · EV-TLW-116 | `[LIVE:browser]` | cao |
-| F-20 | Không có email wall trước offer; email + tài khoản sinh tại/ sau checkout (human: đặt mật khẩu ngay sau thanh toán) | EV-TLW-107 · EV-TLW-110 · S14 | `[LIVE:browser]` / `[INFERRED]` | trung bình |
+| F-20 | Không có email wall trước offer; email + tài khoản sinh tại/ sau checkout (human: đặt mật khẩu ngay sau thanh toán) — *2026-09-28: phản hồi của công ty trên Trustpilot: "purchasing a test result automatically creates an account" (F-43, `[LIVE:web]`)* | EV-TLW-107 · EV-TLW-110 · S14 | `[LIVE:browser]` / `[INFERRED]` | trung bình |
 | F-21 | Member giữ chân bằng daily check-in + streak, 30-day challenge (mở từng ngày), insight + poll tuần (1129 votes), tiến độ 0/30 | EV-TLW-209–214 | `[LIVE:browser]` (post-checkout) | cao |
 | F-22 | Member làm test qua cùng funnel; kết quả lưu server; bỏ qua offer → "Your reports" | EV-TLW-239 · EV-TLW-241 · EV-TLW-242 | `[LIVE:browser]` (post-checkout) | cao |
 | F-23 | Report trả phí ~3.120 chữ, 9 chương, mục lục; PDF **11 trang** (offer hứa "20-page report"), `/Producer Skia/PDF m128`, `/Creator` UA headless Linux | EV-TLW-245 · EV-TLW-261 · EV-TLW-109 | `[LIVE:browser]` (post-checkout) | cao |
@@ -431,20 +433,24 @@ PWA: không manifest, không service worker `[LIVE:browser · EV-TLW-015]` · kh
 
 ## 9. Phần chưa research được (PARK)
 
-| Nhánh | Lý do | Q |
-|---|---|---|
-| Hành vi cookie/consent với IP EU/UK/US | không VPN (geo) | `[BLOCKED · geo]` |
-| Màn sau thanh toán (đặt mật khẩu, order confirmation, upsell sau mua) | không trả tiền trong phiên; chỉ có lời kể human | `[BLOCKED · payment]` |
-| Email vòng đời (nhắc trial, xác nhận huỷ, winback) | không truy cập hộp thư research | `[BLOCKED · login]` |
-| Report trả phí có phụ thuộc câu trả lời không (TK-02/03 trên bài 100 câu) | luật core-tech chỉ probe free tier (`core-tech-web.md §8`) | not-attempted |
-| Hết trial / trial-expiry banner / mất quyền sau huỷ | cần chờ 7 ngày | not-attempted |
-| Bài Soulmate, Spirit Animal, 27 bài member còn lại | ngoài phạm vi (đã thấy 3 dạng engine) | not-attempted |
-| `/free-tests/<slug>/result` mở ở context khác (link chia sẻ) | chưa thử | not-attempted |
-| PSP thật sự (Stripe?) | không có "Powered by"; không đọc bundle/payload | `[INFERRED]` |
+| Nhánh | Lý do | Q | Trạng thái 2026-09-28 |
+|---|---|---|---|
+| Hành vi cookie/consent với IP EU/UK/US | không VPN (geo) | `[BLOCKED · geo]` | chưa có bằng chứng mới · `next-drive-plan` D-13 (cần VPN) |
+| Màn sau thanh toán (đặt mật khẩu, order confirmation, upsell sau mua) | không trả tiền trong phiên; chỉ có lời kể human | `[BLOCKED · payment]` | có lời kể bên thứ ba: công ty nói mua kết quả là tự tạo tài khoản (`web-evidence` §4, `[LIVE:web]`); capture vẫn `[BLOCKED · payment]` |
+| Email vòng đời (nhắc trial, xác nhận huỷ, winback) | không truy cập hộp thư research | `[BLOCKED · login]` | bên thứ ba: điều khoản gia hạn nằm cuối email xác nhận; khiếu nại nói không có email nhắc trước gia hạn (`web-evidence` §4, `[LIVE:web]`) · `next-drive-plan` D-10 (human) |
+| Report trả phí có phụ thuộc câu trả lời không (TK-02/03 trên bài 100 câu) | luật core-tech chỉ probe free tier (`core-tech-web.md §8`) | not-attempted | `next-drive-plan` D-12 (cần human cho phép vượt luật §8) |
+| Hết trial / trial-expiry banner / mất quyền sau huỷ | cần chờ 7 ngày | not-attempted | `next-drive-plan` D-09 (xem lại sau 2026-10-04) |
+| Bài Soulmate, Spirit Animal, 27 bài member còn lại | ngoài phạm vi (đã thấy 3 dạng engine) | not-attempted | `next-drive-plan` D-02 · D-03 (kit run 2/3 trên bài khác) |
+| `/free-tests/<slug>/result` mở ở context khác (link chia sẻ) | chưa thử | not-attempted | `next-drive-plan` D-04 |
+| PSP thật sự (Stripe?) | không có "Powered by"; không đọc bundle/payload | `[INFERRED]` | khiếu nại nêu PayPal · Google Wallet · thẻ, khoản gia hạn hiện "NordicaLab" (F-37, `[LIVE:web]`) · `next-drive-plan` D-05 |
+| Tên thật trên sao kê ("testlibrary.com" hay "NordicaLab") | cần sao kê của human | `[BLOCKED · payment]` | mới (F-37) · `next-drive-plan` D-10 |
+| Giá theo thị trường (GBP · EUR · AUD · HUF…) | chỉ thấy USD vì không VPN | `[BLOCKED · geo]` | mới (F-38, `[LIVE:web]`) · `next-drive-plan` D-13 |
+| Số liệu Trustpilot / BBB / ProductReview nguyên văn | phiên cloud không mở được trang | `[BLOCKED · bot]` (egress) | mới (F-41) · `next-drive-plan` D-11 |
 
 ## 10. AI Notices
 - claude-opus-5-5 drive toàn bộ bằng `wstep.sh`/`wtech.sh`; bước 3–5 (login) do human tự làm → trigger `[INFERRED]`. EV-TLW-003/004/005 đặt tên "landing" nhưng là trang `/login` (URL trong caption ledger). EV-TLW-008–011 là landing khi **đã login**.
 - Transition có ghi "goto href": agent điều hướng bằng URL lấy từ href quan sát được, không bấm chuột — kết quả trang đích như nhau.
 - Kiểu `replace` ở #2, #21, #31 là suy từ URL, chưa thử back → coi như `[INFERRED]` cho phần history.
 - Tên vendor (Stripe, Supabase, Klaviyo, Convert, Nuxt) là suy luận từ dấu vết, không phải site tự công bố.
+- Phiên 2026-09-28 không có bước drive nào: container cloud bị egress policy chặn testlibrary.com. Mọi thứ thêm ở phiên này là `[LIVE:web]` (tóm tắt của công cụ search, chưa mở trang), gom ở `web-evidence.md`; các ghi chú in nghiêng ở §5 trỏ về đó.
 - Phụ lục `legal-extract.md` do subagent trích, quote đã verify là substring; phần "Ghi chú ngoài văn bản" không dùng làm bằng chứng.

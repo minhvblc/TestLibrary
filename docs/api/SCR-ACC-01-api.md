@@ -1,6 +1,7 @@
 # [SCR-ACC-01] API — Tài khoản & quyền riêng tư
 Refs: `docs/screens/SCR-ACC-01-tai-khoan.md` · FLOW-quyen-rieng-tu · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency — KHÔNG lặp lại ở đây)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: API-JOB-06 · API-MAIL-10 đã có.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 0. Endpoint overview
@@ -102,5 +103,5 @@ Xoá phiên của thiết bị hiện tại (BR-APP-10): huỷ phiên ở server
 
 ## AI Notices
 - Payload và tên field là SPEC mới. Profile của đối thủ chỉ có Name · Email · Change password (EV-TLW-246); mình không có mật khẩu (SYS-AUTH).
-- Toggle `weeklyCheckinReminder` chưa có job gửi + email trong `api-mapping.md` §2; cần thêm trước API-FREEZE.
+- Toggle `weeklyCheckinReminder`: job + email đã có ở `api-mapping.md` §2 (API-JOB-06 · API-MAIL-10).
 - Nội dung chi tiết file export (danh sách field JSON) chưa được đặc tả; cần viết cùng tài liệu BE và `legal-consent.md` §1.

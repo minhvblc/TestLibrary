@@ -1,6 +1,7 @@
 # pricing-page — TestLib (tên tạm, Q-01) · trang giá `/pricing` (SCR-PUB-04)
 > Giá CITE `00-overview §2` (placeholder — Q-03), không định nghĩa lại ở đây; màn lấy giá từ API-PAY-01. Copy en-US verbatim (Q-14); chuỗi đã có ở SCR-PUB-04 giữ nguyên từng chữ. FAQ §4 phải khớp landing-copy (FAQ A6) · legal-consent §3c · `/legal/subscriptions`.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice: FAQ gia hạn lệch luật CA / NY (Q-26) và quy tắc đổi giá.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
 ## 1. Plan cards
@@ -74,5 +75,6 @@ Link cuối FAQ: "Subscription & refund terms" → `/legal/subscriptions`. Đổ
 ## 5. AI Notices
 - Giá của mình là placeholder (Q-03, Group A) — không có con số nào ở file này. Neo đối thủ chỉ để tham chiếu, không dùng trong copy: "One Time $57.00" · "$39.95 every 4 weeks" `[LIVE:browser · EV-TLW-025 · 2026-09-27]`.
 - FAQ hoàn tiền là draft theo đề xuất Q-18; FAQ thuế phụ thuộc MoR (Q-04); FAQ gia hạn phụ thuộc Q-16. Chưa được dùng làm cam kết trước khi các Q này chốt.
+- FAQ "When will I be charged again?" hứa "7 days before an annual renewal": mốc này lệch cửa sổ 15–45 ngày của CA / NY / NYC (Q-26, Group D, `research/regulatory-landscape.md` §8). Câu "at the price shown before you bought" cũng cần khớp quy tắc báo đổi giá BR-PUB-11 · API-MAIL-09 (FLOW-quan-ly-huy-gia-han §6). Sửa copy khi human duyệt Q-26 / Q-03.
 - "Priority support" (theo `00-overview §2`) chưa có định nghĩa vận hành (vd mục tiêu thời gian phản hồi) → cần định nghĩa ở `/help` hoặc bỏ bullet, vì bullet chỉ được ghi feature thật.
 - SCR-PUB-04 cần đồng bộ: thêm 3 câu FAQ cuối (§4) và các hàng / cụm bổ sung ở bảng so sánh (§3); ghi "Save [n]%" như §2.

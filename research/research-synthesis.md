@@ -1,5 +1,6 @@
 # testlib — Research synthesis (web)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · thêm bằng chứng `[LIVE:web]` từ `apps/testlibrary-web/web-evidence.md` (F-35–F-43): pain P-02 · P-03 · P-04 có thêm lời người dùng; §4 giá theo thị trường; §G bề mặt search, uy tín bên thứ ba, nhóm sản phẩm cùng chủ; thêm Q-24. Không có quan sát browser mới (egress chặn).
 - 2026-09-27 · v1 · claude-opus-5-5 · tổng hợp từ RS-testlibrary (teardown · tech-probe · legal-extract · design-report), `core-tech.md`, và `[LIVE:web]` (search review). n = 1 site.
 
 ## Provenance legend
@@ -21,6 +22,7 @@
 | Giá | `[LIVE:browser]`, USD, en-US, IP VN, logged-out; không thấy thuế; không có biến thể theo vùng vì không VPN |
 | Bị chặn | consent ở IP EU (`geo`), màn sau thanh toán + email vòng đời (`payment` / `login`), chất lượng report trả phí (free-tier rule) |
 | Safety wall | không nhập email/thẻ ở checkout, không bấm huỷ, không mua |
+| Phiên 2 (2026-09-28) | không drive được (container cloud bị egress chặn). Chỉ thêm `[LIVE:web]`: tóm tắt của công cụ search về review, khiếu nại, search index, pháp nhân (`web-evidence.md`). Không trang nào được mở trực tiếp; số liệu không dùng làm mốc |
 
 ## §1 Product overview & core functions
 
@@ -40,9 +42,9 @@ Actors: **khách ẩn danh** (từ SEO/ads) · **người trả trial** · **mem
 | P-xx | Pain | Bằng chứng (EV / nguồn) | Tag | Site |
 |---|---|---|---|---|
 | P-01 | Muốn hiểu bản thân (tính cách, quan hệ, nghề nghiệp) nhanh, rõ, không jargon | positioning "The tests that reveal the Real You", "No waiting and no confusing jargon" (EV-TLW-014 · EV-TLW-025); category tồn tại với nhiều site cùng mô hình (§2 applications-list) | `[LIVE:browser]` + `[INFERRED]` (nhu cầu) | testlibrary |
-| P-02 | Bị trừ tiền định kỳ bất ngờ sau khoản $1.95 | review: phàn nàn phí ẩn, bị ghi danh gói ~$39–55+/tháng (S13); offer không có chữ nào về gia hạn (F-17); checkout funnel không checkbox (F-18) | `[LIVE:web]` + `[LIVE:browser]` | testlibrary |
-| P-03 | Khó huỷ, khó được hoàn tiền | review: email huỷ/hoàn không được trả lời (S13); huỷ qua link xác minh email, huỷ có hiệu lực ngay (F-11); hoàn tiền tuỳ ý (F-29) | `[LIVE:web]` + `[LIVE:browser]` | testlibrary |
-| P-04 | Kết quả chung chung, không phản ánh câu trả lời | kết quả free cố định với mọi pattern (F-14) | `[LIVE:browser]` | testlibrary |
+| P-02 | Bị trừ tiền định kỳ bất ngờ sau khoản $1.95 | review: phàn nàn phí ẩn, bị ghi danh gói ~$39–55+/tháng (S13); 11 nguồn độc lập kể cùng mẫu "trả $1.95 → bị trừ $39.95 sau 7 ngày", 7 nguồn nói điều khoản chỉ ở chữ nhỏ hoặc trong email sau khi mua, 2 nguồn nói không có email nhắc (F-42); tên lạ "NordicaLab" trên sao kê (F-37); offer không có chữ nào về gia hạn (F-17); checkout funnel không checkbox (F-18) | `[LIVE:web]` + `[LIVE:browser]` | testlibrary |
+| P-03 | Khó huỷ, khó được hoàn tiền | review: email huỷ/hoàn không được trả lời (S13); hoàn tiền theo thang 25% → 40% → 100%, hoàn đủ khi doạ chargeback (3 nguồn); huỷ rối hoặc "không có subscription để huỷ" (4 nguồn); BBB rating F vì 18 khiếu nại không trả lời (F-41 · F-42); huỷ qua link xác minh email, huỷ có hiệu lực ngay (F-11); hoàn tiền tuỳ ý (F-29) | `[LIVE:web]` + `[LIVE:browser]` | testlibrary |
+| P-04 | Kết quả chung chung, không phản ánh câu trả lời | kết quả free cố định với mọi pattern (F-14); 2 nguồn review gọi report là "generic", "horoscope" (F-42) | `[LIVE:browser]` + `[LIVE:web]` | testlibrary |
 | P-05 | Lo ngại riêng tư khi trả lời câu hỏi nhạy cảm (sức khoẻ tinh thần, tình dục, chính trị) | pixel quảng cáo bắn theo từng câu (F-13); văn bản coi câu trả lời là dữ liệu nhạy cảm, đồng ý ngay khi gửi (F-29) | `[LIVE:browser]` (hành vi) · `[INFERRED]` (pain của user) | testlibrary |
 | P-06 | Bài dài (100 câu, "20 mins") dễ bỏ ngang | bài đầy đủ 20 trang (F-15); bài free chỉ 19 câu | `[INFERRED]` | testlibrary |
 | P-07 | Muốn biến kết quả thành hành động/thói quen, không chỉ đọc report | đối thủ đầu tư thử thách 30 ngày + check-in (F-21) | `[INFERRED]` | testlibrary |
@@ -86,6 +88,7 @@ Actors: **khách ẩn danh** (từ SEO/ads) · **người trả trial** · **mem
 
 Paywall surfaces: `pricing-page` (soft) · `upgrade-cta` ở kết quả free (soft) · `onboarding-plan-picker` = offer (**hard**, bẫy back) · `checkout` ×2 biến thể · `billing-settings` (teardown §4.5).
 Checkout: first-party, Apple Pay + Google Pay + thẻ; không "Powered by" `[LIVE:browser · EV-TLW-033]`.
+Giá theo thị trường (`[LIVE:web]`, không phải mốc giá): người review kể £1.95 → £39.95, 1,95 € → 39,95 €, AUD 1.95 → 54.95, HUF 710 → 10.930; biến thể PayPal $1.99 → $39.99; bài blog tháng 6/2026 còn ghi gói Lifetime $99.95. Khoản gia hạn nhiều khi hiện tên "NordicaLab" trên sao kê (web-evidence F-37 · F-38).
 **Consensus (n=1):** subscription tự gia hạn là nguồn thu; paywall đặt **sau khi user đã đầu tư công làm bài** (sunk cost); trial cần thẻ.
 
 ## §G Mặt tiền & phân phối
@@ -95,6 +98,9 @@ Checkout: first-party, Apple Pay + Google Pay + thẻ; không "Powered by" `[LIV
 | First visit | không cookie banner, không popup, không chat (IP VN) | `[LIVE:browser · EV-TLW-002]` |
 | Landing | hero → carousel test → chủ đề → 3 bước → lợi ích → FAQ → footer; mọi CTA card → pricing | `[LIVE:browser · EV-TLW-013]` |
 | SEO | 25 trang `/free-tests/<slug>` nhắm từ khoá lâm sàng; không OG / hreflang / JSON-LD; sitemap 403 với crawler không-JS | `[LIVE:browser · EV-TLW-052 · EV-TLW-015 · EV-TLW-001]` |
+| Search index | không URL `/free-tests/` nào được index; bề mặt được index là root funnel trả phí từng bài ("<X> Test - Get Your Accurate <X> Trait Report"), vài URL mang tham số chiến dịch, một URL checkout kèm `sessionId`; locale trong index chỉ de · fr · es; có domain sinh đôi testlibrary.us | `[LIVE:web]` · web-evidence F-39 · F-40 |
+| Uy tín bên thứ ba | Trustpilot 4,1/5 (khoảng 25–30 nghìn review, 8% một sao, công ty trả lời 98–99% review xấu); BBB rating F, không accredited; ProductReview 1/5; nhiều blog "scam or legit" từ 6/2026; offer lại ghi "Rated 4.8/5" | `[LIVE:web]` · web-evidence F-41 |
+| Nhóm sản phẩm cùng chủ | Aura Health LLC đứng tên ở testlibrary.com, mytraitsprofile.com (cùng mô hình giá) và salo.health; Haur B.V. có app Your Novella; các pháp nhân thành lập 2025 | `[LIVE:web]` · web-evidence F-35 · F-36 |
 | Kênh trả phí | Meta Pixel · Bing UET · Google Ads conversion chạy từ lần đầu → có chạy quảng cáo | `[LIVE:browser]` (pixel) · `[INFERRED]` (chạy ads) |
 | Kênh khác | không app store badge, không extension, không blog | `[LIVE:browser · EV-TLW-014]` |
 
@@ -194,7 +200,9 @@ Checkout: first-party, Apple Pay + Google Pay + thẻ; không "Powered by" `[LIV
 | Q-17 | FND tokens (màu, font) | design-report | C |
 | Q-18 | Chính sách hoàn tiền & huỷ | F-11 · F-29 · F-30 | A |
 | Q-19 | COGS / op (LLM, PDF, hosting) | core-tech §8 | A |
+| Q-24 | Tên hiện trên sao kê (billing descriptor) cho mọi phương thức thanh toán | web-evidence F-37 · P-02 | B |
 
 ## AI Notices
 - Mọi pattern ở §N/§R là n=1, không phải chuẩn thị trường.
-- P-05/P-06/P-07 là suy luận từ hành vi đối thủ, không có lời người dùng trực tiếp (không có `[LIVE:web]` riêng cho các pain này).
+- P-05/P-06/P-07 là suy luận từ hành vi đối thủ, không có lời người dùng trực tiếp. Lượt search 2026-09-28 không thấy nguồn nào phàn nàn về riêng tư (P-05); một số review có nhắc phải trả lời "100 questions" trước khi thấy kết quả, gần với P-06 (`web-evidence.md` §3).
+- Bằng chứng `[LIVE:web]` của phiên 2 là tóm tắt do công cụ search viết, có chỗ mâu thuẫn nhau; đếm theo số nguồn, không phải số ca (`web-evidence.md` §0 · §12).

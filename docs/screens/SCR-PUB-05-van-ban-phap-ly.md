@@ -6,6 +6,7 @@
 | SCR-PUB-05 | PUB | Short | Web | `/legal/:doc` (`privacy` · `terms` · `subscriptions` · `cookies`) | public | index | 390 · 768 · 1280 | FLOW-quyen-rieng-tu | Draft | (sau design) | `tracking-events.md` → `legal` | không có — nội dung tĩnh (§5) | **EV-TLW-040 · EV-TLW-041 · EV-TLW-043 · EV-TLW-049 · SC-TLW-06 · basis RS·F-12 · F-29 · Q-05** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: email báo thay đổi điều khoản đã có (API-MAIL-09).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose
@@ -102,5 +103,5 @@ Bấm một mục trong mục lục thì focus chuyển tới heading đích (`t
 ## 10. AI Notices
 - Nội dung văn bản do legal soạn (Q-05 · Q-16 · Q-18 còn mở). File này chỉ quy định khung, meta và những chỗ bắt buộc phải khớp (cong-nghe-loi §4, SYS-CONSENT, GC-RenewalDisclosure).
 - Tên pháp nhân, địa chỉ và domain email chưa có (Q-01 · Q-05); CMP-05 dùng placeholder tới khi chốt.
-- BR-PUB-11 cần một email "thay đổi điều khoản" gửi subscriber, nhưng `api-mapping §2` chưa có API-MAIL nào cho việc này.
+- BR-PUB-11: email "thay đổi điều khoản" đã có ở `api-mapping §2` (API-MAIL-09); job gửi, copy và link chưa đặc tả (FLOW-quan-ly-huy-gia-han §6).
 - Mục lục nhảy anchor là thay đổi tại chỗ, chưa có cạnh inline riêng.

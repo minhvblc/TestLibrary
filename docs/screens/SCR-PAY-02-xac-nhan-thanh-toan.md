@@ -7,6 +7,7 @@
 | SCR-PAY-02 | PAY | Full | Web | `/checkout/return` | guest | noindex | 390 · 768 · 1280 | FLOW-mo-khoa-report · FLOW-dang-ky-plus | Draft | (sau design) | `tracking-events.md` → `checkout_return` · ft_unlock | `docs/api/SCR-PAY-02-api.md` | **không có EV đối thủ (CS-21 `[BLOCKED · payment]`) — màn in-house · basis cong-nghe-loi §3 · BR-APP-01 · SYS-ENTITLEMENT** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · copy "still processing" của Plus đã chốt ở cong-nghe-loi §3; AI Notice về khách mua Plus khớp lại EC-07.
 - 2026-09-27 · v1.1 · claude-opus-5-5 · EC-07 / "Go to your dashboard" theo luật phiên sau checkout khách (SYS-AUTH).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
@@ -63,7 +64,7 @@ flowchart TD
 | CMP-ID | Component | Display condition | Copy verbatim (en-US) | Basis (EV / Q) |
 |---|---|---|---|---|
 | CMP-01 | Thanh trên funnel | luôn | logo (shell funnel, SYS-NAV §4) | SYS-NAV §4 |
-| CMP-02 | Panel trạng thái | mọi state trừ Empty | pending: "Confirming your payment…" · paid: "You're all set" · failed: "Your payment didn't go through. You haven't been charged." · canceled: "Checkout canceled. You haven't been charged." · processing (> 30 s): "Your payment is still processing. We'll email you as soon as your report is unlocked." (Plus, đề xuất: "Your payment is still processing. We'll email you as soon as your Plus plan is active.") · Locked: "This checkout isn't linked to this browser. Check your email for your receipt." | cong-nghe-loi §3 · BR-PAY-07 · BR-PAY-08 |
+| CMP-02 | Panel trạng thái | mọi state trừ Empty | pending: "Confirming your payment…" · paid: "You're all set" · failed: "Your payment didn't go through. You haven't been charged." · canceled: "Checkout canceled. You haven't been charged." · processing (> 30 s): "Your payment is still processing. We'll email you as soon as your report is unlocked." (Plus: "Your payment is still processing. We'll email you as soon as your Plus plan is active." — cong-nghe-loi §3) · Locked: "This checkout isn't linked to this browser. Check your email for your receipt." | cong-nghe-loi §3 · BR-PAY-07 · BR-PAY-08 |
 | CMP-03 | Tóm tắt đơn | paid | nhãn "Product" · "Total paid" · "Billing period" (Plus) · "Next charge" (Plus) · "Sold by"; giá trị lấy từ API-PAY-03 (số tiền do provider trả, đã gồm thuế); GC-RenewalDisclosure variant `post-purchase` (chỉ Plus); "A receipt is on its way to [email]." ([email] đã che một phần) | BR-PAY-09 · BR-APP-02 · BR-APP-12 · Q-05 |
 | CMP-04 | Nút chính | paid | "Read your report" (`report.single`) · "Go to your dashboard" (Plus) | BR-APP-01 · BR-PAY-10 |
 | CMP-05 | Nút phụ | failed · canceled | "Try again" (có `resultId`) · "Back to pricing" (mua từ trang giá) | cong-nghe-loi §3 |
@@ -195,6 +196,6 @@ Màn này hiện số tiền provider đã thu thật (API-PAY-03), không tự 
 ## 13. AI Notices
 - Provider chưa chốt (Q-04): cách nhận biết `canceled` (nhánh huỷ của return URL, phiên hết hạn) và hành vi back sau khi rời trang của provider phụ thuộc provider.
 - Copy biến thể cho Plus ở CMP-02 (processing) và CMP-06 là đề xuất; câu gốc ở cong-nghe-loi §3 chỉ nói về report.
-- Khách mua Plus phải đăng nhập bằng magic link mới vào được `/app` (EC-07). Muốn bỏ bước này thì cần quyết định ở Q-11.
+- Khách mua Plus (EC-07): email mới → phiên cấp ngay trên trình duyệt này; chỉ email **đã có tài khoản** mới phải đăng nhập bằng magic link. Muốn bỏ cả bước này thì cần quyết định ở Q-11.
 - Mua Plus từ SCR-PAY-01 (có `resultId`): blueprint chỉ có "Go to your dashboard"; đề xuất cân nhắc thêm lối tới report của kết quả đó.
 - Nhãn tóm tắt đơn ("Product", "Total paid", "Billing period", "Next charge", "Sold by") và `<title>` "Payment · TestLib" là đề xuất.

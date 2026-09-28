@@ -7,6 +7,7 @@
 | SCR-TEST-02 | TEST | Full | Web | `/results/:resultId` | guest | noindex | 390 · 768 · 1280 | FLOW-lam-bai-mien-phi · FLOW-mo-khoa-report · FLOW-luu-ket-qua-dang-nhap | Draft | (sau design) | `tracking-events.md` → `result` · ft_result | `docs/api/SCR-TEST-02-api.md` | **EV-TLW-079 · EV-TLW-138 · EV-TLW-159 · EV-TLW-108 · SC-TLW-14 · basis RS·F-14 · F-15 · F-17 · F-23 · CS-07 · P-04** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: `from` của ft_result start đã có test_page · unlock.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose & context
@@ -210,4 +211,4 @@ Tên type + mô tả 1 câu, điểm mọi thang (nhãn, %, dải, thứ tự), 
 - Link "Sign in" / "Browse all tests" ở frame Error/Locked đã có cạnh NAV-TEST-02-8 / NAV-TEST-02-9. Nút xoá kết quả (CMP-13 · API-RES-03) được thêm theo review quyền riêng tư (rút consent bài `sensitive` mà không cần xoá tài khoản).
 - Biến thể đã đăng nhập của CMP-06 ("Save to my account") và dòng "Saved to your account." là đề xuất in-house, cần duyệt cùng Q-11.
 - Màn không hiện giá nên không dùng GC-RenewalDisclosure; giá và gia hạn hiện ở SCR-PAY-01 (BR-APP-02).
-- ft_result start chưa có giá trị `from` cho lối vào từ SCR-PUB-03 (NAV-PUB-03-3) và SCR-PAY-01 (NAV-PAY-01-3); cần bổ sung ở `tracking-events.md`.
+- ft_result start: `tracking-events.md` đã có `from` = test_page / unlock cho lối vào từ SCR-PUB-03 (NAV-PUB-03-3) và SCR-PAY-01 (NAV-PAY-01-3).

@@ -7,6 +7,7 @@
 | SCR-ACC-01 | ACC | Full | Web | `/account` | account | noindex | 390 · 768 · 1280 | FLOW-quyen-rieng-tu | Draft | (sau design) | `tracking-events.md` → `account` · ft_data_export · ft_auth | `docs/api/SCR-ACC-01-api.md` | **EV-TLW-246 · SC-TLW-26 · basis research-synthesis §3 · BR-APP-11 · Q-05** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: job + email nhắc check-in hằng tuần đã có (API-JOB-06 · API-MAIL-10).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose & context
@@ -178,7 +179,7 @@ Tên, email, timezone hiện tại và timezone đang chờ áp dụng (kèm ng�
 | Đăng xuất | xoá phiên ở server trước khi chuyển trang, để back trình duyệt không hiện lại dữ liệu cũ từ cache |
 
 ## 13. AI Notices
-- Toggle "Weekly check-in reminder" chưa có job gửi và email tương ứng trong `api-mapping.md` §2 (chỉ có nhắc gia hạn API-JOB-01). Cần thêm job + email trước API-FREEZE.
+- Toggle "Weekly check-in reminder": job + email đã có ở `api-mapping.md` §2 (API-JOB-06 · API-MAIL-10, link tới SCR-APP-01); SYS-NAV §4 và SCR-APP-01 §2.1 chưa liệt kê link email này là điểm vào `/app`.
 - "Product updates" là email marketing; công cụ gửi (vendor, Q-16) và luồng huỷ đăng ký trong email chưa được mô tả.
 - Đổi email đăng nhập ngoài scope MVP; ghi chú "This is the email you sign in with." thay cho nút đổi email.
 - Tiêu đề nhóm ("Account", "Profile", "Emails") và các copy toast là copy đề xuất.

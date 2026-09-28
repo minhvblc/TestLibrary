@@ -1,6 +1,7 @@
 # [FLOW-luu-ket-qua-dang-nhap] — Lưu kết quả bằng email và đăng nhập bằng magic link
 > Flow kích hoạt: biến khách thành tài khoản mà không cần mật khẩu. Khách bấm "Email me a link" ở kết quả, bấm magic link trong email, và quay lại đúng trang đang xem (`next`) với kết quả đã gộp vào tài khoản, đọc được ở mọi thiết bị. Màn chính: [SCR-TEST-02](../screens/SCR-TEST-02-ket-qua.md) · [SCR-AUTH-01](../screens/SCR-AUTH-01-dang-nhap.md) · [SCR-APP-02](../screens/SCR-APP-02-report-cua-toi.md). Mục lục: [00-so-do-luong-tong](00-so-do-luong-tong.md).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · gap "không có lối đăng nhập từ SCR-TEST-02" đã có NAV-TEST-02-8.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 0. Meta
@@ -122,6 +123,6 @@ Tỉ lệ theo dõi: ft_result · save_email success → ft_auth · login (tỉ 
 
 ## 6. AI Notices
 - **Gap — ngữ nghĩa gộp khi bấm link ở thiết bị khác:** SYS-AUTH nói bấm link "gộp mọi kết quả của token hiện tại". Ở thiết bị khác, token hiện tại là token của thiết bị đó. Flow này giả định kết quả đã claim bằng API-RES-02 được gắn vào tài khoản ngay khi xác thực link, còn các kết quả khác của trình duyệt gốc chỉ gộp khi đăng nhập trên trình duyệt gốc. Cần khẳng định ở `docs/api/SCR-TEST-02-api.md`.
-- **Gap — không có lối đăng nhập từ state Locked của SCR-TEST-02:** copy nói "Sign in if you saved it" nhưng SCR-TEST-02 không có NAV tới SCR-AUTH-01 (thanh funnel chỉ có logo). Đề xuất thêm một cạnh "Sign in" → SCR-AUTH-01 với `next=/results/:resultId` ở SCR-TEST-02 §2.2.
+- **Đã xử lý (2026-09-28) — lối đăng nhập từ SCR-TEST-02:** SCR-TEST-02 §2.2 đã có NAV-TEST-02-8: CMP-11 "Sign in" → SCR-AUTH-01 · `next=/results/:resultId` (chỉ ở state Error 410 / Locked 403).
 - Copy xác nhận sau "Email me a link" ở SCR-TEST-02 chưa có trong blueprint; screen doc phải ghi verbatim (có thể dùng lại câu "Check your inbox" của SCR-AUTH-01).
 - `from = result` của ft_auth · start (tracking-events) chưa có cạnh tương ứng; sẽ khớp nếu thêm cạnh ở gap thứ hai.

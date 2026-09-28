@@ -6,6 +6,7 @@
 | SCR-AUTH-01 | AUTH | Short | Web | `/login` · `/login?next=<route>` · `/login/callback?token=…` | public | noindex | 390 · 768 · 1280 | FLOW-luu-ket-qua-dang-nhap | Draft | (sau design) | `tracking-events.md` → `login` · ft_auth | `docs/api/SCR-AUTH-01-api.md` | **EV-TLW-006 · SC-TLW-02 · basis RS·F-20 · Q-11 · SYS-AUTH** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: link "Privacy" đã có NAV-AUTH-01-5.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose
@@ -121,7 +122,7 @@ Chi tiết schema và lỗi riêng → `docs/api/SCR-AUTH-01-api.md`.
 Mở trang thì focus sẵn ở ô "Email" (trang chỉ có một việc). Enter trong ô Email = bấm CMP-04. Sau khi gửi, focus chuyển tới tiêu đề "Check your inbox" (`tabindex="-1"`, đọc qua `aria-live="polite"`); "Resend link" khi còn khoá dùng `aria-disabled` và đọc số giây còn lại. Còn lại theo `tieu-chuan-chung §5`.
 
 ## 10. AI Notices
-- Link "Privacy" ở CMP-07 chưa có cạnh NAV riêng; blueprint chỉ có NAV-AUTH-01-4 cho "Terms".
+- Link "Privacy" ở CMP-07 đã có cạnh NAV-AUTH-01-5 (→ SCR-PUB-05 `doc=privacy`); sơ đồ tổng `00-so-do-luong-tong` cập nhật 2026-09-28.
 - Rủi ro: link mở trong trình duyệt nhúng của app email thì phiên nằm ở trình duyệt đó, không phải trình duyệt gốc. Nếu đo thấy nhiều, cân nhắc thêm mã đăng nhập 6 số (cần một quyết định mới trong bảng quyết định).
 - Luồng Google quay về `/login/callback?provider=google…` (chi tiết ở file API); SYS-NAV §4 hiện chỉ ghi biến thể `?token=`.
 - Chưa FREEZE: Q-11 (mô hình auth), Q-16 (vendor gửi API-MAIL-01).

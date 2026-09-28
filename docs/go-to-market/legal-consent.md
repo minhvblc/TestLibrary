@@ -1,6 +1,7 @@
 # legal-consent — TestLib (tên tạm, Q-01) · dữ liệu, cookie, consent, văn bản pháp lý
 > Nguồn: `cong-nghe-loi §4` (dữ liệu rời trình duyệt) + `tracking-events.md` (event nào bắn, chỉ sau consent) + SYS-CONSENT. File này là **yêu cầu sản phẩm + khung khai báo**, KHÔNG phải tư vấn pháp lý; mọi văn bản phải qua legal review trước khi ra mắt (Q-05). Đối thủ chỉ được nhắc để nêu điều cần TRÁNH (`research/apps/testlibrary-web/legal-extract.md`).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · gap cũ đã có lời giải: rút consent từng kết quả (API-RES-03 · BR-REP-07), tuổi tối thiểu (Q-21), nguồn hỗ trợ khủng hoảng (Q-23); trỏ tới research pháp lý 2026-09-28 (Q-24 · Q-25 · Q-26).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
 ## 1. Dữ liệu thu thập
@@ -74,7 +75,7 @@ Mirror 1-1 `cong-nghe-loi §4` (16 hàng, cùng thứ tự, cùng giá trị). M
 | Lưu bằng chứng | `sensitive_consent_version` + thời điểm gửi trong API-TEST-01, lưu vào attempt | — | BR-APP-06 |
 | Tracking | route bài `sensitive` không tải analytics, không bắn event | — | BR-APP-06 · tracking-events |
 | Nguồn hỗ trợ | mở trang nguồn hỗ trợ khủng hoảng ở tab mới | "Get support now" | Q-06 · GC-SensitiveNotice |
-| Rút consent | **gap:** chưa có cách xoá riêng một kết quả; hiện chỉ có xoá tài khoản (BR-APP-11) hoặc kết quả khách tự xoá sau 30 ngày (BR-APP-08) → cần quyết định (đề xuất: hành động xoá kết quả ở màn kết quả / report) | — | BR-APP-11 · BR-APP-08 |
+| Rút consent | xoá từng kết quả ở SCR-APP-02 (NAV-APP-02-4) hoặc SCR-TEST-02 (NAV-TEST-02-10) qua API-RES-03: xoá cứng ngay kết quả + câu trả lời + report ráp từ nó; ngoài ra xoá tài khoản (BR-APP-11) hoặc kết quả khách tự xoá sau 30 ngày (BR-APP-08) | "Delete this result and your answers? This can't be undone." | BR-REP-07 · BR-APP-11 · BR-APP-08 |
 
 ## 3c. Công bố gia hạn tự động — checklist yêu cầu sản phẩm
 
@@ -97,7 +98,7 @@ Mỗi văn bản có dòng "Last updated: [date] · Version [n]" và khối phá
 
 | Trang | Route | Owner | Status | Nội dung tối thiểu |
 |---|---|---|---|---|
-| Privacy policy | `/legal/privacy` (SCR-PUB-05) | legal (human) duyệt · PO cấp §1–§3 | chưa có — chặn bởi Q-05 · Q-04 · Q-16 | bảng §1 (+ gap) · bên xử lý: Google (Firebase Analytics), vendor email (Q-16), provider / MoR (Q-04), hosting + region (Q-05) · thời hạn lưu · quyền xem / export / xoá (BR-APP-11) · dữ liệu nhạy cảm + cách rút consent · tuổi tối thiểu (chưa có Q) · liên hệ |
+| Privacy policy | `/legal/privacy` (SCR-PUB-05) | legal (human) duyệt · PO cấp §1–§3 | chưa có — chặn bởi Q-05 · Q-04 · Q-16 | bảng §1 (+ gap) · bên xử lý: Google (Firebase Analytics), vendor email (Q-16), provider / MoR (Q-04), hosting + region (Q-05) · thời hạn lưu · quyền xem / export / xoá (BR-APP-11) · dữ liệu nhạy cảm + cách rút consent (API-RES-03) · tuổi tối thiểu (Q-21) · liên hệ |
 | Terms of service | `/legal/terms` (SCR-PUB-05) | legal (human) | chưa có — Q-05 · Q-07 | mô tả dịch vụ + "not a diagnosis" (Q-06) · pháp nhân + luật áp dụng (Q-05) · nội dung bài + bản quyền (Q-07) · giới hạn trách nhiệm (legal review) |
 | Subscriptions & refunds | `/legal/subscriptions` (SCR-PUB-05) | legal (human) + PO | chưa có — Q-03 · Q-04 · Q-16 · Q-18 | giá + chu kỳ cite `00-overview §2` · tự gia hạn · email nhắc (Q-16) · huỷ một bước, dùng tới hết kỳ (BR-APP-04) · hoàn tiền (Q-18) · gia hạn thất bại · báo trước qua email khi đổi giá |
 | Cookie policy | `/legal/cookies` (SCR-PUB-05) | PO + dev (bảng §2) | chưa có — Q-12 · Q-13 | bảng §2 (cùng nguồn với banner) · cách đổi lựa chọn (link "Cookie settings" → SCR-PUB-07) |
@@ -106,6 +107,7 @@ Mỗi văn bản có dòng "Last updated: [date] · Version [n]" và khối phá
 ## 5. AI Notices
 - KHÔNG phải tư vấn pháp lý. Legal review bắt buộc trước ra mắt cho mọi văn bản ở §4, câu banner §3 và câu consent §3b. Pháp nhân, vùng bán, luật áp dụng = Q-05 (Group A, Mở).
 - §3c là yêu cầu sản phẩm rút từ BR-APP-02..04 và đối thủ; không khẳng định đủ hay thiếu so với luật của bất kỳ vùng nào.
-- Gap cần owner quyết: 8 loại dữ liệu chưa khai ở `cong-nghe-loi §4` (§1); chưa có cách rút consent cho từng kết quả `sensitive` (§3b); tuổi tối thiểu chưa có Q-xx; danh sách nguồn hỗ trợ khủng hoảng theo vùng chưa có (final-features §5).
+- Gap cần owner quyết: 8 loại dữ liệu chưa khai ở `cong-nghe-loi §4` (§1); tuổi tối thiểu (Q-21) và danh sách nguồn hỗ trợ khủng hoảng theo vùng (Q-23) còn Mở; rút consent từng kết quả đã có (API-RES-03 · BR-REP-07, §3b).
+- Research pháp lý 2026-09-28 (`research/regulatory-landscape.md` §8, không phải tư vấn pháp lý): mốc nhắc 7 ngày trước kỳ năm ở §3c #4 lệch cửa sổ 15–45 ngày của CA / NY / NYC → Q-26; CA đòi lưu bằng chứng consent gia hạn ≥ 3 năm (hoặc 1 năm sau khi hợp đồng kết thúc) → cột "Lưu bao lâu" của §1 khi Q-05 chốt; EU đòi chức năng rút hợp đồng 14 ngày từ 19/6/2026 → Q-25; tên trên sao kê → Q-24.
 - Check-in cảm xúc đang có căn cứ "hợp đồng" trong khi được coi là dữ liệu nhạy cảm (mirror nguồn) → legal review xem có cần consent tường minh như bài `sensitive` không.
 - Tên và thời hạn cookie / IndexedDB của Firebase là suy luận `[INFERRED]`; kiểm bằng DevTools khi gắn SDK (pre-launch checklist #8 ở 00-gtm-strategy §6).

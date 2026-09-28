@@ -1,6 +1,7 @@
 # [testlib] — Danh sách web app khảo sát
 > Scope: thư viện bài test tâm lý / tính cách, dạng quiz-funnel · thị trường mục tiêu `en-US` (XTW_LANG) · region quan sát: VN (IP, Cloudflare POP SIN) · **full** · 2026-09-27 · mode `full-mvp`. Mọi site phải **mở được trong Chrome research** (không mở được thì ngoài scope, ghi lý do).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · §2: mytraitsprofile.com là site **cùng chủ** (Aura Health LLC), không phải đối thủ độc lập; thêm các site cùng nhóm / na ná tìm thấy qua web search. Không drive thêm site nào (container cloud bị egress chặn). Coverage ledger §3 giữ nguyên.
 - 2026-09-27 · v1 · claude-opus-5-5 · theo quyết định của user: chỉ drive **testlibrary.com**. Các site cùng category chỉ ghi nhận ở §2 (nguồn web search, không drive).
 
 ## 1. Sites để drive
@@ -13,10 +14,12 @@
 
 | Site | Vì sao | Bằng chứng |
 |---|---|---|
-| mytraitsprofile.com | user chọn chỉ drive testlibrary.com (Phase 0). Theo search summary: cùng mô hình $1.95 → $39.95/4 tuần | web search 2026-09-27 `[LIVE:web]` (không drive) |
+| mytraitsprofile.com | user chọn chỉ drive testlibrary.com (Phase 0). **Cùng chủ với testlibrary.com**: nêu Aura Health LLC (Sheridan, WY) là service provider, cùng mô hình €1.95 → €39.95 mỗi 28 ngày, cùng khuôn domain `.us` + `/docs/` (web-evidence F-35) | web search 2026-09-27 · 2026-09-28 `[LIVE:web]` (không drive) |
 | personality.co | như trên (search summary: 7 ngày → $39.95/4 tuần) | web search 2026-09-27 `[LIVE:web]` |
 | mypersonality.net | như trên (search summary: $1.99 trial 7 ngày → $27.88/tháng) | web search 2026-09-27 `[LIVE:web]` |
 | 16personalities.com · truity.com | như trên (leader category, mô hình freemium/mua lẻ) | web search 2026-09-27 `[LIVE:web]` |
+| salo.health · Your Novella (app) | cùng nhóm pháp nhân (Aura Health LLC · Haur B.V.) nhưng khác category (sức khoẻ / đọc truyện) | web search 2026-09-28 `[LIVE:web]` · web-evidence F-35 |
+| test-library.com · mytraitprofile.com · persolabs.org · mindprofile.co · testolib.com · testorix.com · personality.cc | site cùng mô hình hoặc na ná tên / tagline; chưa thấy quan hệ sở hữu với testlibrary.com | web search 2026-09-28 `[LIVE:web]` · web-evidence §7 |
 
 > Số trong §2 là `[LIVE:web]`: không được dùng làm mốc giá, không được dùng cho feature-lock.
 
@@ -42,5 +45,6 @@ Coverage = 4/7 ô LIVE-full ≈ 57%.
 Chỉ một site nên không có "archetype so sánh". Testlibrary đại diện nhánh **quiz-funnel trial→subscription** của category (theo search, nhánh này có nhiều site na ná). Nhánh **freemium/mua lẻ** (16personalities, truity) chưa được drive → mọi nhận định "thị trường" chỉ đúng cho nhánh funnel. Đây là giới hạn chính của bộ research này (xem `research-synthesis.md` Fidelity note).
 
 ## 5. AI Notices
+- 2026-09-28: web search cho thấy nhiều domain trong nhánh "quiz-funnel" có thể thuộc cùng một nhóm chủ (web-evidence F-35), nên số domain không phản ánh số đối thủ độc lập. Muốn so sánh category thì nên drive thêm nhánh freemium / mua lẻ (16personalities, truity) thay vì thêm site cùng nhóm.
 - Scope 1 site là quyết định của user (Phase 0). Template "full" khuyến nghị 6–10 site, nên đây là độ lệch có chủ đích, được ghi lại ở đây.
 - Giá ở §2 đến từ tóm tắt của công cụ search, không phải capture.

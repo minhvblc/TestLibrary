@@ -1,6 +1,7 @@
 # [SCR-PAY-04] API — Huỷ gia hạn
 Refs: `docs/screens/SCR-PAY-04-huy-gia-han.md` · FLOW-quan-ly-huy-gia-han · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency — KHÔNG lặp lại ở đây) · schema đầy đủ của API-PAY-04 ở `docs/api/SCR-PAY-03-api.md`.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · định dạng ngày theo tieu-chuan-chung §4 ("October 27, 2026").
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 0. Endpoint overview
@@ -65,7 +66,7 @@ Huỷ gia hạn cuối kỳ bằng một request. Side effect: gọi provider đ
 
 | Response field | Used by (CMP-ID) | Display format |
 |---|---|---|
-| `subscription.accessEndsAt` | CMP-03 · toast ở SCR-PAY-03 | "[date]" dạng "October 27 2026" theo timezone tài khoản (tieu-chuan-chung §4) |
+| `subscription.accessEndsAt` | CMP-03 · toast ở SCR-PAY-03 | "[date]" dạng "October 27, 2026" theo timezone tài khoản (tieu-chuan-chung §4) |
 | `subscription.nextCharge` · `subscription.renewalPrice` · `subscription.interval` | CMP-03 | GC-RenewalDisclosure `billing` · Active: "Next charge: [amount] on [date]." + câu gia hạn |
 | `subscription` = null / không active | CMP-05 · state Empty | "You don't have an active renewal." + "Plan & billing" |
 | `subscription.status = canceled` (sau API-PAY-05) | NAV-PAY-04-1 | replace sang `/account/billing` + toast "Your plan won't renew. You have Plus until [date]." |

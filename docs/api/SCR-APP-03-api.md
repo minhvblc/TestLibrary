@@ -1,6 +1,7 @@
 # [SCR-APP-03] API — Report chi tiết
 Refs: `docs/screens/SCR-APP-03-report-chi-tiet.md` · FLOW-mo-khoa-report · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency — KHÔNG lặp lại ở đây)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: API-REP-05 (đánh giá report) đã có.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 0. Endpoint overview
@@ -121,4 +122,4 @@ Trả trạng thái PDF mới nhất cho (`reportId`, `contentVersion`, locale).
 ## AI Notices
 - Payload và tên field là SPEC mới, không lấy từ đối thủ. Đối thủ render PDF từ HTML bằng headless Chromium (RS·F-34), mình chỉ cùng hướng kỹ thuật (TD-03).
 - `pdf.pageCount` và `pageCount` luôn là số trang của file thật. Đối thủ hứa "20-page report" nhưng file có 11 trang (RS·F-23); mình không được lệch như vậy.
-- Chưa có API ghi feedback cho CMP-08 ("Was this report useful?"); cần thêm vào `api-mapping.md`.
+- Feedback của CMP-08 ("Was this report useful?") ghi qua API-REP-05 (`api-mapping.md`); schema chi tiết chưa có ở file này.
