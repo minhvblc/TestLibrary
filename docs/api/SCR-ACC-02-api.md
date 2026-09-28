@@ -1,6 +1,7 @@
 # [SCR-ACC-02] API — Xoá tài khoản
 Refs: `docs/screens/SCR-ACC-02-xoa-tai-khoan.md` · FLOW-quyen-rieng-tu · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency — KHÔNG lặp lại ở đây)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · Q-05 (f): bước xoá cứng giữ lại chứng từ đơn hàng, bằng chứng consent gia hạn, yêu cầu huỷ / rút; Q-18: API-ME-04 không hoàn tiền, rút 14 ngày là API-PAY-08; provider = Paddle (Q-04); AI Notices theo Q-05 đã chốt.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 0. Endpoint overview
@@ -14,11 +15,11 @@ Refs: `docs/screens/SCR-ACC-02-xoa-tai-khoan.md` · FLOW-quyen-rieng-tu · `00-q
 Yêu cầu xoá tài khoản đang đăng nhập. Auth: cookie `tl_session` + `X-CSRF-Token`. Endpoint này có tiền (tắt gia hạn), nên theo `api-mapping.md` phải được human review trước API-FREEZE.
 
 Side effect, chạy theo đúng thứ tự; bước nào lỗi thì dừng và không đổi gì ở các bước sau:
-1. Nếu có subscription còn gia hạn: tắt gia hạn qua provider (hết kỳ thì dừng, không thu thêm; BR-APP-04). Provider lỗi → trả 502, tài khoản giữ nguyên.
+1. Nếu có subscription còn gia hạn: tắt gia hạn qua Paddle (hết kỳ thì dừng, không thu thêm; BR-APP-04). Paddle lỗi → trả 502, tài khoản giữ nguyên. Không hoàn tiền (Q-18): khoản còn trong 14 ngày vẫn rút được ở SCR-PAY-05 (API-PAY-08, định danh bằng email + mã đơn), kể cả sau khi đã yêu cầu xoá.
 2. Đánh dấu tài khoản "chờ xoá", ghi hạn xoá cứng = thời điểm yêu cầu + 30 ngày.
 3. Thu hồi mọi phiên `tl_session` của user trên mọi thiết bị, và xoá cookie phiên trong chính phản hồi này.
 4. Đưa API-MAIL-07 vào hàng đợi (xác nhận + cách khôi phục).
-5. Tới hạn thì API-JOB-04 xoá cứng. Nếu user đăng nhập lại trước hạn thì tài khoản được khôi phục ở bước tạo phiên (BR-ACC-06).
+5. Tới hạn thì API-JOB-04 xoá cứng; chỉ giữ lại, tách khỏi hồ sơ: chứng từ đơn hàng (7 năm), bằng chứng consent gia hạn (3 năm hoặc 1 năm sau khi hợp đồng kết thúc, lấy mốc dài hơn) và yêu cầu huỷ / rút (Q-05 (f) · cong-nghe-loi §4). Nếu user đăng nhập lại trước hạn thì tài khoản được khôi phục ở bước tạo phiên (BR-ACC-06).
 
 | Body field | Type | Required | Meaning | Basis |
 |---|---|---|---|---|
@@ -52,4 +53,5 @@ Không nhận field lý do: màn không hỏi lý do xoá (BR-APP-04).
 - Payload là SPEC mới; đối thủ không có xoá tài khoản (EV-TLW-246), không có gì để tham chiếu.
 - `confirm` gửi trong body của DELETE (fetch hỗ trợ). Nếu proxy/CDN chặn body của DELETE thì đổi sang header, quyết định lúc làm BE.
 - Khôi phục tài khoản xảy ra ở bước tạo phiên (API-AUTH-02 / API-AUTH-04); banner BR-ACC-06 dựa trên cờ `accountRestored` / query `restored=1` đã mô tả ở `SCR-AUTH-01-api.md`.
-- Danh sách dữ liệu bị xoá cứng và bản ghi giao dịch phải giữ theo luật: chốt cùng Q-05 ở `legal-consent.md`.
+- Q-05 (f) đã chốt thời hạn giữ chứng từ đơn hàng và bằng chứng consent gia hạn (bước 5); danh sách chi tiết ở cong-nghe-loi §4 · legal-consent §1.
+- API này không hoàn tiền (Q-18); rút trong 14 ngày là API-PAY-08 (`SCR-PAY-05-api.md`).

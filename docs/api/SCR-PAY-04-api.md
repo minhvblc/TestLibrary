@@ -1,6 +1,7 @@
 # [SCR-PAY-04] API — Huỷ gia hạn
 Refs: `docs/screens/SCR-PAY-04-huy-gia-han.md` · FLOW-quan-ly-huy-gia-han · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency — KHÔNG lặp lại ở đây) · schema đầy đủ của API-PAY-04 ở `docs/api/SCR-PAY-03-api.md`.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.3 · claude-opus-5-5 · Q-18 · Q-25: API-PAY-04 dùng thêm `subscription.currentPeriodPayment` cho CMP-07 / NAV-PAY-04-3 (rút thay vì huỷ → SCR-PAY-05); API-PAY-05 không hoàn tiền (rút = API-PAY-08), email có ngày giờ nhận yêu cầu (BR-PAY-21), lưu thời điểm nhận làm bằng chứng; provider = Paddle (Q-04); ví dụ dùng giá thật (Q-03). Sửa sót D-06 ở `subscription.id`.
 - 2026-09-28 · v1.2 · claude-opus-5-5 · D-06: khoá idempotency của huỷ / tiếp tục gia hạn = UUID cho mỗi thao tác mới + server kiểm trạng thái hiện tại (thay khoá cố định `subscriptionId` + hành động). D-07: thời hạn lưu `reason` theo cong-nghe-loi §4.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · định dạng ngày theo tieu-chuan-chung §4 ("October 27, 2026").
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
@@ -19,11 +20,12 @@ Schema, nguồn dữ liệu và auth: `SCR-PAY-03-api.md`. Màn này chỉ quy�
 | Response `data` field (dùng ở đây) | Type | Meaning | Basis |
 |---|---|---|---|
 | `subscription` | object / null | null → state Empty | BR-PAY-17 |
-| `subscription.id` | string | gửi lại ở API-PAY-05 + làm idempotency key | 00-quy-uoc-api §5 |
+| `subscription.id` | string | gửi lại trong body API-PAY-05 (khoá idempotency là UUID mỗi thao tác, 00-quy-uoc-api §5) | 00-quy-uoc-api §5 |
 | `subscription.status` · `subscription.cancelAtPeriodEnd` | enum · boolean | `active` / `past_due` và chưa lên lịch huỷ → Default; còn lại → Empty | BR-PAY-17 · BR-APP-04 |
 | `subscription.accessEndsAt` | ISO-8601 | [date] trong "Your Plus plan stays active until [date]…" | BR-APP-04 · SYS-ENTITLEMENT |
 | `subscription.nextCharge` | object `{ amount, currency, date }` / null | lần thu kế tiếp, sẽ bị dừng nếu huỷ (GC-RenewalDisclosure `billing` · Active trong CMP-03) | BR-APP-02 |
-| `subscription.renewalPrice` · `subscription.interval` | object · enum | giá + chu kỳ trong GC-RenewalDisclosure | BR-APP-02 |
+| `subscription.renewalPrice` · `subscription.interval` | object · enum | giá (đã khoá lúc mua, BR-APP-13) + chu kỳ trong GC-RenewalDisclosure | BR-APP-02 · BR-APP-13 |
+| `subscription.currentPeriodPayment.orderNumber` · `.withdrawableUntil` | string · ISO-8601 / null | `withdrawableUntil` > now → hiện CMP-07; `orderNumber` là tham số `order` của NAV-PAY-04-3 | BR-APP-14 · Q-25 |
 | `planKey` | enum | `plan_key` cho ft_subscription cancel_confirm | ft_subscription |
 
 | Lỗi RIÊNG màn | When | UI reaction (verbatim) |
@@ -32,7 +34,7 @@ Schema, nguồn dữ liệu và auth: `SCR-PAY-03-api.md`. Màn này chỉ quy�
 
 ## API-PAY-05 · POST `/v1/billing/subscription/cancel`
 
-Huỷ gia hạn cuối kỳ bằng một request. Side effect: gọi provider đặt huỷ cuối kỳ (mức nghiệp vụ, Q-04); bản sao DB → `cancelAtPeriodEnd = true`, `status = canceled`; entitlement `plus` giữ tới `accessEndsAt` (SYS-ENTITLEMENT); đưa email xác nhận API-MAIL-04 vào hàng đợi, gửi trong 5 phút (BR-PAY-15); lưu `reason` nội bộ (không gửi analytics; tách khỏi danh tính sau 90 ngày, xoá luôn nếu tài khoản bị xoá trước mốc đó — cong-nghe-loi §4 · BR-APP-11). Không hoàn tiền tự động (Q-18). Gọi lại khi đã `canceled` → 200 với trạng thái hiện tại, không gửi email lần hai. Auth: `tl_session` bắt buộc (401 → `/login?next=/account/billing/cancel`). Header: `Idempotency-Key`, `X-CSRF-Token`.
+Huỷ gia hạn cuối kỳ bằng một request. Side effect: gọi Paddle đặt huỷ cuối kỳ (mức nghiệp vụ, Q-04); bản sao DB → `cancelAtPeriodEnd = true`, `status = canceled`; entitlement `plus` giữ tới `accessEndsAt` (SYS-ENTITLEMENT); lưu thời điểm nhận yêu cầu (bằng chứng, giữ như đơn hàng — cong-nghe-loi §4); đưa email xác nhận API-MAIL-04 vào hàng đợi, gửi trong 5 phút, có ngày giờ nhận yêu cầu (BR-PAY-15 · BR-PAY-21); lưu `reason` nội bộ (không gửi analytics; tách khỏi danh tính sau 90 ngày, xoá luôn nếu tài khoản bị xoá trước mốc đó — cong-nghe-loi §4 · BR-APP-11). Không hoàn tiền (Q-18 (a)); muốn hoàn trong 14 ngày thì rút ở SCR-PAY-05 (API-PAY-08, `SCR-PAY-05-api.md`). Gọi lại khi đã `canceled` → 200 với trạng thái hiện tại, không gửi email lần hai. Auth: `tl_session` bắt buộc (401 → `/login?next=/account/billing/cancel`). Header: `Idempotency-Key`, `X-CSRF-Token`.
 
 | Body field | Type | Required | Meaning | Basis |
 |---|---|---|---|---|
@@ -50,7 +52,7 @@ Huỷ gia hạn cuối kỳ bằng một request. Side effect: gọi provider đ
     "subscription": {
       "id": "sub_41c9…", "status": "canceled", "cancelAtPeriodEnd": true,
       "currentPeriodEnd": "2026-10-27T09:00:00Z", "accessEndsAt": "2026-10-27T09:00:00Z",
-      "interval": "month", "renewalPrice": { "amount": "<placeholder Q-03>", "currency": "USD" },
+      "interval": "month", "renewalPrice": { "amount": 1299, "currency": "USD" },
       "nextCharge": null, "canResume": true
     }
   }
@@ -71,8 +73,9 @@ Huỷ gia hạn cuối kỳ bằng một request. Side effect: gọi provider đ
 | `subscription.nextCharge` · `subscription.renewalPrice` · `subscription.interval` | CMP-03 | GC-RenewalDisclosure `billing` · Active: "Next charge: [amount] on [date]." + câu gia hạn |
 | `subscription` = null / không active | CMP-05 · state Empty | "You don't have an active renewal." + "Plan & billing" |
 | `subscription.status = canceled` (sau API-PAY-05) | NAV-PAY-04-1 | replace sang `/account/billing` + toast "Your plan won't renew. You have Plus until [date]." |
+| `subscription.currentPeriodPayment.withdrawableUntil` · `.orderNumber` | CMP-07 · NAV-PAY-04-3 | "Paid in the last 14 days? You can withdraw instead and get a full refund." + "Withdraw instead" → `/cancel?mode=withdraw&order=<orderNumber>` |
 
 ## AI Notices
-- Hoàn tiền khi huỷ theo Q-18 (đang Mở); API này không hoàn tiền.
-- Hành vi với subscription `past_due` khi huỷ (dừng thu lại, ngày mất quyền) theo provider (Q-04); `accessEndsAt` do server tính.
+- Q-18 đã chốt (2026-09-28): API này không hoàn tiền; rút trong 14 ngày là API-PAY-08 (`SCR-PAY-05-api.md`).
+- Hành vi với subscription `past_due` khi huỷ (dừng thu lại, ngày mất quyền) theo cấu hình Paddle (Q-04, đã chốt; điền khi mở tài khoản — `bang-quyet-dinh` §2 #3); `accessEndsAt` do server tính.
 - Money API → human review trước API-FREEZE (api-mapping §1).

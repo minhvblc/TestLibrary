@@ -1,6 +1,7 @@
 # [FLOW-dang-ky-plus] — Đăng ký Plus từ bảng giá
 > Flow tiền thứ hai: user (khách hoặc tài khoản Free) đăng ký Plus (tháng hoặc năm, tự gia hạn) với giá gia hạn, chu kỳ và cách huỷ hiện rõ, consent bằng checkbox không tick sẵn, trả tiền ở checkout của provider và vào dashboard với thử thách 30 ngày đã mở. Màn chính: [SCR-PUB-04](../screens/SCR-PUB-04-bang-gia.md) · [SCR-PAY-02](../screens/SCR-PAY-02-xac-nhan-thanh-toan.md) · [SCR-APP-01](../screens/SCR-APP-01-trang-chu-member.md). Mục lục: [00-so-do-luong-tong](00-so-do-luong-tong.md).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.3 · claude-opus-5-5 · bước 1 của SCR-PAY-05 có ô tên bắt buộc (quyết định 2026-09-28): KB rút ghi đủ trường tên, email + mã đơn; điền sẵn khi có phiên vẫn sửa được.
 - 2026-09-28 · v1.2 · claude-opus-5-5 · theo quyết định 2026-09-28: giá thật (Q-03), câu reseller Paddle + tên trên sao kê (Q-04 · Q-24), nhắc 21 / 7 ngày (Q-16), khoá giá (Q-27); thêm KB-7 đổi ý trong 14 ngày qua NAV-PAY-02-5 → SCR-PAY-05 (Q-18 · Q-25); gỡ notice Q-03 / Q-16 / Q-26 đang mở.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · cập nhật theo docs mới hơn: phiên sau checkout khách (SYS-AUTH · SCR-PAY-02 EC-07), 422 `already_entitled` (SCR-PUB-04 EC-06), copy pending cho Plus (cong-nghe-loi §3), API-MAIL-09 + FLOW-quan-ly-huy-gia-han; thêm Q-26 (mốc nhắc gói năm).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
@@ -83,7 +84,7 @@ SCR-PUB-04 là paywall **soft**: luôn có lối ra free liền nét ("Take a fr
 
 **KB-7 · Đổi ý trong 14 ngày.**
 1. SCR-PAY-02 (paid) → "Withdraw from contract here" → SCR-PAY-05 `?mode=withdraw&order=<orderNumber>` · NAV-PAY-02-5 (push). Về sau: cùng link ở footer mọi trang, trong email biên nhận (API-MAIL-02), hoặc "Withdraw and get a refund" ở Gói & thanh toán (NAV-PAY-03-6).
-2. SCR-PAY-05: email + mã đơn (điền sẵn khi có phiên) → "Confirm withdrawal" → API-PAY-08: hoàn toàn bộ qua Paddle, quyền Plus kết thúc ngay (BR-APP-14) → email API-MAIL-11 có ngày giờ nhận yêu cầu. Kỳ gia hạn tháng về sau không rút được, chỉ huỷ gia hạn (Q-18 (c)); mỗi lần gia hạn năm lại rút được trong 14 ngày.
+2. SCR-PAY-05: tên, email + mã đơn (điền sẵn khi có phiên, vẫn sửa được) → "Confirm withdrawal" → API-PAY-08: hoàn toàn bộ qua Paddle, quyền Plus kết thúc ngay (BR-APP-14) → email API-MAIL-11 có ngày giờ nhận yêu cầu. Kỳ gia hạn tháng về sau không rút được, chỉ huỷ gia hạn (Q-18 (c)); mỗi lần gia hạn năm lại rút được trong 14 ngày.
 
 ## 3. Cover-case grid (web)
 

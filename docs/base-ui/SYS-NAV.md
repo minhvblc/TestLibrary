@@ -1,6 +1,7 @@
 # SYS-NAV — hệ điều hướng · route table · sơ đồ màn theo nền tảng
 > Owner: CẠNH (`NAV-…`) định nghĩa ở SCR §2.2 của màn NGUỒN; route ở SCR meta. File này sở hữu KHUNG (§1), TỪ VỰNG (§2–3), ROUTE TABLE (§4). §5–7 là bản SINH (`navmap.py . write`), không sửa tay. Sản phẩm chỉ có **Web**; iOS / Android ngoài scope.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.5 · claude-opus-5-5 · route SCR-PAY-05: có phiên thì điền sẵn tên + email + mã đơn.
 - 2026-09-28 · v1.4 · claude-opus-5-5 · route SCR-PAY-05: thêm lối vào từ email nhắc gia hạn (API-MAIL-03, `?order=`).
 - 2026-09-28 · v1.3 · claude-opus-5-5 · route table: SCR-APP-01 vào từ email nhắc check-in hằng tuần (API-MAIL-10) và `/app#checkin` (Q-22).
 - 2026-09-28 · v1.2 · claude-opus-5-5 · footer: link huỷ / rút có ở mọi trang có footer; SCR-TEST-01 (runner) không có footer theo thiết kế, là ngoại lệ có chủ đích. SCR-PUB-02 `?topic=` render theo request (Q-09).
@@ -65,7 +66,7 @@
 | SCR-PAY-02 | `/checkout/return?session=<id>` | guest | phiên checkout không thuộc trình duyệt/tài khoản → state Locked tại chỗ (không redirect); thiếu `session` → `/` | noindex | funnel | provider return URL (sau checkout) | |
 | SCR-PAY-03 | `/account/billing` | account | `/login?next=/account/billing` | noindex | app | email nhắc gia hạn / thanh toán thất bại | root (menu avatar) |
 | SCR-PAY-04 | `/account/billing/cancel` | account | `/login?next=/account/billing/cancel` | noindex | app | email nhắc gia hạn "Cancel renewal" (API-MAIL-03) | |
-| SCR-PAY-05 | `/cancel` · `/cancel?order=<orderNumber>` · `/cancel?mode=withdraw` · `/cancel?mode=withdraw&order=<orderNumber>` | public | — (không cần đăng nhập; có phiên thì điền sẵn email + mã đơn) | index | public | email biên nhận "Withdraw from contract here" (API-MAIL-02) · email nhắc gia hạn "Cancel without signing in" (API-MAIL-03, `/cancel?order=<orderNumber>`) · SEO ("cancel [brand]") | BR-PAY-18 · Q-25 |
+| SCR-PAY-05 | `/cancel` · `/cancel?order=<orderNumber>` · `/cancel?mode=withdraw` · `/cancel?mode=withdraw&order=<orderNumber>` | public | — (không cần đăng nhập; có phiên thì điền sẵn tên + email + mã đơn) | index | public | email biên nhận "Withdraw from contract here" (API-MAIL-02) · email nhắc gia hạn "Cancel without signing in" (API-MAIL-03, `/cancel?order=<orderNumber>`) · SEO ("cancel [brand]") | BR-PAY-18 · Q-25 |
 | SCR-AUTH-01 | `/login` · `/login?next=<route>` · `/login?error=<code>` · `/login/callback?token=…` · `/login/callback?provider=google&next=…` | public | đã đăng nhập → `next` hoặc `/app` | noindex | minimal (logo) | email magic link (API-MAIL-01) | callback không có UI riêng; lỗi callback → `/login?error=` |
 | SCR-APP-01 | `/app` · `/app#checkin` | account | `/login?next=/app` | noindex | app | email nhắc check-in hằng tuần (API-MAIL-10) · `/app#checkin` từ SCR-ACC-01 (NAV-ACC-01-8) | root; `#checkin` mở sẵn bước bật check-in khi chưa bật (Q-22) |
 | SCR-APP-02 | `/app/reports` | account | `/login?next=/app/reports` | noindex | app | — | root |

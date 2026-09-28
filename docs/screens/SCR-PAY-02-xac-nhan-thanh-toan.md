@@ -7,6 +7,7 @@
 | SCR-PAY-02 | PAY | Full | Web | `/checkout/return` | guest | noindex | 390 · 768 · 1280 | FLOW-mo-khoa-report · FLOW-dang-ky-plus | Draft | (sau design) | `tracking-events.md` → `checkout_return` · ft_unlock | `docs/api/SCR-PAY-02-api.md` | **không có EV đối thủ (CS-21 `[BLOCKED · payment]`) — màn in-house · basis cong-nghe-loi §3 · BR-APP-01 · SYS-ENTITLEMENT · Q-04 · Q-18 · Q-24 · Q-25** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.4 · claude-opus-5-5 · CMP-07: [date] = ngày của `withdrawableUntil` lùi 1 ngày (quy tắc hiển thị hạn rút ở SCR-PAY-05-api), để không hứa quá mốc server nhận.
 - 2026-09-28 · v1.3 · claude-opus-5-5 · theo quyết định 2026-09-28: state paid có nhãn "Merchant of Record" thay "Sold by" (Q-04), "Order number", dòng tên trên sao kê (Q-24), khối rút 14 ngày CMP-07 + NAV-PAY-02-5 → SCR-PAY-05 (Q-18 · Q-25); footer `compact` CMP-08; BR-PAY-10 ghi ngoại lệ push; giá thật (Q-03).
 - 2026-09-28 · v1.2 · claude-opus-5-5 · copy "still processing" của Plus đã chốt ở cong-nghe-loi §3; AI Notice về khách mua Plus khớp lại EC-07.
 - 2026-09-27 · v1.1 · claude-opus-5-5 · EC-07 / "Go to your dashboard" theo luật phiên sau checkout khách (SYS-AUTH).
@@ -74,7 +75,7 @@ flowchart TD
 | CMP-04 | Nút chính | paid | "Read your report" (`report.single`) · "Go to your dashboard" (Plus) | BR-APP-01 · BR-PAY-10 |
 | CMP-05 | Nút phụ | failed · canceled | "Try again" (có `resultId`) · "Back to pricing" (mua từ trang giá) | cong-nghe-loi §3 |
 | CMP-06 | Ghi chú khách | paid + chưa đăng nhập | "To open your report on another device, use the sign-in link in your email." (Plus, đề xuất: "Use the sign-in link in your email to start using Plus.") | SYS-AUTH · Q-11 |
-| CMP-07 | Khối rút 14 ngày | paid, khi `withdrawableUntil` còn trong tương lai (ẩn khi null hoặc đã qua) | "Changed your mind? You can withdraw until [date] for a full refund." + link "Withdraw from contract here" (NAV-PAY-02-5); [date] = `withdrawableUntil` kiểu "October 12, 2026" theo timezone tài khoản (khách: trình duyệt) | Q-18 · Q-25 · BR-APP-14 |
+| CMP-07 | Khối rút 14 ngày | paid, khi `withdrawableUntil` còn trong tương lai (ẩn khi null hoặc đã qua) | "Changed your mind? You can withdraw until [date] for a full refund." + link "Withdraw from contract here" (NAV-PAY-02-5); [date] = ngày của `withdrawableUntil` lùi 1 ngày (quy tắc hiển thị hạn rút ở SCR-PAY-05-api), kiểu "October 11, 2026" theo timezone tài khoản (khách: trình duyệt) | Q-18 · Q-25 · BR-APP-14 |
 | CMP-08 | Footer | luôn | GC-SiteFooter variant `compact` (shell funnel), có "Cancel your plan here" · "Withdraw from contract here" → SCR-PAY-05 | SYS-NAV §1 · Q-25 |
 
 ## 4. Screen states

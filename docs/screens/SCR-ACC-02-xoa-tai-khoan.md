@@ -4,15 +4,16 @@
 
 | id | module | doc level | platforms | route | access | indexable | viewports | related FLOW | status | design | tracking | api | Evidence / visual basis |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| SCR-ACC-02 | ACC | Full | Web | `/account/delete` | account | noindex | 390 · 768 · 1280 | FLOW-quyen-rieng-tu | Draft | (sau design) | `tracking-events.md` → `delete_account` · ft_account_delete | `docs/api/SCR-ACC-02-api.md` | **EV-TLW-246 (đối thủ không có xoá tài khoản) · màn in-house · basis BR-APP-11 · Q-05 · Q-18** |
+| SCR-ACC-02 | ACC | Full | Web | `/account/delete` | account | noindex | 390 · 768 · 1280 | FLOW-quyen-rieng-tu | Draft | (sau design) | `tracking-events.md` → `delete_account` · ft_account_delete | `docs/api/SCR-ACC-02-api.md` | **EV-TLW-246 (đối thủ không có xoá tài khoản) · màn in-house · basis BR-APP-11 · BR-APP-14 · Q-05 · Q-18** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · Q-18 · Q-25: CMP-03 thêm câu "xoá tài khoản không hoàn tiền; rút trong 14 ngày bằng “Withdraw from contract here” ở footer" (không thêm NAV); Q-05 (f): câu giữ chứng từ theo luật, BR-ACC-05 · EC-04 ghi thời hạn giữ; thêm EC-10; provider = Paddle; AI Notices theo Q-05 · Q-18 đã chốt. EC-10 ghi đủ trường của SCR-PAY-05 (tên, email, mã đơn).
 - 2026-09-28 · v1.1 · claude-opus-5-5 · D-17: overlay khôi phục do shell app hiện ở mọi trang đích (SYS-AUTH).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose & context
 
-Trang để user tự xoá tài khoản. Trang nói rõ hệ quả, cho tải dữ liệu trước, rồi yêu cầu gõ "DELETE" để bật nút xoá. Xoá sẽ tắt gia hạn Plus ngay (không thu thêm), lên lịch xoá cứng sau 30 ngày, đăng xuất mọi thiết bị và gửi email xác nhận (BR-ACC-05). Trong 30 ngày đó, chỉ cần đăng nhập lại là tài khoản được khôi phục (BR-ACC-06). Đối thủ không có xoá tài khoản cũng không có export dữ liệu (EV-TLW-246 · research-synthesis §3). Đây là trang riêng có route chứ không phải modal, để back trình duyệt đóng được và a11y tốt hơn (00-overview §3). Không có bước giữ chân, không offer chen giữa, không hỏi lý do. · basis BR-APP-11 · BR-APP-04 · Q-05 · Q-18
+Trang để user tự xoá tài khoản. Trang nói rõ hệ quả, cho tải dữ liệu trước, rồi yêu cầu gõ "DELETE" để bật nút xoá. Xoá sẽ tắt gia hạn Plus ngay (không thu thêm), lên lịch xoá cứng sau 30 ngày, đăng xuất mọi thiết bị và gửi email xác nhận (BR-ACC-05). Xoá tài khoản không tự hoàn tiền: khoản mua còn trong 14 ngày thì rút ở `/cancel` (SCR-PAY-05, link "Withdraw from contract here" ở footer) để được hoàn toàn bộ (BR-APP-14). Chứng từ đơn hàng và bằng chứng consent gia hạn vẫn được giữ theo thời hạn luật định sau khi xoá (Q-05 (f)). Trong 30 ngày đó, chỉ cần đăng nhập lại là tài khoản được khôi phục (BR-ACC-06). Đối thủ không có xoá tài khoản cũng không có export dữ liệu (EV-TLW-246 · research-synthesis §3). Đây là trang riêng có route chứ không phải modal, để back trình duyệt đóng được và a11y tốt hơn (00-overview §3). Không có bước giữ chân, không offer chen giữa, không hỏi lý do. · basis BR-APP-11 · BR-APP-04 · BR-APP-14 · Q-05 · Q-18
 
 ## 2. Điều hướng
 
@@ -58,7 +59,7 @@ flowchart TD
 |---|---|---|---|---|
 | CMP-01 | Header | luôn | GC-SiteHeader (app) | SYS-NAV §1 |
 | CMP-02 | Tiêu đề | luôn | "Delete your account" | in-house |
-| CMP-03 | Hệ quả | luôn | "Your results, reports and check-ins will be deleted." · "If you have Plus, it stops renewing now. You won't be charged again." · "You'll be signed out on all your devices." · "You have 30 days to change your mind — just sign in again to restore your account. After 30 days, everything is permanently deleted, including reports you bought." · "Refunds follow our Subscriptions & refunds policy." · "We'll email you a confirmation." | BR-ACC-05 · BR-ACC-06 · Q-18 |
+| CMP-03 | Hệ quả | luôn | "Your results, reports and check-ins will be deleted." · "If you have Plus, it stops renewing now. You won't be charged again." · "Deleting your account doesn't refund anything. If you bought a report, started Plus or renewed an annual plan in the last 14 days, you can withdraw for a full refund using “Withdraw from contract here” at the bottom of any page." · "You'll be signed out on all your devices." · "You have 30 days to change your mind — just sign in again to restore your account. After 30 days, your account and data are permanently deleted, including reports you bought. We keep only what the law requires, such as order records." · "Refunds follow our Subscriptions & refunds policy." · "We'll email you a confirmation." — câu rút chỉ dẫn tới link ở footer (GC-SiteFooter), không phải link riêng | BR-ACC-05 · BR-ACC-06 · BR-APP-14 · Q-18 · Q-05 (f) |
 | CMP-04 | Link tải dữ liệu | luôn | "Download my data first" | BR-APP-11 |
 | CMP-05 | Ô xác nhận | luôn | nhãn "Type DELETE to confirm" · ô chữ (`autocapitalize="characters"`, tắt autocomplete và kiểm chính tả) | BR-ACC-04 |
 | CMP-06 | Nút xoá | luôn; disable tới khi CMP-05 khớp | "Delete my account" · đang xoá: "Deleting…" | BR-ACC-04 · BR-ACC-05 |
@@ -126,22 +127,23 @@ Không có dữ liệu riêng của user trên trang: nội dung là copy tĩnh.
 | BR-ID | Rule | Basis | Access |
 |---|---|---|---|
 | BR-ACC-04 | Xác nhận bằng gõ đúng "DELETE" (chữ hoa) | BR-APP-11 · in-house | account |
-| BR-ACC-05 | Xoá = huỷ gia hạn ngay (server), lên lịch xoá cứng sau 30 ngày (API-JOB-04), đăng xuất mọi thiết bị, gửi API-MAIL-07 | BR-APP-11 · BR-APP-04 · Q-18 | account |
+| BR-ACC-05 | Xoá = huỷ gia hạn ngay (server), lên lịch xoá cứng sau 30 ngày (API-JOB-04), đăng xuất mọi thiết bị, gửi API-MAIL-07. Không hoàn tiền (muốn hoàn thì rút trong 14 ngày ở SCR-PAY-05 — BR-APP-14). Chứng từ đơn hàng, bằng chứng consent gia hạn và yêu cầu huỷ / rút được giữ theo Q-05 (f), tách khỏi hồ sơ | BR-APP-11 · BR-APP-04 · BR-APP-14 · Q-05 · Q-18 | account |
 | BR-ACC-06 | Đăng nhập lại trong 30 ngày → khôi phục, hiện banner xác nhận "Welcome back — your account has been restored." | BR-APP-11 · Q-05 | account |
 
 ## 8. Edge cases & error handling
 
 | EC-xx | Case | Kết quả xác định (kể cả khi fail) | Basis |
 |---|---|---|---|
-| EC-01 | Đang có Plus | server tắt gia hạn qua provider TRƯỚC khi lên lịch xoá; provider lỗi → dừng lại, không đổi gì, hiện copy Error | BR-ACC-05 · BR-APP-04 |
+| EC-01 | Đang có Plus | server tắt gia hạn qua Paddle TRƯỚC khi lên lịch xoá; Paddle lỗi → dừng lại, không đổi gì, hiện copy Error | BR-ACC-05 · BR-APP-04 |
 | EC-02 | Khôi phục trong 30 ngày khi kỳ Plus còn | quyền Plus còn tới hết kỳ đã trả; gia hạn vẫn tắt, user bật lại được ở SCR-PAY-03 ("Resume renewal", BR-PAY-12) | SYS-ENTITLEMENT · BR-PAY-12 |
 | EC-03 | Khôi phục khi kỳ Plus đã hết | tài khoản về Free; report mua lẻ vẫn còn | SYS-ENTITLEMENT |
-| EC-04 | Quá 30 ngày | API-JOB-04 xoá cứng hồ sơ, kết quả, câu trả lời, check-in, report, file PDF cache và file export; đăng nhập lại bằng email đó = tài khoản mới, trống | BR-ACC-05 · cong-nghe-loi §4 |
+| EC-04 | Quá 30 ngày | API-JOB-04 xoá cứng hồ sơ, kết quả, câu trả lời, check-in, report, file PDF cache và file export; chỉ giữ, tách khỏi hồ sơ: chứng từ đơn hàng (7 năm), bằng chứng consent gia hạn (3 năm, hoặc 1 năm sau khi hợp đồng kết thúc — lấy mốc dài hơn) và yêu cầu huỷ / rút; đăng nhập lại bằng email đó = tài khoản mới, trống | BR-ACC-05 · cong-nghe-loi §4 · Q-05 (f) |
 | EC-05 | Đăng nhập lại (magic link hoặc Google) trong 30 ngày | khôi phục ngay khi tạo phiên; trang đích hiện banner BR-ACC-06 một lần, dựa trên cờ `accountRestored` (API-AUTH-02) hoặc query `restored=1` (API-AUTH-04) | BR-ACC-06 · SYS-AUTH |
 | EC-06 | Tab / thiết bị khác đang mở | mọi phiên bị thu hồi; request kế tiếp nhận 401 → `/login` | BR-ACC-05 · tieu-chuan-chung §1 |
 | EC-07 | Bấm xoá 2 lần gần như cùng lúc (2 tab, mạng chập chờn) | idempotent theo `userId`: lần sau nhận 409 = thành công → cùng kết quả | 00-quy-uoc-api §5 |
 | EC-08 | Webhook thanh toán tới sau khi đã lên lịch xoá | vẫn ghi nhận (API-HOOK-01) vào tài khoản đang chờ xoá; khôi phục thì quyền còn, không khôi phục thì bị xoá cùng tài khoản | BR-APP-01 · in-house |
 | EC-09 | Gõ "delete" chữ thường | không khớp, nút vẫn disable | BR-ACC-04 |
+| EC-10 | Muốn được hoàn tiền khi xoá tài khoản | xoá không hoàn tiền. Khoản còn trong 14 ngày (report lẻ, lần thanh toán đầu của Plus, gia hạn năm) rút ở SCR-PAY-05 qua "Withdraw from contract here" ở footer, trước hay sau khi yêu cầu xoá đều được, không cần đăng nhập (tên, email + mã đơn); kỳ gia hạn tháng không hoàn | BR-APP-14 · BR-PAY-18 · Q-18 |
 
 ## 9. Responsive deltas
 
@@ -169,5 +171,6 @@ Không có dữ liệu riêng của user trên trang: nội dung là copy tĩnh.
 ## 13. AI Notices
 - "Subscriptions & refunds" giờ là link (CMP-08 · NAV-ACC-02-4), đã bổ sung theo review.
 - Banner "Welcome back — your account has been restored." dựa trên cờ `accountRestored` / query `restored=1` mô tả ở `SCR-AUTH-01-api.md`, hiện ở trang đích sau đăng nhập (SCR-APP-01 EC-11 khi không có `next`). Trang đích là `next` khác cũng hiện vì overlay do shell app hiện (SYS-AUTH, 2026-09-28).
-- Bản ghi giao dịch mà luật thuế/kế toán buộc giữ lại sau khi xoá cứng phụ thuộc pháp nhân và vùng bán (Q-05); cần chốt ở `legal-consent.md`.
+- Q-05 (f) đã chốt (2026-09-28): chứng từ đơn hàng giữ 7 năm (tới khi kế toán nơi đăng ký xác nhận mốc khác), bằng chứng consent gia hạn 3 năm hoặc 1 năm sau khi hợp đồng kết thúc (lấy mốc dài hơn), giữ cả khi xoá tài khoản (cong-nghe-loi §4 · legal-consent §1). Câu "We keep only what the law requires, such as order records." ở CMP-03 nói điều này; cần legal review.
+- Q-18 đã chốt: xoá tài khoản không hoàn tiền. Câu rút 14 ngày ở CMP-03 chỉ dẫn tới link footer "Withdraw from contract here", không thêm NAV.
 - Có nên bắt đăng nhập lại gần đây trước khi xoá hay không: MVP không yêu cầu (vì xoá khôi phục được trong 30 ngày). Human xem lại nếu muốn chặt hơn.

@@ -1,6 +1,7 @@
 # Báo cáo thẩm định — TestLib (tên tạm, web)
 > Kiểm chéo bộ `docs/` với chính nó và với `research/` sau phiên 2026-09-28. Mục đích: biết docs đã đủ chưa, chỗ nào lệch nhau, cái gì đã sửa, cái gì còn chờ quyết định, gate nào còn bị chặn. Không thay thế review của human hay legal review (Q-05).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.3 · claude-opus-5-5 · lượt 3: human uỷ quyền ("Các cái còn lại tự ra quyết định đi") → AI chốt mọi Q (`bang-quyet-dinh` v1.5–v1.7); 6 conflict §5a giải quyết (§5c); thêm SCR-PAY-05; lan quyết định bằng 4 agent theo nhóm file không chồng nhau, kiểm chéo báo cáo của từng agent (§4b); lint + mermaid + bảng chạy lại (§3); gate (§7).
 - 2026-09-28 · v1.2 · claude-opus-5-5 · spike #2 (PDF) đã chạy → §6 · §7.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · lượt 2: sửa 13 conflict AI xử lý được (D-04…D-10 · D-14…D-19, §5b); còn 6 conflict cần human (§5a).
 - 2026-09-28 · v1 · claude-opus-5-5 · khởi tạo (file đã có trong index `00-overview` §8 nhưng chưa tồn tại).
@@ -14,6 +15,8 @@
 | 3 | Đọc chéo khi viết 3 FLOW còn thiếu: SCR §2.2 / §7, file API, GC, SYS, tracking-events, overview | 19 SCR, 13 file API, 14 file base-ui | §4 · §5 |
 | 4 | Kiểm lại bằng grep mọi chỗ lệch mà bước 3 báo, trước khi ghi vào đây | — | cột "Đã kiểm" ở §5 |
 | 5 | Đối chiếu với research mới: `research/apps/testlibrary-web/web-evidence.md` (`[LIVE:web]`) và `research/regulatory-landscape.md` | cam kết tiền, huỷ, dữ liệu | §5 · §6 |
+| 6 | Lượt 3: lan quyết định uỷ quyền vào docs bằng 4 agent (bề mặt mua · huỷ / rút · consent / GPC / tuổi · check-in / tài khoản), mỗi agent một nhóm file không chồng nhau, cùng một brief (quyết định, ID đặt sẵn, copy nguyên văn); đọc báo cáo "chỗ lệch ở file không thuộc tôi" của từng agent, sửa hoặc giao lại | 69 file `docs/` | §4b · §5c |
+| 7 | Kiểm bảng markdown (số ô mỗi hàng = header) và mọi NAV định nghĩa ở §2.2 của màn phải có mặt ở sơ đồ tổng (vẽ hoặc trong danh sách inline) | `docs/` | §3 |
 
 ## 2. Độ đủ của bộ docs (so với index `00-overview` §8)
 
@@ -21,8 +24,8 @@
 |---|---|---|---|
 | `docs/overview/` | 6 | 6 | file này là file cuối cùng còn thiếu |
 | `docs/flow/` | 8 | 8 | FLOW-quan-ly-huy-gia-han · FLOW-thoi-quen-hang-ngay · FLOW-quyen-rieng-tu viết ngày 2026-09-28 |
-| `docs/screens/` | 19 SCR | 19 | 11 Full · 8 Short |
-| `docs/api/` | quy ước + mapping + màn có API ghi | 2 + 12 | SCR-PUB-06 · SCR-PUB-07 · SCR-APP-02 để API ở §5 của màn (inline) |
+| `docs/screens/` | 20 SCR | 20 | 12 Full · 8 Short; SCR-PAY-05 `/cancel` thêm ở lượt 3 (Q-25) |
+| `docs/api/` | quy ước + mapping + màn có API ghi | 2 + 13 | SCR-PAY-05-api thêm ở lượt 3; SCR-PUB-06 · SCR-PUB-07 · SCR-APP-02 để API ở §5 của màn (inline) |
 | `docs/tracking/` | 1 | 1 | — |
 | `docs/base-ui/` | FND + SYS + GC | 1 + 4 + 9 | — |
 | `docs/go-to-market/` | 5 + `web/` | 5 + `web/` | ảnh OG và icon trong `web/README.txt` là asset dự kiến, chưa tạo |
@@ -32,8 +35,9 @@
 | Kiểm | Kết quả |
 |---|---|
 | Tham chiếu ID gãy | **0**. Hai ca báo nhầm có chủ đích: `FND-FREEZE` (tên gate, không phải file) và `EV-TLW-264` (số EV dự kiến cho phiên drive tới, `next-drive-plan.md`) |
-| Số định nghĩa | NAV 88 · BR 73 · API 52 (thêm API-JOB-07 ở lượt 2) · Q 26 · F 43 · EV 269 (263 TLW + 6 KIT) · SCR 19 · FLOW 7 + sơ đồ tổng |
-| NAV có mặt ở sơ đồ tổng `00-so-do-luong-tong` | 79 / 88 → **88 / 88** sau khi vẽ thêm 7 cạnh push và thêm 2 cạnh inline vào danh sách không vẽ (§4 #1) |
+| Số định nghĩa | lượt 3: NAV 103 · BR 88 · API 55 · Q 28 · F 43 · EV 269 (263 TLW + 6 KIT) · SCR 20 · FLOW 7 + sơ đồ tổng (lượt 2: NAV 88 · BR 73 · API 52 · Q 26 · SCR 19) |
+| NAV có mặt ở sơ đồ tổng `00-so-do-luong-tong` | lượt 2: 79 / 88 → 88 / 88 (§4 #1). Lượt 3: **103 / 103** (thêm 8 cạnh push vẽ được và 8 cạnh inline vào danh sách không vẽ) |
+| Bảng markdown | mọi hàng có đúng số ô như header (bỏ qua dấu gạch đứng nằm trong backtick) |
 | Mermaid | mọi khối ở `docs/flow/*`, `docs/screens/*` và `SYS-NAV` parse được |
 | Trường "FLOW" ở meta của SCR | chỉ ghi flow chính của màn, không ghi mọi flow đi qua màn đó (vd SCR-PUB-05 chỉ ghi FLOW-quyen-rieng-tu). Không coi là lỗi; cần chốt quy ước nếu muốn dùng trường này để tra ngược |
 
@@ -57,11 +61,30 @@ Toàn bộ là chỗ lệch máy móc hoặc AI Notice đã cũ vì docs mới h
 | 12 | `docs/go-to-market/legal-consent.md` | §3b "Rút consent" còn ghi gap; §4 · §5 ghi "tuổi tối thiểu chưa có Q", "nguồn hỗ trợ khủng hoảng chưa có" | trỏ tới API-RES-03 · BR-REP-07, Q-21, Q-23; thêm trỏ tới research pháp lý |
 | 13 | `docs/go-to-market/pricing-page.md` | FAQ gia hạn hứa mốc 7 ngày trước kỳ năm | chỉ thêm AI Notice trỏ Q-26; copy giữ nguyên tới khi human duyệt |
 
+## 4b. Lượt 3 — phát hiện khi lan quyết định, đã sửa
+
+| # | Phát hiện | Đã sửa |
+|---|---|---|
+| 1 | Lấy vùng cho khối nguồn hỗ trợ khủng hoảng qua header nước của CDN không chạy với trang render sẵn (SSG) SCR-PUB-03 và cần thêm field ở 3 API | GC-SensitiveNotice không định vị: luôn hiện đủ danh sách, nút trỏ danh bạ quốc tế (Q-23) |
+| 2 | `/tests?topic=` cần title / canonical riêng từng chủ đề, trong khi trang SSG không đọc được query | render theo request, CDN cache theo `topic` (Q-09 · `cong-nghe-loi` §1b · SYS-NAV §4) |
+| 3 | Hạn rút tính theo UTC−12 khi tài khoản chưa có timezone có thể ngắn hơn hạn 14 ngày theo lịch của khách ở UTC+0…−11; mốc giữa ngày làm trang hứa quá | hạn rút = thời điểm thanh toán + 15 ngày + 1 giờ (kể cả đổi giờ mùa); ngày hiện cho user lùi 1 ngày so với mốc (BR-APP-14 · SCR-PAY-05-api) |
+| 4 | Chức năng rút EU cho khách nhập tên, bước 1 của `/cancel` chỉ có email + mã đơn | thêm ô tên (SCR-PAY-05 · API-PAY-08 · API-PAY-09 · Q-25) |
+| 5 | Người đang đăng nhập mà khoản mua bằng email khác phải đăng xuất mới rút / huỷ được | email + mã đơn luôn dùng được (`api-mapping` §1 · SCR-PAY-05 EC-04) |
+| 6 | "Privacy request" của khách không có cách xác minh (link kết quả không chứng minh là chủ) | xác minh bằng token `tl_guest` của trình duyệt gửi form hoặc phiên / email tài khoản (BR-PUB-15) |
+| 7 | Chưa có rule khi câu consent check-in đổi version | major hỏi lại + tạm dừng check-in mới, minor không (SYS-CONSENT) |
+| 8 | File export (hạn 7 ngày) dựng trước khi user tắt check-in / xoá kết quả / xoá tài khoản vẫn chứa dữ liệu đã xoá | file export còn hạn bị xoá ngay (BR-APP-11 · `cong-nghe-loi` §4) |
+| 9 | Lần mua trùng được tự hoàn có thể làm mất quyền mà lần mua đầu đã cấp | thu hồi theo từng giao dịch (SYS-ENTITLEMENT) |
+| 10 | BR-APP-04 / BR-APP-14 ghi "footer mọi trang" nhưng runner SCR-TEST-01 không có footer; SCR-AUTH-01 · SCR-TEST-02 ghi "không footer site" trong khi GC-SiteFooter §5 cho chúng footer `compact` | ghi ngoại lệ có chủ đích cho SCR-TEST-01; hai màn kia ghi footer `compact` |
+| 11 | Notice cũ đã sai từ trước: tham số API-CAT-01, biến thể callback Google ở SYS-NAV §4, khoá idempotent của API-AUTH-01, cạnh `from = result` của ft_auth, FAQ landing "chưa có CMP" | sửa theo nguồn hiện hành |
+| 12 | Mã copy của brief (C1…C16) và tên vai trò nội bộ lọt vào docs | xoá, thay bằng copy nguyên văn hoặc CMP-ID |
+
 ## 5. Conflict
 
 "Đã kiểm" = đã grep lại nguồn và thấy đúng như mô tả.
 
 ### 5a. Còn mở — cần human quyết
+
+Không còn. Ngày 2026-09-28 human uỷ quyền cho AI chốt mọi quyết định còn mở; cả 6 dòng dưới đây đã giải quyết (§5c). Bảng giữ lại để tra ngược.
 
 | D-xx | Lệch | Ở đâu | Đã kiểm | Đề xuất | Q |
 |---|---|---|---|---|---|
@@ -71,6 +94,17 @@ Toàn bộ là chỗ lệch máy móc hoặc AI Notice đã cũ vì docs mới h
 | D-11 | Lời hứa với khách: landing-copy "Download or delete your data anytime." và mô tả `/legal/privacy` ở seo-meta, trong khi khách không có export tự phục vụ | `landing-copy` · `seo-meta` · FLOW-quyen-rieng-tu KB-11 | có | sửa copy cho đúng phạm vi (member), hoặc thêm quy trình yêu cầu qua form | — |
 | D-12 | Check-in cảm xúc: Q-22 đề xuất consent tường minh, nhưng `cong-nghe-loi` §4 và `legal-consent` §1 ghi căn cứ "hợp đồng", SCR-APP-01 chưa có bước consent | Q-22 · SCR-APP-01 · API-APP-02 | có | research nghiêng về consent tường minh (`[BK]`) | Q-22 |
 | D-13 | Tuổi tối thiểu: Q-21 đề xuất checkbox tự khai trước bài `sensitive`, SCR-TEST-01 chưa có | Q-21 · SCR-TEST-01 CMP-03 | có | — | Q-21 |
+
+### 5c. Đã giải quyết bằng quyết định uỷ quyền (lượt 3, 2026-09-28)
+
+| D-xx | Quyết định | Đã sửa ở |
+|---|---|---|
+| D-01 | Q-16 (Q-26 đã xử lý): nhắc 21 ngày trước kỳ năm, 7 ngày trước mỗi kỳ tháng; email nhắc đủ nội dung nhắc hằng năm | `pricing-page` §4 · `legal-consent` §3c #4 · GC-RenewalDisclosure · FLOW-quan-ly-huy-gia-han · `api-mapping` API-JOB-01 · API-PAY-01 `renewalReminderDays` |
+| D-02 | Q-27: khoá giá cho subscriber; tăng giá chỉ khi user đồng ý; báo thay đổi điều khoản 28 ngày trước (cửa sổ 21–30) | `00-overview` BR-APP-13 · SCR-PUB-05 BR-PUB-11 · `pricing-page` §4 · `api-mapping` API-MAIL-09 · FLOW-quan-ly-huy-gia-han KB-10 |
+| D-03 | Q-20: GPC = "Reject all", một rule ở SYS-CONSENT | SYS-CONSENT · GC-ConsentBanner · SCR-PUB-07 · `legal-consent` · tracking-events |
+| D-11 | Q-28: khách tự xoá kết quả; tải dữ liệu cần tài khoản hoặc "Privacy request" ở `/help` | `landing-copy` · `seo-meta` · SCR-PUB-06 BR-PUB-15 · FLOW-quyen-rieng-tu KB-11 |
+| D-12 | Q-22: check-in cần consent tường minh; tắt = xoá lịch sử | SCR-APP-01 · SCR-ACC-01 · SYS-CONSENT · `cong-nghe-loi` §4 · `legal-consent` §1 · §3d · FLOW-thoi-quen-hang-ngay |
+| D-13 | Q-21: ô "I'm 18 or older." bắt buộc trước bài `sensitive` | SCR-TEST-01 CMP-03 · BR-TEST-11 · API-TEST-01 · SYS-CONSENT · FLOW-lam-bai-mien-phi |
 
 ### 5b. Đã xử lý ở lượt 2 (2026-09-28)
 
@@ -102,6 +136,7 @@ Gap nội bộ của từng flow (chưa có spec, chưa phải mâu thuẫn) n�
 | regulatory-landscape §2 | cửa sổ nhắc 15–45 ngày cho kỳ ≥ 1 năm (CA, NY, NYC); lưu bằng chứng consent ≥ 3 năm (CA) | Q-26 (mới) · `legal-consent` §1 khi Q-05 chốt |
 | regulatory-landscape §3 | EU: chức năng rút hợp đồng 14 ngày từ 19/6/2026; Đức: nút huỷ không cần đăng nhập | Q-25 (mới) |
 | regulatory-landscape §5–§7 | GPC, dữ liệu sức khoẻ, tuổi — **chưa verify** (`[BK]`) | evidence ở Q-20 · Q-21 · Q-22 |
+| teardown S16 (lời kể human, `[INFERRED]`) | tài khoản đối thủ đã huỷ không dùng được nữa khi hết hạn: quyền giữ tới hết kỳ rồi mất, không "take effect immediately" như trang huỷ viết | xác nhận hướng BR-APP-04 (dùng tới hết kỳ đã trả); anchor đối thủ ở `legal-consent` §3c #5 |
 | `research/spikes/SPK-02-pdf-render.md` (spike #2) | engine Playwright render report 22–40 trang trong 0,2–0,75 s, ~0,42 GB RAM / job; ảnh bitmap là yếu tố làm chậm và làm nặng file nhất | TD-03 đạt ngân sách ở phần engine; Q-19 chuyển PARKED → Mở (chờ giá vendor) |
 
 ## 7. Trạng thái gate
@@ -109,14 +144,15 @@ Gap nội bộ của từng flow (chưa có spec, chưa phải mâu thuẫn) n�
 | Gate | Bị chặn bởi | Trạng thái 2026-09-28 |
 |---|---|---|
 | feature-lock | — | **đạt** (`research/final-features.md` v2, 2026-09-27) |
-| economy-FREEZE | Group A mở: Q-03 · Q-04 · Q-05 · Q-18 · Q-19 (PDF đã đo ở spike #2, chờ giá vendor) · Q-25 | chưa |
-| FND-FREEZE | Q-17 (Group C, chờ human veto) | chưa |
-| API-FREEZE | Group B mở (Q-10 · Q-11 · Q-16 · Q-24 …); money API cần human review (`api-mapping` §1) | chưa |
-| G-lint-PASS | Group D: Q-26 và D-01 · D-02 · D-03 · D-11 · D-12 · D-13 (§5a, đều cần human) | chưa (lint ID tự động sạch; 13 conflict AI xử lý được đã sửa, §5b) |
+| economy-FREEZE | không còn Q mở (Q-03 · Q-04 · Q-05 · Q-18 · Q-19 · Q-25 · Q-27 chốt 2026-09-28, AI · uỷ quyền); còn dữ liệu setup: price id Paddle, phí thật, chuỗi trên sao kê, giá hạ tầng (`bang-quyet-dinh` §2 #3) | **quyết định đủ**; FREEZE khi điền xong dữ liệu setup |
+| FND-FREEZE | Q-17 chốt (human uỷ quyền, không veto); còn đo lại contrast trên UI thật (AI Notices của FND-tokens) | **quyết định đủ**; FREEZE sau khi đo contrast |
+| API-FREEZE | Group B đã chốt. Luật `api-mapping` §1 vẫn đòi human review money API (API-PAY-01…09 · API-ME-04); uỷ quyền 2026-09-28 là uỷ quyền quyết định, không thay được bước review này | chưa (chờ human review money API) |
+| G-lint-PASS | Group D: không còn (Q-26 đã xử lý; D-01…D-19 đã giải quyết, §5b · §5c) | **đạt** (lint ID sạch, mermaid parse hết, bảng đúng số ô, mọi NAV có ở sơ đồ tổng) |
 | Research freshness | `teardown.md` ghi re-verify by 2026-12-27; phần drive còn PARK ở `next-drive-plan.md` | còn hạn |
 
 ## 8. AI Notices
 - Mọi dòng D-01…D-19 đều đã được grep lại ở nguồn trước khi ghi (cột "Đã kiểm").
-- Không sửa copy nào có tính cam kết với người dùng khi chưa có quyết định (FAQ gia hạn, lời hứa về dữ liệu: §5a). D-04 và D-09 chỉ gom hai bản nháp của AI về một nguồn (GC-ConsentBanner, GC-RenewalDisclosure), không đổi nội dung cam kết.
-- Evidence `[INFERRED · BK]` của `regulatory-landscape` là kiến thức nền chưa verify; không dùng để chốt Q-20 · Q-21 · Q-22.
+- Lượt 2 không sửa copy có tính cam kết khi chưa có quyết định. Lượt 3 sửa các copy đó theo quyết định uỷ quyền (§5c); mọi copy tiền / pháp lý vẫn cần legal review trước launch (`bang-quyet-dinh` §2 #2).
+- Evidence `[INFERRED · BK]` của `regulatory-landscape` là kiến thức nền chưa verify. Q-20 · Q-21 · Q-22 được chốt theo phương án chặt hơn, không dựa vào việc `[BK]` đúng.
+- Còn thiếu (không phải conflict): template đầy đủ của các email giao dịch (API-MAIL-01…11) chưa viết ở đâu; nội dung bắt buộc của từng email có ở `api-mapping` §2, GC-RenewalDisclosure (API-MAIL-03) và BR-PAY-21.
 - Chạy lại thẩm định sau mỗi đợt sửa lớn: script lint ID, parse mermaid, và so NAV giữa §2.2 của từng màn với sơ đồ tổng.

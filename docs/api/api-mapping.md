@@ -1,6 +1,7 @@
 # api-mapping — API ↔ screen matrix
 > Registry API-ID (định nghĩa DUY NHẤT ở đây). Chi tiết schema ở `SCR-*-api.md`; quy ước chung ở `00-quy-uoc-api.md`.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.6 · claude-opus-5-5 · API-MAIL-02: [date] của câu hạn rút theo quy tắc hiển thị ở SCR-PAY-05-api (ngày của mốc lùi 1 ngày, timezone tài khoản).
 - 2026-09-28 · v1.5 · claude-opus-5-5 · §1 định danh API-PAY-08 · 09: email + mã đơn luôn dùng được (kể cả khi đang đăng nhập tài khoản khác), body có `name`; API-MAIL-03 thêm link huỷ không cần đăng nhập → SCR-PAY-05; API-MAIL-11 in lại tên người yêu cầu.
 - 2026-09-28 · v1.4 · claude-opus-5-5 · API-JOB-06 · API-MAIL-10 chỉ gửi khi check-in đang chạy (BR-ACC-08, Q-22).
 - 2026-09-28 · v1.3 · claude-opus-5-5 · API-MAIL-02 ghi rõ nội dung: câu đổi ý có hạn rút + link "Withdraw from contract here", câu tên trên sao kê, mã đơn, và với Plus thêm câu công bố gia hạn GC-RenewalDisclosure `post-purchase`.
@@ -66,7 +67,7 @@
 | API-JOB-04 | cron hằng ngày | xoá cứng tài khoản quá 30 ngày sau yêu cầu xoá (BR-APP-11) | todo |
 | API-JOB-05 | queue | worker render PDF bằng Playwright (TD-03) | todo |
 | API-MAIL-01 | email giao dịch | magic link đăng nhập / lưu kết quả | todo |
-| API-MAIL-02 | email giao dịch | biên nhận + "report đã mở khoá" (link SCR-APP-03); mã đơn ("Order number"); "Charges will appear as [descriptor] on your statement." (BR-APP-15); "Changed your mind? You can withdraw until [date] for a full refund." + link "Withdraw from contract here" → SCR-PAY-05 `?mode=withdraw&order=<orderNumber>` (BR-APP-14); mua Plus: thêm 4 câu GC-RenewalDisclosure `post-purchase` (BR-APP-02) | todo |
+| API-MAIL-02 | email giao dịch | biên nhận + "report đã mở khoá" (link SCR-APP-03); mã đơn ("Order number"); "Charges will appear as [descriptor] on your statement." (BR-APP-15); "Changed your mind? You can withdraw until [date] for a full refund." ([date] = ngày của `withdrawableUntil` lùi 1 ngày, timezone tài khoản — SCR-PAY-05-api) + link "Withdraw from contract here" → SCR-PAY-05 `?mode=withdraw&order=<orderNumber>` (BR-APP-14); mua Plus: thêm 4 câu GC-RenewalDisclosure `post-purchase` (BR-APP-02) | todo |
 | API-MAIL-03 | email giao dịch | nhắc gia hạn: tên gói, chu kỳ, số tiền, ngày thu, tên trên sao kê, link huỷ (link SCR-PAY-04 + SCR-PAY-03, và "Cancel without signing in" → SCR-PAY-05 `?order=<orderNumber>`) — đủ nội dung nhắc hằng năm (Q-16) | todo |
 | API-MAIL-04 | email giao dịch | xác nhận huỷ gia hạn (BR-APP-04); huỷ không cần đăng nhập (API-PAY-09) thêm link "Resume renewal" để chủ gói hoàn tác nếu không phải mình yêu cầu | todo |
 | API-MAIL-05 | email giao dịch | thanh toán gia hạn thất bại (link cập nhật thẻ) | todo |

@@ -3,6 +3,7 @@
 > **Consent:** không event nào bắn trước khi user đồng ý analytics (mọi vùng, Q-13; BR-APP-05). Trình duyệt gửi GPC thì analytics = denied (Q-20), nên không có event nào trừ khi user tự bật lại ở SCR-PUB-07. Route của bài `sensitive` (SCR-PUB-03 · SCR-TEST-01 · SCR-TEST-02 · SCR-PAY-01 · SCR-PAY-02 · SCR-APP-03 khi kết quả/report thuộc bài `sensitive`) **không bắn event nào** (BR-APP-06). **Cấm** gửi câu trả lời, điểm, type kết quả, email, tên.
 > **Che URL:** `AppTracking` tự đặt `page_location` / `page_referrer` về dạng không có id và che slug bài `sensitive` (vd `/tests/[sensitive]`, `/results/[id]`); không gửi query string. Nhờ đó trang kế tiếp sau một bài nhạy cảm không làm lộ slug qua referrer.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.4 · claude-opus-5-5 · `channel` của cancel_confirm ở SCR-PAY-05 lấy từ `identifiedBy` của API-PAY-09 (`session` → account, `order` → no_login).
 - 2026-09-28 · v1.3 · claude-opus-5-5 · ft_subscription / ft_withdrawal: `from` thêm `direct` (vào thẳng `/cancel` hoặc từ tìm kiếm) và `email` cho email nhắc; `cancel_confirm` thêm status `no_active_plan`.
 - 2026-09-28 · v1.2 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): thêm màn SCR-PAY-05 (`cancel_or_withdraw`) + feature ft_withdrawal (Q-18 · Q-25); ft_subscription thêm huỷ không cần đăng nhập (API-PAY-09); ft_checkin thêm enable / disable (consent check-in, Q-22); ft_consent: GPC không bắn event và `source` (Q-20); ft_contact thêm chủ đề `privacy_request` (Q-28).
 - 2026-09-28 · v1.1 · claude-opus-5-5 · ft_consent start: thêm trường hợp cho phép lần đầu ở SCR-PUB-07 (bắn ngay trước save). D-14: `from` của ft_test start (app_home mang qua SCR-PUB-03) và ft_report start (thêm app_home · billing).
@@ -83,7 +84,7 @@
 |---|---|---|---|---|---|---|---|
 | start | — | — | — | billing / email / cancel_page / direct (vào thẳng `/cancel` hoặc từ tìm kiếm) | SCR-PAY-03 hoặc SCR-PAY-04 hiện, hoặc SCR-PAY-05 ở chế độ huỷ (chọn "Cancel Plus renewal") | `plan_key` (SCR-PAY-05 khi chưa đăng nhập: không có) | Chưa gắn |
 | action | cancel_open | FALSE | null | billing / email | mở SCR-PAY-04 | — | Chưa gắn |
-| action | cancel_confirm | TRUE | success / fail / not_found / no_active_plan | — | API-PAY-05 (SCR-PAY-04) hoặc API-PAY-09 (SCR-PAY-05) trả về | `plan_key` · `channel` = account / no_login | Chưa gắn |
+| action | cancel_confirm | TRUE | success / fail / not_found / no_active_plan | — | API-PAY-05 (SCR-PAY-04) hoặc API-PAY-09 (SCR-PAY-05) trả về | `plan_key` · `channel` = account / no_login (SCR-PAY-05: theo `identifiedBy` của API-PAY-09 — `session` → account, `order` → no_login) | Chưa gắn |
 | action | resume | FALSE | success / fail | — | API-PAY-06 trả về | `plan_key` | Chưa gắn |
 | action | portal_open | FALSE | null | — | API-PAY-07 trả URL | — | Chưa gắn |
 

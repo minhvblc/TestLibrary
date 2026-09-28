@@ -1,6 +1,7 @@
 # [SCR-PAY-02] API — Xác nhận thanh toán
 Refs: `docs/screens/SCR-PAY-02-xac-nhan-thanh-toan.md` · FLOW-mo-khoa-report · FLOW-dang-ky-plus · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency, webhook — KHÔNG lặp lại ở đây)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · `withdrawableUntil` = `paidAt` + 15 ngày + 1 giờ, tính tuyệt đối, bỏ quy tắc UTC−12 (quy tắc chung ở SCR-PAY-05-api): không ngắn hơn hạn luật 14 ngày ở mọi múi giờ, kể cả khi đổi giờ mùa; "until [date]" hiện ngày của mốc lùi 1 ngày; ví dụ đổi theo.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · API-PAY-03 theo quyết định 2026-09-28: thêm `statementDescriptor` (Q-24), `orderNumber`, `withdrawableUntil` (Q-18 · Q-25); `seller.merchantOfRecord` thay `seller.legalName` (Q-04); `renewalReminderDays` 7 / 21 (Q-16); ví dụ giá thật (Q-03). `orderNumber` · `withdrawableUntil` theo quy tắc chung ở SCR-PAY-05-api.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
@@ -37,12 +38,12 @@ Refs: `docs/screens/SCR-PAY-02-xac-nhan-thanh-toan.md` · FLOW-mo-khoa-report ·
 | `seller` | object `{ merchantOfRecord: string }` | nhãn "Merchant of Record" ở CMP-03: bên bán trên hoá đơn, "Paddle.com" | Q-04 · BR-APP-12 |
 | `statementDescriptor` | string / null | chỉ khi `paid`: chuỗi khách sẽ thấy trên sao kê, cùng giá trị cấu hình với API-PAY-01; dòng "Charges will appear as [descriptor] on your statement." ở CMP-03; null khi chưa cấu hình → không render dòng này | Q-24 · BR-APP-15 |
 | `orderNumber` | string / null | chỉ khi `paid`: mã đơn, trùng mã in trên email biên nhận (API-MAIL-02); nhãn "Order number" ở CMP-03 và tham số `order` của NAV-PAY-02-5; cùng mã SCR-PAY-05 hỏi khi không đăng nhập (API-PAY-08 · API-PAY-09); server của mình sinh, định dạng và cách chuẩn hoá ở bảng định danh của `SCR-PAY-05-api.md` (vd `TL-4F7Q-K2M9`) | Q-25 · BR-APP-14 |
-| `withdrawableUntil` | ISO-8601 / null | chỉ khi `paid`: hạn rút của khoản này — hết ngày thứ 14 sau ngày thanh toán, 23:59:59 theo timezone tài khoản (chưa có timezone thì UTC−12), cùng hàm với API-PAY-04 · API-PAY-08 (`SCR-PAY-05-api.md`); null khi khoản đã rút hoặc đã hoàn. Client ẩn CMP-07 khi null hoặc đã qua | Q-18 · Q-25 · BR-APP-14 |
+| `withdrawableUntil` | ISO-8601 / null | chỉ khi `paid`: hạn rút của khoản này = `paidAt` + 15 ngày + 1 giờ, tính tuyệt đối (không ngắn hơn hạn luật — cuối ngày thứ 14 theo lịch nơi khách ở — ở mọi múi giờ, kể cả khi đổi giờ mùa), cùng hàm với API-PAY-04 · API-PAY-08 (`SCR-PAY-05-api.md`); null khi khoản đã rút hoặc đã hoàn. Client hiện "until [date]" theo timezone tài khoản (khách: trình duyệt) với [date] = ngày của mốc lùi 1 ngày, ẩn CMP-07 khi null hoặc đã qua | Q-18 · Q-25 · BR-APP-14 |
 | `receiptEmailMasked` | string / null | email biên nhận đã che một phần (vd `m•••@example.com`); chỉ khi `paid` | SYS-AUTH · in-house (riêng tư khi chia sẻ màn hình) |
 | `viewerSignedIn` | boolean | hiện CMP-06; khách mua Plus sẽ qua guard khi vào `/app` | SYS-AUTH |
 | `pollAfterMs` | int | nhịp poll gợi ý, mặc định 2000 | BR-PAY-08 |
 
-Ví dụ: Plus tháng thanh toán lúc 2026-09-27 09:00 UTC, giá $12.99 (00-overview §2), giao dịch không có thuế; số thật do Paddle trả theo từng giao dịch. Tài khoản vừa tạo từ checkout khách chưa có timezone nên hạn rút tính theo UTC−12 (hết 2026-10-11 ở UTC−12 = 2026-10-12T11:59:59Z). `statementDescriptor` là dữ liệu setup, chưa có giá trị thật; `orderNumber` là giá trị minh hoạ.
+Ví dụ: Plus tháng thanh toán lúc 2026-09-27 09:00 UTC, giá $12.99 (00-overview §2), giao dịch không có thuế; số thật do Paddle trả theo từng giao dịch. Hạn rút = 2026-09-27 09:00 UTC + 15 ngày + 1 giờ = 2026-10-12T10:00:00Z, không phụ thuộc timezone của tài khoản; người xem ở UTC thấy "until October 11, 2026" (ngày của mốc lùi 1 ngày). `statementDescriptor` là dữ liệu setup, chưa có giá trị thật; `orderNumber` là giá trị minh hoạ.
 
 ```json
 {
@@ -56,7 +57,7 @@ Ví dụ: Plus tháng thanh toán lúc 2026-09-27 09:00 UTC, giá $12.99 (00-ove
     "seller": { "merchantOfRecord": "Paddle.com" },
     "statementDescriptor": "<chuỗi từ giao dịch thử — bang-quyet-dinh §2 #3>",
     "orderNumber": "TL-7H3C-W9QA",
-    "withdrawableUntil": "2026-10-12T11:59:59Z",
+    "withdrawableUntil": "2026-10-12T10:00:00Z",
     "receiptEmailMasked": "m•••@example.com",
     "viewerSignedIn": false, "pollAfterMs": 2000
   }
@@ -83,7 +84,7 @@ Phản hồi 403/404 không kèm sản phẩm, số tiền hay email.
 | `seller.merchantOfRecord` | CMP-03 | "Merchant of Record" |
 | `statementDescriptor` | CMP-03 | "Charges will appear as [descriptor] on your statement." |
 | `orderNumber` | CMP-03 · NAV-PAY-02-5 | "Order number" · `/cancel?mode=withdraw&order=<orderNumber>` |
-| `withdrawableUntil` | CMP-07 | "Changed your mind? You can withdraw until [date] for a full refund." (ngày kiểu "October 12, 2026"); ẩn khi null hoặc đã qua |
+| `withdrawableUntil` | CMP-07 | "Changed your mind? You can withdraw until [date] for a full refund." ([date] = ngày của mốc lùi 1 ngày, kiểu "October 11, 2026"); ẩn khi null hoặc đã qua |
 | `receiptEmailMasked` | CMP-03 | "A receipt is on its way to [email]." |
 | `reportId` | NAV-PAY-02-1 | replace sang `/app/reports/:reportId` |
 | `origin` · `resultId` | CMP-05 | "Try again" (có `resultId`) hoặc "Back to pricing" |
