@@ -1,6 +1,7 @@
 # Công nghệ cốt lõi — TestLib (web)
 > Basis: `research/core-tech.md` (TC-01 · TC-02). Đây là SPEC: nêu đích danh framework / vendor. Số nào chưa chốt → `Q-xx`, KHÔNG ghi như đã quyết. Stack BE theo chuẩn team: NestJS + TypeORM + PostgreSQL `postgres:16-alpine`, một schema `public` (basis in-house).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.4 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): thêm §1b nền tảng (Next.js · AWS eu-central-1 · Paddle · Postmark — Q-04 · Q-09 · Q-16 · Q-19); TD-01 · TD-04 đã chốt (Q-10 · Q-12 · Q-13 · Q-20); §4 check-in đổi căn cứ sang consent (Q-22), thêm 2 loại dữ liệu (xác nhận 18+ — Q-21; yêu cầu huỷ / rút — Q-25), thời hạn lưu consent gia hạn và chứng từ (Q-05 (f)); §5 · §8 theo Q-19.
 - 2026-09-28 · v1.3 · claude-opus-5-5 · Spike #2 (PDF) đã chạy: cập nhật §2 · §5 · §7.
 - 2026-09-28 · v1.2 · claude-opus-5-5 · D-07: thời hạn lưu lý do huỷ thống nhất — tách khỏi danh tính sau 90 ngày, xoá luôn nếu tài khoản bị xoá trước đó. D-19: thêm 3 hàng lỗi cho gói & thanh toán (§3) mà SCR-PAY-03 / SCR-PAY-04 đang trích.
 - 2026-09-27 · v1.1 · claude-opus-5-5 · §4 thêm 7 loại dữ liệu (log, liên hệ, lý do huỷ, đánh giá report, consent gia hạn, đơn hàng/webhook, file export) theo review của writer go-to-market.
@@ -10,10 +11,26 @@
 
 | TD-xx | Capability (TC-xx) | Cách làm | Vì sao (so với đối thủ đo được) | Basis (TC-xx · EV / Q-xx) | Status |
 |---|---|---|---|---|---|
-| TD-01 | Engine làm test (TC-01) | **Hybrid.** Flow câu hỏi + tiến độ chạy ở client (localStorage theo `attemptId` cho khách; autosave lên server khi đã đăng nhập). **Chấm điểm ở server** khi nộp bài (NestJS service `ScoringService`, thang đo versioned trong DB). Nộp bài idempotent theo `attemptId`; có hàng đợi nộp lại khi rớt mạng | Đối thủ chấm ở client và kết quả không phụ thuộc câu trả lời (RS·F-14 · F-31). Mình giữ ưu điểm offline/resume của họ (TK-04 · TK-05), còn chấm điểm thì phải thật và không bị sửa được | TC-01 · EV-TLW-138 · EV-TLW-061 · EV-TLW-065 · Q-10 | Đề xuất (Q-10) |
+| TD-01 | Engine làm test (TC-01) | **Hybrid.** Flow câu hỏi + tiến độ chạy ở client (localStorage theo `attemptId` cho khách; autosave lên server khi đã đăng nhập). **Chấm điểm ở server** khi nộp bài (NestJS service `ScoringService`, thang đo versioned trong DB). Nộp bài idempotent theo `attemptId`; có hàng đợi nộp lại khi rớt mạng | Đối thủ chấm ở client và kết quả không phụ thuộc câu trả lời (RS·F-14 · F-31). Mình giữ ưu điểm offline/resume của họ (TK-04 · TK-05), còn chấm điểm thì phải thật và không bị sửa được | TC-01 · EV-TLW-138 · EV-TLW-061 · EV-TLW-065 · Q-10 | Đã chốt (Q-10) |
 | TD-02 | Report (TC-02) | **Nội dung viết sẵn** theo (bài × type/dải điểm × thang con), lưu versioned trong DB (`report_blocks`). Server ráp report theo rule khi user có quyền. Biên tập trước khi phát hành. Không gọi LLM lúc chạy | Q-08 (human chốt). Đối thủ có report 9 chương (RS·F-23), nhưng không kiểm chứng được mức cá nhân hoá | TC-02 · EV-TLW-245 · Q-08 | Đã chốt |
 | TD-03 | Export PDF (TC-02) | **Playwright (Chromium headless) phía server** render route in của report (`/app/reports/:reportId?print=1`) → PDF. Cache ở object storage theo (`reportId`, `contentVersion`, `locale`), tải bằng signed URL 10 phút. Fallback: nút "Print / Save as PDF" dùng print stylesheet | Đối thủ render bằng Skia/PDF headless (RS·F-34); PDF của họ 11 trang trong khi hứa 20 (RS·F-23). Mình ghi đúng số trang thật ở trang mở khoá | TC-02 · EV-TLW-261 · Q-08 · Q-19 | Đã chốt (cách làm) · spike §7 #2 |
-| TD-04 | Tracking & consent | Consent manager first-party (GC-ConsentBanner · SYS-CONSENT) quyết định việc tải script. Analytics: Firebase Analytics (web) qua cổng `AppTracking` duy nhất (chuẩn xteam-tracking), **chỉ sau consent analytics**. **Không pixel quảng cáo phía client** trong MVP. Route của bài `sensitive` không tải analytics. Không gửi câu trả lời/điểm/type kết quả | Đối thủ bắn ~2 event Meta Pixel mỗi câu trả lời, không có cookie banner (RS·F-13 · F-02) | EV-TLW-059 · EV-TLW-002 · Q-12 · Q-13 | Đề xuất (Q-12 · Q-13) |
+| TD-04 | Tracking & consent | Consent manager first-party (GC-ConsentBanner · SYS-CONSENT) quyết định việc tải script. Analytics: Firebase Analytics (web) qua cổng `AppTracking` duy nhất (chuẩn xteam-tracking), **chỉ sau consent analytics**. **Không pixel quảng cáo phía client** trong MVP. Route của bài `sensitive` không tải analytics. Trình duyệt gửi GPC → coi như "Reject all" (Q-20). Không gửi câu trả lời/điểm/type kết quả | Đối thủ bắn ~2 event Meta Pixel mỗi câu trả lời, không có cookie banner (RS·F-13 · F-02) | EV-TLW-059 · EV-TLW-002 · Q-12 · Q-13 · Q-20 | Đã chốt (Q-12 · Q-13 · Q-20) |
+
+## 1b. Nền tảng (chốt 2026-09-28)
+
+| Thành phần | Chọn | Basis |
+|---|---|---|
+| Web | Next.js (App Router, TypeScript); route public SSG + revalidate; funnel / app render phía client; route in `?print=1` render phía server cho worker PDF | Q-09 |
+| API | NestJS + TypeORM (chuẩn team) | in-house |
+| DB | PostgreSQL 16 (RDS), AWS `eu-central-1` (Frankfurt) | Q-05 (d) · Q-19 |
+| Chạy app | container trên ECS Fargate: web, API, worker PDF (Playwright, 1 vCPU / 1 GB, tối đa 2 job — SPK-02) | Q-19 · TD-03 |
+| File (PDF, export) | S3 cùng region, signed URL | TD-03 · BR-APP-11 |
+| CDN / WAF | CloudFront + AWS WAF; header nước của CloudFront chỉ dùng trong request cho GC-SensitiveNotice | Q-09 · Q-23 |
+| Thanh toán | Paddle Billing, merchant of record | Q-04 |
+| Email giao dịch | Postmark (message stream giao dịch) | Q-16 |
+| Analytics | Firebase Analytics (web), chỉ sau consent, không khi có GPC | TD-04 · Q-20 |
+
+Nếu team đã có cloud khác có region EU thì dùng cloud đó; ràng buộc thật là dữ liệu ở EU (Q-19). Giá vendor điền lúc setup (`bang-quyet-dinh` §2 #3).
 
 ## 2. Ngân sách phi chức năng
 
@@ -48,20 +65,22 @@
 | Dữ liệu | Rời trình duyệt? | Đi đâu (vendor · region) | Lưu bao lâu | Cần consent? | Khai báo ở | Basis |
 |---|---|---|---|---|---|---|
 | Câu trả lời đang làm (khách) | không (localStorage) | — | tới khi nộp; xoá khỏi máy sau khi nộp thành công | không | legal-consent §1 | TD-01 |
-| Câu trả lời đang làm (đã đăng nhập, autosave) | có | server của mình (PostgreSQL, region = Q-05) | tới khi nộp / 30 ngày nếu bỏ dở | không (hợp đồng) | legal-consent §1 | TD-01 · Q-05 |
+| Câu trả lời đang làm (đã đăng nhập, autosave) | có | server của mình (PostgreSQL, AWS `eu-central-1` — Q-05 · Q-19) | tới khi nộp / 30 ngày nếu bỏ dở | không (hợp đồng) | legal-consent §1 | TD-01 · Q-05 |
 | Câu trả lời đã nộp + kết quả | có | server của mình | khách: 30 ngày nếu chưa lưu (BR-APP-08); tài khoản: tới khi xoá | bài `sensitive`: **consent tường minh** trước câu 1 (BR-APP-06); bài thường: hợp đồng | legal-consent §1 | BR-APP-06 · BR-APP-08 · Q-05 |
-| Check-in cảm xúc | có | server của mình | tới khi xoá tài khoản | không (hợp đồng); coi là dữ liệu nhạy cảm → không gửi analytics | legal-consent §1 | BR-APP-05 |
-| Email, tên, timezone (nguồn: form, hoặc hồ sơ Google khi đăng nhập Google) | có | server của mình + vendor email giao dịch (Q-16) | tới khi xoá tài khoản | không (hợp đồng) | legal-consent §1 | Q-16 · Q-11 |
-| Dữ liệu thẻ / thanh toán | có | **chỉ provider/MoR** (Q-04), không qua server mình | theo provider | không (hợp đồng) | legal-consent §1 | BR-APP-01 · Q-04 |
+| Xác nhận 18+ (bài `sensitive`) | có | server của mình (cùng attempt) | như câu trả lời của attempt đó | đi kèm consent bài `sensitive`; chỉ là ô tự xác nhận, không thu ngày sinh | legal-consent §1 | Q-21 · BR-TEST-11 |
+| Check-in cảm xúc | có | server của mình | tới khi user tắt check-in (xoá cứng ngay) hoặc xoá tài khoản | **consent tường minh** lần đầu bật (lưu `checkin_consent_version` + thời điểm); dữ liệu nhạy cảm → không gửi analytics | legal-consent §1 | Q-22 · BR-DASH-05 · BR-ACC-07 · BR-APP-05 |
+| Email, tên, timezone (nguồn: form, hoặc hồ sơ Google khi đăng nhập Google) | có | server của mình + Postmark (Mỹ, có DPA — Q-16) | tới khi xoá tài khoản | không (hợp đồng) | legal-consent §1 | Q-16 · Q-11 |
+| Dữ liệu thẻ / thanh toán | có | **chỉ Paddle** (MoR, Q-04), không qua server mình | theo provider | không (hợp đồng) | legal-consent §1 | BR-APP-01 · Q-04 |
 | Event analytics (không có dữ liệu bài) | có | Firebase Analytics (Google) | theo cấu hình retention analytics (đề xuất 14 tháng) | **có** (analytics) | legal-consent §2 · tracking-events | TD-04 · BR-APP-05 |
-| Bản ghi consent cookie | có | server của mình | 12 tháng, sau đó hỏi lại | không (nghĩa vụ pháp lý) | legal-consent §3 | SYS-CONSENT |
+| Bản ghi consent cookie (gồm `source` = banner / settings / gpc) | có | server của mình | 12 tháng, sau đó hỏi lại | không (nghĩa vụ pháp lý) | legal-consent §3 | SYS-CONSENT |
 | File PDF report | có | object storage của mình (cùng region) | cache 30 ngày, tạo lại khi cần | không | legal-consent §1 | TD-03 |
-| Log máy chủ / bảo mật (IP, user agent, thời điểm) | có | server của mình (+ CDN/WAF nếu dùng, Q-09) | 30 ngày | không (lợi ích hợp pháp: bảo mật, chống lạm dụng, rate limit) | legal-consent §1 | in-house |
+| Log máy chủ / bảo mật (IP, user agent, thời điểm) | có | server của mình + CloudFront / WAF (Q-09 · Q-19) | 30 ngày | không (lợi ích hợp pháp: bảo mật, chống lạm dụng, rate limit) | legal-consent §1 | in-house |
 | Tin nhắn liên hệ (email, chủ đề, nội dung) | có | server của mình | 24 tháng sau khi đóng yêu cầu | không (trả lời yêu cầu của user) | legal-consent §1 | API-HELP-01 |
 | Lý do huỷ gia hạn (tuỳ chọn, chữ tự do) | có | server của mình | tách khỏi danh tính sau 90 ngày; xoá luôn nếu tài khoản bị xoá trước mốc đó | không (tuỳ chọn) | legal-consent §1 | SCR-PAY-04 |
 | Đánh giá report (1–5) | có | server của mình | tới khi xoá tài khoản; không gửi analytics | không | legal-consent §1 | SCR-APP-03 · BR-APP-05 |
-| Bản ghi consent gia hạn (`consent_version`, thời điểm, IP) | có | server của mình + provider | theo thời hạn chứng từ (Q-05) | không (nghĩa vụ pháp lý: chứng minh đồng ý tự gia hạn) | legal-consent §1 | BR-APP-03 |
-| Đơn hàng + event webhook thanh toán (email, planKey, số tiền, trạng thái) | có | server của mình + provider/MoR (Q-04) | theo luật kế toán của pháp nhân bán (Q-05) | không (hợp đồng + nghĩa vụ pháp lý) | legal-consent §1 | API-HOOK-01 · SYS-ENTITLEMENT |
+| Bản ghi consent gia hạn (`consent_version`, thời điểm, IP, giá + câu gia hạn đã hiện, planKey) | có | server của mình + Paddle | 3 năm, hoặc 1 năm sau khi hợp đồng kết thúc (lấy mốc dài hơn); giữ cả khi xoá tài khoản (Q-05 (f)) | không (nghĩa vụ pháp lý: chứng minh đồng ý tự gia hạn) | legal-consent §1 | BR-APP-03 |
+| Đơn hàng + event webhook thanh toán (email, planKey, số tiền, trạng thái, mã đơn) | có | server của mình + Paddle (Q-04) | 7 năm, tới khi kế toán nơi đăng ký xác nhận mốc khác (Q-05 (f)) | không (hợp đồng + nghĩa vụ pháp lý) | legal-consent §1 | API-HOOK-01 · SYS-ENTITLEMENT |
+| Yêu cầu huỷ / rút (email, mã đơn, việc chọn, thời điểm nhận, IP) | có | server của mình + Paddle (khi hoàn tiền) | như đơn hàng (7 năm) | không (nghĩa vụ pháp lý: bằng chứng đã nhận yêu cầu rút / huỷ) | legal-consent §1 | Q-25 · BR-APP-14 · API-PAY-08 · API-PAY-09 |
 | File export dữ liệu | có | object storage của mình | link + file xoá sau 7 ngày | không | legal-consent §1 | BR-APP-11 |
 
 > Bảng này là nguồn của `go-to-market/legal-consent.md` và tài liệu BE. Sai ở đây thì khai báo pháp lý cũng sai.
@@ -72,7 +91,7 @@
 |---|---|---|---|---|---|
 | TD-01 | CPU server, không vendor (`[INFERRED]`) | ~10 lần nộp | ≈ 0 | không | Q-19 |
 | TD-02 | 0 lúc chạy; soạn nội dung là chi phí một lần (`[INFERRED]`) | ~10 report | ≈ 0 | không | Q-19 |
-| TD-03 | container Chromium: ~0,25–0,6 s CPU mỗi PDF, ~0,42 GB RAM cho 1 job, ~0,8–1 GB cho 4 job song song (đo ở spike §7 #2 — `research/spikes/SPK-02-pdf-render.md`); giá hạ tầng chưa có | ~2 PDF | ~1 s CPU / user / tháng | không | Q-19 |
+| TD-03 | container Chromium: ~0,25–0,6 s CPU mỗi PDF, ~0,42 GB RAM cho 1 job, ~0,8–1 GB cho 4 job song song (đo ở spike §7 #2 — `research/spikes/SPK-02-pdf-render.md`); worker ECS Fargate 1 vCPU / 1 GB (Q-19), giá AWS điền lúc setup | ~2 PDF | ~1 s CPU / user / tháng | không | Q-19 |
 | TD-04 | Firebase Analytics gói miễn phí (`[INFERRED]`) | — | 0 | không | Q-19 |
 
 ## 6. Rủi ro & fallback
@@ -94,4 +113,5 @@
 
 ## 8. AI Notices
 - Latency/chi phí ở §2 và §5 là mục tiêu `[INFERRED]` (basis in-house). Phải thay bằng số đo của spike §7 trước FREEZE. Spike #2 (PDF) đã có số đo engine (`research/spikes/SPK-02-pdf-render.md`); spike #1 và #3 cần code của mình.
-- Không dùng tên vendor của đối thủ làm lý do. Lựa chọn vendor của mình ghi ở đây với basis riêng.
+- Không dùng tên vendor của đối thủ làm lý do. Lựa chọn vendor của mình ghi ở §1b với basis riêng (chốt 2026-09-28, AI · uỷ quyền human).
+- Chi phí biến đổi (§5) rất nhỏ so với giá thấp nhất $9.99 (`00-overview §2`), nên giá vendor chỉ ảnh hưởng chi phí cố định; điền từ bảng giá thật lúc setup (Q-19), không dùng số nhớ.

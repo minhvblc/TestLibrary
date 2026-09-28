@@ -1,5 +1,6 @@
 # SYS-AUTH — khách, tài khoản, phiên
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · Q-11 đã chốt 2026-09-28 (AI · uỷ quyền human): magic link + Google, không mật khẩu; email magic link gửi qua Postmark (Q-16).
 - 2026-09-28 · v1.1 · claude-opus-5-5 · D-17: banner khôi phục do shell app hiện ở trang đích đầu tiên (mọi `next`), dựa trên `accountRestored` (API-AUTH-02) hoặc `restored=1` (API-AUTH-04).
 - 2026-09-27 · v1 · claude-opus-5-5 · theo đề xuất Q-11 (magic link + Google, checkout khách được).
 
@@ -27,7 +28,7 @@ SCR-AUTH-01 · SCR-TEST-02 · SCR-PAY-02 · SCR-ACC-01 · SCR-ACC-02 · GC-SiteH
 
 ## 4. Basis
 
-Q-11 (đề xuất AI) · BR-APP-08 · BR-APP-10 · RS·F-20.
+Q-11 (chốt 2026-09-28) · Q-16 (Postmark gửi API-MAIL-01) · BR-APP-08 · BR-APP-10 · RS·F-20.
 
 ## 5. AI Notices
-- Nếu human chọn mật khẩu thay magic link (Q-11), cần thêm màn đặt/đổi mật khẩu và chính sách mật khẩu.
+- Q-11 đã chốt không có mật khẩu. Đăng nhập phụ thuộc email tới nhanh (magic link hết hạn sau 15 phút), nên theo dõi độ trễ giao email của Postmark như một chỉ số vận hành.

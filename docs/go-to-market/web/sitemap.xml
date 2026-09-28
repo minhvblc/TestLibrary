@@ -43,4 +43,8 @@
   <url>
     <loc>https://&lt;domain&gt;/legal/cookies</loc>
   </url>
+  <!-- /cancel (SCR-PAY-05): huỷ / rút không cần đăng nhập, index để "cancel [brand]" tìm thấy ngay (Q-25 · seo-meta.md §1). Chỉ /cancel, không đưa biến thể có ?mode / ?order. -->
+  <url>
+    <loc>https://&lt;domain&gt;/cancel</loc>
+  </url>
 </urlset>

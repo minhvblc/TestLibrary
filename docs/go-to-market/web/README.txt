@@ -23,4 +23,5 @@ KHÔNG soạn copy trong các file này: sửa file .md nguồn trước, rồi 
   - Không bao giờ đưa route noindex vào sitemap.xml.
   - Route public phải render phía server hoặc prerender để crawler không chạy JS thấy meta riêng từng route (Q-09).
   - Không thẻ analytics / quảng cáo trong head-meta.html: Firebase Analytics chỉ tải sau consent qua AppTracking (TD-04).
-  - Không ghi giá vào meta / OG / JSON-LD tới khi Q-03 chốt; sau đó giá phải khớp docs/overview/00-overview.md §2.
+  - Q-03 đã chốt (2026-09-28). Giá trong meta / OG / JSON-LD (nếu có) phải khớp docs/overview/00-overview.md §2 và lấy từ cùng nguồn với API-PAY-01, không gõ tay.
+  - /cancel (SCR-PAY-05) là route index, có trong sitemap.xml; biến thể ?mode= / ?order= không đưa vào sitemap (canonical về /cancel).

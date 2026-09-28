@@ -1,8 +1,9 @@
 # Tracking events — TestLib (web)
 > MỘT file. Chỉ 2 loại event: `screen_active` + `ft_<feature>`. Gửi qua một cổng duy nhất `AppTracking` (Firebase Analytics web, chuẩn xteam-tracking). Params chung khai báo 1 lần ở bảng đầu. Status: Chưa gắn → Đã gắn → Đã verify.
-> **Consent:** không event nào bắn trước khi user đồng ý analytics (mọi vùng, Q-13; BR-APP-05). Route của bài `sensitive` (SCR-PUB-03 · SCR-TEST-01 · SCR-TEST-02 · SCR-PAY-01 · SCR-PAY-02 · SCR-APP-03 khi kết quả/report thuộc bài `sensitive`) **không bắn event nào** (BR-APP-06). **Cấm** gửi câu trả lời, điểm, type kết quả, email, tên.
+> **Consent:** không event nào bắn trước khi user đồng ý analytics (mọi vùng, Q-13; BR-APP-05). Trình duyệt gửi GPC thì analytics = denied (Q-20), nên không có event nào trừ khi user tự bật lại ở SCR-PUB-07. Route của bài `sensitive` (SCR-PUB-03 · SCR-TEST-01 · SCR-TEST-02 · SCR-PAY-01 · SCR-PAY-02 · SCR-APP-03 khi kết quả/report thuộc bài `sensitive`) **không bắn event nào** (BR-APP-06). **Cấm** gửi câu trả lời, điểm, type kết quả, email, tên.
 > **Che URL:** `AppTracking` tự đặt `page_location` / `page_referrer` về dạng không có id và che slug bài `sensitive` (vd `/tests/[sensitive]`, `/results/[id]`); không gửi query string. Nhờ đó trang kế tiếp sau một bài nhạy cảm không làm lộ slug qua referrer.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): thêm màn SCR-PAY-05 (`cancel_or_withdraw`) + feature ft_withdrawal (Q-18 · Q-25); ft_subscription thêm huỷ không cần đăng nhập (API-PAY-09); ft_checkin thêm enable / disable (consent check-in, Q-22); ft_consent: GPC không bắn event và `source` (Q-20); ft_contact thêm chủ đề `privacy_request` (Q-28).
 - 2026-09-28 · v1.1 · claude-opus-5-5 · ft_consent start: thêm trường hợp cho phép lần đầu ở SCR-PUB-07 (bắn ngay trước save). D-14: `from` của ft_test start (app_home mang qua SCR-PUB-03) và ft_report start (thêm app_home · billing).
 - 2026-09-27 · v1 · claude-opus-5-5 · khởi tạo.
 
@@ -42,6 +43,7 @@
 | SCR-PAY-02 | `/checkout/return` | `checkout_return` |
 | SCR-PAY-03 | `/account/billing` | `billing` |
 | SCR-PAY-04 | `/account/billing/cancel` | `cancel_renewal` |
+| SCR-PAY-05 | `/cancel` | `cancel_or_withdraw` |
 | SCR-AUTH-01 | `/login` | `login` |
 | SCR-APP-01 | `/app` | `app_home` |
 | SCR-APP-02 | `/app/reports` | `my_reports` |
@@ -78,9 +80,9 @@
 #### ft_subscription
 | action_type | action_name | feature_target | status | from | Fires when | Extra param | Status |
 |---|---|---|---|---|---|---|---|
-| start | — | — | — | billing / email | SCR-PAY-03 hoặc SCR-PAY-04 hiện | `plan_key` | Chưa gắn |
+| start | — | — | — | billing / email / cancel_page | SCR-PAY-03 hoặc SCR-PAY-04 hiện, hoặc SCR-PAY-05 ở chế độ huỷ (chọn "Cancel Plus renewal") | `plan_key` (SCR-PAY-05 khi chưa đăng nhập: không có) | Chưa gắn |
 | action | cancel_open | FALSE | null | billing / email | mở SCR-PAY-04 | — | Chưa gắn |
-| action | cancel_confirm | TRUE | success / fail | — | API-PAY-05 trả về | `plan_key` | Chưa gắn |
+| action | cancel_confirm | TRUE | success / fail / not_found | — | API-PAY-05 (SCR-PAY-04) hoặc API-PAY-09 (SCR-PAY-05) trả về | `plan_key` · `channel` = account / no_login | Chưa gắn |
 | action | resume | FALSE | success / fail | — | API-PAY-06 trả về | `plan_key` | Chưa gắn |
 | action | portal_open | FALSE | null | — | API-PAY-07 trả URL | — | Chưa gắn |
 
@@ -95,8 +97,10 @@
 #### ft_checkin
 | action_type | action_name | feature_target | status | from | Fires when | Extra param | Status |
 |---|---|---|---|---|---|---|---|
-| start | — | — | — | app_home | widget check-in hiện và hôm nay chưa check-in | — | Chưa gắn |
+| start | — | — | — | app_home | widget check-in hiện và hôm nay chưa check-in (hoặc bước bật check-in hiện, khi chưa đồng ý — Q-22) | — | Chưa gắn |
+| action | enable | FALSE | success / declined | — | bước bật check-in: "Turn on check-ins" (API-ME-02 OK) hoặc "Not now" | — | Chưa gắn |
 | action | submit | TRUE | success / fail | — | API-APP-02 trả về | `streak_days` (KHÔNG gửi giá trị cảm xúc) | Chưa gắn |
+| action | disable | FALSE | success / fail | account | tắt check-in + xoá lịch sử ở SCR-ACC-01 (API-ME-02 trả về) | — | Chưa gắn |
 
 #### ft_challenge
 | action_type | action_name | feature_target | status | from | Fires when | Extra param | Status |
@@ -127,13 +131,19 @@
 | action_type | action_name | feature_target | status | from | Fires when | Extra param | Status |
 |---|---|---|---|---|---|---|---|
 | start | — | — | — | banner / cookie_settings | chỉ bắn được khi analytics đã được cho phép: mở SCR-PUB-07 khi đã granted, hoặc ngay sau khi SDK tải do vừa cho phép (banner "Accept all" · lưu lần đầu ở SCR-PUB-07), luôn trước save | — | Chưa gắn |
-| action | save | TRUE | success | — | lưu lựa chọn có analytics = granted (từ chối thì không có event nào) | `analytics` · `marketing` (granted / denied) | Chưa gắn |
+| action | save | TRUE | success | — | lưu lựa chọn có analytics = granted (từ chối, hoặc GPC tự lưu denied, thì không có event nào) | `analytics` · `marketing` (granted / denied) · `source` = banner / settings | Chưa gắn |
 
 #### ft_contact
 | action_type | action_name | feature_target | status | from | Fires when | Extra param | Status |
 |---|---|---|---|---|---|---|---|
 | start | — | — | — | help | form liên hệ hiện | — | Chưa gắn |
-| action | submit | TRUE | success / fail | — | API-HELP-01 trả về | `topic` | Chưa gắn |
+| action | submit | TRUE | success / fail | — | API-HELP-01 trả về | `topic` (gồm `privacy_request` — Q-28) | Chưa gắn |
+
+#### ft_withdrawal
+| action_type | action_name | feature_target | status | from | Fires when | Extra param | Status |
+|---|---|---|---|---|---|---|---|
+| start | — | — | — | footer / help / billing / checkout_return / email | SCR-PAY-05 hiện ở chế độ rút (vào bằng `mode=withdraw` hoặc chọn "Withdraw from a purchase") | — | Chưa gắn |
+| action | confirm | TRUE | success / fail / not_eligible / not_found | — | API-PAY-08 trả về sau bước 2 "Confirm withdrawal" | `plan_key` (chỉ khi success) | Chưa gắn |
 
 ## Event index
 
@@ -143,9 +153,10 @@
 | ft_test | feature | SCR-TEST-01 | Chưa gắn |
 | ft_result | feature | SCR-TEST-02 | Chưa gắn |
 | ft_unlock | feature | SCR-PUB-04 · SCR-PAY-01 · SCR-PAY-02 · SCR-APP-03 · SCR-APP-01 | Chưa gắn |
-| ft_subscription | feature | SCR-PAY-03 · SCR-PAY-04 | Chưa gắn |
+| ft_subscription | feature | SCR-PAY-03 · SCR-PAY-04 · SCR-PAY-05 | Chưa gắn |
+| ft_withdrawal | feature | SCR-PAY-05 | Chưa gắn |
 | ft_auth | feature | SCR-AUTH-01 · SCR-ACC-01 | Chưa gắn |
-| ft_checkin | feature | SCR-APP-01 | Chưa gắn |
+| ft_checkin | feature | SCR-APP-01 · SCR-ACC-01 | Chưa gắn |
 | ft_challenge | feature | SCR-APP-01 | Chưa gắn |
 | ft_report | feature | SCR-APP-03 | Chưa gắn |
 | ft_data_export | feature | SCR-ACC-01 | Chưa gắn |
@@ -157,4 +168,5 @@
 
 ## AI Notices
 - Không có event per-question (đối thủ bắn event theo từng câu, RS·F-13). Tỉ lệ bỏ dở đo ở server từ bảng attempt (số câu đã trả lời), không qua analytics.
-- Pixel quảng cáo chưa có (Q-12). Nếu chạy ads thì chỉ gửi conversion "purchase" phía server, sau consent marketing.
+- Pixel quảng cáo không có trong MVP (Q-12, chốt 2026-09-28). Nếu chạy ads thì chỉ gửi conversion "purchase" phía server, sau consent marketing, không khi có GPC, không kèm sản phẩm khi report thuộc bài `sensitive`.
+- Rút tiền và huỷ gia hạn đếm chính xác ở server (bảng đơn hàng, event webhook). ft_withdrawal / ft_subscription chỉ đo trải nghiệm trên trang, có thể thiếu vì consent.

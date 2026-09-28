@@ -1,6 +1,7 @@
 # Quy ước API chung (web client)
 > BE: NestJS + TypeORM, PostgreSQL `postgres:16-alpine`, một schema `public`; migration sinh bằng `typeorm migration:generate` (basis in-house). Endpoint ở đây là SPEC MỚI của mình, không lấy từ network log của đối thủ.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · §5 thêm idempotency cho API-PAY-08 · API-PAY-09; §6 provider = Paddle (Q-04, chốt 2026-09-28), thêm rule hoàn tiền / rút.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · D-06: khoá idempotency của huỷ / tiếp tục gia hạn = UUID cho mỗi thao tác mới + server kiểm trạng thái hiện tại (thay khoá cố định `subscriptionId` + hành động). D-18: thêm hàng idempotency cho API-CON-01 (`consentId`) và API-RES-03.
 - 2026-09-27 · v1 · claude-opus-5-5 · khởi tạo (proposal).
 
@@ -55,7 +56,8 @@ Versioning: tiền tố `/v1`; thay đổi phá vỡ → `/v2`, giữ `/v1` ít 
 | Nộp bài (API-TEST-03) | `attemptId` | nộp lặp → 409 → trả `resultId` cũ |
 | Lưu kết quả bằng email (API-RES-02) | `resultId` + email chuẩn hoá | gửi lại magic link tối đa 3 lần/giờ |
 | Tạo phiên checkout (API-PAY-02) | UUID sinh mỗi lần bấm CTA | bấm 2 lần → cùng phiên checkout |
-| Huỷ / tiếp tục gia hạn (API-PAY-05 · API-PAY-06) | UUID sinh cho mỗi thao tác mới của user (bấm lại sau lỗi / timeout thì dùng lại khoá của lần đó) | server còn kiểm trạng thái hiện tại: huỷ khi đã lên lịch huỷ, hoặc tiếp tục khi đang `active` → 200 trạng thái hiện tại, không gọi provider, không gửi email lần hai. Nhờ vậy huỷ → tiếp tục → huỷ lại trong 24 giờ vẫn có hiệu lực |
+| Huỷ / tiếp tục gia hạn (API-PAY-05 · API-PAY-06 · API-PAY-09) | UUID sinh cho mỗi thao tác mới của user (bấm lại sau lỗi / timeout thì dùng lại khoá của lần đó) | server còn kiểm trạng thái hiện tại: huỷ khi đã lên lịch huỷ, hoặc tiếp tục khi đang `active` → 200 trạng thái hiện tại, không gọi provider, không gửi email lần hai. Nhờ vậy huỷ → tiếp tục → huỷ lại trong 24 giờ vẫn có hiệu lực |
+| Rút một khoản trong 14 ngày (API-PAY-08) | UUID sinh cho mỗi thao tác mới (bấm lại sau lỗi / timeout dùng lại khoá của lần đó) | server kiểm trạng thái: khoản đã rút → 200 kết quả cũ, không hoàn lần hai, không gửi API-MAIL-11 lần hai; quá hạn → 422 `not_eligible` |
 | Check-in (API-APP-02) | `userId` + ngày nghiệp vụ (BR-APP-09) | mỗi ngày tối đa 1 bản; gửi lại = cập nhật giá trị |
 | Hoàn thành ngày thử thách (API-APP-03) | `userId` + `day` | |
 | Tạo PDF (API-REP-03) | `reportId` + `contentVersion` + locale | trả job/URL đã có |
@@ -69,13 +71,14 @@ Versioning: tiền tố `/v1`; thay đổi phá vỡ → `/v2`, giữ `/v1` ít 
 
 | Hạng mục | Quy định |
 |---|---|
-| Provider | Q-04 (MoR ưu tiên) |
+| Provider | Paddle Billing, merchant of record (Q-04) |
 | Verify | kiểm chữ ký bằng secret của provider TRƯỚC khi đọc payload; sai chữ ký → 400, không ghi gì |
 | Idempotent | theo `event.id`; đã xử lý → 200 ngay |
 | Entitlement | **server quyết** (BR-APP-01): chỉ webhook `checkout completed` / `subscription active` mới mở quyền; client không tự mở |
 | Thứ tự | event đến lộn xộn → đọc lại trạng thái subscription từ provider trước khi cập nhật; không lùi trạng thái theo event cũ hơn |
 | Retry | trả 2xx trong 5 s; xử lý nặng đẩy sang queue; provider retry thì nhờ idempotency nên an toàn |
 | Consent | lưu `consent_version` của câu công bố gia hạn (BR-APP-03) kèm phiên checkout |
+| Rút / hoàn tiền | rút qua API-PAY-08 thu hồi quyền ngay khi server nhận yêu cầu (không chờ webhook), rồi gọi hoàn toàn bộ ở Paddle; event refund / adjustment về sau chỉ xác nhận. Hoàn tiền do hỗ trợ tạo trên Paddle → quyền thu hồi khi webhook về (SYS-ENTITLEMENT) |
 
 ## 7. Streaming
 

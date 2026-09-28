@@ -1,5 +1,6 @@
 # Notes — Testlibrary (web) · drive log
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · thêm # 58: lời kể human về tài khoản đã huỷ khi hết hạn.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · thêm log phiên 2 (container cloud, không drive được).
 - 2026-09-27 · v1 · claude-opus-5-5 · bắt đầu drive (Chrome research, profile `testlib`, en-US, 1280×800).
 
@@ -87,6 +88,7 @@
 | 55 | WebSearch: search index, pháp nhân, claim trên offer (96 query) | index có root funnel trả phí, không có `/free-tests/`; Aura Health LLC đứng tên cả mytraitsprofile.com và salo.health; các pháp nhân lập năm 2025; "Rated 4.8/5" không khớp Trustpilot | `web-evidence.md` §6–§8 |
 | 56 | WebSearch: pháp lý 2026 (34 query, hết ngân sách 200 search của phiên) | FTC click-to-cancel bị huỷ 7/2025, ANPRM 3/2026; luật bang (CA, NY, NYC từ 1/10/2026…); EU withdrawal function từ 19/6/2026 | `research/regulatory-landscape.md` |
 | 57 | Kế hoạch drive cho phiên browser thật | D-01…D-13 | `next-drive-plan.md` |
+| 58 | human (lời kể, không phải capture) | tài khoản research đã huỷ (Plan = Cancelled) **không dùng được nữa khi đã hết hạn** | teardown F-24 · S16 (`[INFERRED]`, nguồn: human) · `next-drive-plan.md` D-09 |
 
 ## AI Notices
 - Bước 3–5 có thao tác của human xen vào (đăng nhập tự phát), nên trigger các transition này là `[INFERRED]`.

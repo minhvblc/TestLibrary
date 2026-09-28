@@ -1,5 +1,6 @@
 # [RS-testlibrary] Teardown — Testlibrary (web)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · thêm nguồn S16 (lời kể human: tài khoản đã huỷ không dùng được khi hết hạn, `[INFERRED]`); ghi chú F-24; §9 PARK hàng hết trial.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · phiên cloud không drive được (egress chặn testlibrary.com); thêm nguồn S15 (`web-evidence.md`, `[LIVE:web]`), finding F-35–F-43 ở đó, ghi chú F-04 · F-06 · F-10 · F-20, cập nhật §9 PARK. Kế hoạch drive tiếp: `next-drive-plan.md`.
 - 2026-09-27 · v1 · claude-opus-5-5 · teardown LIVE ~70 màn (ẩn danh + research account trial của human, 1280 + 390), 263 EV `EV-TLW-*` + 6 EV kit `EV-KIT-*`; phụ lục pháp lý `legal-extract.md`.
 
@@ -49,6 +50,7 @@
 | S13 | Review / bài viết bên thứ ba (qua web search, KHÔNG drive) | trustpilot.com/review/testlibrary.com · sensorstechforum.com/testlibrary-scam · youtube "Is TestLibrary com Legit…" · facebook group post | — (search summary) | 2026-09-27 | `[LIVE:web]` |
 | S14 | Lời kể của human (tạo mật khẩu sau thanh toán) | — | — | 2026-09-27 | `[INFERRED]` (không phải capture) |
 | S15 | Bằng chứng ngoài site qua WebSearch: Trustpilot, BBB + Scam Tracker, ProductReview, blog cảnh báo, search index của testlibrary.com, sổ đăng ký pháp nhân (W-01…W-23) | `web-evidence.md` §1 | — (search summary, không mở trang) | 2026-09-28 | `[LIVE:web]` |
+| S16 | Lời kể của human (tài khoản research đã huỷ không dùng được nữa khi đã hết hạn) | — | — | 2026-09-28 | `[INFERRED]` (không phải capture) |
 
 ## 3. Tổng quan & positioning
 
@@ -377,7 +379,7 @@ PWA: không manifest, không service worker `[LIVE:browser · EV-TLW-015]` · kh
 | F-21 | Member giữ chân bằng daily check-in + streak, 30-day challenge (mở từng ngày), insight + poll tuần (1129 votes), tiến độ 0/30 | EV-TLW-209–214 | `[LIVE:browser]` (post-checkout) | cao |
 | F-22 | Member làm test qua cùng funnel; kết quả lưu server; bỏ qua offer → "Your reports" | EV-TLW-239 · EV-TLW-241 · EV-TLW-242 | `[LIVE:browser]` (post-checkout) | cao |
 | F-23 | Report trả phí ~3.120 chữ, 9 chương, mục lục; PDF **11 trang** (offer hứa "20-page report"), `/Producer Skia/PDF m128`, `/Creator` UA headless Linux | EV-TLW-245 · EV-TLW-261 · EV-TLW-109 | `[LIVE:browser]` (post-checkout) | cao |
-| F-24 | Plan details "Cancelled" nhưng tài khoản vẫn làm test + xem report cùng ngày (trái với "take effect immediately") | EV-TLW-247 · EV-TLW-243 · EV-TLW-046 | `[LIVE:browser]` (post-checkout) | trung bình (không rõ lúc nào mất quyền) |
+| F-24 | Plan details "Cancelled" nhưng tài khoản vẫn làm test + xem report cùng ngày (trái với "take effect immediately") — *2026-09-28: human cho biết tài khoản đã huỷ không dùng được nữa khi đã hết hạn (S16). Tức là quyền giữ tới hết kỳ đã trả rồi mới mất, không phải "take effect immediately" như `/cancel-sub` và văn bản pháp lý viết; màn lúc hết hạn chưa capture* | EV-TLW-247 · EV-TLW-243 · EV-TLW-046 · S16 | `[LIVE:browser]` (post-checkout) / `[INFERRED]` (S16) | trung bình (mốc mất quyền theo lời kể, chưa có capture) |
 | F-25 | IQ test 38 câu: trộn Likert tự đánh giá + câu đố nhiều lựa chọn + đồng hồ đếm lên; truy cập bằng `?access=` token | EV-TLW-248–252 | `[LIVE:browser]` (post-checkout) | cao |
 | F-26 | Dấu vết stack: Nuxt; Cloudflare; host `*.supabase.co` + cookie `sb-…-auth-token`; `data.testlibrary.com` (tag gateway first-party); Meta · Bing · Google Ads · GA4; key Klaviyo; cookie Convert → vendor đều `[INFERRED]` | EV-TLW-001 · EV-TLW-015 · EV-TLW-254 | `[LIVE:browser]` (dấu vết) / `[INFERRED]` (vendor) | trung bình |
 | F-27 | SEO kỹ thuật yếu: không OG, không hreflang (dù có `/de/`), không JSON-LD, sitemap 403 với crawler không-JS | EV-TLW-001 · EV-TLW-015 | `[LIVE:browser]` | cao |
@@ -439,7 +441,7 @@ PWA: không manifest, không service worker `[LIVE:browser · EV-TLW-015]` · kh
 | Màn sau thanh toán (đặt mật khẩu, order confirmation, upsell sau mua) | không trả tiền trong phiên; chỉ có lời kể human | `[BLOCKED · payment]` | có lời kể bên thứ ba: công ty nói mua kết quả là tự tạo tài khoản (`web-evidence` §4, `[LIVE:web]`); capture vẫn `[BLOCKED · payment]` |
 | Email vòng đời (nhắc trial, xác nhận huỷ, winback) | không truy cập hộp thư research | `[BLOCKED · login]` | bên thứ ba: điều khoản gia hạn nằm cuối email xác nhận; khiếu nại nói không có email nhắc trước gia hạn (`web-evidence` §4, `[LIVE:web]`) · `next-drive-plan` D-10 (human) |
 | Report trả phí có phụ thuộc câu trả lời không (TK-02/03 trên bài 100 câu) | luật core-tech chỉ probe free tier (`core-tech-web.md §8`) | not-attempted | `next-drive-plan` D-12 (cần human cho phép vượt luật §8) |
-| Hết trial / trial-expiry banner / mất quyền sau huỷ | cần chờ 7 ngày | not-attempted | `next-drive-plan` D-09 (xem lại sau 2026-10-04) |
+| Hết trial / trial-expiry banner / mất quyền sau huỷ | cần chờ 7 ngày | not-attempted → lời kể human | human cho biết hết hạn là không dùng được nữa (S16, `[INFERRED]`); màn / banner lúc hết hạn chưa capture · `next-drive-plan` D-09 còn lại phần chụp màn (tuỳ chọn) |
 | Bài Soulmate, Spirit Animal, 27 bài member còn lại | ngoài phạm vi (đã thấy 3 dạng engine) | not-attempted | `next-drive-plan` D-02 · D-03 (kit run 2/3 trên bài khác) |
 | `/free-tests/<slug>/result` mở ở context khác (link chia sẻ) | chưa thử | not-attempted | `next-drive-plan` D-04 |
 | PSP thật sự (Stripe?) | không có "Powered by"; không đọc bundle/payload | `[INFERRED]` | khiếu nại nêu PayPal · Google Wallet · thẻ, khoản gia hạn hiện "NordicaLab" (F-37, `[LIVE:web]`) · `next-drive-plan` D-05 |

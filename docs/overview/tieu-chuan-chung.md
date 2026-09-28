@@ -1,6 +1,7 @@
 # Tiêu chuẩn chung — TestLib (web)
 > Viết một lần ở đây; SCR chỉ ghi **ngoại lệ**. Copy UI là en-US (Q-14).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · Q-09 (Next.js SSG + revalidate) và Q-20 (GPC = "Reject all") đã chốt 2026-09-28 (AI · uỷ quyền human).
 - 2026-09-27 · v1 · claude-opus-5-5 · baseline web từ cong-nghe-loi §2–4 + research (perf đối thủ, consent).
 
 ## 1. Session & auth
@@ -81,7 +82,7 @@ Chrome · Safari (macOS + iOS) · Edge · Firefox, 2 bản gần nhất. Tính n
 | OG | title / description / ảnh 1200×630 cho mọi route indexable |
 | hreflang | chỉ khi có locale thứ hai (Q-14) |
 | JSON-LD | `Organization` (trang chủ) · `FAQPage` (trợ giúp, trang bài) · `Quiz` (trang bài) |
-| Rendering | route public render phía server/tĩnh (Q-09); crawler không chạy JS vẫn đọc được meta + nội dung |
+| Rendering | route public render sẵn bằng Next.js (SSG + revalidate, Q-09); crawler không chạy JS vẫn đọc được meta + nội dung |
 | 404 / 500 | trang có nội dung + link về thư viện bài |
 
 ## 9. Performance budget
@@ -100,7 +101,7 @@ Chrome · Safari (macOS + iOS) · Edge · Firefox, 2 bản gần nhất. Tính n
 - Danh mục cookie + nút ở banner: cite `go-to-market/legal-consent.md` §2–3. Nút "Reject all" ngang hàng "Accept all".
 - Route của bài `sensitive` không tải analytics ngay cả khi đã consent (BR-APP-06).
 - `AppTracking` che URL trước khi gửi: bỏ query string, thay id bằng `[id]`, thay slug bài `sensitive` bằng `[sensitive]` ở cả `page_location` lẫn `page_referrer` (tracking-events). Header `Referrer-Policy: strict-origin-when-cross-origin` cho mọi trang.
-- Tín hiệu Global Privacy Control của trình duyệt: đề xuất coi như "Reject all" (Q-20).
+- Tín hiệu Global Privacy Control của trình duyệt = "Reject all": không hiện banner, không tải analytics; user vẫn tự bật lại được ở SCR-PUB-07 (Q-20 · rule ở SYS-CONSENT).
 - Event: chỉ hai loại `screen_active` + `ft_*` (cite `tracking/tracking-events.md`).
 
 ## 11. AI Notices

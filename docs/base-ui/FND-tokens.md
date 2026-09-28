@@ -1,7 +1,8 @@
 # FND-tokens — foundation (FREEZE trước UI code)
 > Nguồn định hướng định tính: `docs/overview/design-language.md` (bối cảnh "tủ phiếu thư mục thư viện"). Đây là nơi DUY NHẤT có hex / px / token.
-> **Provenance token:** mọi giá trị là **đề xuất Group C (Q-17)** của AI (taste mode, không có Figma), human veto trước FND-FREEZE. Contrast tính theo WCAG 2.x; palette chart chạy validator của skill dataviz trên đúng surface của mình.
+> **Provenance token:** mọi giá trị do AI chọn (taste mode, không có Figma) và **đã chốt ở Q-17** (Group C, 2026-09-28, human uỷ quyền, không veto). Đổi giá trị = tăng version file này. Contrast tính theo WCAG 2.x; palette chart chạy validator của skill dataviz trên đúng surface của mình.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · Q-17 đã chốt 2026-09-28 (AI · uỷ quyền human): bộ token này là bản chốt; đổi = tăng version.
 - 2026-09-27 · v1 · claude-opus-5-5 · bộ token đầu tiên; contrast đã tính, palette chart đã validate (light surface `#FFFCF5`, dark surface `#1B2030`).
 
 ## 1. Color (semantic, light + dark)
@@ -109,5 +110,5 @@
 | Icon | bộ icon nét (stroke 1.5 px, đầu tròn), SVG tự host; icon luôn đi kèm chữ ở trạng thái (success / warning / danger) | dataviz status rule |
 
 ## 6. AI Notices
-- Toàn bộ giá trị ở đây là đề xuất Group C (Q-17). FND-FREEZE cần human duyệt (hoặc designer thay).
+- Toàn bộ giá trị ở đây đã chốt ở Q-17 (2026-09-28). FND-FREEZE còn cần đo lại contrast trên UI thật; designer có thể thay bằng một version mới.
 - Hai font Newsreader và Atkinson Hyperlegible Next cần kiểm tra lại bản variable + subset Latin khi build để giữ ngân sách perf (tieu-chuan-chung §9).

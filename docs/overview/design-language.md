@@ -1,6 +1,7 @@
 # Design language — TestLib (register ĐỊNH TÍNH, KHÔNG hex / px / token)
-> Chuyển look & feel quan sát được thành hướng đi của MÌNH. Cite `research/apps/testlibrary-web/design-report.md`. Giá trị cụ thể nằm ở `base-ui/FND-tokens.md` (Group C, Q-17: AI đề xuất, human veto).
+> Chuyển look & feel quan sát được thành hướng đi của MÌNH. Cite `research/apps/testlibrary-web/design-report.md`. Giá trị cụ thể nằm ở `base-ui/FND-tokens.md` (Group C, Q-17: AI chọn, đã chốt 2026-09-28).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · Q-17 đã chốt 2026-09-28 (AI · uỷ quyền human).
 - 2026-09-27 · v1 · claude-opus-5-5 · hướng "tủ phiếu thư mục thư viện" (taste mode, không có Figma).
 
 ## 1. Mood & tông
@@ -69,4 +70,4 @@
 | Vòng focus | `focus.ring` · `color.focus` |
 
 ## 7. AI Notices
-- Hướng thẩm mỹ do AI chọn (không có designer/Figma, Q-17 Group C). Human có thể veto trước FND-FREEZE; đổi hướng thì chỉ sửa FND-tokens, các SCR cite token theo tên nên không phải sửa.
+- Hướng thẩm mỹ do AI chọn (không có designer/Figma) và đã chốt ở Q-17 (human uỷ quyền 2026-09-28). Đổi hướng sau này thì chỉ sửa FND-tokens (tăng version); các SCR cite token theo tên nên không phải sửa.

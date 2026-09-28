@@ -1,5 +1,6 @@
 # [RS-testlibrary] Bằng chứng ngoài site: review, khiếu nại, index, pháp nhân (`[LIVE:web]`)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · §4 hàng huỷ: thêm lời kể human (teardown S16): tài khoản đã huỷ không dùng được khi hết hạn.
 - 2026-09-28 · v1 · claude-opus-5-5 · phiên cloud không mở được testlibrary.com (proxy trả 403), nên chỉ dùng WebSearch. Hai lượt search chạy song song: review + khiếu nại + vòng đời (69 query) và index + pháp nhân + claim (96 query). Ngân sách 200 search của phiên đã dùng hết. Lượt pháp lý nằm ở `research/regulatory-landscape.md`.
 
 ## 0. Cách đọc file này
@@ -92,7 +93,7 @@ Bù một phần cho PARK "màn sau thanh toán" và "email vòng đời" (teard
 | Tên trên sao kê | lần thu gia hạn, nhất là qua PayPal, hiện là **"NordicaLab"** (bản tiếng Đức còn nhắc "Trynourix"); MalwareTips lại nói hiện "TestLibrary" | W-21 · A · W-04 1338618 · A · W-05/W-07 · C · W-09 · B | checkbox ở checkout viết: "Charges will appear as "testlibrary.com" on my billing statement" (EV-TLW-034) |
 | Ai thu tiền | "Haur B.V. (in The Netherlands) is involved in collecting the initial €1.95 payment" | W-03 · C | khớp danh sách Payment Processing Entity (legal-extract 1.5–1.8) |
 | Phương thức | PayPal (một vụ BBB ngày 2026-07-11), thẻ, Google Wallet | W-03 · A | checkout có Apple Pay, Google Pay, thẻ; dải logo có PayPal (EV-TLW-032 · EV-TLW-033) |
-| Huỷ qua `/cancel-sub` | "enter the email associated with your account, complete the verification process"; "cancellation takes effect immediately and premium access ends"; "does not automatically reverse a payment that already processed" | W-05 · C | khớp F-11; phiên 1 thấy tài khoản "Cancelled" vẫn dùng được trong ngày (F-24) |
+| Huỷ qua `/cancel-sub` | "enter the email associated with your account, complete the verification process"; "cancellation takes effect immediately and premium access ends"; "does not automatically reverse a payment that already processed" | W-05 · C | khớp F-11; phiên 1 thấy tài khoản "Cancelled" vẫn dùng được trong ngày (F-24); human cho biết hết hạn thì không dùng được nữa (teardown S16, `[INFERRED]`) |
 | Hoàn tiền | thang **25% → 40% → 100%**, hoàn đủ khi khách nói sẽ khiếu nại ngân hàng / chargeback: "To obtain a 100% refund, users must forcefully reject all partial offers…" | W-01 · W-03 · W-02 · A · W-06 · C | văn bản: "refunds are not guaranteed… case-by-case"; offer: "30-day satisfaction guarantee" (F-30) |
 
 ## 5. Giá theo thị trường và thay đổi theo thời gian
