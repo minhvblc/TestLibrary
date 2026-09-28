@@ -1,6 +1,7 @@
 # Báo cáo thẩm định — TestLib (tên tạm, web)
 > Kiểm chéo bộ `docs/` với chính nó và với `research/` sau phiên 2026-09-28. Mục đích: biết docs đã đủ chưa, chỗ nào lệch nhau, cái gì đã sửa, cái gì còn chờ quyết định, gate nào còn bị chặn. Không thay thế review của human hay legal review (Q-05).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · spike #2 (PDF) đã chạy → §6 · §7.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · lượt 2: sửa 13 conflict AI xử lý được (D-04…D-10 · D-14…D-19, §5b); còn 6 conflict cần human (§5a).
 - 2026-09-28 · v1 · claude-opus-5-5 · khởi tạo (file đã có trong index `00-overview` §8 nhưng chưa tồn tại).
 
@@ -101,13 +102,14 @@ Gap nội bộ của từng flow (chưa có spec, chưa phải mâu thuẫn) n�
 | regulatory-landscape §2 | cửa sổ nhắc 15–45 ngày cho kỳ ≥ 1 năm (CA, NY, NYC); lưu bằng chứng consent ≥ 3 năm (CA) | Q-26 (mới) · `legal-consent` §1 khi Q-05 chốt |
 | regulatory-landscape §3 | EU: chức năng rút hợp đồng 14 ngày từ 19/6/2026; Đức: nút huỷ không cần đăng nhập | Q-25 (mới) |
 | regulatory-landscape §5–§7 | GPC, dữ liệu sức khoẻ, tuổi — **chưa verify** (`[BK]`) | evidence ở Q-20 · Q-21 · Q-22 |
+| `research/spikes/SPK-02-pdf-render.md` (spike #2) | engine Playwright render report 22–40 trang trong 0,2–0,75 s, ~0,42 GB RAM / job; ảnh bitmap là yếu tố làm chậm và làm nặng file nhất | TD-03 đạt ngân sách ở phần engine; Q-19 chuyển PARKED → Mở (chờ giá vendor) |
 
 ## 7. Trạng thái gate
 
 | Gate | Bị chặn bởi | Trạng thái 2026-09-28 |
 |---|---|---|
 | feature-lock | — | **đạt** (`research/final-features.md` v2, 2026-09-27) |
-| economy-FREEZE | Group A mở: Q-03 · Q-04 · Q-05 · Q-18 · Q-19 · Q-25 | chưa |
+| economy-FREEZE | Group A mở: Q-03 · Q-04 · Q-05 · Q-18 · Q-19 (PDF đã đo ở spike #2, chờ giá vendor) · Q-25 | chưa |
 | FND-FREEZE | Q-17 (Group C, chờ human veto) | chưa |
 | API-FREEZE | Group B mở (Q-10 · Q-11 · Q-16 · Q-24 …); money API cần human review (`api-mapping` §1) | chưa |
 | G-lint-PASS | Group D: Q-26 và D-01 · D-02 · D-03 · D-11 · D-12 · D-13 (§5a, đều cần human) | chưa (lint ID tự động sạch; 13 conflict AI xử lý được đã sửa, §5b) |

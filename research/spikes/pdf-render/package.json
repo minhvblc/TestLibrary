@@ -1,0 +1,15 @@
+{
+  "name": "testlib-spike-pdf-render",
+  "private": true,
+  "description": "Spike #2 (cong-nghe-loi §7): Playwright PDF render time and RAM for a 20-40 page report",
+  "scripts": {
+    "make": "node make-report.cjs 10 report-10.html && node make-report.cjs 19 report-19.html",
+    "spike": "node spike.cjs report-10.html 5 --concurrency 4 --jobs 12 --label '22 pages' && node spike.cjs report-19.html 5 --label '40 pages'"
+  },
+  "dependencies": {
+    "@fontsource-variable/atkinson-hyperlegible-next": "5.3.0",
+    "@fontsource-variable/newsreader": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "pdf-lib": "1.17.1"
+  }
+}

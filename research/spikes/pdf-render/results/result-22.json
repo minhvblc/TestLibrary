@@ -1,0 +1,146 @@
+{
+ "label": "22 trang",
+ "file": "report-10.html",
+ "node": "v22.22.2",
+ "cpus": 4,
+ "cold": [
+  {
+   "loadMs": 105,
+   "pdfMs": 112,
+   "totalMs": 217,
+   "bytes": 196990,
+   "pages": 22,
+   "launchMs": 63,
+   "coldTotalMs": 347,
+   "peakChromiumRssMB": 412
+  },
+  {
+   "loadMs": 73,
+   "pdfMs": 124,
+   "totalMs": 197,
+   "bytes": 196990,
+   "pages": 22,
+   "launchMs": 48,
+   "coldTotalMs": 315,
+   "peakChromiumRssMB": 403
+  },
+  {
+   "loadMs": 100,
+   "pdfMs": 96,
+   "totalMs": 196,
+   "bytes": 196990,
+   "pages": 22,
+   "launchMs": 53,
+   "coldTotalMs": 297,
+   "peakChromiumRssMB": 409
+  },
+  {
+   "loadMs": 107,
+   "pdfMs": 96,
+   "totalMs": 203,
+   "bytes": 196990,
+   "pages": 22,
+   "launchMs": 51,
+   "coldTotalMs": 317,
+   "peakChromiumRssMB": 412
+  },
+  {
+   "loadMs": 116,
+   "pdfMs": 96,
+   "totalMs": 212,
+   "bytes": 196990,
+   "pages": 22,
+   "launchMs": 51,
+   "coldTotalMs": 316,
+   "peakChromiumRssMB": 411
+  }
+ ],
+ "warm": [
+  {
+   "loadMs": 111,
+   "pdfMs": 100,
+   "totalMs": 211,
+   "bytes": 196990,
+   "pages": 22,
+   "peakChromiumRssMB": 415
+  },
+  {
+   "loadMs": 87,
+   "pdfMs": 97,
+   "totalMs": 184,
+   "bytes": 196990,
+   "pages": 22,
+   "peakChromiumRssMB": 415
+  },
+  {
+   "loadMs": 87,
+   "pdfMs": 128,
+   "totalMs": 216,
+   "bytes": 196990,
+   "pages": 22,
+   "peakChromiumRssMB": 416
+  },
+  {
+   "loadMs": 90,
+   "pdfMs": 174,
+   "totalMs": 264,
+   "bytes": 196990,
+   "pages": 22,
+   "peakChromiumRssMB": 416
+  },
+  {
+   "loadMs": 74,
+   "pdfMs": 106,
+   "totalMs": 180,
+   "bytes": 196990,
+   "pages": 22,
+   "peakChromiumRssMB": 409
+  }
+ ],
+ "chromiumVersion": "141.0.7390.37",
+ "concurrent": {
+  "concurrency": 4,
+  "jobs": 12,
+  "wallMs": 1183,
+  "perJob": {
+   "min": 271,
+   "p50": 315,
+   "p95": 507,
+   "max": 507
+  },
+  "pdfsPerMinute": 608.8,
+  "peakChromiumRssMB": 785
+ },
+ "summary": {
+  "pages": 22,
+  "pdfBytes": 196990,
+  "coldTotalMs": {
+   "min": 297,
+   "p50": 316,
+   "p95": 347,
+   "max": 347
+  },
+  "coldLaunchMs": {
+   "min": 48,
+   "p50": 51,
+   "p95": 63,
+   "max": 63
+  },
+  "warmTotalMs": {
+   "min": 180,
+   "p50": 211,
+   "p95": 264,
+   "max": 264
+  },
+  "warmPdfMs": {
+   "min": 97,
+   "p50": 106,
+   "p95": 174,
+   "max": 174
+  },
+  "peakChromiumRssMB": {
+   "cold": 412,
+   "warm": 416
+  }
+ }
+}

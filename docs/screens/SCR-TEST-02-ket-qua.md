@@ -7,7 +7,8 @@
 | SCR-TEST-02 | TEST | Full | Web | `/results/:resultId` | guest | noindex | 390 · 768 · 1280 | FLOW-lam-bai-mien-phi · FLOW-mo-khoa-report · FLOW-luu-ket-qua-dang-nhap | Draft | (sau design) | `tracking-events.md` → `result` · ft_result | `docs/api/SCR-TEST-02-api.md` | **EV-TLW-079 · EV-TLW-138 · EV-TLW-159 · EV-TLW-108 · SC-TLW-14 · basis RS·F-14 · F-15 · F-17 · F-23 · CS-07 · P-04** |
 
 **Changelog** (mới nhất trước)
-- 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: `from` của ft_result start đã có test_page · unlock. D-16: guard của NAV-TEST-02-9 gồm cả sau khi xoá; xác nhận xoá thêm câu mất report đã mua lẻ.
+- 2026-09-28 · v1.2 · claude-opus-5-5 · D-16: guard của NAV-TEST-02-9 gồm cả sau khi xoá; xác nhận xoá thêm câu mất report đã mua lẻ.
+- 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: `from` của ft_result start đã có test_page · unlock.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose & context

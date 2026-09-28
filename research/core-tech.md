@@ -1,6 +1,7 @@
 # [testlib] — Công nghệ cốt lõi (research, web)
 > Mọi số đo trên **free tier**, cùng một test kit (`tech-kit/`), trong Chrome research. Không mua, không replay API, không đọc bundle, không bắt payload (`core-tech-web.md §8–9`). TC-02 chỉ **quan sát** trên tài khoản trial human đã trả trước phiên, không benchmark.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · spike §9 #2 đã chạy (SPK-02).
 - 2026-09-27 · v1 · claude-opus-5-5 · 1 site (testlibrary.com) theo scope của user; TC-01 measured (L0–L5), TC-02 behind-paywall (chỉ quan sát L0 + L4).
 
 ## 1. Capability cốt lõi của category
@@ -84,7 +85,7 @@
 | # | Rủi ro | Spike (≤ 1 ngày, code CỦA MÌNH) | Chặn gate nào |
 |---|---|---|---|
 | 1 | Scoring thang đo không chuẩn → kết quả vô nghĩa | chạy lại kit TK-01..03 trên engine của mình: GT-01 phải `answer-sensitive`, GT-02 phải có reverse-keying | G-tech-feasible (TD-01) |
-| 2 | PDF server nặng/chậm | Playwright render 1 report 20 trang: đo thời gian + RAM | TD-02 · Q-08 |
+| 2 | PDF server nặng/chậm | Playwright render 1 report 20 trang: đo thời gian + RAM. **Đã chạy 2026-09-28** (`research/spikes/SPK-02-pdf-render.md`): engine 0,2–0,75 s / PDF 22–40 trang, ~0,42 GB RAM / job → không nặng; rủi ro còn lại là ảnh bitmap nặng và route in thật | TD-02 · Q-08 |
 | 3 | Nộp bài khi rớt mạng mất dữ liệu | hàng đợi nộp bài + retry idempotent (key = attempt id) | API-FREEZE |
 | 4 | Pixel quảng cáo làm rò dữ liệu nhạy cảm | tracking plan không gửi câu trả lời, chỉ event funnel sau consent | legal-consent · Q-12 |
 

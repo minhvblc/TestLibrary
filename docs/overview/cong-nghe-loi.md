@@ -1,6 +1,7 @@
 # Công nghệ cốt lõi — TestLib (web)
 > Basis: `research/core-tech.md` (TC-01 · TC-02). Đây là SPEC: nêu đích danh framework / vendor. Số nào chưa chốt → `Q-xx`, KHÔNG ghi như đã quyết. Stack BE theo chuẩn team: NestJS + TypeORM + PostgreSQL `postgres:16-alpine`, một schema `public` (basis in-house).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.3 · claude-opus-5-5 · Spike #2 (PDF) đã chạy: cập nhật §2 · §5 · §7.
 - 2026-09-28 · v1.2 · claude-opus-5-5 · D-07: thời hạn lưu lý do huỷ thống nhất — tách khỏi danh tính sau 90 ngày, xoá luôn nếu tài khoản bị xoá trước đó. D-19: thêm 3 hàng lỗi cho gói & thanh toán (§3) mà SCR-PAY-03 / SCR-PAY-04 đang trích.
 - 2026-09-27 · v1.1 · claude-opus-5-5 · §4 thêm 7 loại dữ liệu (log, liên hệ, lý do huỷ, đánh giá report, consent gia hạn, đơn hàng/webhook, file export) theo review của writer go-to-market.
 - 2026-09-27 · v1 · claude-opus-5-5 · TD-01..TD-04 từ core-tech §7 + quyết định Q-08 (human).
@@ -20,7 +21,7 @@
 |---|---|---|---|---|---|---|---|
 | TD-01 | nộp bài → kết quả hiện: p50 ≤ 800 ms · p95 ≤ 2 s (basis in-house) | không | 1 attempt ≤ 200 câu; payload nộp ≤ 32 KB | autosave gom ≤ 10 câu/lần | en-US (Q-14) | 2 bản gần nhất của Chrome · Safari · Edge · Firefox; cần localStorage (thiếu thì chạy trong bộ nhớ) | 2690 ms median câu cuối → kết quả `[LIVE:browser · EV-TLW-181 · 2026-09-27]` |
 | TD-02 | mở report: p50 ≤ 1 s · p95 ≤ 2,5 s (basis in-house) | không | — | — | en-US | như trên | không đo (behind-paywall) |
-| TD-03 | tạo PDF: p95 ≤ 10 s (lần đầu) · ≤ 1 s khi đã cache (basis in-house · spike §7 #2) | không (job + trạng thái) | report ≤ 40 trang | 1 PDF / user / lần | en-US | như trên | PDF đối thủ 11 trang `[LIVE:browser · EV-TLW-261 · 2026-09-27]` |
+| TD-03 | tạo PDF: p95 ≤ 10 s (lần đầu) · ≤ 1 s khi đã cache (basis in-house · spike §7 #2). Spike 2026-09-28: riêng engine render 22–40 trang mất 0,2–0,75 s kể cả mở Chromium mới (`research/spikes/SPK-02-pdf-render.md`); phần còn lại của ngân sách dành cho route in thật + upload | không (job + trạng thái) | report ≤ 40 trang | 1 PDF / user / lần | en-US | như trên | PDF đối thủ 11 trang `[LIVE:browser · EV-TLW-261 · 2026-09-27]` |
 | TD-04 | không chặn render: script analytics tải sau `load` và sau consent | không | — | — | — | như trên | trang đối thủ tải 30 request bên thứ ba `[LIVE:browser · EV-TLW-262 · 2026-09-27]` |
 
 ## 3. Degradation contract
@@ -71,7 +72,7 @@
 |---|---|---|---|---|---|
 | TD-01 | CPU server, không vendor (`[INFERRED]`) | ~10 lần nộp | ≈ 0 | không | Q-19 |
 | TD-02 | 0 lúc chạy; soạn nội dung là chi phí một lần (`[INFERRED]`) | ~10 report | ≈ 0 | không | Q-19 |
-| TD-03 | container Chromium (`[INFERRED]`, đo ở spike §7 #2) | ~2 PDF | nhỏ | không | Q-19 |
+| TD-03 | container Chromium: ~0,25–0,6 s CPU mỗi PDF, ~0,42 GB RAM cho 1 job, ~0,8–1 GB cho 4 job song song (đo ở spike §7 #2 — `research/spikes/SPK-02-pdf-render.md`); giá hạ tầng chưa có | ~2 PDF | ~1 s CPU / user / tháng | không | Q-19 |
 | TD-04 | Firebase Analytics gói miễn phí (`[INFERRED]`) | — | 0 | không | Q-19 |
 
 ## 6. Rủi ro & fallback
@@ -88,9 +89,9 @@
 | # | Câu hỏi | Cách đo (code của mình) | Chặn gate nào |
 |---|---|---|---|
 | 1 | Scoring có `answer-sensitive` + reverse-keying đúng không | chạy TK-01..03 (research/tech-kit) trên API chấm điểm của mình; GT-01 phải ≥ 1 thang khác, GT-02 < tổng số thang | G-tech-feasible (TD-01) · API-FREEZE |
-| 2 | PDF 20+ trang tạo trong bao lâu, tốn bao nhiêu RAM | Playwright render 1 report mẫu 5 lần, ghi p50/p95 + peak RAM | TD-03 · Q-19 · economy-FREEZE |
+| 2 | PDF 20+ trang tạo trong bao lâu, tốn bao nhiêu RAM | Playwright render 1 report mẫu 5 lần, ghi p50/p95 + peak RAM. **Đã chạy 2026-09-28** (`research/spikes/SPK-02-pdf-render.md`): 22 trang warm p50 211 ms / cold p50 316 ms; 40 trang cold p95 430 ms; có 1,8 MB ảnh bitmap: cold p95 747 ms; RAM đỉnh ~0,42 GB / job. Chưa đo route in thật của app | TD-03 · Q-19 · economy-FREEZE |
 | 3 | Hàng đợi nộp bài khi rớt mạng | bật offline giữa bài (giống TK-05), nộp, online → đúng 1 kết quả | API-FREEZE |
 
 ## 8. AI Notices
-- Latency/chi phí ở §2 và §5 là mục tiêu `[INFERRED]` (basis in-house). Phải thay bằng số đo của spike §7 trước FREEZE.
+- Latency/chi phí ở §2 và §5 là mục tiêu `[INFERRED]` (basis in-house). Phải thay bằng số đo của spike §7 trước FREEZE. Spike #2 (PDF) đã có số đo engine (`research/spikes/SPK-02-pdf-render.md`); spike #1 và #3 cần code của mình.
 - Không dùng tên vendor của đối thủ làm lý do. Lựa chọn vendor của mình ghi ở đây với basis riêng.
