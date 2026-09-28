@@ -1,6 +1,7 @@
 # [SCR-APP-03] API — Report chi tiết
 Refs: `docs/screens/SCR-APP-03-report-chi-tiet.md` · FLOW-mo-khoa-report · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency — KHÔNG lặp lại ở đây)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · Q-18: `access = locked` và 403 `pdf_forbidden` gồm cả khi quyền vừa bị thu hồi do rút trong 14 ngày (BR-APP-14); AI Notice nguồn hỗ trợ theo Q-23.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: API-REP-05 (đánh giá report) đã có.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
@@ -33,7 +34,7 @@ Trả report của một kết quả. Mỗi kết quả có đúng một `report
 | `scales` | array `{ key: string, name: string, percent: int 0–100, band: string }`, đã xếp giảm dần | GC-ScoreBars | BR-TEST-07 |
 | `scoringVersion` | string | "Scored with version [v]" | BR-APP-07 |
 | `contentVersion` | string | version nội dung đã ghim ở kết quả; khoá cache PDF | BR-REP-03 · TD-03 |
-| `access` | enum `full` · `pending` · `locked` | Default · chờ webhook · Locked | SYS-ENTITLEMENT · BR-REP-06 |
+| `access` | enum `full` · `pending` · `locked` | Default · chờ webhook · Locked (gồm cả khi quyền vừa bị thu hồi do rút trong 14 ngày, API-PAY-08) | SYS-ENTITLEMENT · BR-REP-06 · BR-APP-14 |
 | `chapters` | array `{ index: int, title: string, blocks: array / null }`; `blocks` = array `{ kind: enum paragraph · list · callout, text: string }`, null khi `access` khác `full` | mục lục + nội dung chương | TD-02 · BR-REP-06 |
 | `pdf` | object `{ status: enum none · generating · ready, pageCount: int / null }` | nhãn nút CMP-03; `pageCount` chỉ có khi file đã render | BR-REP-04 · TD-03 |
 | `viewerSignedIn` | boolean | chọn header (app / tối giản) và ẩn/hiện CMP-10 | BR-REP-05 · SYS-NAV §4 |
@@ -83,7 +84,7 @@ Tạo, hoặc trả lại, job PDF cho (`reportId`, `contentVersion`, locale). F
 
 | Lỗi RIÊNG màn | When | UI reaction (verbatim) |
 |---|---|---|
-| 403 `pdf_forbidden` | vừa mất quyền (vd Plus hết kỳ) | tải lại API-REP-02 → state Locked |
+| 403 `pdf_forbidden` | vừa mất quyền (vd Plus hết kỳ, hoặc vừa rút khoản mua trong 14 ngày — BR-APP-14) | tải lại API-REP-02 → state Locked |
 | 429 | bấm dồn quá nhanh | "Too many requests. Please wait a moment and try again." |
 | 5xx / `status = failed` | render lỗi | "Your PDF is taking longer than usual. We'll email it to you — or use Print → Save as PDF." |
 
@@ -123,3 +124,4 @@ Trả trạng thái PDF mới nhất cho (`reportId`, `contentVersion`, locale).
 - Payload và tên field là SPEC mới, không lấy từ đối thủ. Đối thủ render PDF từ HTML bằng headless Chromium (RS·F-34), mình chỉ cùng hướng kỹ thuật (TD-03).
 - `pdf.pageCount` và `pageCount` luôn là số trang của file thật. Đối thủ hứa "20-page report" nhưng file có 11 trang (RS·F-23); mình không được lệch như vậy.
 - Feedback của CMP-08 ("Was this report useful?") ghi qua API-REP-05 (`api-mapping.md`); schema chi tiết chưa có ở file này.
+- Khối nguồn hỗ trợ của bài `sensitive` (CMP-07) là dữ liệu tĩnh của GC-SensitiveNotice (danh sách đã chốt, Q-23; còn verify trước launch), không đi qua các endpoint ở đây. Không định vị người dùng (khối luôn hiện đủ danh sách), nên API không cần field nào cho khối này.

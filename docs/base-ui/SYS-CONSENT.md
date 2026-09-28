@@ -1,5 +1,6 @@
 # SYS-CONSENT — consent cookie + consent dữ liệu nhạy cảm
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · rule "Version consent check-in" dùng đúng tên trạng thái của API-APP-01 (`reask` · `paused`); "Not now" = `checkins.dismissed` (không phải `enabled: false`, vì lệnh đó xoá lịch sử).
 - 2026-09-28 · v1.1 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): thêm rule GPC — nơi định nghĩa duy nhất (Q-20, giải quyết D-03); consent bài `sensitive` thêm xác nhận 18+ (Q-21 · BR-TEST-11); thêm consent check-in, cách rút và rule đổi version (major hỏi lại, minor không) (Q-22 · BR-DASH-05 · BR-ACC-07); Q-12 · Q-13 đã chốt, bỏ notice "đổi sang chỉ EU/UK".
 - 2026-09-27 · v1 · claude-opus-5-5 · theo Q-06 (human) + đề xuất Q-12 · Q-13.
 
@@ -37,7 +38,7 @@ Không có tracking không-thiết-yếu nào chạy trước consent. Câu tr�
 | Rút consent dữ liệu nhạy cảm | xoá kết quả đó (kèm câu trả lời) bằng API-RES-03 từ SCR-APP-02 hoặc SCR-TEST-02; không cần xoá tài khoản | BR-APP-11 |
 | Rút consent check-in | tắt toggle "Daily check-ins" ở SCR-ACC-01 → xác nhận "Turn off check-ins and delete your check-in history? Your streak will reset. This can't be undone." → "Turn off and delete" (NAV-ACC-01-7): xoá cứng ngay toàn bộ lịch sử check-in, streak về 0 ("Keep check-ins" thì không đổi gì). Bật lại chỉ ở SCR-APP-01 (NAV-ACC-01-8 → `/app#checkin`), qua bước consent như lần đầu | BR-ACC-07 · Q-22 |
 | Version | đổi nội dung banner/chính sách → tăng version → hỏi lại (trình duyệt gửi GPC: không hỏi, GPC áp dụng lại — "GPC · lưu") | in-house · Q-20 |
-| Version consent check-in | `checkin_consent_version` dạng `major.minor`. Đổi lớn (mục đích dùng hoặc nơi dữ liệu đi mở rộng) → tăng major → lần vào SCR-APP-01 kế tiếp hiện lại bước "Turn on daily check-ins?"; chưa đồng ý lại thì tạm dừng check-in mới, lịch sử cũ giữ nguyên tới khi user tắt ở SCR-ACC-01 (tắt = xoá). Đổi nhỏ (chỉ sửa câu chữ cho rõ, không đổi mục đích / nơi đi) → tăng minor, không hỏi lại | Q-22 · in-house |
+| Version consent check-in | `checkin_consent_version` dạng `major.minor`. Đổi lớn (mục đích dùng hoặc nơi dữ liệu đi mở rộng) → tăng major → `checkin.state` = `reask`: lần vào SCR-APP-01 kế tiếp hiện lại bước "Turn on daily check-ins?"; "Not now" gửi `checkins.dismissed` (không phải `enabled: false`) → `paused`: tạm dừng check-in mới, lịch sử cũ giữ nguyên tới khi user tắt ở SCR-ACC-01 (tắt = xoá). Đổi nhỏ (chỉ sửa câu chữ cho rõ, không đổi mục đích / nơi đi) → tăng minor, không hỏi lại | Q-22 · in-house |
 
 ## 3. Màn liên quan
 
@@ -51,4 +52,4 @@ Q-06 (human) · Q-12 · Q-13 · Q-20 · Q-21 · Q-22 · TD-04 · RS·F-02 · RS�
 - Hỏi consent ở mọi vùng (Q-13) và coi GPC là "Reject all" (Q-20) làm giảm dữ liệu analytics. Tỉ lệ đồng ý chỉ tính được ở server từ bản ghi API-CON-01 (theo `source`).
 - Trường `gpc` trong `tl_consent` và API-CON-01 dùng để tách lựa chọn lưu khi chưa có GPC (bị GPC ghi đè) với lựa chọn tường minh lưu khi đang có GPC (thắng GPC).
 - Căn cứ pháp lý của GPC, tuổi và check-in là kiến thức nền chưa verify (`[BK]`, `bang-quyet-dinh` §2 #6). Các rule ở đây chọn phương án chặt hơn, nên kết quả verify chỉ có thể nới.
-- Rule "Version" áp cho banner / chính sách cookie. Consent bài `sensitive` luôn dùng version hiện hành vì hỏi ở mỗi lần làm bài. Consent check-in theo rule "Version consent check-in" (major hỏi lại, minor không; orchestrator chốt 2026-09-28).
+- Rule "Version" áp cho banner / chính sách cookie. Consent bài `sensitive` luôn dùng version hiện hành vì hỏi ở mỗi lần làm bài. Consent check-in theo rule "Version consent check-in" (major hỏi lại, minor không; chốt 2026-09-28).

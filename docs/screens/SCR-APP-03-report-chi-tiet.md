@@ -7,6 +7,7 @@
 | SCR-APP-03 | APP | Full | Web | `/app/reports/:reportId` | entitled | noindex | 390 · 768 · 1280 | FLOW-mo-khoa-report | Draft | (sau design) | `tracking-events.md` → `report` · ft_report · ft_unlock | `docs/api/SCR-APP-03-api.md` | **EV-TLW-243 · EV-TLW-244 · EV-TLW-245 · EV-TLW-261 · SC-TLW-25 · basis RS·F-23 · F-34 · TD-02 · TD-03 · CS-14** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · Q-23 đã chốt: CMP-07 · NAV-APP-03-5 dùng danh sách ra mắt ở GC-SensitiveNotice §4, hiện đủ, không định vị người dùng, "Get support now" → danh bạ quốc tế (còn verify + clinical review trước launch); Q-18: thêm EC-13 (rút trong 14 ngày → Locked ngay).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose & context
@@ -35,7 +36,7 @@ Report đầy đủ của một kết quả: hero, điểm các thang, mục l�
 | NAV-APP-03-2 | SCR-PAY-01 · `resultId` | CMP-09 "Unlock full report" | push | `/unlock/:resultId` (push) | mặc định | back trình duyệt → SCR-APP-03 | chưa có quyền | Web | BR-APP-01 |
 | NAV-APP-03-3 | SCR-APP-02 | CMP-10 "Back to My reports" | push | `/app/reports` (push) | mặc định | back trình duyệt → SCR-APP-03 | đã đăng nhập | Web | in-house |
 | NAV-APP-03-4 | (cùng màn) nhảy tới chương | CMP-05 mục | inline | `#chapter-<n>` (replace) | mặc định | — | — | Web | in-house |
-| NAV-APP-03-5 | external: trang nguồn hỗ trợ khủng hoảng | CMP-07 "Get support now" | external | tab mới | mặc định | đóng tab → SCR-APP-03 | bài `sensitive` | Web | Q-06 |
+| NAV-APP-03-5 | external: danh bạ quốc tế nguồn hỗ trợ khủng hoảng (`cta` của GC-SensitiveNotice; không định vị người dùng) | CMP-07 "Get support now" | external | tab mới | mặc định | đóng tab → SCR-APP-03 | bài `sensitive` | Web | Q-06 · Q-23 |
 
 ### 2.3 Diagram
 
@@ -74,7 +75,7 @@ flowchart TD
 | CMP-04 | Điểm các thang | luôn (cả Locked) | GC-ScoreBars, như SCR-TEST-02 CMP-03 | EV-TLW-244 · BR-TEST-07 |
 | CMP-05 | Mục lục | luôn; Locked: tên chương hiện nhưng không bấm được | tiêu đề "Contents"; mỗi mục là tên một chương, link tới `#chapter-<n>`; @390 thu gọn thành nút "Contents" | EV-TLW-244 |
 | CMP-06 | Các chương | có quyền `report.full` | mỗi chương: H2 tên chương + các đoạn ráp từ `report_blocks` | TD-02 · EV-TLW-245 |
-| CMP-07 | Thông báo bài nhạy cảm | bài `sensitive`, kể cả state Locked và bản PDF | GC-SensitiveNotice biến thể `full`: "This is a self-reflection tool, not a diagnosis." + "Get support now" (phần còn lại theo GC) | Q-06 · BR-APP-06 |
+| CMP-07 | Thông báo bài nhạy cảm | bài `sensitive`, kể cả state Locked và bản PDF | GC-SensitiveNotice biến thể `full`: "This is a self-reflection tool, not a diagnosis." + "Get support now" (phần còn lại theo GC: luôn hiện đủ danh sách nguồn ở GC-SensitiveNotice §4, không định vị người dùng; "Get support now" trỏ danh bạ quốc tế) | Q-06 · Q-23 · BR-APP-06 |
 | CMP-08 | Khảo sát hữu ích | có quyền, cuối report | "Was this report useful?" + 5 nút "1"…"5" (nhãn hai đầu: "Not useful" · "Very useful"); sau khi chọn: "Thanks for your feedback." | EV-TLW-244 (đối thủ: "Did you like our test?") |
 | CMP-09 | Panel khoá | chưa có quyền (`access = locked`) | "Unlock the full report to read every chapter." + nút "Unlock full report" · đang chờ webhook (`access = pending`): "Confirming your payment…" (không nút) | cong-nghe-loi §3 · BR-REP-06 |
 | CMP-10 | Link về danh sách | đã đăng nhập | "Back to My reports" | in-house |
@@ -169,6 +170,7 @@ Tên bài, ngày làm, type + mô tả, điểm các thang, danh sách chương 
 | EC-10 | Mở `#chapter-<n>` khi đang Locked | bỏ qua anchor, hiện CMP-09 | in-house |
 | EC-11 | Bài `sensitive` | CMP-07 hiện trên trang; trang đầu của PDF cũng in disclaimer + nguồn hỗ trợ; không `screen_active`, không ft_report | BR-APP-06 |
 | EC-12 | Locked | nội dung chương không được gửi về client (không chỉ ẩn bằng CSS) | BR-APP-01 · BR-REP-06 |
+| EC-13 | Khoản mua được rút trong 14 ngày (API-PAY-08 · SCR-PAY-05): report lẻ này, hoặc Plus khi report chỉ có quyền nhờ Plus | quyền kết thúc ngay khi server nhận yêu cầu rút → `access = locked` → CMP-09 (mua lại được); đang mở trang thì API-REP-03 / 04 trả 403 `pdf_forbidden` → tải lại → Locked | BR-APP-14 · Q-18 · SYS-ENTITLEMENT |
 
 ## 9. Responsive deltas
 
@@ -201,3 +203,5 @@ Tên bài, ngày làm, type + mô tả, điểm các thang, danh sách chương 
 - CMP-08 ghi qua API-REP-05 (lưu server, cong-nghe-loi §4) và event ft_report `rate`, event này không bắn với bài `sensitive` (đã bổ sung owner doc theo review).
 - "[N] pages" trên nút chỉ hiện khi đã có file PDF thật; chưa có file thì nút ghi "Download PDF", không ước lượng (BR-REP-04).
 - Copy "Contents", "Preparing your PDF…", "Thanks for your feedback." và nhãn hai đầu của CMP-08 là copy đề xuất.
+- Nguồn hỗ trợ (CMP-07 · NAV-APP-03-5): danh sách ra mắt đã chốt (Q-23, GC-SensitiveNotice §4) nhưng từng số / website phải verify và qua clinical review trước khi ship bài `sensitive` (`bang-quyet-dinh` §2 #4).
+- CMP-07 dùng dữ liệu tĩnh của GC-SensitiveNotice: không định vị người dùng (không IP, header nước, locale hay timezone), luôn hiện đủ danh sách §4, "Get support now" trỏ danh bạ quốc tế; trang, bản in và PDF giống hệt nhau, không cần field nào từ API.

@@ -6,12 +6,13 @@
 | SCR-AUTH-01 | AUTH | Short | Web | `/login` · `/login?next=<route>` · `/login/callback?token=…` | public | noindex | 390 · 768 · 1280 | FLOW-luu-ket-qua-dang-nhap | Draft | (sau design) | `tracking-events.md` → `login` · ft_auth | `docs/api/SCR-AUTH-01-api.md` | **EV-TLW-006 · SC-TLW-02 · basis RS·F-20 · Q-11 · SYS-AUTH** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · Q-11 (magic link + Google, không mật khẩu) và Q-16 (Postmark gửi API-MAIL-01) đã chốt 2026-09-28: bỏ notice "Chưa FREEZE", ghi vendor email ở §1. Notice cũ về SYS-NAV §4 sửa (đã ghi cả hai biến thể callback).
 - 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: link "Privacy" đã có NAV-AUTH-01-5.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose
 
-Đăng nhập không mật khẩu: magic link qua email hoặc Google (Q-11). Một màn dùng cho cả người mới (tài khoản được tạo khi link được xác minh) lẫn người quay lại, kể cả khi guard chuyển tới kèm `?next=`. Đối thủ dùng email + mật khẩu, không có social login, tài khoản chỉ sinh ra sau khi thanh toán (RS·F-20 · EV-TLW-006). Trang `/login/callback` thuộc màn này và không có UI riêng ngoài trạng thái đang xác thực. · basis RS·F-20 · Q-11 · SYS-AUTH
+Đăng nhập không mật khẩu: magic link qua email (API-MAIL-01, gửi bằng Postmark — Q-16) hoặc Google (Q-11). Một màn dùng cho cả người mới (tài khoản được tạo khi link được xác minh) lẫn người quay lại, kể cả khi guard chuyển tới kèm `?next=`. Đối thủ dùng email + mật khẩu, không có social login, tài khoản chỉ sinh ra sau khi thanh toán (RS·F-20 · EV-TLW-006). Trang `/login/callback` thuộc màn này và không có UI riêng ngoài trạng thái đang xác thực. · basis RS·F-20 · Q-11 · SYS-AUTH
 
 ## 2. Điều hướng
 
@@ -124,5 +125,5 @@ Mở trang thì focus sẵn ở ô "Email" (trang chỉ có một việc). Enter
 ## 10. AI Notices
 - Link "Privacy" ở CMP-07 đã có cạnh NAV-AUTH-01-5 (→ SCR-PUB-05 `doc=privacy`); sơ đồ tổng `00-so-do-luong-tong` cập nhật 2026-09-28.
 - Rủi ro: link mở trong trình duyệt nhúng của app email thì phiên nằm ở trình duyệt đó, không phải trình duyệt gốc. Nếu đo thấy nhiều, cân nhắc thêm mã đăng nhập 6 số (cần một quyết định mới trong bảng quyết định).
-- Luồng Google quay về `/login/callback?provider=google…` (chi tiết ở file API); SYS-NAV §4 hiện chỉ ghi biến thể `?token=`.
-- Chưa FREEZE: Q-11 (mô hình auth), Q-16 (vendor gửi API-MAIL-01).
+- Luồng Google quay về `/login/callback?provider=google…` (chi tiết ở file API); SYS-NAV §4 ghi cả hai biến thể của callback.
+- Q-11 (mô hình auth) và Q-16 (Postmark gửi API-MAIL-01) đã chốt 2026-09-28; màn không còn chờ quyết định. Magic link hết hạn sau 15 phút nên đăng nhập phụ thuộc email tới nhanh: theo dõi độ trễ giao email của Postmark như một chỉ số vận hành (SYS-AUTH).

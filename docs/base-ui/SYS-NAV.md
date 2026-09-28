@@ -1,6 +1,7 @@
 # SYS-NAV — hệ điều hướng · route table · sơ đồ màn theo nền tảng
 > Owner: CẠNH (`NAV-…`) định nghĩa ở SCR §2.2 của màn NGUỒN; route ở SCR meta. File này sở hữu KHUNG (§1), TỪ VỰNG (§2–3), ROUTE TABLE (§4). §5–7 là bản SINH (`navmap.py . write`), không sửa tay. Sản phẩm chỉ có **Web**; iOS / Android ngoài scope.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.3 · claude-opus-5-5 · route table: SCR-APP-01 vào từ email nhắc check-in hằng tuần (API-MAIL-10) và `/app#checkin` (Q-22).
 - 2026-09-28 · v1.2 · claude-opus-5-5 · footer: link huỷ / rút có ở mọi trang có footer; SCR-TEST-01 (runner) không có footer theo thiết kế, là ngoại lệ có chủ đích. SCR-PUB-02 `?topic=` render theo request (Q-09).
 - 2026-09-28 · v1.1 · claude-opus-5-5 · Q-18 · Q-25 (chốt 2026-09-28, AI · uỷ quyền human): footer thêm "Cancel your plan here" · "Withdraw from contract here" → SCR-PAY-05; route table thêm SCR-PAY-05 `/cancel`.
 - 2026-09-27 · v1 · claude-opus-5-5 · khởi tạo từ `00-overview §3` + `final-features §7`.
@@ -65,7 +66,7 @@
 | SCR-PAY-04 | `/account/billing/cancel` | account | `/login?next=/account/billing/cancel` | noindex | app | email nhắc gia hạn "Cancel renewal" (API-MAIL-03) | |
 | SCR-PAY-05 | `/cancel` · `/cancel?mode=withdraw` · `/cancel?mode=withdraw&order=<orderNumber>` | public | — (không cần đăng nhập; có phiên thì điền sẵn email + mã đơn) | index | public | email biên nhận "Withdraw from contract here" (API-MAIL-02) · SEO ("cancel [brand]") | BR-PAY-18 · Q-25 |
 | SCR-AUTH-01 | `/login` · `/login?next=<route>` · `/login?error=<code>` · `/login/callback?token=…` · `/login/callback?provider=google&next=…` | public | đã đăng nhập → `next` hoặc `/app` | noindex | minimal (logo) | email magic link (API-MAIL-01) | callback không có UI riêng; lỗi callback → `/login?error=` |
-| SCR-APP-01 | `/app` | account | `/login?next=/app` | noindex | app | — | root |
+| SCR-APP-01 | `/app` · `/app#checkin` | account | `/login?next=/app` | noindex | app | email nhắc check-in hằng tuần (API-MAIL-10) · `/app#checkin` từ SCR-ACC-01 (NAV-ACC-01-8) | root; `#checkin` mở sẵn bước bật check-in khi chưa bật (Q-22) |
 | SCR-APP-02 | `/app/reports` | account | `/login?next=/app/reports` | noindex | app | — | root |
 | SCR-APP-03 | `/app/reports/:reportId` (+ `?print=1` cho render PDF) | entitled | không có phiên VÀ không có token khách sở hữu kết quả → `/login?next=…`; có quyền xem nhưng chưa mở khoá → state Locked (không redirect) | noindex | app (khách: header `minimal`) | email "Your report is unlocked" (API-MAIL-02) | khách đã mua trên trình duyệt này đọc được không cần đăng nhập (SYS-AUTH) |
 | SCR-ACC-01 | `/account` | account | `/login?next=/account` | noindex | app | — | root |

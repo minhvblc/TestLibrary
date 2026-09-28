@@ -1,6 +1,7 @@
 # 00-so-do-luong-tong — master flow map (TestLib, web)
 > Bản đồ tổng của 20 màn + mục lục 7 flow. Nguồn sự thật của điều hướng là bảng cạnh §2.2 của từng màn (`NAV-…`) và graph sinh ở `docs/base-ui/SYS-NAV.md` §7; sơ đồ dưới đây chỉ minh hoạ và cite lại các cạnh đó.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.4 · claude-opus-5-5 · check-in cần consent (Q-22): vẽ cạnh push NAV-ACC-01-8 (SCR-ACC-01 → SCR-APP-01 `#checkin`); thêm 6 cạnh inline NAV-APP-01-7 · 8 · 9 · NAV-ACC-01-7 · NAV-PAY-05-5 · 6 vào danh sách không vẽ; FLOW-quyen-rieng-tu thêm nhánh phụ SCR-PUB-06 ("Privacy request", Q-28).
 - 2026-09-28 · v1.3 · claude-opus-5-5 · tên node SCR-PAY-05 theo `00-overview` §3 ("Huỷ hoặc rút"); bảng FLOW §2: SCR-PAY-05 là nhánh phụ của FLOW-mo-khoa-report và FLOW-dang-ky-plus (NAV-PAY-02-5).
 - 2026-09-28 · v1.2 · claude-opus-5-5 · quyết định 2026-09-28 (Q-18 · Q-25): thêm màn SCR-PAY-05 `/cancel` (huỷ / rút không cần đăng nhập) + 7 cạnh push (NAV-PUB-06-4 · NAV-PAY-02-5 · NAV-PAY-03-6 · NAV-PAY-04-3 · NAV-PAY-05-1 · NAV-PAY-05-2 · NAV-PAY-05-3) và 1 cạnh inline (NAV-PAY-05-4); 19 → 20 màn.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · vẽ thêm 7 cạnh push có trong §2.2 của màn nhưng thiếu ở sơ đồ (NAV-PUB-01-5 · NAV-PUB-03-6 · NAV-TEST-01-8 · NAV-TEST-02-8 · NAV-TEST-02-9 · NAV-AUTH-01-5 · NAV-ACC-02-4), thêm 2 cạnh inline vào danh sách không vẽ (NAV-APP-02-4 · NAV-TEST-02-10); FLOW-quyen-rieng-tu thêm nhánh phụ SCR-APP-02 · SCR-TEST-02; 3 file FLOW còn thiếu đã được viết.
@@ -120,6 +121,7 @@ flowchart TD
     SCR_ACC_01 -->|"“Plan & billing” · push"| SCR_PAY_03
     SCR_ACC_01 -->|"“Cookie settings” · push"| SCR_PUB_07
     SCR_ACC_01 -->|"“Sign out” · replace"| SCR_PUB_01
+    SCR_ACC_01 -.->|"check-in đang tắt: “Turn them on from your dashboard” · push"| SCR_APP_01
     SCR_ACC_02 -->|"hệ thống: xoá OK · replace"| SCR_PUB_01
     SCR_ACC_02 -->|"“Cancel” / “Download my data first” · push"| SCR_ACC_01
     SCR_ACC_02 -->|"“Subscriptions & refunds” · push"| SCR_PUB_05
@@ -142,7 +144,7 @@ Nhóm màn theo subgraph và cạnh đã vẽ:
 | Public | SCR-PUB-01 · SCR-PUB-02 · SCR-PUB-03 · SCR-PUB-05 · SCR-PUB-06 · SCR-PUB-07 | NAV-PUB-01-1 · NAV-PUB-01-2 · NAV-PUB-01-3 · NAV-PUB-01-4 · NAV-PUB-01-5 · NAV-PUB-02-1 · NAV-PUB-03-1 · NAV-PUB-03-2 · NAV-PUB-03-3 · NAV-PUB-03-4 · NAV-PUB-03-5 · NAV-PUB-03-6 · NAV-PUB-05-1 · NAV-PUB-06-1 · NAV-PUB-06-2 · NAV-PUB-06-4 · NAV-PUB-07-1 |
 | Funnel | SCR-TEST-01 · SCR-TEST-02 | NAV-TEST-01-1 · NAV-TEST-01-2 · NAV-TEST-01-5 · NAV-TEST-01-6 · NAV-TEST-01-7 · NAV-TEST-01-8 · NAV-TEST-02-1 · NAV-TEST-02-2 · NAV-TEST-02-3 · NAV-TEST-02-4 · NAV-TEST-02-6 · NAV-TEST-02-7 · NAV-TEST-02-8 · NAV-TEST-02-9 |
 | Money | SCR-PUB-04 · SCR-PAY-01 · SCR-PAY-02 · SCR-PAY-03 · SCR-PAY-04 · SCR-PAY-05 | NAV-PUB-04-1 · NAV-PUB-04-2 · NAV-PUB-04-3 · NAV-PUB-04-4 · NAV-PUB-04-5 · NAV-PAY-01-1 · NAV-PAY-01-2 · NAV-PAY-01-3 · NAV-PAY-01-4 · NAV-PAY-01-5 · NAV-PAY-02-1 · NAV-PAY-02-2 · NAV-PAY-02-3 · NAV-PAY-02-4 · NAV-PAY-02-5 · NAV-PAY-03-1 · NAV-PAY-03-3 · NAV-PAY-03-4 · NAV-PAY-03-5 · NAV-PAY-03-6 · NAV-PAY-04-1 · NAV-PAY-04-2 · NAV-PAY-04-3 · NAV-PAY-05-1 · NAV-PAY-05-2 · NAV-PAY-05-3 |
-| App / Account | SCR-AUTH-01 · SCR-APP-01 · SCR-APP-02 · SCR-APP-03 · SCR-ACC-01 · SCR-ACC-02 | NAV-AUTH-01-2 · NAV-AUTH-01-3 · NAV-AUTH-01-4 · NAV-AUTH-01-5 · NAV-APP-01-1 · NAV-APP-01-2 · NAV-APP-01-3 · NAV-APP-01-4 · NAV-APP-02-1 · NAV-APP-02-2 · NAV-APP-02-3 · NAV-APP-03-1 · NAV-APP-03-2 · NAV-APP-03-3 · NAV-APP-03-5 · NAV-ACC-01-1 · NAV-ACC-01-2 · NAV-ACC-01-3 · NAV-ACC-01-4 · NAV-ACC-02-1 · NAV-ACC-02-2 · NAV-ACC-02-3 · NAV-ACC-02-4 |
+| App / Account | SCR-AUTH-01 · SCR-APP-01 · SCR-APP-02 · SCR-APP-03 · SCR-ACC-01 · SCR-ACC-02 | NAV-AUTH-01-2 · NAV-AUTH-01-3 · NAV-AUTH-01-4 · NAV-AUTH-01-5 · NAV-APP-01-1 · NAV-APP-01-2 · NAV-APP-01-3 · NAV-APP-01-4 · NAV-APP-02-1 · NAV-APP-02-2 · NAV-APP-02-3 · NAV-APP-03-1 · NAV-APP-03-2 · NAV-APP-03-3 · NAV-APP-03-5 · NAV-ACC-01-1 · NAV-ACC-01-2 · NAV-ACC-01-3 · NAV-ACC-01-4 · NAV-ACC-01-8 · NAV-ACC-02-1 · NAV-ACC-02-2 · NAV-ACC-02-3 · NAV-ACC-02-4 |
 
 ## 2. Flow index
 
@@ -154,12 +156,12 @@ Nhóm màn theo subgraph và cạnh đã vẽ:
 | FLOW-dang-ky-plus | Đăng ký Plus từ bảng giá | money | SCR-PUB-01 · SCR-PUB-03 · SCR-APP-01 · SCR-PAY-03 · SCR-PUB-04 · checkout provider · SCR-PAY-02 (nhánh phụ SCR-PAY-01 · SCR-PUB-02 · SCR-PUB-05 · SCR-PAY-05) | [FLOW-dang-ky-plus.md](FLOW-dang-ky-plus.md) |
 | FLOW-quan-ly-huy-gia-han | Nhắc gia hạn → huỷ một bước · tiếp tục gia hạn · cập nhật thẻ · huỷ / rút 14 ngày không cần đăng nhập | money · retention | SCR-PAY-03 · SCR-PAY-04 · SCR-PAY-05 · SCR-AUTH-01 · SCR-PUB-06 · SCR-ACC-01 · SCR-PUB-04 (nhánh phụ SCR-APP-03 · SCR-PUB-05) | [FLOW-quan-ly-huy-gia-han.md](FLOW-quan-ly-huy-gia-han.md) |
 | FLOW-thoi-quen-hang-ngay | Check-in hằng ngày + streak · thử thách 30 ngày (Free thấy thẻ khoá) | retention | SCR-APP-01 · SCR-PUB-04 · SCR-PAY-02 (nhánh phụ SCR-PUB-03 · SCR-APP-03 · SCR-PAY-01 · SCR-ACC-01) | [FLOW-thoi-quen-hang-ngay.md](FLOW-thoi-quen-hang-ngay.md) |
-| FLOW-quyen-rieng-tu | Consent cookie · export dữ liệu · xoá tài khoản (khôi phục trong 30 ngày) | trust | SCR-PUB-07 · SCR-PUB-05 · SCR-ACC-01 · SCR-ACC-02 · SCR-PUB-01 (nhánh phụ SCR-AUTH-01 · SCR-APP-01 · SCR-APP-02 · SCR-TEST-02) | [FLOW-quyen-rieng-tu.md](FLOW-quyen-rieng-tu.md) |
+| FLOW-quyen-rieng-tu | Consent cookie · export dữ liệu · xoá tài khoản (khôi phục trong 30 ngày) | trust | SCR-PUB-07 · SCR-PUB-05 · SCR-ACC-01 · SCR-ACC-02 · SCR-PUB-01 (nhánh phụ SCR-AUTH-01 · SCR-APP-01 · SCR-APP-02 · SCR-TEST-02 · SCR-PUB-06) | [FLOW-quyen-rieng-tu.md](FLOW-quyen-rieng-tu.md) |
 
 ## 3. AI Notices
 - Sơ đồ §1 vẽ tay từ các hàng NAV của blueprint (kiểu push / replace / external; không có cạnh `tab` nào mang NAV-ID — mục header/drawer/footer là khung SYS-NAV §1, không vẽ). Khi `navmap.py . write` sinh SYS-NAV §7, phải so lại: lệch thì bảng §2.2 của màn là đúng, sửa sơ đồ này.
 - Cạnh `EXT_CHECKOUT → SCR-PAY-02` KHÔNG phải NAV: đó là return URL của provider (deep link, SYS-NAV §4). Vẽ để ranh giới tiền không bị đứt; SCR-PAY-02 không có NAV nào tới.
-- Không vẽ 16 cạnh `inline` / `overlay`: NAV-PUB-02-2 · NAV-PUB-06-3 · NAV-PUB-07-2 · NAV-TEST-01-3 · NAV-TEST-01-4 · NAV-TEST-02-5 · NAV-TEST-02-10 · NAV-PAY-03-2 · NAV-PAY-05-4 · NAV-AUTH-01-1 · NAV-APP-01-5 · NAV-APP-01-6 · NAV-APP-02-4 · NAV-APP-03-4 · NAV-ACC-01-5 · NAV-ACC-01-6. Các FLOW vẽ chúng dạng vòng tự thân khi cần.
+- Không vẽ 22 cạnh `inline` / `overlay`: NAV-PUB-02-2 · NAV-PUB-06-3 · NAV-PUB-07-2 · NAV-TEST-01-3 · NAV-TEST-01-4 · NAV-TEST-02-5 · NAV-TEST-02-10 · NAV-PAY-03-2 · NAV-PAY-05-4 · NAV-PAY-05-5 · NAV-PAY-05-6 · NAV-AUTH-01-1 · NAV-APP-01-5 · NAV-APP-01-6 · NAV-APP-01-7 · NAV-APP-01-8 · NAV-APP-01-9 · NAV-APP-02-4 · NAV-APP-03-4 · NAV-ACC-01-5 · NAV-ACC-01-6 · NAV-ACC-01-7. Các FLOW vẽ chúng dạng vòng tự thân khi cần.
 - Gộp mũi tên: NAV-PUB-04-1 + NAV-PUB-04-5 · NAV-PAY-01-1 + NAV-PAY-01-2 · NAV-ACC-02-2 + NAV-ACC-02-3 · NAV-AUTH-01-4 + NAV-AUTH-01-5 (cùng nguồn, cùng đích, cùng kiểu). Cạnh có điều kiện (đứt) không gộp với cạnh luôn đi được (liền) dù cùng đích, vd NAV-PUB-01-2 và NAV-PUB-01-5.
 - SCR-AUTH-01 đặt trong nhóm App / Account vì là cổng vào khu tài khoản, dù route `/login` là public. Hai NAV tới màn này: NAV-TEST-02-8 ("Sign in" ở state Error / Locked của SCR-TEST-02, kèm `next`) và NAV-PAY-05-1 ("Sign in to manage your plan" ở SCR-PAY-05, `next=/account/billing`); còn lại vào qua shell "Sign in", guard `/login?next=` và email magic link (API-MAIL-01). Chỉ vẽ cạnh ra mặc định (không có `next`); các cạnh có `next` nằm ở từng FLOW.
 - Cả 20 SCR đều thuộc ít nhất một FLOW ở §2. Footer "Cancel your plan here" · "Withdraw from contract here" → SCR-PAY-05 là khung SYS-NAV §1 (không có NAV-ID), không vẽ. Role `trust` của FLOW-quyen-rieng-tu nằm ngoài bộ role của template (acquisition / activation / money / retention), dùng theo yêu cầu blueprint.

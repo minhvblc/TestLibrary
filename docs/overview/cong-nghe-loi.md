@@ -1,6 +1,7 @@
 # Công nghệ cốt lõi — TestLib (web)
 > Basis: `research/core-tech.md` (TC-01 · TC-02). Đây là SPEC: nêu đích danh framework / vendor. Số nào chưa chốt → `Q-xx`, KHÔNG ghi như đã quyết. Stack BE theo chuẩn team: NestJS + TypeORM + PostgreSQL `postgres:16-alpine`, một schema `public` (basis in-house).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.6 · claude-opus-5-5 · §4 thêm bản ghi consent check-in (bật / tắt); file export còn hạn bị xoá ngay khi user xoá dữ liệu nằm trong đó (BR-APP-11).
 - 2026-09-28 · v1.5 · claude-opus-5-5 · làm rõ khi lan quyết định: `/tests?topic=` render theo request + CloudFront cache theo `topic` (Q-09); CDN không còn dùng header nước cho GC-SensitiveNotice (Q-23: không định vị).
 - 2026-09-28 · v1.4 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): thêm §1b nền tảng (Next.js · AWS eu-central-1 · Paddle · Postmark — Q-04 · Q-09 · Q-16 · Q-19); TD-01 · TD-04 đã chốt (Q-10 · Q-12 · Q-13 · Q-20); §4 check-in đổi căn cứ sang consent (Q-22), thêm 2 loại dữ liệu (xác nhận 18+ — Q-21; yêu cầu huỷ / rút — Q-25), thời hạn lưu consent gia hạn và chứng từ (Q-05 (f)); §5 · §8 theo Q-19.
 - 2026-09-28 · v1.3 · claude-opus-5-5 · Spike #2 (PDF) đã chạy: cập nhật §2 · §5 · §7.
@@ -69,6 +70,7 @@ Nếu team đã có cloud khác có region EU thì dùng cloud đó; ràng buộ
 | Câu trả lời đang làm (đã đăng nhập, autosave) | có | server của mình (PostgreSQL, AWS `eu-central-1` — Q-05 · Q-19) | tới khi nộp / 30 ngày nếu bỏ dở | không (hợp đồng) | legal-consent §1 | TD-01 · Q-05 |
 | Câu trả lời đã nộp + kết quả | có | server của mình | khách: 30 ngày nếu chưa lưu (BR-APP-08); tài khoản: tới khi xoá | bài `sensitive`: **consent tường minh** trước câu 1 (BR-APP-06); bài thường: hợp đồng | legal-consent §1 | BR-APP-06 · BR-APP-08 · Q-05 |
 | Xác nhận 18+ (bài `sensitive`) | có | server của mình (cùng attempt) | như câu trả lời của attempt đó | đi kèm consent bài `sensitive`; chỉ là ô tự xác nhận, không thu ngày sinh | legal-consent §1 | Q-21 · BR-TEST-11 |
+| Bản ghi consent check-in (version, thời điểm bật / tắt; không có giá trị check-in) | có | server của mình | tới khi xoá tài khoản (chứng minh consent kể cả sau khi đã tắt) | không (nghĩa vụ pháp lý: chứng minh consent) | legal-consent §1 | Q-22 · SYS-CONSENT |
 | Check-in cảm xúc | có | server của mình | tới khi user tắt check-in (xoá cứng ngay) hoặc xoá tài khoản | **consent tường minh** lần đầu bật (lưu `checkin_consent_version` + thời điểm); dữ liệu nhạy cảm → không gửi analytics | legal-consent §1 | Q-22 · BR-DASH-05 · BR-ACC-07 · BR-APP-05 |
 | Email, tên, timezone (nguồn: form, hoặc hồ sơ Google khi đăng nhập Google) | có | server của mình + Postmark (Mỹ, có DPA — Q-16) | tới khi xoá tài khoản | không (hợp đồng) | legal-consent §1 | Q-16 · Q-11 |
 | Dữ liệu thẻ / thanh toán | có | **chỉ Paddle** (MoR, Q-04), không qua server mình | theo provider | không (hợp đồng) | legal-consent §1 | BR-APP-01 · Q-04 |
@@ -82,7 +84,7 @@ Nếu team đã có cloud khác có region EU thì dùng cloud đó; ràng buộ
 | Bản ghi consent gia hạn (`consent_version`, thời điểm, IP, giá + câu gia hạn đã hiện, planKey) | có | server của mình + Paddle | 3 năm, hoặc 1 năm sau khi hợp đồng kết thúc (lấy mốc dài hơn); giữ cả khi xoá tài khoản (Q-05 (f)) | không (nghĩa vụ pháp lý: chứng minh đồng ý tự gia hạn) | legal-consent §1 | BR-APP-03 |
 | Đơn hàng + event webhook thanh toán (email, planKey, số tiền, trạng thái, mã đơn) | có | server của mình + Paddle (Q-04) | 7 năm, tới khi kế toán nơi đăng ký xác nhận mốc khác (Q-05 (f)) | không (hợp đồng + nghĩa vụ pháp lý) | legal-consent §1 | API-HOOK-01 · SYS-ENTITLEMENT |
 | Yêu cầu huỷ / rút (email, mã đơn, việc chọn, thời điểm nhận, IP) | có | server của mình + Paddle (khi hoàn tiền) | như đơn hàng (7 năm) | không (nghĩa vụ pháp lý: bằng chứng đã nhận yêu cầu rút / huỷ) | legal-consent §1 | Q-25 · BR-APP-14 · API-PAY-08 · API-PAY-09 |
-| File export dữ liệu | có | object storage của mình | link + file xoá sau 7 ngày | không | legal-consent §1 | BR-APP-11 |
+| File export dữ liệu | có | object storage của mình | link + file xoá sau 7 ngày, hoặc ngay khi user xoá dữ liệu có trong file (tắt check-in, xoá kết quả, xoá tài khoản) | không | legal-consent §1 | BR-APP-11 |
 
 > Bảng này là nguồn của `go-to-market/legal-consent.md` và tài liệu BE. Sai ở đây thì khai báo pháp lý cũng sai.
 

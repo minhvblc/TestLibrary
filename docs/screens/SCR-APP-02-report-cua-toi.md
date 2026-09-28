@@ -6,6 +6,7 @@
 | SCR-APP-02 | APP | Short | Web | `/app/reports` | account | noindex | 390 · 768 · 1280 | FLOW-luu-ket-qua-dang-nhap | Draft | (sau design) | `tracking-events.md` → `my_reports` | §5 (inline) | **EV-TLW-241 · SC-TLW-24 · basis RS·F-22 · CS-13** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · Q-18 đã chốt: thêm EC-07 (rút một khoản trong 14 ngày → `report.full` mất ngay, BR-APP-14); BR-REP-07 bỏ ghi chú hoàn tiền mơ hồ, trỏ quyền rút 14 ngày.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose
@@ -79,7 +80,7 @@ Lỗi riêng: không có. 401 → guard `/login?next=/app/reports` (00-quy-uoc-a
 |---|---|---|
 | BR-REP-01 | Mới nhất trước; mỗi lần làm bài là 1 dòng (làm lại không ghi đè) | BR-APP-07 · CS-13 |
 | BR-REP-02 | Bài `sensitive` không hiện type ở danh sách (riêng tư khi chia sẻ màn hình) | Q-06 · BR-APP-06 |
-| BR-REP-07 | Xoá một kết quả = xoá cứng kết quả + câu trả lời + report ráp từ nó (ngay, không 30 ngày); với bài `sensitive` đây là cách rút consent; không hoàn tiền tự động cho report đã mua (theo Q-18) | BR-APP-11 · SYS-CONSENT · Q-18 |
+| BR-REP-07 | Xoá một kết quả = xoá cứng kết quả + câu trả lời + report ráp từ nó (ngay, không 30 ngày); với bài `sensitive` đây là cách rút consent; xoá không tự hoàn tiền cho report đã mua — muốn hoàn thì rút trong 14 ngày ở SCR-PAY-05 ("Withdraw from contract here"); xoá kết quả không huỷ quyền rút của khoản mua | BR-APP-11 · SYS-CONSENT · Q-18 · BR-APP-14 |
 
 | EC-xx | Tình huống | Handling | Basis |
 |---|---|---|---|
@@ -89,6 +90,7 @@ Lỗi riêng: không có. 401 → guard `/login?next=/app/reports` (00-quy-uoc-a
 | EC-04 | Vừa mua lẻ nhưng webhook chưa về | dòng hiện "Confirming your payment…" (không có "Read") tới khi server xác nhận; danh sách không tự poll, tải lại trang thì thấy trạng thái mới; không mở quyền theo tham số URL | BR-APP-01 · cong-nghe-loi §3 |
 | EC-05 | Làm lại cùng một bài | thêm dòng mới; dòng cũ giữ nguyên kết quả và quyền của nó | BR-REP-01 · BR-APP-07 |
 | EC-06 | Hơn 20 kết quả | "Show more" tải trang kế và nối vào cuối; back từ report giữ số dòng đã tải + vị trí cuộn | 00-quy-uoc-api §8 |
+| EC-07 | Một khoản mua được rút trong 14 ngày (API-PAY-08 · SCR-PAY-05) | report lẻ → dòng của kết quả đó về "Summary" + "View summary" ngay khi server nhận yêu cầu rút; Plus (lần thanh toán đầu hoặc gia hạn năm) → mọi dòng chỉ có quyền nhờ Plus về "Summary" ngay, không chờ hết kỳ; dòng đã mua lẻ riêng giữ "Full report". Kết quả và tóm tắt vẫn còn | BR-APP-14 · Q-18 · SYS-ENTITLEMENT |
 
 ## 8. Responsive deltas
 

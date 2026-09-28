@@ -1,5 +1,6 @@
 # GC-SensitiveNotice — disclaimer không-chẩn-đoán + nguồn hỗ trợ cho bài `sensitive`
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · AI Notice về "không định vị": sửa câu chữ (bỏ tên vai trò nội bộ).
 - 2026-09-28 · v1.1 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): danh sách §4 là bản ra mắt (Q-23), trạng thái từng hàng "chờ verify số + clinical review trước launch" (`bang-quyet-dinh` §2 #4); **không định vị người dùng**: `full` luôn hiện đủ danh sách, `cta` trỏ danh bạ quốc tế (bỏ prop `country` và `region-note`), để trang render sẵn (SSG, Q-09) và bản in / PDF giống nhau ở mọi nơi; SCR-TEST-01 dùng link `cta` cho dòng phụ 18+ (Q-21); AI Notices cập nhật.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
@@ -104,6 +105,6 @@ Danh sách nguồn bản ra mắt (Q-23, đã chốt) — **từng số / websit
 - Viết bởi claude (subagent) ở Phase 4 từ spec blueprint + BR-APP-06 + SYS-CONSENT.
 - **Danh sách §4 là bản ra mắt (Q-23), nhưng số và website CHƯA được xác minh.** Mọi hàng "chờ verify số + clinical review trước launch"; không ship bài `sensitive` trước khi xong `bang-quyet-dinh` §2 #4. Số và tên tổ chức có thể đổi theo thời gian: cần chu kỳ review định kỳ, đặt cùng lần clinical review.
 - Câu "If you're in immediate danger, call your local emergency number." là bổ sung theo hướng dẫn safe messaging thông dụng, cần clinical review cùng các câu khác.
-- Không định vị (Q-23, orchestrator chốt 2026-09-28 sau khi thấy cách lấy vùng qua header CDN xung đột với trang render sẵn SSG của SCR-PUB-03 và cần thêm field ở 3 API). Nếu sau này thêm nhiều nước, cân nhắc lại: danh sách dài quá thì mới cần chọn theo vùng.
+- Không định vị (Q-23, chốt 2026-09-28 sau khi thấy cách lấy vùng qua header CDN xung đột với trang render sẵn SSG của SCR-PUB-03 và cần thêm field ở 3 API). Nếu sau này thêm nhiều nước, cân nhắc lại: danh sách dài quá thì mới cần chọn theo vùng.
 - Câu hỏi cho clinical review (Q-06): có nên nhấn mạnh hơn khi điểm cao (vd bài về tâm trạng) không. MVP không làm.
 - Link tới từng nguồn (`tel:`, `sms:`, website) thuộc cùng loại cạnh external "trang nguồn hỗ trợ khủng hoảng" đã khai ở §2.2 của các màn dùng GC.

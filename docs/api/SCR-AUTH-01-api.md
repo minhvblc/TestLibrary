@@ -1,6 +1,7 @@
 # [SCR-AUTH-01] API — Đăng nhập
 Refs: `docs/screens/SCR-AUTH-01-dang-nhap.md` · FLOW-luu-ket-qua-dang-nhap · SYS-AUTH · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency — KHÔNG lặp lại ở đây)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · Q-11 · Q-16 đã chốt 2026-09-28: API-MAIL-01 gửi qua Postmark; bỏ notice "Chưa FREEZE". Notice cũ về khoá idempotent sửa theo `api-mapping` §1.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 0. Endpoint overview
@@ -14,7 +15,7 @@ Refs: `docs/screens/SCR-AUTH-01-dang-nhap.md` · FLOW-luu-ket-qua-dang-nhap · S
 
 ## API-AUTH-01 · POST `/v1/auth/magic-links`
 
-Tạo token đăng nhập dùng một lần (server chỉ lưu hash, hết hạn 15 phút) gắn với email và `next` đã kiểm, rồi gửi email API-MAIL-01 chứa link `/login/callback?token=<token>`. **Không tạo tài khoản** ở bước này: tài khoản chỉ được tạo khi link được xác minh (API-AUTH-02). Luôn trả thành công khi email đúng định dạng, dù email đã có tài khoản hay chưa (BR-AUTH-03). Gọi lặp cùng email trong cùng một phút mà không có `resend` → trả như lần đầu, không gửi email thứ hai. Auth: không cần phiên; cần `X-CSRF-Token` (00-quy-uoc-api §2).
+Tạo token đăng nhập dùng một lần (server chỉ lưu hash, hết hạn 15 phút) gắn với email và `next` đã kiểm, rồi gửi email API-MAIL-01 (Postmark, message stream giao dịch — Q-16) chứa link `/login/callback?token=<token>`. **Không tạo tài khoản** ở bước này: tài khoản chỉ được tạo khi link được xác minh (API-AUTH-02). Luôn trả thành công khi email đúng định dạng, dù email đã có tài khoản hay chưa (BR-AUTH-03). Gọi lặp cùng email trong cùng một phút mà không có `resend` → trả như lần đầu, không gửi email thứ hai. Auth: không cần phiên; cần `X-CSRF-Token` (00-quy-uoc-api §2).
 
 | Body field | Type | Required | Meaning | Basis |
 |---|---|---|---|---|
@@ -115,5 +116,5 @@ Google chuyển về kèm `code` + `state`. Server so `state` với cookie `tl_o
 - Payload và tên field là SPEC mới, không lấy từ đối thủ (đối thủ đăng nhập bằng email + mật khẩu, không có social login, RS·F-20 · EV-TLW-006).
 - Token magic link: 32 byte ngẫu nhiên, server chỉ lưu hash. Trang `/login/callback` gửi `Referrer-Policy: no-referrer` và xoá `token` khỏi URL ngay khi đọc.
 - Cookie tạm `tl_oauth` là cookie mới (nhóm necessary), chưa có trong `00-quy-uoc-api` §2 và danh mục cookie — cần bổ sung.
-- `api-mapping` ghi khoá idempotent của API-AUTH-01 là "email + phút", trong khi "Resend link" mở sau 30 s. Field `resend` được thêm để lần gửi lại không bị cửa sổ đó nuốt; nếu giữ cách này thì cần cập nhật `api-mapping`.
-- Chưa FREEZE: Q-11 (mô hình auth), Q-16 (vendor gửi API-MAIL-01).
+- Khoá idempotent của API-AUTH-01: email chuẩn hoá + cửa sổ 1 phút; "Resend link" (mở sau 30 s) gửi `resend` nên không bị cửa sổ đó nuốt, vẫn tính vào giới hạn 3 lần / giờ / email. `api-mapping` §1 ghi cùng cơ chế ("email chuẩn hoá + bộ đếm `resend`").
+- Q-11 (mô hình auth) và Q-16 (Postmark gửi API-MAIL-01) đã chốt 2026-09-28; contract vẫn ở trạng thái proposal tới API-FREEZE.

@@ -1,5 +1,6 @@
 # GC-ScaleInput — thang chọn 5 mức (`likert5` · `emoji5`)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · Locked: `emoji5` chỉ render khi check-in đang chạy (consent check-in, Q-22 · BR-DASH-05); chưa bật / tạm dừng thì SCR-APP-01 hiện thẻ mời bật.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
 ## 1. Anatomy (CMP con)
@@ -42,7 +43,7 @@ Option: nền `color.surface`, viền `color.border`, `radius.md`, đệm `space
 | Loading | câu hỏi / widget đang tải từ 300 ms trở lên | skeleton 5 hàng (`likert5`) hoặc 5 ô (`emoji5`) | tieu-chuan-chung §3 · SCR-TEST-01 §4 |
 | Empty | N/A — luôn đủ 5 option; thiếu nhãn là lỗi cấu hình, màn xử lý (SCR-TEST-01 state Empty) | — | SCR-TEST-01 §4 |
 | Error | `likert5`: N/A (đáp án lưu local trước, lỗi mạng do màn xử lý); `emoji5`: API-APP-02 lỗi | `emoji5`: trả về giá trị trước đó, `error-slot` hiện "We couldn't save your check-in." + nút "Try again" (gửi lại đúng mức vừa chọn) | cong-nghe-loi §3 · SCR-APP-01 |
-| Locked | N/A — `likert5` không render khi bài `sensitive` chưa có consent (BR-TEST-04); `emoji5` có cho mọi tài khoản (quyền `checkin`) | — | BR-TEST-04 · SYS-ENTITLEMENT |
+| Locked | N/A — `likert5` không render khi bài `sensitive` chưa có consent (BR-TEST-04); `emoji5` chỉ render khi check-in đang chạy (quyền `checkin` + consent check-in); chưa bật, đã tắt hay đang chờ đồng ý lại thì SCR-APP-01 hiện thẻ mời bật thay widget | — | BR-TEST-04 · SYS-ENTITLEMENT · BR-DASH-05 · Q-22 |
 | hover | con trỏ trên option | nền `color.surface-muted`, viền đậm hơn một bậc; `motion.fast` | in-house |
 | focus | option đang giữ focus | `focus.ring` quanh cả hàng / ô | tieu-chuan-chung §5 |
 | disabled | `disabled = true`, hoặc trong 150 ms chuyển câu | không nhận input, `aria-disabled="true"`; giao diện giữ nguyên, không nhấp nháy | BR-TEST-01 |

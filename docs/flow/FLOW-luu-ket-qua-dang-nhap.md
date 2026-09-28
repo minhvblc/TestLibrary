@@ -1,6 +1,7 @@
 # [FLOW-luu-ket-qua-dang-nhap] — Lưu kết quả bằng email và đăng nhập bằng magic link
 > Flow kích hoạt: biến khách thành tài khoản mà không cần mật khẩu. Khách bấm "Email me a link" ở kết quả, bấm magic link trong email, và quay lại đúng trang đang xem (`next`) với kết quả đã gộp vào tài khoản, đọc được ở mọi thiết bị. Màn chính: [SCR-TEST-02](../screens/SCR-TEST-02-ket-qua.md) · [SCR-AUTH-01](../screens/SCR-AUTH-01-dang-nhap.md) · [SCR-APP-02](../screens/SCR-APP-02-report-cua-toi.md). Mục lục: [00-so-do-luong-tong](00-so-do-luong-tong.md).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · Q-11 (magic link + Google, không mật khẩu, checkout khách) và Q-16 (Postmark gửi API-MAIL-01) đã chốt 2026-09-28: ghi vendor email, thêm AI Notice trạng thái. Hai notice cũ sửa: khoá idempotent API-AUTH-01 theo `api-mapping` §1; `from = result` đã có NAV-TEST-02-8.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · gap "không có lối đăng nhập từ SCR-TEST-02" đã có NAV-TEST-02-8.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
@@ -40,7 +41,7 @@ Cạnh đứt tới / từ hộp thư và Google là bước **chỉ human làm*
 | SCR-ID | Route | NAV-ID đi qua | Vai trò trong flow |
 |---|---|---|---|
 | SCR-TEST-02 | `/results/:resultId` | NAV-TEST-02-5 · NAV-AUTH-01-3 (vào, `next`) · NAV-APP-02-2 (vào) | nơi bắt đầu lưu (form CMP-06) và đích quay lại sau đăng nhập |
-| — (external · hộp thư) | email API-MAIL-01 | — (deep link, không có NAV) | human mở email, bấm link tới callback |
+| — (external · hộp thư) | email API-MAIL-01 (gửi qua Postmark, Q-16) | — (deep link, không có NAV) | human mở email, bấm link tới callback |
 | SCR-AUTH-01 | `/login` · `/login?next=<route>` · `/login/callback?token=…` | NAV-AUTH-01-1 · NAV-AUTH-01-2 · NAV-AUTH-01-3 · NAV-AUTH-01-4 | gửi magic link, xác thực callback (API-AUTH-02 / API-AUTH-04), chuyển tới `next` |
 | — (external · Google) | trang đăng nhập Google | NAV-AUTH-01-2 | OAuth (API-AUTH-03 → API-AUTH-04) |
 | SCR-APP-01 | `/app` | NAV-AUTH-01-3 (vào) | đích mặc định khi callback không có `next` |
@@ -83,13 +84,13 @@ Cạnh đứt tới / từ hộp thư và Google là bước **chỉ human làm*
 | Guest (chưa đăng nhập) chạm feature cần tài khoản | Flow này chính là đường khách → tài khoản. Route `account` (`/app`, `/app/reports`) khi chưa có phiên → 302 `/login?next=<route>`, đăng nhập xong quay lại đúng route (SYS-AUTH · tieu-chuan-chung §1). Xem kết quả tóm tắt không cần tài khoản (BR-TEST-09) |
 | Rớt mạng giữa chừng | `cong-nghe-loi §3` không có hàng riêng cho auth → áp mặc định tieu-chuan-chung §2: gửi form (API-RES-02 / API-AUTH-01) lỗi mạng → giữ email đã nhập, báo lỗi + thử lại; POST có idempotency key được gửi lại một lần khi online. Callback mất mạng → trang không tải; link vẫn dùng được nếu chưa quá 15 phút và chưa dùng (BR-AUTH-01) |
 | User huỷ giữa chừng (Esc / đóng / rời trang) | Đóng tab sau khi gửi → link trong email vẫn hiệu lực 15 phút (BR-APP-10). Rời SCR-AUTH-01 → không mất gì. Huỷ ở trang Google → back trình duyệt về SCR-AUTH-01 (NAV-AUTH-01-2). Không bấm link thì kết quả vẫn là của khách, hết hạn sau 30 ngày (BR-TEST-10) |
-| Double-submit / retry (idempotent) | API-RES-02 idempotent theo `resultId` + email chuẩn hoá (00-quy-uoc-api §5); API-AUTH-01 idempotent theo email + phút (api-mapping). Bấm lại link đã dùng: trình duyệt đã có phiên → state Locked của SCR-AUTH-01, chuyển `next` hoặc `/app`; trình duyệt khác → xử lý như link hết hạn (state Error, BR-AUTH-01) |
+| Double-submit / retry (idempotent) | API-RES-02 idempotent theo `resultId` + email chuẩn hoá (00-quy-uoc-api §5); API-AUTH-01 idempotent theo email chuẩn hoá + cửa sổ 1 phút; "Resend link" gửi `resend` nên không bị cửa sổ đó nuốt (SCR-AUTH-01-api · api-mapping §1). Bấm lại link đã dùng: trình duyệt đã có phiên → state Locked của SCR-AUTH-01, chuyển `next` hoặc `/app`; trình duyệt khác → xử lý như link hết hạn (state Error, BR-AUTH-01) |
 | Reload / đóng tab rồi mở lại (state còn không?) | Trạng thái "đã gửi" là `inline` (NAV-AUTH-01-1, không đổi URL) nên reload về form trống; link đã gửi vẫn dùng được. Reload callback → token đã dùng: có phiên thì chuyển `next`, không thì Error như trên. Reload SCR-TEST-02 sau khi lưu → đọc theo tài khoản. `cong-nghe-loi §3` (hàng "Kết quả đã hết hạn / token không khớp") chỉ áp khi chưa lưu và mở ở trình duyệt khác |
 | Mở thẳng URL / link chia sẻ / back-forward vào giữa flow | `next` chỉ nhận đường dẫn cùng origin, chống open redirect (BR-AUTH-02). Callback rời bằng replace nên back không quay lại callback (NAV-AUTH-01-3). Mở `/login` khi đã đăng nhập → state Locked, chuyển `next` hoặc `/app`. Link kết quả bị chuyển cho người khác → họ không có token/tài khoản → Locked "This result isn't available on this device. Sign in if you saved it, or take the test again." (`cong-nghe-loi §3` · BR-APP-08) |
 | Hai tab / hai thiết bị cùng lúc | KB-2: link mở ở thiết bị khác tạo phiên ở thiết bị đó; kết quả đã claim bằng API-RES-02 đi theo tài khoản. Các kết quả khác chỉ gắn với token `tl_guest` của trình duyệt gốc được gộp khi đăng nhập trên chính trình duyệt đó (SYS-AUTH — xem AI Notices). Đăng xuất ở một tab → tab khác nhận sự kiện `storage`, về `/` (tieu-chuan-chung §1) |
 | Timezone / đổi giờ | Hạn 15 phút của link tính tuyệt đối ở server, không phụ thuộc giờ máy. Tài khoản tạo ở bước callback lấy timezone trình duyệt lúc tạo làm timezone tài khoản, đổi được ở SCR-ACC-01 (BR-APP-09). Ngày trong SCR-APP-02 hiện theo timezone tài khoản (tieu-chuan-chung §4) |
 | Config / giá đổi giữa phiên | N/A vì flow không hiển thị giá hay gói. Thời hạn link (15 phút, 1 lần) và giới hạn gửi lại (3 lần/giờ) là hằng số của BR-APP-10 · BR-TEST-09; văn bản "Terms" luôn mở bản mới nhất có version + ngày cập nhật (BR-PUB-11) |
-| Pending / held (webhook chưa về, 3-D Secure) | N/A vì không có thanh toán, không webhook. "Chờ" duy nhất là email chưa tới: "Check your inbox" + "Resend link" sau 30 s, tối đa 3 lần/giờ (SCR-AUTH-01 CMP-06 · BR-TEST-09) |
+| Pending / held (webhook chưa về, 3-D Secure) | N/A vì không có thanh toán, không webhook. "Chờ" duy nhất là email chưa tới: "Check your inbox" + "Resend link" sau 30 s, tối đa 3 lần/giờ (SCR-AUTH-01 CMP-06 · BR-TEST-09); email giao dịch gửi qua Postmark (Q-16), độ trễ giao được theo dõi như chỉ số vận hành (SYS-AUTH) |
 
 ## 4. BR references
 
@@ -122,7 +123,8 @@ Cạnh đứt tới / từ hộp thư và Google là bước **chỉ human làm*
 Tỉ lệ theo dõi: ft_result · save_email success → ft_auth · login (tỉ lệ bấm link) · ft_auth · magic_link_sent → ft_auth · login · tỉ trọng `method` magic_link vs google · tỉ lệ `has_next = true` (đến từ guard). Kết quả bài `sensitive` không bắn ft_result (BR-APP-06), nên lượt lưu từ bài đó chỉ đếm ở server (bảng claim của API-RES-02). Callback không có UI riêng nên không có `screen_active` cho nó.
 
 ## 6. AI Notices
+- Q-11 (magic link + Google, không mật khẩu, checkout khách) và Q-16 (Postmark gửi API-MAIL-01) đã chốt 2026-09-28; flow không còn chờ quyết định.
 - **Gap — ngữ nghĩa gộp khi bấm link ở thiết bị khác:** SYS-AUTH nói bấm link "gộp mọi kết quả của token hiện tại". Ở thiết bị khác, token hiện tại là token của thiết bị đó. Flow này giả định kết quả đã claim bằng API-RES-02 được gắn vào tài khoản ngay khi xác thực link, còn các kết quả khác của trình duyệt gốc chỉ gộp khi đăng nhập trên trình duyệt gốc. Cần khẳng định ở `docs/api/SCR-TEST-02-api.md`.
 - **Đã xử lý (2026-09-28) — lối đăng nhập từ SCR-TEST-02:** SCR-TEST-02 §2.2 đã có NAV-TEST-02-8: CMP-11 "Sign in" → SCR-AUTH-01 · `next=/results/:resultId` (chỉ ở state Error 410 / Locked 403).
 - Copy xác nhận sau "Email me a link" ở SCR-TEST-02 chưa có trong blueprint; screen doc phải ghi verbatim (có thể dùng lại câu "Check your inbox" của SCR-AUTH-01).
-- `from = result` của ft_auth · start (tracking-events) chưa có cạnh tương ứng; sẽ khớp nếu thêm cạnh ở gap thứ hai.
+- `from = result` của ft_auth · start (tracking-events) khớp NAV-TEST-02-8 ("Sign in" ở state Error / Locked của SCR-TEST-02).
