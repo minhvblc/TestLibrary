@@ -1,6 +1,7 @@
 # 00-gtm-strategy — TestLib (tên tạm, Q-01) · nguồn nội dung cho mọi copy web
 > Mọi copy ở `seo-meta.md` · `landing-copy.md` · `pricing-page.md` · `legal-consent.md` · `web/` được **dịch từ file này**, không soạn thẳng ở đó. Copy UI là en-US (Q-14), viết verbatim trong ngoặc kép. Giá không nằm ở đây: cite `00-overview §2` (Q-03). Nguồn: `research/final-features.md` §1 · §4–5 · `research/research-synthesis.md` §G · §U · `research/apps/testlibrary-web/teardown.md` §4.0.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · §4 #6: FAQ landing đã có CMP-09 ở SCR-PUB-01, bỏ ghi chú "chưa có CMP" và AI Notice tương ứng.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): giá đã chốt (Q-03); value prop #4 thêm huỷ không cần đăng nhập, #5 theo Q-28, thêm #9 rút 14 ngày (Q-18 · Q-25); keyword theo Q-07 và route `/cancel`; ads theo Q-12 · Q-20; footer có link huỷ / rút; checklist §6 thêm #12–#14 (rút / huỷ không đăng nhập, GPC, nguồn hỗ trợ).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
@@ -85,7 +86,7 @@ Thứ tự neo consensus đối thủ (hero → carousel bài → chủ đề �
 | 3 | How it works — CMP-04 | 3 bước; bước 3 nói rõ trả phí là tuỳ chọn | §1 #1 · #2 → landing-copy "How it works" |
 | 4 | Giá tóm tắt — CMP-05 | nói free vs trả phí + gia hạn / huỷ trước khi user phải hỏi; link "See pricing" | §1 #2 · #3 · #4 → landing-copy "Pricing teaser" |
 | 5 | Khối tin cậy — CMP-06 | riêng tư + cách chấm điểm; link "How we score" → `/help#scoring` | §1 #1 · #5 · #8 → landing-copy "Trust block" |
-| 6 | FAQ — **chưa có CMP ở SCR-PUB-01 (đề xuất chèn giữa CMP-06 và CMP-07)** | trả lời 6 câu hay hỏi: free? · chấm điểm? · chẩn đoán? · tài khoản? · dữ liệu? · gia hạn / huỷ? | §1 #1 · #2 · #3 · #4 · #5 · #8 → landing-copy "FAQ" |
+| 6 | FAQ — SCR-PUB-01 CMP-09 (giữa CMP-06 và CMP-07) | trả lời 6 câu hay hỏi: free? · chấm điểm? · chẩn đoán? · tài khoản? · dữ liệu? · gia hạn / huỷ? | §1 #1 · #2 · #3 · #4 · #5 · #8 → landing-copy "FAQ" |
 | 7 | Footer — CMP-07 | link pháp lý + "Cookie settings" + "Cancel your plan here" · "Withdraw from contract here" (BR-APP-04 · BR-APP-14), disclaimer không-chẩn-đoán, pháp nhân (Q-05) | §1 #8 → landing-copy "Footer" · legal-consent §4 |
 
 ## 5. Locales
@@ -120,4 +121,3 @@ Thứ tự neo consensus đối thủ (hero → carousel bài → chủ đề �
 - Từ khoá wellbeing: trang kết quả tìm kiếm thường do tổ chức y tế chiếm và nội dung sức khoẻ bị soi chất lượng kỹ hơn `[INFERRED]` → cần chuyên gia duyệt nội dung. Route `sensitive` không có analytics (BR-APP-06) nên hiệu quả SEO của nhóm này chỉ đo được bằng Search Console (số liệu gộp).
 - Nội dung về chính sách quảng cáo ở §2 là hiểu biết của AI, không phải kết luận pháp lý; verify bản hiện hành của từng nền tảng trước khi chạy ads.
 - "science-based" trong hero: Q-07 đã chốt nguồn (IPIP cho Big Five); chỉ dùng chữ này cho bài dựng trên thang đã kiểm định, không cho bài tự soạn (xem landing-copy §1).
-- FAQ landing (§4 #6) chưa có CMP trong blueprint SCR-PUB-01 → writer SCR-PUB-01 cần thêm.

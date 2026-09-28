@@ -1,6 +1,7 @@
 # Tiêu chuẩn chung — TestLib (web)
 > Viết một lần ở đây; SCR chỉ ghi **ngoại lệ**. Copy UI là en-US (Q-14).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · Rendering: `/tests?topic=` render theo request + cache CDN theo `topic` (Q-09).
 - 2026-09-28 · v1.1 · claude-opus-5-5 · Q-09 (Next.js SSG + revalidate) và Q-20 (GPC = "Reject all") đã chốt 2026-09-28 (AI · uỷ quyền human).
 - 2026-09-27 · v1 · claude-opus-5-5 · baseline web từ cong-nghe-loi §2–4 + research (perf đối thủ, consent).
 
@@ -82,7 +83,7 @@ Chrome · Safari (macOS + iOS) · Edge · Firefox, 2 bản gần nhất. Tính n
 | OG | title / description / ảnh 1200×630 cho mọi route indexable |
 | hreflang | chỉ khi có locale thứ hai (Q-14) |
 | JSON-LD | `Organization` (trang chủ) · `FAQPage` (trợ giúp, trang bài) · `Quiz` (trang bài) |
-| Rendering | route public render sẵn bằng Next.js (SSG + revalidate, Q-09); crawler không chạy JS vẫn đọc được meta + nội dung |
+| Rendering | route public render sẵn bằng Next.js (SSG + revalidate, Q-09); riêng `/tests?topic=` render theo request, CDN cache theo `topic`; crawler không chạy JS vẫn đọc được meta + nội dung |
 | 404 / 500 | trang có nội dung + link về thư viện bài |
 
 ## 9. Performance budget

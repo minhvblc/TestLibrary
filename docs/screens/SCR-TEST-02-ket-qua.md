@@ -7,13 +7,14 @@
 | SCR-TEST-02 | TEST | Full | Web | `/results/:resultId` | guest | noindex | 390 · 768 · 1280 | FLOW-lam-bai-mien-phi · FLOW-mo-khoa-report · FLOW-luu-ket-qua-dang-nhap | Draft | (sau design) | `tracking-events.md` → `result` · ft_result | `docs/api/SCR-TEST-02-api.md` | **EV-TLW-079 · EV-TLW-138 · EV-TLW-159 · EV-TLW-108 · SC-TLW-14 · basis RS·F-14 · F-15 · F-17 · F-23 · CS-07 · P-04** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.3 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): xoá kết quả ở CMP-13 là cách khách tự xoá dữ liệu (Q-28), copy xoá giữ nguyên (khớp SCR-APP-02); tên type / dải theo Q-07; GC-SensitiveNotice theo Q-23; Q-05 · Q-11 đã chốt ở AI Notices. Không đổi hành vi khác.
 - 2026-09-28 · v1.2 · claude-opus-5-5 · D-16: guard của NAV-TEST-02-9 gồm cả sau khi xoá; xác nhận xoá thêm câu mất report đã mua lẻ.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: `from` của ft_result start đã có test_page · unlock.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose & context
 
-Màn kết quả tóm tắt miễn phí, hiện ngay sau khi nộp bài. Server chấm điểm thật theo câu trả lời (TD-01), nên tóm tắt có đủ type, điểm của mọi thang và phần "Why you got this result". Không phần nào bị làm mờ hay giấu đi để ép mua (BR-TEST-07). Đối thủ trả về cùng một type và cùng điểm dù người làm chọn toàn "đồng ý", toàn "không đồng ý" hay toàn "trung lập" (RS·F-14 · EV-TLW-138 · EV-TLW-159). Sau đó họ đẩy khách sang bài trả phí (RS·F-15) rồi tới trang offer có đồng hồ đếm ngược và dòng "vừa mua" (RS·F-17 · EV-TLW-108). Màn của mình chỉ có một khối report đầy đủ, liệt kê đúng các chương và số trang thật (BR-TEST-08), và không hiện giá; giá cùng điều khoản gia hạn nằm ở SCR-PAY-01 (BR-APP-02). Khách lưu kết quả bằng email nếu muốn, không bắt buộc (BR-TEST-09). Nếu không lưu, kết quả tự hết hạn sau 30 ngày (BR-TEST-10). Bài `sensitive` luôn có GC-SensitiveNotice và không bắn event analytics nào (BR-APP-06). · basis RS·F-14 · P-04 · Q-02 · Q-11
+Màn kết quả tóm tắt miễn phí, hiện ngay sau khi nộp bài. Server chấm điểm thật theo câu trả lời (TD-01), nên tóm tắt có đủ type, điểm của mọi thang và phần "Why you got this result". Không phần nào bị làm mờ hay giấu đi để ép mua (BR-TEST-07). Đối thủ trả về cùng một type và cùng điểm dù người làm chọn toàn "đồng ý", toàn "không đồng ý" hay toàn "trung lập" (RS·F-14 · EV-TLW-138 · EV-TLW-159). Sau đó họ đẩy khách sang bài trả phí (RS·F-15) rồi tới trang offer có đồng hồ đếm ngược và dòng "vừa mua" (RS·F-17 · EV-TLW-108). Màn của mình chỉ có một khối report đầy đủ, liệt kê đúng các chương và số trang thật (BR-TEST-08), và không hiện giá; giá cùng điều khoản gia hạn nằm ở SCR-PAY-01 (BR-APP-02). Khách lưu kết quả bằng email nếu muốn, không bắt buộc (BR-TEST-09). Nếu không lưu, kết quả tự hết hạn sau 30 ngày (BR-TEST-10). Chủ kết quả, kể cả khách, tự xoá kết quả ở cuối trang (CMP-13, Q-28). Bài `sensitive` luôn có GC-SensitiveNotice và không bắn event analytics nào (BR-APP-06). · basis RS·F-14 · P-04 · Q-02 · Q-11 · Q-28
 
 ## 2. Điều hướng
 
@@ -40,7 +41,7 @@ Màn kết quả tóm tắt miễn phí, hiện ngay sau khi nộp bài. Server 
 | NAV-TEST-02-7 | external: trang nguồn hỗ trợ khủng hoảng | CMP-09 "Get support now" | external | tab mới | mặc định | đóng tab → SCR-TEST-02 | bài `sensitive` | Web | Q-06 |
 | NAV-TEST-02-8 | SCR-AUTH-01 · `next=/results/:resultId` | CMP-11 "Sign in" | push | `/login?next=/results/:resultId` (push) | mặc định | back trình duyệt → SCR-TEST-02 | chỉ ở state Error (410) / Locked (403) | Web | SYS-AUTH |
 | NAV-TEST-02-9 | SCR-PUB-02 | CMP-12 "Browse all tests" | push | `/tests` (push) | mặc định | back trình duyệt → SCR-TEST-02 | ở state Error (410) / Locked (403), và sau khi xoá kết quả (NAV-TEST-02-10) | Web | in-house |
-| NAV-TEST-02-10 | (cùng màn) xoá kết quả | CMP-13 "Delete this result" → xác nhận tại chỗ "Delete this result and your answers? This can't be undone." (+ "You'll also lose the full report you unlocked for this result." nếu đã mua lẻ) · "Delete" / "Cancel" | inline | không đổi URL; xoá xong → thay nội dung bằng "Result deleted." + CMP-12 | mặc định | — | chủ sở hữu kết quả | Web | BR-APP-11 · SYS-CONSENT |
+| NAV-TEST-02-10 | (cùng màn) xoá kết quả | CMP-13 "Delete this result" → xác nhận tại chỗ "Delete this result and your answers? This can't be undone." (+ "You'll also lose the full report you unlocked for this result." nếu đã mua lẻ) · "Delete" / "Cancel" | inline | không đổi URL; xoá xong → thay nội dung bằng "Result deleted." + CMP-12 | mặc định | — | chủ sở hữu kết quả | Web | BR-APP-11 · SYS-CONSENT · Q-28 |
 
 ### 2.3 Diagram
 
@@ -76,17 +77,17 @@ flowchart TD
 | CMP-ID | Component | Display condition | Copy verbatim (en-US) | Basis (EV / Q) |
 |---|---|---|---|---|
 | CMP-01 | Thanh trên funnel | luôn | GC-SiteHeader biến thể `minimal`: chỉ logo "TestLib" (link → `/`), kể cả khi đã đăng nhập | SYS-NAV §4 (layout funnel) |
-| CMP-02 | Headline kết quả | Default | "Your result: [Type]" + 1 câu mô tả type (nội dung versioned); bài không có type thì [Type] là tên dải điểm của thang chính | EV-TLW-079 · TD-02 |
+| CMP-02 | Headline kết quả | Default | "Your result: [Type]" + 1 câu mô tả type (nội dung versioned); bài không có type thì [Type] là tên dải điểm của thang chính. Tên type / dải do mình tự đặt: không nhãn chẩn đoán, không tên thương hiệu bên khác (Q-07) | EV-TLW-079 · TD-02 · Q-07 |
 | CMP-03 | Điểm các thang | Default | GC-ScoreBars: mỗi thang một thanh, nhãn thang + "[n]%", xếp giảm dần; kèm bảng chữ cho screen reader | RS·F-14 · BR-TEST-07 |
 | CMP-04 | Giải thích | Default | tiêu đề "Why you got this result" + mỗi thang 1 đoạn theo dải điểm (lấy từ `report_blocks` loại tóm tắt, TD-02); nói về thang và dải, không nhắc lại câu trả lời thô | P-04 · BR-APP-07 |
 | CMP-05 | Khối report đầy đủ | Default; nội dung theo `report.access` | tiêu đề "Full report" · danh sách chương thật · "About [N] pages" · `none` → nút "Unlock full report" · `full` → nút "Read full report" · `pending` → "Confirming your payment…" (không nút) | RS·F-23 · TD-02 · SYS-ENTITLEMENT |
 | CMP-06 | Lưu kết quả | kết quả chưa gắn tài khoản; đã lưu → dòng xác nhận | khách: tiêu đề "Save your result" · ô "Email" · nút "Email me a link" · "Saved on this device until [date]" · đã gửi: "Check your inbox" + "We sent a link to [email]. Open it within 15 minutes to save this result to your account." + "Resend link" (hiện sau 30 s) · đã đăng nhập nhưng kết quả còn của token khách: nút "Save to my account" · đã lưu: "Saved to your account." | Q-11 · BR-APP-08 · SYS-AUTH |
 | CMP-07 | Làm lại | Default | "Retake test" (nút phụ) | BR-APP-07 |
 | CMP-08 | Bài khác | Default | "Take another test" (link) | in-house |
-| CMP-09 | Thông báo bài nhạy cảm | bài `sensitive` | GC-SensitiveNotice biến thể `full`: "This is a self-reflection tool, not a diagnosis." + "Get support now" (phần còn lại theo GC); đặt trước CMP-02 và trước khối mở khoá CMP-05 | Q-06 · BR-APP-06 |
+| CMP-09 | Thông báo bài nhạy cảm | bài `sensitive` | GC-SensitiveNotice biến thể `full`: "This is a self-reflection tool, not a diagnosis." + "Get support now" (phần còn lại theo GC); đặt trước CMP-02 và trước khối mở khoá CMP-05 | Q-06 · Q-23 · BR-APP-06 |
 | CMP-11 | Link "Sign in" | state Error (410) / Locked (403) | "Sign in" (NAV-TEST-02-8) | SYS-AUTH |
 | CMP-12 | Link "Browse all tests" | state Error / Locked; sau khi xoá kết quả | "Browse all tests" (NAV-TEST-02-9) | in-house |
-| CMP-13 | Xoá kết quả | Default, cuối trang, cỡ chữ nhỏ | "Delete this result" → xác nhận tại chỗ (thêm "You'll also lose the full report you unlocked for this result." khi kết quả đã mua lẻ, cùng câu với SCR-APP-02 CMP-05) → API-RES-03; với bài `sensitive` đây là cách rút consent | BR-APP-11 · SYS-CONSENT |
+| CMP-13 | Xoá kết quả | Default, cuối trang, cỡ chữ nhỏ | "Delete this result" → xác nhận tại chỗ (thêm "You'll also lose the full report you unlocked for this result." khi kết quả đã mua lẻ, cùng câu với SCR-APP-02 CMP-05) → API-RES-03; với bài `sensitive` đây là cách rút consent; với khách đây là cách tự xoá dữ liệu (Q-28) | BR-APP-11 · SYS-CONSENT · Q-28 |
 | CMP-10 | Chú thích chấm điểm | Default | "Scored with version [v] of this test." + link "How scoring works" | BR-APP-07 · RS·F-14 |
 
 ## 4. Screen states
@@ -208,8 +209,8 @@ Tên type + mô tả 1 câu, điểm mọi thang (nhãn, %, dải, thứ tự), 
 | Riêng tư | phản hồi 403/404/410 không kèm tên bài hay type; route bài `sensitive` không tải script analytics |
 
 ## 13. AI Notices
-- "Saved on this device until [date]" = `expiresAt` của kết quả khách (30 ngày, đề xuất Q-05). Định dạng ngày theo tieu-chuan-chung §4.
-- Link "Sign in" / "Browse all tests" ở frame Error/Locked đã có cạnh NAV-TEST-02-8 / NAV-TEST-02-9. Nút xoá kết quả (CMP-13 · API-RES-03) được thêm theo review quyền riêng tư (rút consent bài `sensitive` mà không cần xoá tài khoản).
-- Biến thể đã đăng nhập của CMP-06 ("Save to my account") và dòng "Saved to your account." là đề xuất in-house, cần duyệt cùng Q-11.
+- "Saved on this device until [date]" = `expiresAt` của kết quả khách (30 ngày, Q-05 (e)). Định dạng ngày theo tieu-chuan-chung §4.
+- Link "Sign in" / "Browse all tests" ở frame Error/Locked đã có cạnh NAV-TEST-02-8 / NAV-TEST-02-9. Nút xoá kết quả (CMP-13 · API-RES-03) được thêm theo review quyền riêng tư (rút consent bài `sensitive` mà không cần xoá tài khoản) và là cách khách tự xoá dữ liệu (Q-28); khách muốn bản sao dữ liệu thì cần tài khoản miễn phí hoặc gửi "Privacy request" ở `/help` (BR-PUB-15).
+- Biến thể đã đăng nhập của CMP-06 ("Save to my account") và dòng "Saved to your account." là copy in-house, theo mô hình tài khoản đã chốt ở Q-11 (lưu bằng email magic link).
 - Màn không hiện giá nên không dùng GC-RenewalDisclosure; giá và gia hạn hiện ở SCR-PAY-01 (BR-APP-02).
 - ft_result start: `tracking-events.md` đã có `from` = test_page / unlock cho lối vào từ SCR-PUB-03 (NAV-PUB-03-3) và SCR-PAY-01 (NAV-PAY-01-3).

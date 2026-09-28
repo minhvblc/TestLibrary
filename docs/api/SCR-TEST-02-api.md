@@ -1,6 +1,7 @@
 # [SCR-TEST-02] API — Kết quả
 Refs: `docs/screens/SCR-TEST-02-ket-qua.md` · FLOW-lam-bai-mien-phi · FLOW-luu-ket-qua-dang-nhap · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency — KHÔNG lặp lại ở đây)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): API-RES-03 là cách khách tự xoá dữ liệu (Q-28); Q-07 · Q-11 đã chốt ở AI Notices.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 0. Endpoint overview
@@ -92,7 +93,7 @@ Lưu kết quả vào tài khoản. Khách: tạo token đăng nhập dùng mộ
 
 ## API-RES-03 · DELETE `/v1/results/{resultId}`
 
-Xoá cứng kết quả + câu trả lời + report ráp từ kết quả đó (BR-REP-07). Với bài `sensitive` đây là cách rút consent (SYS-CONSENT). Auth: chủ sở hữu (token `tl_guest` hoặc phiên); không có body.
+Xoá cứng kết quả + câu trả lời + report ráp từ kết quả đó (BR-REP-07). Với bài `sensitive` đây là cách rút consent (SYS-CONSENT); với khách đây là cách tự xoá dữ liệu, không cần tài khoản (Q-28). Auth: chủ sở hữu (token `tl_guest` hoặc phiên); không có body.
 
 | Response `data` field | Type | Meaning | Basis |
 |---|---|---|---|
@@ -125,5 +126,5 @@ Xoá cứng kết quả + câu trả lời + report ráp từ kết quả đó (
 - Payload và tên field là SPEC mới, không lấy từ đối thủ (đối thủ không có bước lưu kết quả bằng email trước checkout, RS·F-20).
 - `report.pageCount` phải đo từ PDF render thật (TD-03), không ước lượng. UI ghi "About [N] pages" vì report của từng người có thể lệch vài trang so với bản đo.
 - Shape phản hồi của API-RES-02 (`expiresInSec` · `resendAfterSec`, lỗi 400/429) theo cùng mẫu với API-AUTH-01 (`SCR-AUTH-01-api.md`) vì hai endpoint cùng gửi một loại link.
-- Nhánh "có phiên → gộp ngay" của API-RES-02 chỉ dùng cho trường hợp hiếm (EC-07 của màn), vì đăng nhập đã gộp kết quả `tl_guest` của trình duyệt (SCR-AUTH-01). Cần duyệt cùng Q-11.
-- `testName` · `type` trong ví dụ là dữ liệu minh hoạ; tên bài thật theo Q-07.
+- Nhánh "có phiên → gộp ngay" của API-RES-02 chỉ dùng cho trường hợp hiếm (EC-07 của màn), vì đăng nhập đã gộp kết quả `tl_guest` của trình duyệt (SCR-AUTH-01). Đây là chi tiết in-house theo Q-11 (đã chốt).
+- `testName` · `type` trong ví dụ là dữ liệu minh hoạ. Tên bài và tên type thật do nội dung tự đặt theo Q-07 (đã chốt: không nhãn chẩn đoán, không tên thương hiệu bên khác), chờ legal review (`bang-quyet-dinh` §2 #5).

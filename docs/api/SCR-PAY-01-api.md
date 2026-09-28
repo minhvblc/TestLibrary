@@ -1,6 +1,7 @@
 # [SCR-PAY-01] API — Mở khoá report
 Refs: `docs/screens/SCR-PAY-01-mo-khoa-report.md` · FLOW-mo-khoa-report · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency — KHÔNG lặp lại ở đây) · schema đầy đủ: API-RES-01 ở `docs/api/SCR-TEST-02-api.md`, API-PAY-01 và API-PAY-02 ở `docs/api/SCR-PUB-04-api.md`. File này chỉ ghi phần màn này dùng và phần khác biệt.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · API-PAY-01 phần dùng ở màn này theo quyết định 2026-09-28: `seller.merchantOfRecord` thay `seller.legalName` ở CMP-10 (Q-04), thêm `statementDescriptor` (Q-24) và `monthlyEquivalent`; `renewalReminderDays` = { month: 7, year: 21 } (Q-16); giá hiện hành (Q-03).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 0. Endpoint overview
@@ -56,11 +57,13 @@ Schema đầy đủ và cache: `SCR-PUB-04-api.md`. Màn này gọi có cookie (
 
 | Response `data` field (dùng ở đây) | Type | Meaning | Basis |
 |---|---|---|---|
-| `plans[]` (3 gói trả phí) | array Plan | giá + chu kỳ cho CMP-04 · CMP-05 | BR-PAY-01 · 00-overview §2 |
-| `plans[].savingsPercent` | int / null | "Save [n]%" ở CMP-05 | BR-PUB-09 |
+| `plans[]` (3 gói trả phí) | array Plan | giá + chu kỳ cho CMP-04 · CMP-05 (`amount` 999 · 1299 · 6999 — 00-overview §2) | BR-PAY-01 · 00-overview §2 |
+| `plans[].savingsPercent` | int / null | "Save [n]%" cạnh "Annual" ở CMP-05 (hiện 55) | BR-PUB-09 |
+| `plans[].monthlyEquivalent` | object / null | dòng phụ "[…] per month, billed yearly" của Plus năm ở CMP-04 (583 = $5.83) | BR-PUB-09 · pricing-page §2 |
 | `consent` | object `{ version, template }` | câu CMP-07 + version gửi lại ở API-PAY-02 | BR-PAY-02 · BR-APP-03 |
-| `renewalReminderDays` | object `{ month, year }` | CMP-06 (email nhắc trước kỳ thu) | Q-16 |
-| `seller.legalName` | string | CMP-10 "Sold by [legal entity]. Taxes calculated at checkout." | Q-05 · RS·F-12 |
+| `renewalReminderDays` | object `{ month: 7, year: 21 }` | CMP-06 (email nhắc 7 ngày trước kỳ tháng, 21 ngày trước kỳ năm) | Q-16 |
+| `seller.merchantOfRecord` | string | CMP-10 câu reseller ("Paddle.com") | Q-04 · BR-APP-12 |
+| `statementDescriptor` | string / null | CMP-10 "Charges will appear as [descriptor] on your statement."; null → không render câu này | Q-24 · BR-APP-15 |
 | `purchasable` · `unavailableReason` | boolean · enum | state Locked (3) | Q-04 |
 
 | Lỗi RIÊNG màn | When | UI reaction (verbatim) |
@@ -100,12 +103,14 @@ Schema, side effect và lỗi chung: `SCR-PUB-04-api.md`. Ở màn này:
 | `report.excerpt` | CMP-03 | đoạn văn thường, không làm mờ |
 | `report.access` · `report.reportId` | NAV-PAY-01-5 · state Locked | `full` → replace sang report · `pending` → câu processing |
 | `plans[].price` · `plans[].interval` | CMP-04 · CMP-05 | "[price] one-time" · "[price] per month" · "[price] per year" |
+| `plans[].savingsPercent` · `plans[].monthlyEquivalent` | CMP-05 · CMP-04 | "Save [n]%" cạnh "Annual" · dòng phụ "[…] per month, billed yearly" |
 | `consent.template` | CMP-07 | câu consent nguyên văn |
 | `renewalReminderDays` · `plans[].renewalPrice` | CMP-06 | GC-RenewalDisclosure |
-| `seller.legalName` | CMP-10 | "Sold by [legal entity]. Taxes calculated at checkout." |
+| `seller.merchantOfRecord` · `statementDescriptor` | CMP-10 | câu reseller + "Charges will appear as [descriptor] on your statement." (SCR-PAY-01 §3) |
 | `checkoutUrl` | NAV-PAY-01-1 · NAV-PAY-01-2 | chuyển trang cùng tab |
 
 ## AI Notices
 - `include=excerpt` và `report.excerpt` chưa có trong schema API-RES-01 của `SCR-TEST-02-api.md`; cần owner bổ sung (không phải API mới).
 - `report.access = pending` phải được server đặt khi người dùng quay về từ nhánh thành công của checkout (API-PAY-03) và bỏ khi webhook về hoặc sau 30 phút; SCR-TEST-02 dùng cùng giá trị.
+- `seller.merchantOfRecord` và `statementDescriptor`: giá trị thật verify khi mở tài khoản Paddle (bang-quyet-dinh §2 #3).
 - Money API → human review trước API-FREEZE (api-mapping §1).

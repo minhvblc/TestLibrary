@@ -1,5 +1,6 @@
 # GC-TestCard — thẻ bài test trong lưới và khối gợi ý
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): `title` ghi danh sách tên thương hiệu bên khác không được dùng theo Q-07 (đã chốt) và việc legal review tên bài. Không đổi hành vi.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
 ## 1. Anatomy (CMP con)
@@ -10,7 +11,7 @@ Một thẻ = một bài test, bọc trong `<article>`. Thẻ nói thật bài �
 |---|---|---|---|
 | `topic` | nhãn chữ nhỏ `type.label`, không phải link | "Personality" · "Relationships" · "Career" · "Wellbeing" | cùng bộ nhãn với chip lọc của SCR-PUB-02 CMP-03; bài `sensitive` dùng `sensitive-label` thay chỗ này |
 | `sensitive-label` | nhãn `type.body-sm`, nền `color.sensitive-bg`, chữ `color.text`, `radius.sm` | "Wellbeing · Not a diagnosis" | chỉ bài `sensitive` (BR-PUB-03) |
-| `title` | heading, cấp do màn truyền | tên bài từ API-CAT-01 | `type.h3`; tên đúng chủ đề (BR-PUB-06); không dùng tên thương hiệu của bên khác (Q-07) |
+| `title` | heading, cấp do màn truyền | tên bài từ API-CAT-01 | `type.h3`; tên đúng chủ đề (BR-PUB-06); không dùng tên thương hiệu của bên khác (Q-07: MBTI / Myers-Briggs, 16Personalities, CliftonStrengths / StrengthsFinder, DiSC, tên type Enneagram hệ Riso-Hudson); tên bài thật chờ legal review (`bang-quyet-dinh` §2 #5) |
 | `description` | 1 câu | mô tả ngắn từ API-CAT-01 | `type.body-sm`, `color.text-muted`; hiển thị tối đa 2 dòng, quá thì cắt "…" (nội dung gốc không đổi) |
 | `meta` | 2 chip `radius.pill` | "[n] questions" · "About [m] min" | `type.label`; số thật (xem §4) |
 | `cta` | link dạng nút | "Start test" | → `/tests/:slug` (SCR-PUB-03), push; accessible name "Start test: [title]" (phần sau dấu hai chấm ẩn thị giác) |

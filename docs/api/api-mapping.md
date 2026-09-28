@@ -1,6 +1,7 @@
 # api-mapping — API ↔ screen matrix
 > Registry API-ID (định nghĩa DUY NHẤT ở đây). Chi tiết schema ở `SCR-*-api.md`; quy ước chung ở `00-quy-uoc-api.md`.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.3 · claude-opus-5-5 · API-MAIL-02 ghi rõ nội dung: câu đổi ý có hạn rút + link "Withdraw from contract here", câu tên trên sao kê, mã đơn, và với Plus thêm câu công bố gia hạn GC-RenewalDisclosure `post-purchase`.
 - 2026-09-28 · v1.2 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): thêm API-PAY-08 (rút trong 14 ngày) · API-PAY-09 (huỷ không cần đăng nhập) · API-MAIL-11 (xác nhận rút); API-JOB-01 theo mốc 21 / 7 ngày (Q-16); API-MAIL-02 · 03 · 04 · 09 theo Q-24 · Q-25 · Q-27; API-ME-02 thêm SCR-APP-01 (bật check-in có consent, Q-22); API-PAY-04 thêm SCR-PAY-05; API-CON-01 thêm `source` (GPC, Q-20); provider = Paddle, vendor email = Postmark.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · D-06: khoá idempotency của huỷ / tiếp tục gia hạn = UUID cho mỗi thao tác mới + server kiểm trạng thái hiện tại (thay khoá cố định `subscriptionId` + hành động). D-08: thêm API-JOB-07 (đối soát quyền hết kỳ). D-18: API-CON-01 dùng `consentId`, schema ở SCR-PUB-07 §5.
 - 2026-09-27 · v1 · claude-opus-5-5 · khởi tạo (proposal).
@@ -63,7 +64,7 @@
 | API-JOB-04 | cron hằng ngày | xoá cứng tài khoản quá 30 ngày sau yêu cầu xoá (BR-APP-11) | todo |
 | API-JOB-05 | queue | worker render PDF bằng Playwright (TD-03) | todo |
 | API-MAIL-01 | email giao dịch | magic link đăng nhập / lưu kết quả | todo |
-| API-MAIL-02 | email giao dịch | biên nhận + "report đã mở khoá" (link SCR-APP-03) + mã đơn + tên trên sao kê (BR-APP-15) + hạn rút 14 ngày và link "Withdraw from contract here" → SCR-PAY-05 (BR-APP-14) | todo |
+| API-MAIL-02 | email giao dịch | biên nhận + "report đã mở khoá" (link SCR-APP-03); mã đơn ("Order number"); "Charges will appear as [descriptor] on your statement." (BR-APP-15); "Changed your mind? You can withdraw until [date] for a full refund." + link "Withdraw from contract here" → SCR-PAY-05 `?mode=withdraw&order=<orderNumber>` (BR-APP-14); mua Plus: thêm 4 câu GC-RenewalDisclosure `post-purchase` (BR-APP-02) | todo |
 | API-MAIL-03 | email giao dịch | nhắc gia hạn: tên gói, chu kỳ, số tiền, ngày thu, tên trên sao kê, link huỷ (link SCR-PAY-04 + SCR-PAY-03) — đủ nội dung nhắc hằng năm (Q-16) | todo |
 | API-MAIL-04 | email giao dịch | xác nhận huỷ gia hạn (BR-APP-04); huỷ không cần đăng nhập (API-PAY-09) thêm link "Resume renewal" để chủ gói hoàn tác nếu không phải mình yêu cầu | todo |
 | API-MAIL-05 | email giao dịch | thanh toán gia hạn thất bại (link cập nhật thẻ) | todo |

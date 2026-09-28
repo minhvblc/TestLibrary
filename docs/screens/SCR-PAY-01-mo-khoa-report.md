@@ -4,14 +4,15 @@
 
 | id | module | doc level | platforms | route | access | indexable | viewports | related FLOW | status | design | tracking | api | Evidence / visual basis |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| SCR-PAY-01 | PAY | Full | Web | `/unlock/:resultId` | guest | noindex | 390 · 768 · 1280 | FLOW-mo-khoa-report | Draft | (sau design) | `tracking-events.md` → `unlock` · ft_unlock | `docs/api/SCR-PAY-01-api.md` | **EV-TLW-108 · EV-TLW-109 · EV-TLW-111 · EV-TLW-112 · EV-TLW-116 · EV-TLW-261 · SC-TLW-21 · SC-TLW-22 · basis RS·F-17 · F-18 · F-19 · F-23 · F-30 · Q-02 · Q-03** |
+| SCR-PAY-01 | PAY | Full | Web | `/unlock/:resultId` | guest | noindex | 390 · 768 · 1280 | FLOW-mo-khoa-report | Draft | (sau design) | `tracking-events.md` → `unlock` · ft_unlock | `docs/api/SCR-PAY-01-api.md` | **EV-TLW-108 · EV-TLW-109 · EV-TLW-111 · EV-TLW-112 · EV-TLW-116 · EV-TLW-261 · SC-TLW-21 · SC-TLW-22 · basis RS·F-17 · F-18 · F-19 · F-23 · F-30 · Q-02 · Q-03 · Q-04 · Q-18 · Q-24 · Q-25** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · theo quyết định 2026-09-28: giá thật (Q-03), "Save 55%"; CMP-10 = câu reseller Paddle + tên trên sao kê (Q-04 · Q-24); thêm CMP-11 dòng rút 14 ngày, không có ô từ bỏ quyền rút (Q-18 · Q-25, EC-13); footer `compact` có link rút (CMP-12, Q-25); EC-08 tự hoàn lần mua trùng (Q-18).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose & context
 
-Trang mua report đầy đủ cho MỘT kết quả cụ thể. Người dùng thấy đúng thứ mình sẽ mua (danh sách chương thật, số trang thật, đoạn đầu chương 1 của chính report đó), chọn giữa "This report" (mua một lần, chọn sẵn, không gia hạn) và "Plus" (tự gia hạn, phải tick consent), rồi sang checkout hosted của provider. Offer của đối thủ ở cùng vị trí trong funnel là mẫu phải tránh: đồng hồ "Results saved for", ticker "just bought", logo "featured in" và không một chữ nào về gia hạn (RS·F-17); checkout không checkbox (RS·F-18); hứa "20-page report" nhưng PDF chỉ 11 trang (RS·F-23); "30-day satisfaction guarantee" không có trong văn bản pháp lý (RS·F-30); back bị đẩy về lại offer (RS·F-19). Trang này không mở quyền: quyền đọc chỉ mở khi server nhận webhook đã verify (BR-APP-01). · basis Q-02 · Q-03 · BR-APP-01 · BR-APP-03 · P-02
+Trang mua report đầy đủ cho MỘT kết quả cụ thể. Người dùng thấy đúng thứ mình sẽ mua (danh sách chương thật, số trang thật, đoạn đầu chương 1 của chính report đó), chọn giữa "This report" (mua một lần, chọn sẵn, không gia hạn) và "Plus" (tự gia hạn, phải tick consent), rồi sang checkout hosted của provider. Offer của đối thủ ở cùng vị trí trong funnel là mẫu phải tránh: đồng hồ "Results saved for", ticker "just bought", logo "featured in" và không một chữ nào về gia hạn (RS·F-17); checkout không checkbox (RS·F-18); hứa "20-page report" nhưng PDF chỉ 11 trang (RS·F-23); "30-day satisfaction guarantee" không có trong văn bản pháp lý (RS·F-30); back bị đẩy về lại offer (RS·F-19). Trước nút mua, trang nói rõ Paddle là bên bán trên hoá đơn (câu reseller, Q-04), tên sẽ hiện trên sao kê (Q-24) và quyền rút trong 14 ngày được hoàn toàn bộ, kể cả khi đã đọc report — không có ô "từ bỏ quyền rút" (Q-18 · Q-25). Trang này không mở quyền: quyền đọc chỉ mở khi server nhận webhook đã verify (BR-APP-01). · basis Q-02 · Q-03 · Q-04 · Q-18 · Q-24 · Q-25 · BR-APP-01 · BR-APP-03 · BR-APP-14 · P-02
 
 ## 2. Điều hướng
 
@@ -57,39 +58,43 @@ flowchart TD
 ## 3. Layout & UI components
 
 - **Design brief @390 (top→bottom):**
-  - thanh funnel: logo bên trái, link "Back to your result" bên phải; không header/footer site;
+  - thanh funnel: logo bên trái, link "Back to your result" bên phải; không header site;
   - H1 "Unlock your full [Test] report";
   - khối xem trước: "About [N] pages" → danh sách chương đánh số → đoạn đầu chương 1 (chữ thật, không làm mờ);
   - hai thẻ lựa chọn dạng radio xếp dọc: "This report" (chọn sẵn) ở trên, "Plus" ở dưới;
   - GC-RenewalDisclosure ngay dưới 2 thẻ, TRƯỚC nút: chọn "This report" thì là câu một lần; chọn "Plus" thì mở thêm toggle "Monthly" / "Annual" → câu gia hạn → checkbox consent;
   - nút "Continue to secure checkout" full width (không dính đáy, để không che phần công bố gia hạn);
+  - dòng rút 14 ngày ngay dưới nút (CMP-11);
   - link "Subscription & refund terms";
-  - dòng người bán.
+  - dòng người bán + dòng tên trên sao kê (CMP-10);
+  - footer `compact` (CMP-12): link pháp lý, "Cookie settings", "Cancel your plan here" · "Withdraw from contract here".
 - **Không** đồng hồ, không "just bought", không testimonial, không logo "featured in", không badge giảm giá, không "guarantee" không có trong văn bản (BR-PAY-05).
-- **Delta 1280:** 2 cột trong container 1120: trái là khối xem trước (CMP-03), phải là CMP-04…10; cột phải dính (sticky) khi cuộn. Thanh funnel giữ nguyên.
+- **Delta 1280:** 2 cột trong container 1120: trái là khối xem trước (CMP-03), phải là CMP-04…11; cột phải dính (sticky) khi cuộn. Thanh funnel và footer giữ nguyên.
 
 | CMP-ID | Component | Display condition | Copy verbatim (en-US) | Basis (EV / Q) |
 |---|---|---|---|---|
 | CMP-01 | Thanh trên funnel | luôn | logo (shell funnel, SYS-NAV §4) · link "Back to your result" | RS·F-19 · EV-TLW-116 |
 | CMP-02 | Tiêu đề | luôn | H1 "Unlock your full [Test] report" | Q-02 |
 | CMP-03 | Xem trước report | luôn (trừ Locked vì không phải chủ) | "About [N] pages" (N = số trang PDF thật) · danh sách tiêu đề chương thật của report này · đoạn đầu chương 1, nguyên văn | RS·F-23 · TD-02 · TD-03 · EV-TLW-109 · EV-TLW-261 |
-| CMP-04 | Hai lựa chọn (GC-PlanCard, variant `selectable`) | luôn; "This report" **chọn sẵn** | tên "This report" · "Plus"; giá "[price] one-time" · "[price] per month" hoặc "[price] per year"; bullet verbatim theo bảng "Quyền → bullet" của GC-PlanCard §4 | Q-02 · BR-PAY-03 · RS·F-17 · P-02 |
-| CMP-05 | Toggle chu kỳ | chỉ khi chọn "Plus"; mặc định "Monthly" | "Monthly" · "Annual"; ở "Annual" thẻ Plus hiện "Save [n]%" (GC-PlanCard `savings`, cách tính BR-PUB-09) | Q-03 · BR-PUB-09 |
-| CMP-06 | GC-RenewalDisclosure | chọn "Plus": variant `pre-purchase` · Plus, ngay trên CMP-07; chọn "This report": variant `pre-purchase` · một lần | copy verbatim theo GC; bản một lần: "One-time payment. No subscription — nothing renews." | BR-APP-02 · RS·F-17 · RS·F-09 |
+| CMP-04 | Hai lựa chọn (GC-PlanCard, variant `selectable`) | luôn; "This report" **chọn sẵn** | tên "This report" · "Plus"; giá "[price] one-time" (= $9.99) · "[price] per month" (= $12.99) hoặc "[price] per year" (= $69.99, kèm dòng phụ "[…] per month, billed yearly" = $5.83) — 00-overview §2; câu `summary` theo GC-PlanCard §1 | Q-02 · Q-03 · BR-PAY-03 · RS·F-17 · P-02 |
+| CMP-05 | Toggle chu kỳ | chỉ khi chọn "Plus"; mặc định "Monthly" | "Monthly" · "Annual"; nhãn "Save [n]%" cạnh "Annual" (= "Save 55%", `savingsPercent`; GC-PlanCard `cycle-toggle`, cách tính BR-PUB-09) | Q-03 · BR-PUB-09 |
+| CMP-06 | GC-RenewalDisclosure | chọn "Plus": variant `pre-purchase` · Plus, ngay trên CMP-07; chọn "This report": variant `pre-purchase` · một lần | copy verbatim theo GC (câu nhắc [n] = 7 với "Monthly", 21 với "Annual" — Q-16); bản một lần: "One-time payment. No subscription — nothing renews." | BR-APP-02 · RS·F-17 · RS·F-09 |
 | CMP-07 | Checkbox consent Plus | chỉ khi chọn "Plus"; KHÔNG tick sẵn; tự bỏ tick khi đổi lựa chọn hoặc chu kỳ | "I understand Plus renews automatically at [price] per [period] until I cancel. I can cancel anytime in Account → Plan & billing." | BR-APP-03 · BR-PAY-02 · RS·F-08 |
 | CMP-08 | Nút chính | luôn khi còn mua được; "This report": bấm được; "Plus": khoá tới khi tick CMP-07 | "Continue to secure checkout" · gợi ý khi chưa tick: "Tick the box above to continue." | BR-PAY-02 · Q-04 |
 | CMP-09 | Link điều khoản | luôn | "Subscription & refund terms" | RS·F-30 · Q-18 |
-| CMP-10 | Dòng người bán | luôn | "Sold by [legal entity]. Taxes calculated at checkout." | Q-05 · RS·F-12 · BR-APP-12 |
+| CMP-10 | Dòng người bán + sao kê | luôn khi đã có giá (Error giá: ẩn, không render câu có chỗ trống) | "Our order process is conducted by our online reseller [merchantOfRecord]. [merchantOfRecord] is the Merchant of Record for all our orders. Taxes calculated at checkout." (`[merchantOfRecord]` = `seller.merchantOfRecord`, "Paddle.com") · "Charges will appear as [descriptor] on your statement." (`[descriptor]` = `statementDescriptor`; null thì không hiện câu này) | Q-04 · Q-24 · BR-APP-12 · BR-APP-15 · RS·F-12 |
+| CMP-11 | Dòng rút 14 ngày | khi còn mua được (ẩn ở Locked (2) · (3) · (4) và Error giá), ngay dưới CMP-08 | "Changed your mind? Withdraw within 14 days for a full refund." — đúng cho cả "This report" và lần thanh toán đầu của "Plus"; không có ô "từ bỏ quyền rút" trước khi mua (EC-13) | Q-18 · Q-25 (b) · BR-APP-14 · RS·F-30 |
+| CMP-12 | Footer | luôn | GC-SiteFooter variant `compact` (shell funnel), có "Cancel your plan here" · "Withdraw from contract here" → SCR-PAY-05 | SYS-NAV §1 · Q-25 |
 
 ## 4. Screen states
 
 | State | Trigger cụ thể | Frame | EV / basis |
 |---|---|---|---|
-| Default | API-RES-01 `report.access = none` + API-PAY-01 trả đủ 3 gói trả phí | CMP-01…10, "This report" chọn sẵn | EV-TLW-108 (đối lập) · Q-02 |
+| Default | API-RES-01 `report.access = none` + API-PAY-01 trả đủ 3 gói trả phí | CMP-01…12, "This report" chọn sẵn | EV-TLW-108 (đối lập) · Q-02 |
 | Loading | tải API-RES-01 + API-PAY-01 > 300 ms | skeleton khối xem trước + 2 thẻ; CMP-07 và CMP-08 disabled (không cho đồng ý một câu còn thiếu số); sau khi bấm CMP-08: spinner trong nút | tieu-chuan-chung §3 · GC-RenewalDisclosure |
 | Empty | N/A — luôn có 2 lựa chọn; API-PAY-01 rỗng hoặc thiếu gói → xử lý như Error | như Error | BR-PAY-01 |
-| Error | tải giá lỗi (503 `pricing_unavailable` / mạng) · tạo phiên checkout lỗi (API-PAY-02 5xx / timeout 10 s) · kết quả khách hết hạn (410) | giá: "We couldn't load prices. Please refresh." · checkout: "We couldn't start checkout. Please try again." · 410: "This result isn't available on this device. Sign in if you saved it, or take the test again." | cong-nghe-loi §3 · tieu-chuan-chung §2 |
-| Locked | (1) đã có quyền (`report.access = full`) → NAV-PAY-01-5; (2) thanh toán đang chờ webhook (`report.access = pending`); (3) quốc gia không hỗ trợ; (4) không phải chủ kết quả (403) | (1) không render, replace sang report · (2) CMP-04…08 ẩn, hiện "Your payment is still processing. We'll email you as soon as your report is unlocked." · (3) "Purchases aren't available in your country yet.", CMP-08 disabled · (4) chỉ CMP-01 + copy cong-nghe-loi §3, không lộ tên bài hay chương | SYS-ENTITLEMENT · Q-04 · BR-APP-08 |
+| Error | tải giá lỗi (503 `pricing_unavailable` / mạng) · tạo phiên checkout lỗi (API-PAY-02 5xx / timeout 10 s) · kết quả khách hết hạn (410) | giá: "We couldn't load prices. Please refresh." (CMP-10 · CMP-11 ẩn) · checkout: "We couldn't start checkout. Please try again." · 410: "This result isn't available on this device. Sign in if you saved it, or take the test again." | cong-nghe-loi §3 · tieu-chuan-chung §2 |
+| Locked | (1) đã có quyền (`report.access = full`) → NAV-PAY-01-5; (2) thanh toán đang chờ webhook (`report.access = pending`); (3) quốc gia không hỗ trợ; (4) không phải chủ kết quả (403) | (1) không render, replace sang report · (2) CMP-04…08 và CMP-11 ẩn, hiện "Your payment is still processing. We'll email you as soon as your report is unlocked." · (3) "Purchases aren't available in your country yet.", CMP-08 disabled, CMP-11 ẩn · (4) chỉ CMP-01 + CMP-12 + copy cong-nghe-loi §3, không lộ tên bài hay chương | SYS-ENTITLEMENT · Q-04 · BR-APP-08 |
 
 ```mermaid
 stateDiagram-v2
@@ -133,7 +138,7 @@ stateDiagram-v2
 ## 6. Data & API
 
 ### 6.1 Dữ liệu hiển thị
-Tên bài, cờ `sensitive`, danh sách chương + số trang PDF thật + đoạn đầu chương 1 của report ứng với kết quả này, trạng thái quyền (`report.access`, `reportId`), giá + chu kỳ của `report.single` và 2 gói Plus, câu consent + version, số ngày nhắc gia hạn, `purchasable`, tên pháp nhân bán.
+Tên bài, cờ `sensitive`, danh sách chương + số trang PDF thật + đoạn đầu chương 1 của report ứng với kết quả này, trạng thái quyền (`report.access`, `reportId`), giá + chu kỳ của `report.single` và 2 gói Plus, câu consent + version, số ngày nhắc gia hạn (7 / 21), `purchasable`, bên bán trên hoá đơn (`seller.merchantOfRecord`) và chuỗi trên sao kê (`statementDescriptor`).
 
 ### 6.2 Endpoint
 
@@ -149,15 +154,15 @@ Tên bài, cờ `sensitive`, danh sách chương + số trang PDF thật + đo�
 
 | Plan | planKey | Giá base | Giới hạn | Neo đối thủ (RS·F · EV · [LIVE:browser]) |
 |---|---|---|---|---|
-| This report | `report.single` | placeholder — Q-03 (00-overview §2) | report đầy đủ + PDF của đúng kết quả này, vĩnh viễn; không gia hạn | "One Time $57.00" · "One test with its full report. No subscription." · RS·F-05 `[LIVE:browser · EV-TLW-025 · 2026-09-27]` |
-| Plus tháng | `plan.plus.monthly` | placeholder — Q-03 (00-overview §2) | mọi report + PDF; thử thách 30 ngày; tự gia hạn mỗi tháng tới khi huỷ | offer ở cùng vị trí: "Download report $1.95", rồi "$39.95 every 4 weeks" chỉ nằm trong đoạn chữ ở checkout · RS·F-17 · F-18 `[LIVE:browser · EV-TLW-109 · EV-TLW-112 · 2026-09-27]` |
-| Plus năm | `plan.plus.annual` | placeholder — Q-03 (00-overview §2) | như Plus tháng; tự gia hạn mỗi năm tới khi huỷ | đối thủ không có gói năm · RS·F-05 `[LIVE:browser · EV-TLW-025 · 2026-09-27]` |
+| This report | `report.single` | $9.99 (USD, chưa gồm thuế — 00-overview §2 · Q-03) | report đầy đủ + PDF của đúng kết quả này, vĩnh viễn; không gia hạn; rút trong 14 ngày được hoàn toàn bộ (BR-APP-14) | "One Time $57.00" · "One test with its full report. No subscription." · RS·F-05 `[LIVE:browser · EV-TLW-025 · 2026-09-27]` |
+| Plus tháng | `plan.plus.monthly` | $12.99 / month (USD, chưa gồm thuế — 00-overview §2) | mọi report + PDF; thử thách 30 ngày; tự gia hạn mỗi tháng tới khi huỷ; rút trong 14 ngày từ lần thanh toán đầu (BR-APP-14) | offer ở cùng vị trí: "Download report $1.95", rồi "$39.95 every 4 weeks" chỉ nằm trong đoạn chữ ở checkout · RS·F-17 · F-18 `[LIVE:browser · EV-TLW-109 · EV-TLW-112 · 2026-09-27]` |
+| Plus năm | `plan.plus.annual` | $69.99 / year (USD, chưa gồm thuế; ≈ $5.83 / month, "Save 55%" — 00-overview §2) | như Plus tháng; tự gia hạn mỗi năm tới khi huỷ; rút trong 14 ngày từ lần thanh toán đầu và từ mỗi lần gia hạn năm (BR-APP-14) | đối thủ không có gói năm · RS·F-05 `[LIVE:browser · EV-TLW-025 · 2026-09-27]` |
 
 ## 7. Business rules & permissions
 
 | BR-ID | Rule | Basis | Access |
 |---|---|---|---|
-| BR-PAY-01 | Giá/chu kỳ từ API-PAY-01 (nguồn 00-overview §2) — placeholder tới Q-03. Giá hiển thị được gửi lại trong API-PAY-02 để server từ chối nếu đã đổi | 00-overview §2 · Q-03 · BR-APP-12 | guest |
+| BR-PAY-01 | Giá/chu kỳ từ API-PAY-01 (nguồn 00-overview §2; giá hiện hành $9.99 · $12.99 / month · $69.99 / year — Q-03). Giá hiển thị được gửi lại trong API-PAY-02 để server từ chối nếu đã đổi | 00-overview §2 · Q-03 · BR-APP-12 | guest |
 | BR-PAY-02 | Plus: nút disable tới khi tick CMP-07; câu consent verbatim + `consent_version` gửi trong API-PAY-02 | BR-APP-03 · RS·F-08 · RS·F-18 | guest |
 | BR-PAY-03 | Mặc định chọn "This report" (không tự gia hạn); Plus chỉ chọn khi user bấm | RS·F-17 · P-02 | guest |
 | BR-PAY-04 | Ghi số trang thật của report (đối thủ hứa "20-page report" nhưng PDF 11 trang). Số trang đo từ PDF render thật theo (bài × type × `contentVersion`), không ước lượng; danh sách chương là chương thật của report sẽ nhận | RS·F-23 · TD-03 · EV-TLW-109 · EV-TLW-261 | guest |
@@ -175,11 +180,12 @@ Tên bài, cờ `sensitive`, danh sách chương + số trang PDF thật + đo�
 | EC-05 | API-PAY-02 lỗi / timeout 10 s | giữ lựa chọn + dấu tick, mở lại nút: "We couldn't start checkout. Please try again."; thử lại do mạng dùng cùng key | cong-nghe-loi §3 · 00-quy-uoc-api §5 |
 | EC-06 | Back từ trang checkout của provider | về SCR-PAY-01 (bfcache), tắt spinner, giữ lựa chọn; lần bấm sau dùng key mới | RS·F-19 |
 | EC-07 | Đã thanh toán, webhook chưa về, user mở lại trang này | `report.access = pending` → Locked (2), ẩn nút mua để tránh mua trùng; server cũng chặn bằng 422 `purchase_pending` | SYS-ENTITLEMENT · cong-nghe-loi §3 |
-| EC-08 | Hai tab cùng thanh toán `report.single` cho một `resultId` | webhook thứ hai ghi nhận mua trùng; xử lý hoàn tiền lần trùng theo chính sách hoàn tiền (Q-18, đề xuất: tự hoàn) | Q-18 · 00-quy-uoc-api §6 |
+| EC-08 | Hai tab cùng thanh toán `report.single` cho một `resultId` | webhook thứ hai ghi nhận mua trùng → server tự hoàn toàn bộ lần trùng qua Paddle, không chờ khách yêu cầu (lần trùng nằm trong 14 ngày nên đằng nào cũng hoàn được); quyền từ lần mua đầu giữ nguyên | Q-18 · BR-APP-14 · 00-quy-uoc-api §6 |
 | EC-09 | Bài `sensitive` | nội dung trang như bài thường, nhưng không tải analytics, không bắn event; `<title>` chung "Unlock your report · TestLib", không chứa tên bài | BR-APP-05 · BR-APP-06 |
 | EC-10 | Bài chưa có nội dung report (lỗi cấu hình) | không bán; trang 404 chung | 00-quy-uoc-api §4 · TD-02 |
 | EC-11 | Quốc gia provider không hỗ trợ | Locked (3): xem trước report vẫn hiện, CMP-08 khoá; server trả 403 `country_not_supported` nếu client bị qua mặt | Q-04 |
 | EC-12 | Mua Plus từ trang này | `resultId` vẫn gửi kèm; sau khi webhook mở Plus, report này đọc được theo Plus; thanh toán thất bại → SCR-PAY-02 "Try again" quay lại đúng trang này | SYS-ENTITLEMENT |
+| EC-13 | Mua report lẻ (nội dung số, đọc được ngay sau khi trả) | không có ô "từ bỏ quyền rút" hay "đồng ý mất quyền rút khi bắt đầu đọc" trước khi mua; rút trong 14 ngày vẫn hoàn toàn bộ, kể cả khi đã đọc hoặc tải PDF; rút xong quyền đọc report đó kết thúc ngay. Vì sao: chính sách hoàn cả khi đã đọc (Q-18) nên ô từ bỏ không đổi được gì, chỉ thêm một bước trước khi trả và khiến khách tưởng mình mất quyền hoàn tiền | Q-18 · Q-25 (b) · BR-APP-14 · mở lại khi tỉ lệ rút report lẻ > 10% trong 30 ngày liên tiếp (bang-quyet-dinh §2) |
 
 ## 9. Responsive deltas
 
@@ -207,8 +213,10 @@ Tên bài, cờ `sensitive`, danh sách chương + số trang PDF thật + đo�
 | A11y | CMP-04 `role="radiogroup"`, mỗi thẻ là một radio có nhãn đầy đủ (tên + giá + chu kỳ); phần hiện thêm khi chọn Plus nằm ngay sau 2 thẻ theo thứ tự DOM; CMP-07 trỏ `aria-describedby` tới CMP-06; CMP-08 khoá dùng `aria-disabled` + `aria-describedby` |
 
 ## 13. AI Notices
-- Giá là placeholder tới Q-03. Chính sách với mua trùng (EC-08) chờ Q-18.
+- Giá hiện hành ở 00-overview §2 (Q-03, chốt 2026-09-28); copy dùng token `[price]` điền từ API-PAY-01, số "(= …)" chỉ để đối chiếu. Mua trùng (EC-08) tự hoàn lần trùng (Q-18).
+- Câu reseller và chuỗi trên sao kê (CMP-10) verify khi mở tài khoản Paddle (bang-quyet-dinh §2 #3).
+- Footer `compact` (CMP-12) thay ghi chú cũ "không header/footer site": footer mọi trang phải có "Withdraw from contract here" (Q-25 · SYS-NAV §1), khớp cách đọc ở GC-SiteFooter §8 ("không footer site" = không có `full`).
 - Đoạn đầu chương 1 cần API-RES-01 trả thêm `report.excerpt` (tham số `include=excerpt`); schema gốc của API-RES-01 do `docs/api/SCR-TEST-02-api.md` sở hữu, cần bổ sung ở đó.
 - Với bài `sensitive`, blueprint không có GC-SensitiveNotice trên trang này; `tracking-events.md` cũng chưa liệt kê SCR-PAY-01 vào nhóm route không bắn event. EC-09 là đề xuất, cần owner xác nhận.
 - Blueprint chỉ hiện CMP-06 khi chọn Plus; file này theo GC-RenewalDisclosure §5 hiện thêm bản một lần cho "This report" (nói rõ không gia hạn, khác lỗi copy của đối thủ ở RS·F-09).
-- Copy mới không có trong blueprint (đề xuất): "Tick the box above to continue.", "Prices or renewal terms have changed. Please review and tick the box again.", `<title>` "Unlock your report · TestLib". Bullet của 2 thẻ lấy từ GC-PlanCard §4.
+- Copy mới không có trong blueprint (đề xuất): "Tick the box above to continue.", "Prices or renewal terms have changed. Please review and tick the box again.", `<title>` "Unlock your report · TestLib". Câu tóm tắt của 2 thẻ lấy từ GC-PlanCard §1 (`summary`).

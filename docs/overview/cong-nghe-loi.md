@@ -1,6 +1,7 @@
 # Công nghệ cốt lõi — TestLib (web)
 > Basis: `research/core-tech.md` (TC-01 · TC-02). Đây là SPEC: nêu đích danh framework / vendor. Số nào chưa chốt → `Q-xx`, KHÔNG ghi như đã quyết. Stack BE theo chuẩn team: NestJS + TypeORM + PostgreSQL `postgres:16-alpine`, một schema `public` (basis in-house).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.5 · claude-opus-5-5 · làm rõ khi lan quyết định: `/tests?topic=` render theo request + CloudFront cache theo `topic` (Q-09); CDN không còn dùng header nước cho GC-SensitiveNotice (Q-23: không định vị).
 - 2026-09-28 · v1.4 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): thêm §1b nền tảng (Next.js · AWS eu-central-1 · Paddle · Postmark — Q-04 · Q-09 · Q-16 · Q-19); TD-01 · TD-04 đã chốt (Q-10 · Q-12 · Q-13 · Q-20); §4 check-in đổi căn cứ sang consent (Q-22), thêm 2 loại dữ liệu (xác nhận 18+ — Q-21; yêu cầu huỷ / rút — Q-25), thời hạn lưu consent gia hạn và chứng từ (Q-05 (f)); §5 · §8 theo Q-19.
 - 2026-09-28 · v1.3 · claude-opus-5-5 · Spike #2 (PDF) đã chạy: cập nhật §2 · §5 · §7.
 - 2026-09-28 · v1.2 · claude-opus-5-5 · D-07: thời hạn lưu lý do huỷ thống nhất — tách khỏi danh tính sau 90 ngày, xoá luôn nếu tài khoản bị xoá trước đó. D-19: thêm 3 hàng lỗi cho gói & thanh toán (§3) mà SCR-PAY-03 / SCR-PAY-04 đang trích.
@@ -20,12 +21,12 @@
 
 | Thành phần | Chọn | Basis |
 |---|---|---|
-| Web | Next.js (App Router, TypeScript); route public SSG + revalidate; funnel / app render phía client; route in `?print=1` render phía server cho worker PDF | Q-09 |
+| Web | Next.js (App Router, TypeScript); route public SSG + revalidate, riêng `/tests?topic=` render theo request và CloudFront cache theo tham số `topic` (trang SSG không đọc được query); funnel / app render phía client; route in `?print=1` render phía server cho worker PDF | Q-09 |
 | API | NestJS + TypeORM (chuẩn team) | in-house |
 | DB | PostgreSQL 16 (RDS), AWS `eu-central-1` (Frankfurt) | Q-05 (d) · Q-19 |
 | Chạy app | container trên ECS Fargate: web, API, worker PDF (Playwright, 1 vCPU / 1 GB, tối đa 2 job — SPK-02) | Q-19 · TD-03 |
 | File (PDF, export) | S3 cùng region, signed URL | TD-03 · BR-APP-11 |
-| CDN / WAF | CloudFront + AWS WAF; header nước của CloudFront chỉ dùng trong request cho GC-SensitiveNotice | Q-09 · Q-23 |
+| CDN / WAF | CloudFront + AWS WAF; không dùng header nước (GC-SensitiveNotice không định vị người dùng, Q-23) | Q-09 · Q-23 |
 | Thanh toán | Paddle Billing, merchant of record | Q-04 |
 | Email giao dịch | Postmark (message stream giao dịch) | Q-16 |
 | Analytics | Firebase Analytics (web), chỉ sau consent, không khi có GPC | TD-04 · Q-20 |

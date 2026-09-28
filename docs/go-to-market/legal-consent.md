@@ -1,6 +1,7 @@
 # legal-consent — TestLib (tên tạm, Q-01) · dữ liệu, cookie, consent, văn bản pháp lý
 > Nguồn: `cong-nghe-loi §4` (dữ liệu rời trình duyệt) + `tracking-events.md` (event nào bắn, chỉ sau consent) + SYS-CONSENT. File này là **yêu cầu sản phẩm + khung khai báo**, KHÔNG phải tư vấn pháp lý; mọi văn bản phải qua legal review trước khi ra mắt (Q-05). Đối thủ chỉ được nhắc để nêu điều cần TRÁNH (`research/apps/testlibrary-web/legal-extract.md`).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.4 · claude-opus-5-5 · khớp docs đã lan quyết định: `tl_consent` có trường `gpc` (SYS-CONSENT); bằng chứng consent bài `sensitive` gồm `ageConfirmed` (Q-21).
 - 2026-09-28 · v1.3 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): §1 mirror lại `cong-nghe-loi` §4 (18 hàng: thêm xác nhận 18+ và yêu cầu huỷ / rút; check-in sang consent — Q-22; thời hạn consent gia hạn + chứng từ — Q-05 (f); Paddle · Postmark · AWS `eu-central-1`); §2 · §3 GPC (Q-20); §3b ô 18+ (Q-21); thêm §3d consent check-in; §3c mốc nhắc 21 / 7 ngày (Q-16), huỷ không cần đăng nhập, thêm #9–#11 (rút 14 ngày, sao kê, khoá giá); §4 · §5 theo các Q đã chốt.
 - 2026-09-28 · v1.2 · claude-opus-5-5 · D-04: câu banner lấy nguyên văn từ GC-ConsentBanner §1 (nguồn duy nhất). D-07: thời hạn lưu lý do huỷ thống nhất — tách khỏi danh tính sau 90 ngày, xoá luôn nếu tài khoản bị xoá trước đó.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · gap cũ đã có lời giải: rút consent từng kết quả (API-RES-03 · BR-REP-07), tuổi tối thiểu (Q-21), nguồn hỗ trợ khủng hoảng (Q-23); trỏ tới research pháp lý 2026-09-28 (Q-24 · Q-25 · Q-26).
@@ -40,7 +41,7 @@ Mirror 1-1 `cong-nghe-loi §4` (18 hàng, cùng thứ tự, cùng giá trị). M
 | `tl_session` | necessary | TestLib (first-party · HttpOnly · Secure · SameSite=Lax) | không | phiên đăng nhập · trượt 30 ngày | SYS-AUTH · BR-APP-10 |
 | `tl_guest` | necessary | TestLib (first-party · HttpOnly · Secure · SameSite=Lax) | không | token khách gắn attempt / kết quả · 30 ngày | SYS-AUTH · BR-APP-08 |
 | `tl_csrf` | necessary | TestLib (first-party · không HttpOnly, double-submit) | không | chống CSRF cho request ghi · thời hạn chưa ghi ở 00-quy-uoc-api §2 (đề xuất: theo phiên) | 00-quy-uoc-api §2 |
-| `tl_consent` | necessary | TestLib (first-party) | không | lưu lựa chọn analytics / marketing + version + `source` (có GPC → lưu denied, `source = gpc`) · 12 tháng | SYS-CONSENT · API-CON-01 · Q-20 |
+| `tl_consent` | necessary | TestLib (first-party) | không | lưu lựa chọn analytics / marketing + version + `source` + `gpc` (có GPC → lưu denied, `source = gpc`; `gpc` = true khi lựa chọn được lưu lúc trình duyệt đang gửi GPC) · 12 tháng | SYS-CONSENT · API-CON-01 · Q-20 |
 | localStorage tiến độ bài (theo `attemptId`) | necessary (lưu trên máy, không phải cookie) | TestLib | không | chạy bài + resume · xoá sau khi nộp | TD-01 |
 | Cookie Google Analytics dạng `_ga` · `_ga_<id>` + IndexedDB của Firebase | analytics | Google, qua SDK Firebase Analytics (cookie nằm trên domain mình) | **có** — chỉ tải SDK sau "Accept all" hoặc bật "Analytics"; không tải trên route bài `sensitive` | đo funnel (tracking-events) · tên + thời hạn theo SDK, verify khi gắn `[INFERRED]` | TD-04 · SYS-CONSENT · BR-APP-06 |
 | Marketing | marketing | — (MVP không có, Q-12) | có, nếu sau này có | nếu sau này chạy ads: conversion API phía server cho event mua, chỉ sau consent marketing, không khi có GPC, không pixel / cookie phía client | Q-12 · Q-20 |
@@ -78,7 +79,7 @@ Mirror 1-1 `cong-nghe-loi §4` (18 hàng, cùng thứ tự, cùng giá trị). M
 | Disclaimer | luôn hiện ở trang bài, làm bài, kết quả, report | "This is a self-reflection tool, not a diagnosis." | Q-06 · GC-SensitiveNotice |
 | Lựa chọn | không có gì chọn sẵn; không đồng ý → quay lại trang bài, không làm bài | "I agree — start the test" · "Not now" · link "Privacy policy" | SYS-CONSENT |
 | Tuổi | ô bắt buộc, không tick sẵn; chưa tick thì nút bắt đầu disable; không thu ngày sinh | "I'm 18 or older." | Q-21 · BR-TEST-11 |
-| Lưu bằng chứng | `sensitive_consent_version` + thời điểm gửi trong API-TEST-01, lưu vào attempt | — | BR-APP-06 |
+| Lưu bằng chứng | `sensitive_consent_version` + thời điểm + `ageConfirmed` gửi trong API-TEST-01, lưu vào attempt | — | BR-APP-06 · BR-TEST-11 |
 | Tracking | route bài `sensitive` không tải analytics, không bắn event | — | BR-APP-06 · tracking-events |
 | Nguồn hỗ trợ | mở trang nguồn hỗ trợ khủng hoảng ở tab mới | "Get support now" | Q-06 · GC-SensitiveNotice |
 | Rút consent | xoá từng kết quả ở SCR-APP-02 (NAV-APP-02-4) hoặc SCR-TEST-02 (NAV-TEST-02-10) qua API-RES-03: xoá cứng ngay kết quả + câu trả lời + report ráp từ nó; ngoài ra xoá tài khoản (BR-APP-11) hoặc kết quả khách tự xoá sau 30 ngày (BR-APP-08) | "Delete this result and your answers? This can't be undone." | BR-REP-07 · BR-APP-11 · BR-APP-08 |

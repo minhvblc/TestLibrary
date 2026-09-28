@@ -1,22 +1,23 @@
 # GC-PlanCard — thẻ gói trên trang giá và trang mở khoá report
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · giá thật theo 00-overview §2 (Q-03): "Save 55%", dòng phụ "$5.83 per month, billed yearly" từ `monthlyEquivalent`; thẻ Plus thêm dòng rút 14 ngày trong `footer` (Q-18 · Q-25); thuế: giá chưa gồm thuế, câu reseller do màn đặt (Q-04); bỏ ghi chú "ưu tiên hỗ trợ".
 - 2026-09-28 · v1.1 · claude-opus-5-5 · D-10: thêm CMP con `status` ("Current plan") + prop `isCurrent` mà SCR-PUB-04 EC-01 đang dùng.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
 ## 1. Anatomy (CMP con)
 
-Một thẻ = một lựa chọn mua (hoặc gói Free), bọc trong `<section>` có heading. Giá, chu kỳ, bullet và số tiết kiệm đều đến từ API-PAY-01 theo `planKey` (schema ở `docs/api/SCR-PUB-04-api.md`); nguồn nghiệp vụ là 00-overview §2. Mọi giá trong docs là **placeholder — Q-03** cho tới khi human chốt.
+Một thẻ = một lựa chọn mua (hoặc gói Free), bọc trong `<section>` có heading. Giá, chu kỳ, bullet và số tiết kiệm đều đến từ API-PAY-01 theo `planKey` (schema ở `docs/api/SCR-PUB-04-api.md`); nguồn nghiệp vụ là 00-overview §2. Giá hiện hành ở 00-overview §2 (Q-03): $9.99 one-time · $12.99 per month · $69.99 per year; docs vẫn ghi token `[price]` vì số luôn đến từ API.
 
 | CMP con | Thành phần | Nội dung / copy verbatim (en-US) | Ghi chú |
 |---|---|---|---|
 | `name` | heading thẻ, `type.h3` | SCR-PUB-04: "Free" · "One report" · "Plus" · SCR-PAY-01: "This report" · "Plus" | nhãn do màn truyền |
-| `cycle-toggle` | slot do màn đặt, chỉ thẻ Plus ở SCR-PUB-04 | "Monthly" · "Annual" (+ "Save [n]%" cạnh "Annual") | là SCR-PUB-04 CMP-04, nằm trên `price`; ở SCR-PAY-01 toggle (CMP-05) nằm ngoài thẻ, ngay dưới thẻ Plus |
-| `price` | giá, `type.price` | `kind` = `free`: "No payment needed" (không hiện số) · `one_time`: "[price] one-time" · `subscription`: "[price] per month" hoặc "[price] per year" | `[price]` định dạng Intl en-US theo currency của planKey (USD); giá thật = placeholder — Q-03 |
+| `cycle-toggle` | slot do màn đặt, chỉ thẻ Plus ở SCR-PUB-04 | "Monthly" · "Annual" (+ "Save [n]%" cạnh "Annual", hiện "Save 55%") | là SCR-PUB-04 CMP-04, nằm trên `price`; ở SCR-PAY-01 toggle (CMP-05) nằm ngoài thẻ, ngay dưới thẻ Plus |
+| `price` | giá, `type.price` | `kind` = `free`: "No payment needed" (không hiện số) · `one_time`: "[price] one-time" · `subscription`: "[price] per month" hoặc "[price] per year"; gói năm thêm dòng phụ nhỏ hơn "[…] per month, billed yearly" từ `plans[].monthlyEquivalent` (hiện "$5.83 per month, billed yearly") | `[price]` định dạng Intl en-US theo currency của planKey (USD); giá hiện hành ở 00-overview §2 (Q-03) |
 | `summary` | 1 câu, `type.body`, tuỳ chọn | do màn truyền — SCR-PUB-04 "One report": "Full report and PDF for one test result. Never renews." · SCR-PAY-01 "This report": "Full report and PDF for this result. Never renews." · SCR-PAY-01 "Plus": "Every full report and PDF, plus the 30-day challenge. Renews automatically until you cancel." | |
 | `features` | danh sách bullet, `type.body`, luôn mở | lấy nguyên từ `plans[].features` của API-PAY-01 | nội dung = cột "Giới hạn / quyền" của 00-overview §2; SCR-PUB-04 dùng cho "Free" và "Plus" |
 | `status` | nhãn chữ, `type.label`, `color.text`, chỉ variant `action` | "Current plan" | hiện khi `isCurrent` = true (SCR-PUB-04 EC-01: Plus active, đã lên lịch huỷ còn trong kỳ, hoặc đang ân hạn); đặt ngay dưới `name`, không đổi nền hay viền thẻ, không phải badge bán hàng (khác "Most popular" / "Best value", BR-PUB-08) |
 | `select-control` | radio, chỉ variant `selectable` | accessible name = `name` + chữ trong `price` | cả thẻ là vùng chọn |
-| `footer` | slot do màn đặt | SCR-PUB-04: nút của thẻ ("Take a free test" · "Take a test to unlock"); thẻ Plus: GC-RenewalDisclosure → checkbox consent → "Continue to secure checkout" (hoặc "Manage plan" khi đã có Plus) | checkbox và nút là CMP của màn (BR-PUB-10 · BR-PAY-02); GC không tự tạo nút mua |
+| `footer` | slot do màn đặt | SCR-PUB-04: nút của thẻ ("Take a free test" · "Take a test to unlock"); thẻ Plus: GC-RenewalDisclosure → checkbox consent → "Continue to secure checkout" (hoặc "Manage plan" khi đã có Plus) → dòng rút 14 ngày (SCR-PUB-04 CMP-11) | checkbox và nút là CMP của màn (BR-PUB-10 · BR-PAY-02); GC không tự tạo nút mua |
 
 Thẻ: nền `color.surface`, viền `color.border`, `radius.lg`, đệm `space.6`. Không nền gradient, không làm một thẻ nổi hơn các thẻ khác.
 
@@ -60,10 +61,10 @@ GC không có BR riêng. Quy tắc cite BR của SCR-PUB-04 / SCR-PAY-01 và BR-
 
 | Rule | Mô tả | Basis |
 |---|---|---|
-| Giá từ API | giá, chu kỳ, `features`, `savingsPercent` lấy từ API-PAY-01 theo `planKey`, không hard-code; tài liệu ghi placeholder tới khi Q-03 chốt | BR-PUB-07 · BR-PAY-01 · 00-overview §2 · Q-03 |
+| Giá từ API | giá, chu kỳ, `features`, `savingsPercent` lấy từ API-PAY-01 theo `planKey`, không hard-code; số hiện hành ở 00-overview §2 (Q-03) | BR-PUB-07 · BR-PAY-01 · 00-overview §2 · Q-03 |
 | Định dạng tiền | Intl en-US theo currency của planKey (USD); không đổi currency theo IP; không làm tròn; luôn kèm chu kỳ ("one-time" · "per month" · "per year") | BR-APP-12 · tieu-chuan-chung §4 |
-| Gói năm | số chính = số tiền thu mỗi năm; nếu có hiện quy đổi theo tháng thì chỉ là dòng phụ, không bao giờ thay số chính | tieu-chuan-chung §4 · BR-APP-02 |
-| Tiết kiệm | "Save [n]%" nằm cạnh "Annual" trên toggle của màn, không nằm trong thẻ; n = `plans[].savingsPercent` do server tính (làm tròn xuống, null thì ẩn) — client không tự tính | BR-PUB-09 |
+| Gói năm | số chính = số tiền thu mỗi năm; quy đổi theo tháng chỉ là dòng phụ (lấy từ `plans[].monthlyEquivalent`, không tự chia), không bao giờ thay số chính | tieu-chuan-chung §4 · BR-APP-02 |
+| Tiết kiệm | "Save [n]%" nằm cạnh "Annual" trên toggle của màn, không nằm trong thẻ; n = `plans[].savingsPercent` do server tính (làm tròn xuống, hiện 55; null thì ẩn) — client không tự tính | BR-PUB-09 |
 | Không dark pattern | không giá gạch / giá neo / "% off" giả, không đồng hồ đếm ngược, không "X just bought", không testimonial chưa kiểm chứng, không logo "featured in" | BR-PUB-08 · BR-PAY-05 · RS·F-17 · F-18 |
 | Badge "Most popular" | MVP không có. Chỉ thêm khi có số liệu mua thật và human duyệt câu chữ (ghi vào bang-quyet-dinh trước) | RS·F-17 · in-house |
 | Không chọn sẵn gói tự gia hạn | `selectable`: mặc định chọn "This report" (một lần); Plus chỉ được chọn khi user bấm | BR-PAY-03 · P-02 |
@@ -72,14 +73,14 @@ GC không có BR riêng. Quy tắc cite BR của SCR-PUB-04 / SCR-PAY-01 và BR-
 | Đã có quyền | đang có Plus: nút mua của thẻ Plus đổi thành "Manage plan" (SCR-PUB-04 CMP-07); không bán trùng mua lẻ khi đang có Plus | SYS-ENTITLEMENT |
 | Radio (`selectable`) | radiogroup chuẩn: Tab vào nhóm, ↑ / ↓ / ← / → đổi lựa chọn (không submit), Space chọn; đổi lựa chọn chỉ cập nhật tại chỗ (toggle, GC-RenewalDisclosure, checkbox consent của màn hiện hoặc ẩn), không đổi URL | tieu-chuan-chung §5 · SYS-NAV §2 |
 | Đổi gói / chu kỳ sau khi đã tick consent | màn phải bỏ tick checkbox, vì câu consent phải khớp đúng giá + chu kỳ đang chọn | BR-APP-03 |
-| Thuế | GC không tự cộng thuế; dòng "Taxes calculated at checkout." do màn đặt (SCR-PAY-01 CMP-10) | BR-APP-12 · Q-04 |
+| Thuế | giá hiển thị chưa gồm thuế; GC không tự cộng thuế. Câu reseller (có "Taxes calculated at checkout.") do màn đặt (SCR-PUB-04 CMP-12 · SCR-PAY-01 CMP-10) | BR-APP-12 · Q-03 · Q-04 |
 | Tracking | GC không bắn event; ft_unlock start / checkout_open do màn bắn | tracking-events |
 
 ## 5. Dùng ở màn nào (SCR-IDs)
 
 | SCR-ID | Variant | CMP ở màn | Ghi chú |
 |---|---|---|---|
-| SCR-PUB-04 | `action` × 3 ("Free" · "One report" · "Plus") | CMP-03 | thẻ Plus chứa CMP-04 (toggle) ở trên giá, và CMP-05 (GC-RenewalDisclosure) · CMP-06 (checkbox) · CMP-07 (nút) trong `footer` |
+| SCR-PUB-04 | `action` × 3 ("Free" · "One report" · "Plus") | CMP-03 | thẻ Plus chứa CMP-04 (toggle) ở trên giá, và CMP-05 (GC-RenewalDisclosure) · CMP-06 (checkbox) · CMP-07 (nút) · CMP-11 (dòng rút 14 ngày) trong `footer` |
 | SCR-PAY-01 | `selectable` × 2 ("This report" · "Plus") | CMP-04 | toggle CMP-05, disclosure CMP-06, checkbox CMP-07 chỉ hiện khi chọn Plus |
 
 ## 6. Responsive
@@ -107,6 +108,5 @@ GC không có BR riêng. Quy tắc cite BR của SCR-PUB-04 / SCR-PAY-01 và BR-
 
 ## 8. AI Notices
 - Viết bởi claude (subagent) ở Phase 4 từ spec blueprint (SCR-PUB-04 · SCR-PAY-01), rồi chỉnh cho khớp `docs/api/SCR-PUB-04-api.md` (`kind`, `features`, `savingsPercent`) và CMP của hai màn đó.
-- Copy bullet nằm ở `plans[].features` (server). Khi viết `go-to-market/pricing-page.md` §1 thì dữ liệu này phải khớp file đó; GC không giữ bản copy riêng.
-- 00-overview §2 ghi Plus có "ưu tiên hỗ trợ" nhưng `features` của API không có bullet này. Giữ như vậy cho tới khi có định nghĩa vận hành (vd thời gian phản hồi cam kết).
-- Không chắc giá hiển thị đã gồm thuế hay chưa: việc này phụ thuộc cấu hình MoR (Q-04), và một số vùng yêu cầu hiện giá đã gồm thuế cho người tiêu dùng. Cần chốt cùng Q-04 trước economy-FREEZE.
+- Copy bullet nằm ở `plans[].features` (server). Dữ liệu này = nguyên văn `go-to-market/pricing-page.md` §1; GC không giữ bản copy riêng.
+- Giá hiển thị chưa gồm thuế (Q-03 · Q-04: Paddle tính thuế và hiện tổng ở checkout). Số hiện hành, "Save 55%" và "$5.83" chỉ để đối chiếu; GC luôn hiện số từ API-PAY-01. Một số vùng (vd EU, UK, AU) có thể đòi hiện giá đã gồm thuế cho người tiêu dùng: đưa vào legal review (bang-quyet-dinh §2 #2).

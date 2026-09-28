@@ -1,6 +1,7 @@
 # landing-copy — TestLib (tên tạm, Q-01) · copy VERBATIM trang chủ `/` (SCR-PUB-01)
-> Thứ tự section theo `00-gtm-strategy.md` §4. Copy en-US (Q-14); chuỗi trùng blueprint SCR-PUB-01 giữ nguyên từng chữ. `[n]` / `[m]` / `[...]` = giá trị lấy từ API hoặc quyết định còn mở, không hard-code. Claim chỉ dùng khi có basis (§2).
+> Thứ tự section theo `00-gtm-strategy.md` §4. Copy en-US (Q-14); chuỗi trùng blueprint SCR-PUB-01 giữ nguyên từng chữ. `[n]` / `[m]` / `[...]` = giá trị lấy từ API hoặc dữ liệu setup (brand Q-01, pháp nhân Q-05), không hard-code. Claim chỉ dùng khi có basis (§2).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · Q-28: dòng tin cậy 4 + A5 đúng phạm vi quyền dữ liệu của khách; A6 theo Q-16 · Q-27 (nhắc 21 / 7 ngày, giữ giá) + huỷ không cần đăng nhập (Q-25); footer thêm "Cancel your plan here" · "Withdraw from contract here"; bỏ ghi "đề xuất" / "chờ" / placeholder của Q-03 · Q-05 · Q-07 · Q-12 · Q-18.
 - 2026-09-27 · v1.1 · claude-opus-5-5 · đồng bộ câu phụ hero với SCR-PUB-01 (bỏ "science-based").
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
@@ -9,7 +10,7 @@
 | Section | Element | Copy VERBATIM (en) | Basis (§1 value prop · RS·F) |
 |---|---|---|---|
 | Hero · CMP-02 | H1 | "Understand yourself — with tests that are actually scored" | §1 #1 · RS·F-14 · BR-APP-07 (trùng blueprint) |
-| Hero · CMP-02 | Sub | "Free tests, scored from your answers. Every score explained. No surprise charges." | §1 #1 · #2 · #3 · RS·F-14 (đổi từ bản blueprint: bỏ "science-based" tới khi Q-07 chốt nguồn thang đo; "Every score explained" thay "Your full results, explained" để không bị hiểu là report trả phí) |
+| Hero · CMP-02 | Sub | "Free tests, scored from your answers. Every score explained. No surprise charges." | §1 #1 · #2 · #3 · RS·F-14 (đổi từ bản blueprint: bỏ "science-based" vì Q-07 chỉ cho dùng chữ này với bài dựng trên thang đã kiểm định (IPIP), không cho bài tự soạn, mà hero nói về mọi bài; "Every score explained" thay "Your full results, explained" để không bị hiểu là report trả phí) |
 | Hero · CMP-02 | CTA chính → `/tests` | "Take a free test" | §1 #2 · RS·F-03 (đối thủ: mọi CTA thẻ bài dẫn tới `/pricing` `[LIVE:browser · EV-TLW-012]`) |
 | Hero · CMP-02 | Ghi chú dưới CTA | "No sign-up needed." | Q-11 · SYS-AUTH (khách làm bài + xem tóm tắt không cần tài khoản) |
 | Featured tests · CMP-03 | Heading | "Featured tests" | §1 #6 (không dùng "Popular" / "Most taken" khi chưa có số liệu) |
@@ -28,13 +29,13 @@
 | How it works · CMP-04 | Bước 3 — mô tả | "Pay once for one report, or choose Plus for all of them. You'll see the full price and renewal terms before you pay." | §1 #3 · BR-APP-02 · RS·F-17 |
 | Pricing teaser · CMP-05 | Heading | "Free summaries. Pay only for full reports." | §1 #2 · Q-02 (trùng blueprint) |
 | Pricing teaser · CMP-05 | Text | "Plus renews automatically, and we email you before it does. Cancel in one step, anytime." | §1 #3 · #4 · BR-APP-03 · BR-APP-04 · mốc nhắc theo Q-16 |
-| Pricing teaser · CMP-05 | Giá | — (landing không hiện giá; placeholder — Q-03) | 00-overview §2 · nếu sau này hiện giá thì lấy từ API-PAY-01, không hard-code |
+| Pricing teaser · CMP-05 | Giá | — (landing không hiện giá; giá chỉ ở trang giá) | 00-overview §2 (Q-03) · nếu sau này hiện giá thì lấy từ API-PAY-01, không hard-code |
 | Pricing teaser · CMP-05 | Link → `/pricing` | "See pricing" | §1 #2 (trùng blueprint) |
 | Trust block · CMP-06 | Heading | "What you can count on" | §1 #5 |
 | Trust block · CMP-06 | Dòng 1 | "Your answers never go to advertisers." | §1 #5 · BR-APP-05 · TD-04 (trùng blueprint) · đối thủ bắn ~2 event Meta Pixel mỗi câu trả lời — RS·F-13 `[LIVE:browser · EV-TLW-059]` |
-| Trust block · CMP-06 | Dòng 2 | "No ad pixels. Analytics only if you say yes." | §1 #5 · Q-12 · SYS-CONSENT — đúng khi Q-12 giữ đề xuất "không pixel phía client" |
+| Trust block · CMP-06 | Dòng 2 | "No ad pixels. Analytics only if you say yes." | §1 #5 · Q-12 (chốt: MVP không pixel quảng cáo, không conversion API) · Q-20 (GPC = từ chối) · SYS-CONSENT |
 | Trust block · CMP-06 | Dòng 3 | "Scores come from your answers, using a fixed method you can read." | §1 #1 · BR-APP-07 |
-| Trust block · CMP-06 | Dòng 4 | "Download or delete your data anytime." | §1 #5 · BR-APP-11 |
+| Trust block · CMP-06 | Dòng 4 | "Delete your results anytime. Download all your data with a free account." | §1 #5 · BR-APP-11 · Q-28 (khách tự xoá từng kết quả, kết quả chưa lưu tự xoá sau 30 ngày; tải toàn bộ dữ liệu cần tài khoản miễn phí, hoặc gửi "Privacy request" ở `/help`) |
 | Trust block · CMP-06 | Dòng 5 | "Wellbeing tests are for self-reflection, not diagnosis, and show where to get support." | §1 #8 · Q-06 · BR-APP-06 |
 | Trust block · CMP-06 | Link → `/help#scoring` | "How we score" | §1 #1 · RS·F-14 (trùng blueprint) |
 | FAQ (đề xuất — chưa có CMP) | Heading | "Questions, answered" | 00-gtm-strategy §4 #6 |
@@ -45,12 +46,12 @@
 | FAQ | Q3 | "Can a test tell me if I have a mental health condition?" | §1 #8 |
 | FAQ | A3 | "No. Our tests are for self-reflection and learning, not diagnosis. Wellbeing tests show where to get support, and if you're worried about how you feel, please talk to a health professional." | §1 #8 · Q-06 · BR-APP-06 |
 | FAQ | Q4 | "Do I need an account?" | Q-11 |
-| FAQ | A4 | "No. You can take tests and see your summary without signing up. To keep a result, save it with your email and we'll send you a sign-in link. Unsaved results are deleted after 30 days." | Q-11 · SYS-AUTH · BR-APP-08 (30 ngày = đề xuất Q-05) |
+| FAQ | A4 | "No. You can take tests and see your summary without signing up. To keep a result, save it with your email and we'll send you a sign-in link. Unsaved results are deleted after 30 days." | Q-11 · SYS-AUTH · BR-APP-08 (30 ngày — Q-05 (e)) |
 | FAQ | Q5 | "What happens to my answers?" | §1 #5 |
-| FAQ | A5 | "We store them to score your test and show your results. We never send them to advertisers or analytics tools, and you can download or delete your data anytime." | §1 #5 · BR-APP-05 · BR-APP-11 · cong-nghe-loi §4 |
+| FAQ | A5 | "We store them to score your test and show your results. We never send them to advertisers or analytics tools. You can delete your results anytime, and download all your data with a free account." | §1 #5 · BR-APP-05 · BR-APP-11 · cong-nghe-loi §4 · Q-28 (cùng phạm vi với dòng tin cậy 4) |
 | FAQ | Q6 | "How do renewals and cancellation work?" | §1 #3 · #4 |
-| FAQ | A6 | "Plus renews automatically at the price shown before you buy. We email you before each renewal, and you can cancel in one step from your account. You keep Plus until the end of the period you paid for." | §1 #3 · #4 · BR-APP-02 · BR-APP-03 · BR-APP-04 · Q-16 — khớp pricing-page §4 |
-| Footer · CMP-07 | Link | "Privacy" · "Terms" · "Subscriptions & refunds" · "Cookie policy" · "Cookie settings" · "Help" | trùng GC-SiteFooter (variant `full`) · SYS-NAV §1 |
+| FAQ | A6 | "Plus renews automatically at the end of each billing period, at the price you signed up for. If our prices change, yours stays the same for as long as your plan continues. We email you before every renewal: 21 days before an annual renewal and 7 days before a monthly one. You can cancel in one step from your account, or without signing in using “Cancel your plan here” at the bottom of any page. You keep Plus until the end of the period you've paid for." | §1 #3 · #4 · BR-APP-03 · BR-APP-04 · BR-APP-13 · Q-16 · Q-25 (d) · Q-27 — cùng ý với pricing-page §4 ("When will I be charged again?" · "How do I cancel?") |
+| Footer · CMP-07 | Link | "Privacy" · "Terms" · "Subscriptions & refunds" · "Cookie policy" · "Cookie settings" · "Help" · "Cancel your plan here" (→ `/cancel`) · "Withdraw from contract here" (→ `/cancel?mode=withdraw`) | trùng GC-SiteFooter (variant `full`) · SYS-NAV §1 · hai link cuối: BR-APP-04 · BR-APP-14 · Q-25 |
 | Footer · CMP-07 | Disclaimer | "Our tests are for self-reflection and education. They are not a medical or psychological diagnosis." | trùng GC-SiteFooter · §1 #8 · Q-06 · tránh mâu thuẫn kiểu đối thủ: disclaimer "not clinical" nhưng landing dùng copy lâm sàng (legal-extract §9.12 `[LIVE:browser · EV-TLW-014]`) |
 | Footer · CMP-07 | Dòng pháp nhân | "© [year] [legal entity] · [registered address] · support@[domain]" | trùng GC-SiteFooter · Q-05 · Q-01 · khác đối thủ chỉ ghi tên thương hiệu, pháp nhân phân tán (RS·F-12) |
 
@@ -70,6 +71,7 @@
 
 ## 3. AI Notices
 - Chuỗi MỚI so với blueprint SCR-PUB-01 (writer SCR-PUB-01 phải thêm vào bảng component): ghi chú dưới CTA, heading + sub của bài nổi bật, meta + nhãn `sensitive` trên thẻ, mô tả 3 bước, text của giá tóm tắt, heading + dòng 2–5 của khối tin cậy, toàn bộ FAQ (cần CMP mới). Footer lấy nguyên văn GC-SiteFooter (có link "Help" mà SYS-NAV §1 chưa liệt kê ở footer → SYS-NAV cần bổ sung).
-- Câu phụ hero đã đổi theo đề xuất review: bỏ "science-based" (chờ Q-07) và "Your full results, explained" → "Every score explained" (đã đồng bộ với SCR-PUB-01 CMP-02).
-- A4 ("30 days") theo BR-APP-08 (đề xuất Q-05); A6 và text giá tóm tắt phụ thuộc Q-16. Landing không nói về hoàn tiền vì Q-18 còn mở.
-- Dòng 2 khối tin cậy ("No ad pixels…") phải sửa nếu Q-12 thêm bất kỳ script quảng cáo nào phía client.
+- Câu phụ hero đã đổi theo review: bỏ "science-based" (Q-07 đã chốt: chữ này chỉ dùng cho bài dựng trên thang đã kiểm định, không cho bài tự soạn) và "Your full results, explained" → "Every score explained" (đã đồng bộ với SCR-PUB-01 CMP-02).
+- A4 ("30 days") theo BR-APP-08 (Q-05 (e)); A6 theo Q-16 · Q-25 · Q-27, cùng ý với pricing-page §4. Hoàn tiền (Q-18) đã chốt nhưng landing giữ 6 câu FAQ (SCR-PUB-01 CMP-09); câu về hoàn tiền nằm ở trang giá ("Changed your mind? Withdraw within 14 days for a full refund." · FAQ "Can I get a refund?").
+- Dòng tin cậy 4 và A5 theo Q-28: khách chưa có tài khoản không tự tải dữ liệu được; khách xoá từng kết quả (hoặc để tự xoá sau 30 ngày) và gửi "Privacy request" ở `/help` (SCR-PUB-06).
+- Dòng 2 khối tin cậy ("No ad pixels…") đúng theo Q-12 (chốt: MVP không pixel); phải sửa nếu sau này thêm bất kỳ script quảng cáo nào phía client.

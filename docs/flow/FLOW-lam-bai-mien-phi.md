@@ -1,6 +1,7 @@
 # [FLOW-lam-bai-mien-phi] — Làm bài miễn phí tới kết quả tóm tắt chấm thật
 > Flow kích hoạt: khách lạ (SEO, landing, thư viện) làm một bài không cần tài khoản và thấy ngay kết quả tóm tắt chấm thật, kể cả bài `sensitive` (có bước consent riêng). Màn chính: [SCR-PUB-03](../screens/SCR-PUB-03-trang-bai-test.md) · [SCR-TEST-01](../screens/SCR-TEST-01-lam-bai.md) · [SCR-TEST-02](../screens/SCR-TEST-02-ket-qua.md). Mục lục: [00-so-do-luong-tong](00-so-do-luong-tong.md).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): nhánh bài `sensitive` (KB-3) thêm ô "I'm 18 or older." + nhánh dưới 18 (Q-21 · BR-TEST-11); trích Q-05 (kết quả khách 30 ngày) · Q-10 (chấm ở server) đã chốt; AI Notice về attempt rỗng đã giải quyết (API-TEST-01 trả 422, không tạo attempt).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 0. Meta
@@ -19,7 +20,7 @@ flowchart TD
     SCR_PUB_03 -->|"“Start test” · push"| SCR_TEST_01["SCR-TEST-01 · Làm bài"]
     SCR_PUB_03 -.->|"có bài dở: “Continue where you left off” · push"| SCR_TEST_01
     SCR_PUB_03 -.->|"có kết quả: “See your latest result” · push"| SCR_TEST_02["SCR-TEST-02 · Kết quả"]
-    SCR_TEST_01 -.->|"sensitive: “I agree — start the test” · inline"| SCR_TEST_01
+    SCR_TEST_01 -.->|"sensitive: tick “I'm 18 or older.” + “I agree — start the test” · inline"| SCR_TEST_01
     SCR_TEST_01 -.->|"sensitive: “Not now” · push"| SCR_PUB_03
     SCR_TEST_01 -.->|"sensitive: “Privacy policy” · push"| SCR_PUB_05["SCR-PUB-05 · Văn bản pháp lý"]
     SCR_TEST_01 -.->|"sensitive: “Get support now” · external"| EXT_SUPPORT(["external · Nguồn hỗ trợ khủng hoảng"])
@@ -39,7 +40,7 @@ flowchart TD
     class EXT_SUPPORT ext;
 ```
 
-Cạnh liền = đường chính; cạnh đứt = nhánh có điều kiện (bài `sensitive`, có bài dở, có kết quả) hoặc lối ra sang flow khác. Vòng tự thân trên SCR-TEST-01 là cạnh `inline` NAV-TEST-01-4 (bước consent → câu 1, không đổi URL).
+Cạnh liền = đường chính; cạnh đứt = nhánh có điều kiện (bài `sensitive`, có bài dở, có kết quả) hoặc lối ra sang flow khác. Vòng tự thân trên SCR-TEST-01 là cạnh `inline` NAV-TEST-01-4 (bước consent → câu 1, không đổi URL; chỉ đi được khi đã tick ô 18+, BR-TEST-11).
 
 | SCR-ID | Route | NAV-ID đi qua | Vai trò trong flow |
 |---|---|---|---|
@@ -57,7 +58,7 @@ Cạnh liền = đường chính; cạnh đứt = nhánh có điều kiện (bà
 **KB-1 · Happy — khách từ SEO làm bài tính cách (K1).** Khách chưa có cookie, bài không `sensitive`.
 1. SCR-PUB-03 (vào từ tìm kiếm) → đọc chip "[n] questions" · "About [m] min" · "Free summary" (số từ API-CAT-02, BR-PUB-05) → bấm "Start test" → SCR-TEST-01 mở câu 1, tạo attempt (API-TEST-01) · NAV-PUB-03-1.
 2. SCR-TEST-01 → chọn một mức GC-ScaleInput (vd "Agree") → lưu localStorage, sau 150 ms sang câu kế · NAV-TEST-01-3 (inline, BR-TEST-01 · BR-TEST-02). Lặp tới câu cuối; "Back" sửa được câu trước.
-3. SCR-TEST-01 → chọn đáp án câu cuối → API-TEST-03 nộp; panel "Submitting your answers…" chỉ hiện khi > 300 ms (BR-TEST-05) → server chấm, trả `resultId` → SCR-TEST-02 thay chỗ runner · NAV-TEST-01-1 (replace).
+3. SCR-TEST-01 → chọn đáp án câu cuối → API-TEST-03 nộp; panel "Submitting your answers…" chỉ hiện khi > 300 ms (BR-TEST-05) → server chấm (TD-01 · Q-10), trả `resultId` → SCR-TEST-02 thay chỗ runner · NAV-TEST-01-1 (replace).
 4. SCR-TEST-02 → thấy "Your result: [Type]" + GC-ScoreBars đủ mọi thang + "Why you got this result" (BR-TEST-07) + khối report với danh sách chương thật và "About [N] pages" (BR-TEST-08) + "Saved on this device until [date]" (BR-TEST-10). Kết thúc flow.
 
 **KB-2 · Từ landing qua thư viện.**
@@ -65,12 +66,12 @@ Cạnh liền = đường chính; cạnh đứt = nhánh có điều kiện (bà
 2. SCR-PUB-02 → chip "Relationships" → lưới lọc, URL `?topic=` (replace) · NAV-PUB-02-2 (inline, BR-PUB-04) → thẻ bài "Start test" → SCR-PUB-03 · NAV-PUB-02-1.
 3. Tiếp như KB-1 bước 1–4 (NAV-PUB-03-1 → NAV-TEST-01-1).
 
-**KB-3 · Bài `sensitive` — nhánh consent (K5).** Bài có cờ `sensitive`; route không tải analytics (BR-APP-06).
+**KB-3 · Bài `sensitive` — nhánh consent (K5).** Bài có cờ `sensitive`; route không tải analytics (BR-APP-06). Chỉ người 18+ làm bài này (Q-21); bài thường không có cổng tuổi.
 1. SCR-PUB-03 → GC-SensitiveNotice hiện trước nút (BR-PUB-06) → "Start test" → SCR-TEST-01 mở ở bước "Before you start", chưa có câu nào · NAV-PUB-03-1 (BR-TEST-04).
 2. SCR-TEST-01 → (tuỳ chọn) "Privacy policy" → SCR-PUB-05 `doc=privacy` · NAV-TEST-01-7 → back trình duyệt về đúng bước consent.
-3. SCR-TEST-01 → "I agree — start the test" → câu 1 hiện, `sensitive_consent_version` + thời điểm gửi trong API-TEST-01 · NAV-TEST-01-4 (inline).
+3. SCR-TEST-01 → tick ô "I'm 18 or older." (bắt buộc, không tick sẵn; chưa tick thì nút khoá, bấm vào chỉ hiện "Tick the box to confirm you're 18 or older.") → "I agree — start the test" → câu 1 hiện; `sensitive_consent_version` + thời điểm + `ageConfirmed` = true gửi trong API-TEST-01 và lưu vào attempt · NAV-TEST-01-4 (inline, BR-TEST-04 · BR-TEST-11).
 4. Trả lời, nộp như KB-1 → SCR-TEST-02 có GC-SensitiveNotice + "Get support now" · NAV-TEST-01-1. Không event analytics nào bắn trên cả ba route (BR-APP-06).
-5. Nhánh từ chối: ở bước 3 bấm "Not now" → về SCR-PUB-03, không câu trả lời nào được lưu · NAV-TEST-01-5. Nhánh hỗ trợ: "Get support now" mở tab mới · NAV-TEST-01-6 (hoặc NAV-TEST-02-7 ở kết quả).
+5. Nhánh từ chối: ở bước 3 bấm "Not now" → về SCR-PUB-03, không tạo attempt, không câu trả lời nào được lưu · NAV-TEST-01-5. Nhánh dưới 18: không tick được nên không bắt đầu; dòng phụ "This test is for adults. If you're under 18 and finding things hard, you can get support now." → "get support now" mở nguồn hỗ trợ ở tab mới · NAV-TEST-01-6 (SCR-TEST-01 EC-08). Nhánh hỗ trợ: "Get support now" mở tab mới · NAV-TEST-01-6 (hoặc NAV-TEST-02-7 ở kết quả).
 
 **KB-4 · Rớt mạng giữa bài (K3).**
 1. SCR-TEST-01 đang ở câu 12 → mất mạng → banner "You're offline. Keep going — we'll save your answers and submit when you're back online." (cong-nghe-loi §3); vẫn trả lời tiếp · NAV-TEST-01-3.
@@ -92,9 +93,9 @@ Cạnh liền = đường chính; cạnh đứt = nhánh có điều kiện (bà
 |---|---|
 | Happy path | KB-1: SCR-PUB-03 → SCR-TEST-01 → SCR-TEST-02 qua NAV-PUB-03-1 → NAV-TEST-01-1 (replace). Server chấm thật, cùng câu trả lời + cùng `scoring_version` thì cùng kết quả (BR-APP-07 · TD-01) — khác đối thủ có kết quả không phụ thuộc câu trả lời (F-14). Không loader giả (BR-TEST-05, tránh F-16) |
 | Hết quota / hết credits / free limit | N/A vì làm bài và xem kết quả tóm tắt miễn phí không giới hạn (`plan.free`, 00-overview §2 · Q-02); không có credits. Giới hạn duy nhất là rate limit kỹ thuật 429 → "Too many requests. Please wait a moment and try again." (cong-nghe-loi §3). Report đầy đủ là phần khoá → lối ra NAV-TEST-02-1 sang FLOW-mo-khoa-report |
-| Guest (chưa đăng nhập) chạm feature cần tài khoản | Cả flow chạy không cần tài khoản: token `tl_guest` tạo ở lần bắt đầu bài đầu tiên (SYS-AUTH · BR-APP-08). Lưu kết quả bằng email là tuỳ chọn, không chặn việc xem (BR-TEST-09) → FLOW-luu-ket-qua-dang-nhap. Khách chưa lưu thì kết quả hết hạn sau 30 ngày, ngày hết hạn hiện cạnh form (BR-TEST-10) |
+| Guest (chưa đăng nhập) chạm feature cần tài khoản | Cả flow chạy không cần tài khoản: token `tl_guest` tạo ở lần bắt đầu bài đầu tiên (SYS-AUTH · BR-APP-08). Lưu kết quả bằng email là tuỳ chọn, không chặn việc xem (BR-TEST-09) → FLOW-luu-ket-qua-dang-nhap. Khách chưa lưu thì kết quả hết hạn sau 30 ngày, ngày hết hạn hiện cạnh form (BR-TEST-10 · Q-05) |
 | Rớt mạng giữa chừng | Theo `cong-nghe-loi §3`: đang trả lời → banner offline, vẫn làm tiếp, tiến độ lưu local; nộp bài lỗi mạng / timeout 10 s / 5xx → vào hàng đợi, tự gửi lại với cùng `attemptId`, tối đa 5 lần backoff 2–4–8–16–32 s, có "Retry now" (BR-TEST-03). Ở SCR-PUB-02 / SCR-PUB-03 (GET lỗi) → giữ nội dung + banner "You're offline. Check your connection and try again." (tieu-chuan-chung §2). KB-4 |
-| User huỷ giữa chừng (Esc / đóng / rời trang) | "Exit" hoặc back trình duyệt rời bài không hỏi xác nhận vì tiến độ đã lưu (NAV-TEST-01-2 · BR-TEST-02); quay lại bằng "Continue where you left off" (NAV-PUB-03-2). Bài `sensitive` bấm "Not now" ở bước consent → về SCR-PUB-03, chưa câu nào hiện và không câu trả lời nào được lưu (NAV-TEST-01-5 · BR-TEST-04) |
+| User huỷ giữa chừng (Esc / đóng / rời trang) | "Exit" hoặc back trình duyệt rời bài không hỏi xác nhận vì tiến độ đã lưu (NAV-TEST-01-2 · BR-TEST-02); quay lại bằng "Continue where you left off" (NAV-PUB-03-2). Bài `sensitive` bấm "Not now" ở bước consent → về SCR-PUB-03, chưa câu nào hiện và không câu trả lời nào được lưu (NAV-TEST-01-5 · BR-TEST-04); chưa tick "I'm 18 or older." thì không bắt đầu được (BR-TEST-11) |
 | Double-submit / retry (idempotent) | Nộp bài idempotent theo `attemptId`: gửi lặp → 409 → dùng `resultId` gốc (BR-TEST-03 · 00-quy-uoc-api §4–§5). Bấm đáp án liên tiếp rất nhanh → mỗi câu chỉ nhận 1 lựa chọn trong 150 ms chuyển câu (SCR-TEST-01 EC-07). Mở lại cùng attempt không tạo bản mới (API-TEST-01 theo `attemptId`) |
 | Reload / đóng tab rồi mở lại (state còn không?) | Còn. Reload giữa bài → resume đúng câu, đáp án cũ còn (localStorage theo `attemptId`, BR-TEST-02 · SCR-TEST-01 EC-02); private mode chặn localStorage → chạy trong bộ nhớ + cảnh báo "Private browsing is on, so your progress won't be saved if you close this tab." (`cong-nghe-loi §3`). Reload SCR-TEST-02 → kết quả đọc lại từ server theo token khách (API-RES-01), còn tới hạn 30 ngày (BR-TEST-10). Đã đăng nhập: autosave server gom ≤ 10 câu / 5 s (API-TEST-02) |
 | Mở thẳng URL / link chia sẻ / back-forward vào giữa flow | `/tests/:slug/take` mở thẳng → resume attempt dở hoặc tạo attempt mới; attempt đã nộp → chuyển kết quả bằng replace (BR-TEST-06). Back sau khi có kết quả → về SCR-PUB-03, không về runner đã nộp (NAV-TEST-01-1 replace; tránh bẫy back F-19). `/results/:resultId` mở ở trình duyệt khác / link bị chia sẻ → state Locked "This result isn't available on this device. Sign in if you saved it, or take the test again." (`cong-nghe-loi §3` · BR-APP-08); link chia sẻ trang bài SCR-PUB-03 là trang public bình thường, không lộ kết quả của người khác |
@@ -117,6 +118,7 @@ Cạnh liền = đường chính; cạnh đứt = nhánh có điều kiện (bà
 | BR-TEST-02 | Tiến độ lưu localStorage sau mỗi câu; đăng nhập thì autosave server | SCR-TEST-01 §7 |
 | BR-TEST-03 | Nộp idempotent theo `attemptId`; hàng đợi + backoff khi lỗi | SCR-TEST-01 §7 |
 | BR-TEST-04 | Bài `sensitive`: không câu nào trước "I agree — start the test"; lưu consent version | SCR-TEST-01 §7 |
+| BR-TEST-11 | Bài `sensitive`: ô "I'm 18 or older." bắt buộc, không tick sẵn; chưa tick thì nút bắt đầu khoá; lưu `ageConfirmed` | SCR-TEST-01 §7 |
 | BR-TEST-05 | Không loader giả; panel nộp chỉ khi > 300 ms | SCR-TEST-01 §7 |
 | BR-TEST-06 | Mở URL có attempt dở → resume; đã nộp → chuyển kết quả (replace) | SCR-TEST-01 §7 |
 | BR-TEST-07 | Tóm tắt free hiện đủ điểm mọi thang + type + giải thích; không mờ/giấu | SCR-TEST-02 §7 |
@@ -145,5 +147,5 @@ Tỉ lệ theo dõi: `test_page` → ft_test · start (tỉ lệ bắt đầu) �
 
 ## 6. AI Notices
 - Hiển thị ngày hết hạn cho **khách** theo timezone trình duyệt là suy luận: tieu-chuan-chung §4 chỉ nói "theo timezone tài khoản", khách chưa có tài khoản. Cần ghi rõ ở SCR-TEST-02.
-- Nhánh consent bài `sensitive` dùng cạnh `inline` NAV-TEST-01-4 (vẽ thành vòng tự thân). Việc "Not now" không để lại dữ liệu dựa trên BR-TEST-04 (consent version đi kèm API-TEST-01); nếu API-TEST-01 được gọi trước bước consent thì phải xoá attempt rỗng — cần khẳng định ở `docs/api/SCR-TEST-01-api.md`.
+- Nhánh consent bài `sensitive` dùng cạnh `inline` NAV-TEST-01-4 (vẽ thành vòng tự thân). "Not now" không để lại dữ liệu: API-TEST-01 của bài `sensitive` thiếu `sensitiveConsent` / `ageConfirmed` trả 422 và không tạo attempt (`docs/api/SCR-TEST-01-api.md`, khẳng định 2026-09-28).
 - Khác đối thủ (research): đối thủ dẫn mọi CTA landing về trang giá (F-03), cho kết quả free cố định (F-14), chèn loader giả (F-16), bắn pixel theo từng câu (F-13) và bẫy back ở offer (F-19). Flow này cố ý làm ngược cả năm điểm.

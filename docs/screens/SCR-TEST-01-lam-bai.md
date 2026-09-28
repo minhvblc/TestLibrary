@@ -7,11 +7,12 @@
 | SCR-TEST-01 | TEST | Full | Web | `/tests/:slug/take` | guest | noindex | 390 · 768 · 1280 | FLOW-lam-bai-mien-phi | Draft | (sau design) | `tracking-events.md` → `test_take` · ft_test | `docs/api/SCR-TEST-01-api.md` | **EV-TLW-054 · EV-TLW-061 · EV-TLW-065 · EV-TLW-083 · EV-TLW-138 · SC-TLW-13 · SC-TLW-18 · basis RS·F-13 · F-14 · F-16 · TD-01 · CS-04** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): bước consent bài `sensitive` (CMP-03) thêm ô "I'm 18 or older." + gợi ý + dòng phụ cho người dưới 18, thêm BR-TEST-11 và EC-08 (Q-21); NAV-TEST-01-6 thêm trigger dòng phụ; API-TEST-01 gửi `ageConfirmed`, bài `sensitive` chưa consent → 422 không tạo attempt. Q-10 · Q-21 đã chốt.
 - 2026-09-27 · v1 · claude-opus-5-5 · khởi tạo (exemplar SCR full).
 
 ## 1. Purpose & context
 
-Màn làm bài: mỗi màn một câu Likert, chọn là sang câu kế, tiến độ lưu liên tục nên reload hay mất mạng cũng không mất bài. Nộp xong thì server chấm điểm thật (TD-01) và chuyển sang kết quả. Đối thủ có flow offline/resume tốt (TK-04 · TK-05) nhưng kết quả không phụ thuộc câu trả lời (RS·F-14), bắn pixel quảng cáo theo từng câu (RS·F-13) và chèn loader "labor illusion" (RS·F-16). Màn này giữ phần tốt, bỏ ba phần xấu. Với bài `sensitive`, bước đầu là consent riêng cho dữ liệu nhạy cảm (Q-06). · basis TD-01 · Q-06 · Q-10
+Màn làm bài: mỗi màn một câu Likert, chọn là sang câu kế, tiến độ lưu liên tục nên reload hay mất mạng cũng không mất bài. Nộp xong thì server chấm điểm thật (TD-01) và chuyển sang kết quả. Đối thủ có flow offline/resume tốt (TK-04 · TK-05) nhưng kết quả không phụ thuộc câu trả lời (RS·F-14), bắn pixel quảng cáo theo từng câu (RS·F-13) và chèn loader "labor illusion" (RS·F-16). Màn này giữ phần tốt, bỏ ba phần xấu. Với bài `sensitive`, bước đầu là consent riêng cho dữ liệu nhạy cảm (Q-06), kèm ô tự xác nhận 18+ (Q-21); bài thường không có cổng tuổi. · basis TD-01 · Q-06 · Q-10 · Q-21
 
 ## 2. Điều hướng
 
@@ -31,9 +32,9 @@ Màn làm bài: mỗi màn một câu Likert, chọn là sang câu kế, tiến 
 | NAV-TEST-01-1 | SCR-TEST-02 · `resultId` | hệ thống: API-TEST-03 trả kết quả sau khi chọn đáp án câu cuối ở CMP-05 | replace | `/tests/:slug/take` → `/results/:resultId` (replace) | mặc định | back trình duyệt → SCR-PUB-03 (runner đã nộp không còn trong history) | — | Web | RS·F-19 (tránh bẫy back) |
 | NAV-TEST-01-2 | SCR-PUB-03 · `slug` | CMP-01 "Exit" | push | `/tests/:slug` (push) | mặc định | back trình duyệt → SCR-TEST-01 (resume đúng câu) | không hỏi xác nhận vì tiến độ đã lưu | Web | TK-04 (EV-TLW-065) |
 | NAV-TEST-01-3 | (cùng màn) câu kế tiếp | CMP-05 chọn một đáp án | inline | không đổi URL (browser back = rời bài, tiến độ giữ) | mặc định | — | — | Web | RS·F-13 (EV-TLW-054) |
-| NAV-TEST-01-4 | (cùng màn) câu 1 | CMP-03 "I agree — start the test" | inline | không đổi URL | mặc định | — | bài `sensitive` | Web | Q-06 |
+| NAV-TEST-01-4 | (cùng màn) câu 1 | CMP-03 "I agree — start the test" | inline | không đổi URL | mặc định | — | bài `sensitive`; đã tick "I'm 18 or older." (BR-TEST-11) | Web | Q-06 · Q-21 |
 | NAV-TEST-01-5 | SCR-PUB-03 · `slug` | CMP-03 "Not now" | push | `/tests/:slug` (push) | mặc định | back trình duyệt → SCR-TEST-01 (bước consent) | bài `sensitive` | Web | Q-06 |
-| NAV-TEST-01-6 | external: trang nguồn hỗ trợ khủng hoảng | CMP-09 "Get support now" | external | tab mới | mặc định | đóng tab → SCR-TEST-01 | bài `sensitive` | Web | Q-06 |
+| NAV-TEST-01-6 | external: trang nguồn hỗ trợ khủng hoảng | CMP-09 "Get support now" · CMP-03 "get support now" (dòng phụ 18+) | external | tab mới | mặc định | đóng tab → SCR-TEST-01 | bài `sensitive` | Web | Q-06 · Q-21 · Q-23 |
 | NAV-TEST-01-7 | SCR-PUB-05 · `doc=privacy` | CMP-03 "Privacy policy" | push | `/legal/privacy` (push) | mặc định | back trình duyệt → SCR-TEST-01 (bước consent) | bài `sensitive` | Web | BR-APP-06 |
 | NAV-TEST-01-8 | SCR-PUB-02 | CMP-11 "Browse all tests" | push | `/tests` (push) | mặc định | back trình duyệt → SCR-TEST-01 | chỉ ở state Empty / Locked (vùng) | Web | in-house |
 
@@ -64,7 +65,7 @@ flowchart TD
 |---|---|---|---|---|
 | CMP-01 | Nút thoát | luôn | "Exit" (aria-label "Exit test — your progress is saved") | TK-04 |
 | CMP-02 | Tiến độ | sau bước consent | "Question [k] of [n]" + thanh % | EV-TLW-054 |
-| CMP-03 | Bước consent dữ liệu nhạy cảm | bài `sensitive`, trước câu 1 | Tiêu đề "Before you start" · thân "This test asks about your mood and wellbeing. Your answers are sensitive, so we need your consent to process them. We use them only to score your test and write your report. We never share them with advertisers." · "This is a self-reflection tool, not a diagnosis." · nút "I agree — start the test" · link "Not now" · link "Privacy policy" | Q-06 · BR-APP-06 |
+| CMP-03 | Bước consent dữ liệu nhạy cảm | bài `sensitive`, trước câu 1 | Tiêu đề "Before you start" · thân "This test asks about your mood and wellbeing. Your answers are sensitive, so we need your consent to process them. We use them only to score your test and write your report. We never share them with advertisers." · "This is a self-reflection tool, not a diagnosis." · ô bắt buộc, không tick sẵn "I'm 18 or older." · dòng phụ ngay dưới ô "This test is for adults. If you're under 18 and finding things hard, you can get support now." ("get support now" là link external của GC-SensitiveNotice, NAV-TEST-01-6) · nút "I agree — start the test" (khoá tới khi tick; gợi ý khi chưa tick: "Tick the box to confirm you're 18 or older.") · link "Not now" · link "Privacy policy" | Q-06 · Q-21 · BR-APP-06 · BR-TEST-11 |
 | CMP-04 | Câu hỏi | mỗi câu | nội dung câu từ API-TEST-01 | TD-01 |
 | CMP-05 | Thang trả lời | mỗi câu | GC-ScaleInput 5 mức: "Strongly disagree" · "Disagree" · "Neutral" · "Agree" · "Strongly agree" (phím 1–5) | EV-TLW-054 · EV-TLW-083 |
 | CMP-06 | Nút quay lại câu trước | từ câu 2 | "Back" | in-house |
@@ -88,7 +89,7 @@ flowchart TD
 stateDiagram-v2
     [*] --> Consent: sensitive
     [*] --> Question: not sensitive
-    Consent --> Question: agree
+    Consent --> Question: 18+ ticked and agree
     Question --> Question: answer or back
     Question --> Submitting: last answer
     Submitting --> Result: scored
@@ -109,6 +110,9 @@ stateDiagram-v2
 | "Back" / phím `Backspace` | về câu trước, giữ đáp án cũ đang được chọn để sửa |
 | "Exit" / back trình duyệt | rời bài, tiến độ giữ, không hỏi xác nhận |
 | Câu cuối được chọn | gọi API-TEST-03 (BR-TEST-03) |
+| Tick / bỏ tick "I'm 18 or older." (bài `sensitive`) | mở khoá / khoá lại "I agree — start the test" (BR-TEST-11) |
+| Bấm "I agree — start the test" khi chưa tick (`aria-disabled`) | không gọi API; focus về ô và hiện "Tick the box to confirm you're 18 or older." |
+| Bấm "I agree — start the test" khi đã tick | gọi API-TEST-01 kèm `sensitiveConsent` + `ageConfirmed` = true → câu 1 (NAV-TEST-01-4) |
 
 ### 5.2 Validation (verbatim)
 
@@ -116,6 +120,7 @@ stateDiagram-v2
 |---|---|---|
 | Đủ câu trả lời trước khi nộp | client kiểm trước khi gọi API-TEST-03 | không có copy: không thể nộp khi thiếu (câu cuối chỉ tới được sau khi trả lời hết). Server trả 400 thì quay về câu thiếu đầu tiên: "Please answer this question to finish." |
 | Consent bài `sensitive` | trước câu 1 | chỉ bắt đầu khi bấm "I agree — start the test" |
+| Xác nhận 18+ (bài `sensitive`) | client trước API-TEST-01; server kiểm lại | chưa tick: nút khoá + "Tick the box to confirm you're 18 or older."; 422 `age_confirmation_required` → focus ô, cùng câu (BR-TEST-11) |
 
 ## 6. Data & API
 
@@ -126,7 +131,7 @@ Tên bài, danh sách câu (thứ tự cố định theo `contentVersion`), tổ
 
 | API | Khi nào |
 |---|---|
-| API-TEST-01 | mở màn: tạo hoặc tiếp tục attempt (`attemptId` sinh ở client, lưu localStorage) |
+| API-TEST-01 | mở màn: tạo hoặc tiếp tục attempt (`attemptId` sinh ở client, lưu localStorage). Bài `sensitive` chưa có attempt → 422 `consent_required`, không tạo attempt → CMP-03; bấm "I agree — start the test" → gọi lại kèm `sensitiveConsent` + `ageConfirmed` |
 | API-TEST-02 | đã đăng nhập: autosave gom tối đa 10 câu mỗi 5 s |
 | API-TEST-03 | chọn đáp án câu cuối; thử lại từ hàng đợi |
 
@@ -142,6 +147,7 @@ Tên bài, danh sách câu (thứ tự cố định theo `contentVersion`), tổ
 | BR-TEST-04 | Bài `sensitive`: không câu nào hiện trước khi bấm "I agree — start the test"; `sensitive_consent_version` + thời điểm gửi trong API-TEST-01 | BR-APP-06 · SYS-CONSENT | guest |
 | BR-TEST-05 | Không loader giả: panel nộp chỉ hiện khi request > 300 ms, biến mất ngay khi có kết quả | RS·F-16 | guest |
 | BR-TEST-06 | Mở URL khi có attempt dở → resume đúng câu; attempt đã nộp → chuyển kết quả (replace) | TK-04 (EV-TLW-065) | guest |
+| BR-TEST-11 | Bài `sensitive`: bước consent có ô "I'm 18 or older." bắt buộc, không tick sẵn; chưa tick thì "I agree — start the test" khoá; không thu ngày sinh; `ageConfirmed` = true gửi trong API-TEST-01 và lưu vào attempt cùng consent. Bài thường không có cổng tuổi (16+ ghi trong Terms) | Q-21 · BR-APP-06 · SYS-CONSENT | guest |
 
 ## 8. Edge cases & error handling
 
@@ -154,6 +160,7 @@ Tên bài, danh sách câu (thứ tự cố định theo `contentVersion`), tổ
 | EC-05 | Đổi thiết bị giữa bài | đã đăng nhập: resume từ autosave server · khách: bắt đầu lại | BR-TEST-02 |
 | EC-06 | Phiên bản thang đo đổi khi đang làm | attempt giữ `scoringVersion` + `contentVersion` lúc bắt đầu | BR-APP-07 |
 | EC-07 | Bấm đáp án liên tiếp rất nhanh | mỗi câu chỉ nhận 1 lựa chọn trong 150 ms chuyển câu | in-house |
+| EC-08 | Người dưới 18 mở bài `sensitive` | không tick được một cách trung thực nên không bắt đầu bài; dòng phụ của CMP-03 chỉ tới nguồn hỗ trợ (NAV-TEST-01-6); "Not now" về trang bài (NAV-TEST-01-5); không tạo attempt, không lưu câu trả lời nào | Q-21 · BR-TEST-11 |
 
 ## 9. Responsive deltas
 
@@ -177,8 +184,9 @@ Tên bài, danh sách câu (thứ tự cố định theo `contentVersion`), tổ
 |---|---|
 | Nộp bài → kết quả | p50 ≤ 800 ms · p95 ≤ 2 s (cong-nghe-loi §2; đối thủ 2690 ms `[LIVE:browser · EV-TLW-181 · 2026-09-27]`) |
 | JS của route | ≤ 300 KB gzip (tieu-chuan-chung §9) |
-| A11y | tiến độ đọc bằng `aria-live="polite"`: "Question 5 of 24" |
+| A11y | tiến độ đọc bằng `aria-live="polite"`: "Question 5 of 24"; bước consent bài `sensitive`: "I agree — start the test" khoá bằng `aria-disabled` + `aria-describedby` tới gợi ý 18+ |
 
 ## 13. AI Notices
 - Thang 5 mức là mặc định của MVP. Bài có câu đố/đồng hồ (kiểu IQ của đối thủ, RS·F-25) nằm ngoài MVP (`final-features §8`).
 - Mục tiêu latency là `[INFERRED]`, cần đo bằng spike cong-nghe-loi §7 #1–3.
+- Ô 18+ là tự xác nhận (Q-21): không thu ngày sinh, không kiểm chứng được; mục tiêu là đặt kiểm tra tuổi đúng chỗ rủi ro. Câu chữ CMP-03 (cả ô 18+ và dòng phụ) chờ legal + clinical review trước launch bài `sensitive` (`bang-quyet-dinh` §2 #2 · #5).

@@ -1,18 +1,19 @@
 # [SCR-PUB-04] API — Bảng giá
 Refs: `docs/screens/SCR-PUB-04-bang-gia.md` · FLOW-dang-ky-plus · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency, webhook — KHÔNG lặp lại ở đây) · `00-overview.md` §2 (nguồn giá). File này sở hữu schema đầy đủ của API-PAY-01 và API-PAY-02; `SCR-PAY-01-api.md` chỉ ghi phần khác.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · API-PAY-01 theo quyết định 2026-09-28: ví dụ giá thật (00-overview §2 · Q-03), `savingsPercent` 55, thêm `monthlyEquivalent`, `seller.merchantOfRecord` ("Paddle.com", Q-04), `statementDescriptor` (Q-24); `renewalReminderDays` = { month: 7, year: 21 } (Q-16); `features` theo pricing-page §1; provider = Paddle. Bỏ chữ "SSR" (Q-09: SSG + revalidate); `statementDescriptor` null → không render.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 0. Endpoint overview
 
 | ID | Endpoint | Method | When called | Idempotent (key) | Contract status |
 |---|---|---|---|---|---|
-| API-PAY-01 | `/v1/plans` | GET | SSR `/pricing` (không cookie) + client sau hydrate (có cookie); SCR-PAY-01 khi mở trang | n/a (GET) | proposal |
+| API-PAY-01 | `/v1/plans` | GET | render sẵn `/pricing` lúc build + revalidate (không cookie, Q-09) + client sau hydrate (có cookie); SCR-PAY-01 khi mở trang | n/a (GET) | proposal |
 | API-PAY-02 | `/v1/checkout-sessions` | POST | bấm CMP-07 "Continue to secure checkout" (SCR-PUB-04) / CMP-08 (SCR-PAY-01) | có — `Idempotency-Key` = UUID sinh mỗi lần bấm CTA; thử lại do mạng dùng lại key đó | proposal |
 
 ## API-PAY-01 · GET `/v1/plans`
 
-Trả các gói đang bán và mọi thứ cần để hiển thị giá trung thực: giá base, giá gia hạn, chu kỳ, câu consent hiện hành, số ngày nhắc trước kỳ thu, khả năng mua ở vùng của người gọi. Giá đọc từ bảng `plans` của server (mỗi planKey map sang price id của provider lúc setup, 00-overview §2); client không tự tính giá. Không side effect. Auth: khách được. Cache: gọi không cookie → `Cache-Control: public, max-age=300`, `purchasable` và `viewer` = null (SSR/CDN cache được); gọi có cookie (`tl_guest` / `tl_session`) → `private, no-store`, đủ mọi field.
+Trả các gói đang bán và mọi thứ cần để hiển thị giá trung thực: giá base, giá gia hạn, chu kỳ, câu consent hiện hành, số ngày nhắc trước kỳ thu, bên bán trên hoá đơn, tên trên sao kê, khả năng mua ở vùng của người gọi. Giá đọc từ bảng `plans` của server (mỗi planKey map sang price id của Paddle lúc setup, 00-overview §2); client không tự tính giá. Không side effect. Auth: khách được. Cache: gọi không cookie → `Cache-Control: public, max-age=300`, `purchasable` và `viewer` = null (trang render sẵn / CDN cache được); gọi có cookie (`tl_guest` / `tl_session`) → `private, no-store`, đủ mọi field.
 
 | Response `data` field | Type | Meaning | Basis |
 |---|---|---|---|
@@ -22,18 +23,20 @@ Trả các gói đang bán và mọi thứ cần để hiển thị giá trung t
 | `plans[].name` | string (en-US) | "Free" · "One report" · "Plus" | Q-02 · Q-14 |
 | `plans[].kind` | enum `free` · `one_time` · `subscription` | cách hiển thị: không giá · "one-time" · "per [period]" kèm công bố gia hạn | Q-02 · BR-APP-02 |
 | `plans[].interval` | enum `month` · `year` / null | chu kỳ gia hạn; null với `free` và `one_time` | Q-03 |
-| `plans[].price` | object `{ amount: int, currency: string }` | giá base, số nguyên đơn vị nhỏ nhất; giá chưa chốt → placeholder Q-03 | 00-overview §2 · 00-quy-uoc-api §8 |
-| `plans[].renewalPrice` | object như `price` / null | giá mỗi kỳ gia hạn; MVP = `price` (không giá kỳ đầu khác, không trial); null nếu không gia hạn | BR-APP-02 · Q-03 |
-| `plans[].features` | array string (en-US) | bullet của thẻ gói, verbatim theo bảng "Quyền → bullet" của GC-PlanCard §4 (nội dung = cột "Giới hạn / quyền" của 00-overview §2) | BR-PUB-07 · GC-PlanCard |
-| `plans[].savingsPercent` | int / null | chỉ `plan.plus.annual`: làm tròn xuống của (1 − giá năm ÷ (12 × giá tháng)) × 100; null nếu < 1 | BR-PUB-09 |
+| `plans[].price` | object `{ amount: int, currency: string }` | giá base (chưa gồm thuế), số nguyên đơn vị nhỏ nhất: `report.single` 999 · `plan.plus.monthly` 1299 · `plan.plus.annual` 6999 | 00-overview §2 · Q-03 · 00-quy-uoc-api §8 |
+| `plans[].renewalPrice` | object như `price` / null | giá mỗi kỳ gia hạn của đăng ký mới; MVP = `price` (không giá kỳ đầu khác, không trial); null nếu không gia hạn. Subscriber đang có giữ giá lúc mua (khoá giá) — giá gia hạn của họ đọc ở API-PAY-04 | BR-APP-02 · BR-APP-13 · Q-03 · Q-27 |
+| `plans[].features` | array string (en-US) | bullet của thẻ gói, verbatim theo `go-to-market/pricing-page.md` §1 (quyền theo 00-overview §2); `report.single` rỗng (thẻ dùng câu `summary` do màn truyền) | BR-PUB-07 · GC-PlanCard |
+| `plans[].savingsPercent` | int / null | chỉ `plan.plus.annual`: làm tròn xuống của (1 − giá năm ÷ (12 × giá tháng)) × 100 — hiện là 55; null nếu < 1 | BR-PUB-09 |
+| `plans[].monthlyEquivalent` | object như `price` / null | chỉ `plan.plus.annual`: giá năm ÷ 12, làm tròn tới đơn vị nhỏ nhất gần nhất (6999 → 583 = $5.83); dòng phụ "[…] per month, billed yearly"; null với gói khác. Client không tự chia | BR-PUB-07 · BR-PUB-09 · pricing-page §2 |
 | `consent` | object `{ version: string, template: string }` | câu consent Plus hiện hành, chứa chỗ trống `[price]` `[period]`; client điền và hiển thị nguyên văn | BR-APP-03 · BR-PUB-10 |
-| `renewalReminderDays` | object `{ month: int, year: int }` | số ngày gửi email nhắc trước kỳ thu, dùng trong GC-RenewalDisclosure | Q-16 · BR-APP-03 |
-| `seller` | object `{ legalName: string, supportEmail: string }` | pháp nhân bán + email hỗ trợ (dòng người bán, copy lỗi) | Q-05 · RS·F-12 |
-| `purchasable` | boolean / null | false khi provider không bán ở quốc gia của người gọi (server xác định theo IP, chỉ để chặn mua, không đổi currency); null khi gọi không cookie | Q-04 · BR-APP-12 |
+| `renewalReminderDays` | object `{ month: int, year: int }` | số ngày gửi email nhắc trước kỳ thu, dùng trong GC-RenewalDisclosure: `{ month: 7, year: 21 }` (nhắc 7 ngày trước mỗi kỳ tháng, 21 ngày trước kỳ năm) | Q-16 · BR-APP-03 |
+| `seller` | object `{ merchantOfRecord: string, legalName: string, supportEmail: string }` | `merchantOfRecord` = bên bán trên hoá đơn, "Paddle.com" (điền vào câu reseller "Our order process is conducted by our online reseller [merchantOfRecord]. …"; đổi provider dự phòng thì chỉ đổi giá trị này); `legalName` = pháp nhân cung cấp dịch vụ (dữ liệu setup, không phải bên bán trên hoá đơn); `supportEmail` = email hỗ trợ | Q-04 · Q-05 (c) · BR-APP-12 · RS·F-12 |
+| `statementDescriptor` | string / null | chuỗi khách sẽ thấy trên sao kê, một giá trị cấu hình server lấy từ giao dịch thử thật (thẻ, PayPal, ví); điền vào "Charges will appear as [descriptor] on your statement."; null khi chưa cấu hình → không render câu này (CMP-12) | Q-24 · BR-APP-15 |
+| `purchasable` | boolean / null | false khi Paddle không bán ở quốc gia của người gọi (server xác định theo IP, chỉ để chặn mua, không đổi currency); null khi gọi không cookie | Q-04 · BR-APP-12 |
 | `unavailableReason` | enum `country_not_supported` / null | lý do khi `purchasable = false` | Q-04 |
 | `viewer` | object / null | chỉ khi có `tl_session`: `{ planKey: string, subscriptionStatus: enum active · canceled · past_due / null }` (`canceled` = đã lên lịch huỷ, còn trong kỳ) | SYS-ENTITLEMENT |
 
-Ví dụ dưới đây chỉ là shape. Ở response thật, `amount` của gói trả phí là số nguyên đơn vị nhỏ nhất; ở đây để chữ vì giá còn là placeholder (Q-03).
+Ví dụ theo giá hiện hành (00-overview §2); `amount` là số nguyên đơn vị nhỏ nhất (cent). `statementDescriptor` và `seller.legalName` là dữ liệu setup (bang-quyet-dinh §2 #2 · #3), chưa có giá trị thật.
 
 ```json
 {
@@ -43,22 +46,26 @@ Ví dụ dưới đây chỉ là shape. Ở response thật, `amount` của gói
     "plans": [
       { "planKey": "plan.free", "name": "Free", "kind": "free", "interval": null,
         "price": { "amount": 0, "currency": "USD" }, "renewalPrice": null,
-        "features": ["Take every test", "A scored summary of every result"], "savingsPercent": null },
+        "features": ["Take every test", "A scored summary for every test, with every score explained", "Save your results with your email", "Daily check-in and streak with a free account"],
+        "savingsPercent": null, "monthlyEquivalent": null },
       { "planKey": "report.single", "name": "One report", "kind": "one_time", "interval": null,
-        "price": { "amount": "<placeholder Q-03>", "currency": "USD" }, "renewalPrice": null,
-        "features": ["The full report for one result", "PDF download"], "savingsPercent": null },
+        "price": { "amount": 999, "currency": "USD" }, "renewalPrice": null,
+        "features": [], "savingsPercent": null, "monthlyEquivalent": null },
       { "planKey": "plan.plus.monthly", "name": "Plus", "kind": "subscription", "interval": "month",
-        "price": { "amount": "<placeholder Q-03>", "currency": "USD" },
-        "renewalPrice": { "amount": "<placeholder Q-03>", "currency": "USD" },
-        "features": ["Full reports for all your results while Plus is active", "30-day challenge"], "savingsPercent": null },
+        "price": { "amount": 1299, "currency": "USD" },
+        "renewalPrice": { "amount": 1299, "currency": "USD" },
+        "features": ["Full reports and PDFs for every test you take, while your plan is active", "A 30-day challenge built from your results"],
+        "savingsPercent": null, "monthlyEquivalent": null },
       { "planKey": "plan.plus.annual", "name": "Plus", "kind": "subscription", "interval": "year",
-        "price": { "amount": "<placeholder Q-03>", "currency": "USD" },
-        "renewalPrice": { "amount": "<placeholder Q-03>", "currency": "USD" },
-        "features": ["Full reports for all your results while Plus is active", "30-day challenge"], "savingsPercent": "<placeholder Q-03>" }
+        "price": { "amount": 6999, "currency": "USD" },
+        "renewalPrice": { "amount": 6999, "currency": "USD" },
+        "features": ["Full reports and PDFs for every test you take, while your plan is active", "A 30-day challenge built from your results"],
+        "savingsPercent": 55, "monthlyEquivalent": { "amount": 583, "currency": "USD" } }
     ],
     "consent": { "version": "plus-renewal-v1", "template": "I understand Plus renews automatically at [price] per [period] until I cancel. I can cancel anytime in Account → Plan & billing." },
-    "renewalReminderDays": { "month": 3, "year": 7 },
-    "seller": { "legalName": "<Q-05>", "supportEmail": "support@<domain>" },
+    "renewalReminderDays": { "month": 7, "year": 21 },
+    "seller": { "merchantOfRecord": "Paddle.com", "legalName": "[legal entity]", "supportEmail": "support@[domain]" },
+    "statementDescriptor": "<chuỗi từ giao dịch thử — bang-quyet-dinh §2 #3>",
     "purchasable": true, "unavailableReason": null,
     "viewer": null
   }
@@ -68,11 +75,11 @@ Ví dụ dưới đây chỉ là shape. Ở response thật, `amount` của gói
 | Lỗi RIÊNG màn | When | UI reaction (verbatim) |
 |---|---|---|
 | 503 `pricing_unavailable` | thiếu một planKey, hoặc planKey chưa map price id của provider | state Error: "We couldn't load prices. Please refresh." |
-| 5xx / timeout / offline | lỗi server / mạng | như trên; nếu lỗi ở SSR thì trang vẫn render phần tĩnh (CMP-08 không giá, CMP-09) |
+| 5xx / timeout / offline | lỗi server / mạng | như trên; nếu lỗi lúc render sẵn thì trang vẫn render phần tĩnh (CMP-08 không giá, CMP-09; CMP-11 · CMP-12 ẩn) |
 
 ## API-PAY-02 · POST `/v1/checkout-sessions`
 
-Tạo phiên checkout hosted ở provider (Q-04) cho một planKey và trả URL để client chuyển trang cùng tab. Side effect: tạo bản ghi `checkout_sessions` (id, planKey, `resultId`, `origin`, chủ = token `tl_guest` hoặc userId, `consent_version` + thời điểm với gói Plus, idempotency key, trạng thái `open`); tạo phiên ở provider với return URL cho cả nhánh thành công và nhánh huỷ trỏ về `/checkout/return?session=<id>` kèm `returnType` (SYS-NAV §4); email do provider thu. KHÔNG ghi entitlement: quyền chỉ mở qua webhook API-HOOK-01 (BR-APP-01). Auth: khách được (token `tl_guest`) hoặc `tl_session`. Header bắt buộc: `Idempotency-Key`, `X-CSRF-Token` (00-quy-uoc-api §2).
+Tạo phiên checkout hosted ở Paddle (Q-04) cho một planKey và trả URL để client chuyển trang cùng tab. Side effect: tạo bản ghi `checkout_sessions` (id, planKey, `resultId`, `origin`, chủ = token `tl_guest` hoặc userId, `consent_version` + thời điểm với gói Plus, idempotency key, trạng thái `open`); tạo phiên ở provider với return URL cho cả nhánh thành công và nhánh huỷ trỏ về `/checkout/return?session=<id>` kèm `returnType` (SYS-NAV §4); email do provider thu. KHÔNG ghi entitlement: quyền chỉ mở qua webhook API-HOOK-01 (BR-APP-01). Auth: khách được (token `tl_guest`) hoặc `tl_session`. Header bắt buộc: `Idempotency-Key`, `X-CSRF-Token` (00-quy-uoc-api §2).
 
 | Body field | Type | Required | Meaning | Basis |
 |---|---|---|---|---|
@@ -112,14 +119,17 @@ Tạo phiên checkout hosted ở provider (Q-04) cho một planKey và trả URL
 |---|---|---|
 | `plans[].price` · `plans[].interval` | CMP-03 · CMP-04 | "[price] one-time" · "[price] per month" · "[price] per year" (tieu-chuan-chung §4) |
 | `plans[].features` | CMP-03 · CMP-08 | danh sách bullet |
-| `plans[].savingsPercent` | CMP-04 | "Save [n]%", ẩn khi null |
+| `plans[].savingsPercent` | CMP-04 | "Save [n]%" cạnh "Annual" (hiện "Save 55%"), ẩn khi null |
+| `plans[].monthlyEquivalent` | CMP-03 | dòng phụ "[…] per month, billed yearly" dưới giá năm (hiện "$5.83 per month, billed yearly") |
 | `plans[].renewalPrice` · `renewalReminderDays` | CMP-05 | GC-RenewalDisclosure |
 | `consent.template` · `consent.version` | CMP-06 | câu consent nguyên văn; `version` gửi lại ở API-PAY-02 |
+| `seller.merchantOfRecord` · `statementDescriptor` | CMP-12 | câu reseller + "Charges will appear as [descriptor] on your statement." (SCR-PUB-04 §3) |
 | `purchasable` · `unavailableReason` | CMP-06 · CMP-07 · state Locked | ẩn checkbox, khoá nút, câu Locked |
 | `viewer.planKey` · `viewer.subscriptionStatus` | CMP-06 · CMP-07 · CMP-03 | có Plus → ẩn CMP-06, nút "Manage plan", thẻ One report ghi "Included in your Plus plan." |
 | `checkoutUrl` | NAV-PUB-04-2 | chuyển trang cùng tab |
 
 ## AI Notices
-- Tên field và payload phía provider viết ở mức nghiệp vụ, chờ Q-04. Không lấy endpoint hay field nào từ checkout của đối thủ.
-- `purchase_pending` và `displayedPrice` là đề xuất chống mua trùng và chống lệch giá so với câu consent; cần human review cùng Q-18 (hoàn tiền khi mua trùng).
+- Provider = Paddle Billing (Q-04). Tên field và payload phía Paddle viết ở mức nghiệp vụ, map khi mở tài khoản (bang-quyet-dinh §2 #3). Không lấy endpoint hay field nào từ checkout của đối thủ.
+- `statementDescriptor`: nếu giao dịch thử cho chuỗi khác nhau theo phương thức (thẻ / PayPal / ví) thì đổi field này thành danh sách theo phương thức (Q-24). Câu reseller dùng `seller.merchantOfRecord`: verify nguyên văn Paddle yêu cầu khi mở tài khoản.
+- `purchase_pending` và `displayedPrice` chống mua trùng và chống lệch giá so với câu consent. Mua trùng lọt qua thì server tự hoàn lần trùng (SCR-PAY-01 EC-08); khách cũng rút được lần mua đó trong 14 ngày (BR-APP-14).
 - Money API → human review trước API-FREEZE (api-mapping §1).

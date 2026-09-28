@@ -1,6 +1,7 @@
 # SYS-NAV — hệ điều hướng · route table · sơ đồ màn theo nền tảng
 > Owner: CẠNH (`NAV-…`) định nghĩa ở SCR §2.2 của màn NGUỒN; route ở SCR meta. File này sở hữu KHUNG (§1), TỪ VỰNG (§2–3), ROUTE TABLE (§4). §5–7 là bản SINH (`navmap.py . write`), không sửa tay. Sản phẩm chỉ có **Web**; iOS / Android ngoài scope.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · footer: link huỷ / rút có ở mọi trang có footer; SCR-TEST-01 (runner) không có footer theo thiết kế, là ngoại lệ có chủ đích. SCR-PUB-02 `?topic=` render theo request (Q-09).
 - 2026-09-28 · v1.1 · claude-opus-5-5 · Q-18 · Q-25 (chốt 2026-09-28, AI · uỷ quyền human): footer thêm "Cancel your plan here" · "Withdraw from contract here" → SCR-PAY-05; route table thêm SCR-PAY-05 `/cancel`.
 - 2026-09-27 · v1 · claude-opus-5-5 · khởi tạo từ `00-overview §3` + `final-features §7`.
 
@@ -17,7 +18,7 @@
 | Web | Footer (mọi trang public + app) | "Privacy" · "Terms" · "Subscriptions & refunds" · "Cookie policy" | SCR-PUB-05 | back trình duyệt → trang trước | in-house |
 | Web | Footer (mọi trang public + app) | "Help" | SCR-PUB-06 | back trình duyệt → trang trước | GC-SiteFooter |
 | Web | Footer (mọi trang) | "Cookie settings" | SCR-PUB-07 | back trình duyệt → trang trước | SYS-CONSENT |
-| Web | Footer (mọi trang, cả `compact` của funnel) | "Cancel your plan here" → `/cancel` · "Withdraw from contract here" → `/cancel?mode=withdraw` | SCR-PAY-05 | back trình duyệt → trang trước | BR-APP-04 · BR-APP-14 · Q-25 |
+| Web | Footer (mọi trang có footer, cả `compact` của funnel; SCR-TEST-01 không có footer nên không có link này — từ đó vẫn tới được qua mọi trang khác và email biên nhận) | "Cancel your plan here" → `/cancel` · "Withdraw from contract here" → `/cancel?mode=withdraw` | SCR-PAY-05 | back trình duyệt → trang trước | BR-APP-04 · BR-APP-14 · Q-25 |
 | Web | Header app @≥768 | "Home" | SCR-APP-01 | back trình duyệt → trang trước | in-house |
 | Web | Header app @≥768 | "Tests" | SCR-PUB-02 | back trình duyệt → trang trước | in-house |
 | Web | Header app @≥768 | "My reports" | SCR-APP-02 | back trình duyệt → trang trước | in-house |
@@ -50,7 +51,7 @@
 | SCR-ID | route | access | redirect khi thiếu quyền | indexable | layout / shell | vào từ ngoài (deep link: email · share · SEO) | Notes |
 |---|---|---|---|---|---|---|---|
 | SCR-PUB-01 | `/` | public | — | index | public | — | root |
-| SCR-PUB-02 | `/tests` · `/tests?topic=<topic>` | public | — | index | public | — | root |
+| SCR-PUB-02 | `/tests` · `/tests?topic=<topic>` | public | — | index | public | — | root; `?topic=` render theo request, CDN cache theo `topic` (Q-09) |
 | SCR-PUB-03 | `/tests/:slug` | public | — | index | public | SEO (trang đích tìm kiếm cho từng bài) · link chia sẻ | bài `sensitive`: không script analytics (BR-APP-06) |
 | SCR-PUB-04 | `/pricing` | public | — | index | public | SEO | root |
 | SCR-PUB-05 | `/legal/:doc` (`privacy` · `terms` · `subscriptions` · `cookies`) | public | — | index | public | — | từ footer |

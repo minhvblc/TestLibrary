@@ -6,6 +6,7 @@
 | SCR-PUB-03 | PUB | Short | Web | `/tests/:slug` | public | index | 390 · 768 · 1280 | FLOW-lam-bai-mien-phi | Draft | (sau design) | `tracking-events.md` → `test_page` | §5 (inline) | **EV-TLW-053 · EV-TLW-052 · EV-TLW-014 · SC-TLW-12 · basis RS·F-04 · F-27 · CS-03** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): NAV-PUB-03-1 ghi bước consent có ô 18+ (Q-21 · BR-TEST-11); GC-SensitiveNotice theo danh sách ra mắt Q-23, không định vị nên trang SSG không cần cache theo vùng; tên bài theo Q-07; trang render sẵn (Q-09). Không đổi hành vi khác.
 - 2026-09-27 · v1 · claude-opus-5-5 · khởi tạo (exemplar SCR short).
 
 ## 1. Purpose
@@ -29,11 +30,11 @@ Trang đích SEO của từng bài: nói thật bài đo gì, dài bao lâu, ch�
 
 | NAV-ID | Tới (SCR-ID · tham số) | Trigger (CMP-ID "nhãn") | Kiểu | URL / history | Animation | Back / đóng → | Guard / điều kiện | Nền tảng | Basis |
 |---|---|---|---|---|---|---|---|---|---|
-| NAV-PUB-03-1 | SCR-TEST-01 · `slug` | CMP-03 "Start test" | push | route mới `/tests/:slug/take` (push) | mặc định | back trình duyệt → SCR-PUB-03 | bài `sensitive`: SCR-TEST-01 mở ở bước consent (BR-TEST-04) | Web | RS·F-13 |
+| NAV-PUB-03-1 | SCR-TEST-01 · `slug` | CMP-03 "Start test" | push | route mới `/tests/:slug/take` (push) | mặc định | back trình duyệt → SCR-PUB-03 | bài `sensitive`: SCR-TEST-01 mở ở bước consent, có ô "I'm 18 or older." (BR-TEST-04 · BR-TEST-11) | Web | RS·F-13 |
 | NAV-PUB-03-2 | SCR-TEST-01 · `slug`, resume | CMP-08 "Continue where you left off" | push | `/tests/:slug/take` (push) | mặc định | back trình duyệt → SCR-PUB-03 | có tiến độ chưa nộp trên thiết bị | Web | TK-04 (EV-TLW-065) |
 | NAV-PUB-03-3 | SCR-TEST-02 · `resultId` | CMP-08 "See your latest result" | push | `/results/:resultId` (push) | mặc định | back trình duyệt → SCR-PUB-03 | có kết quả gần nhất của bài này trên thiết bị / tài khoản | Web | BR-APP-08 |
 | NAV-PUB-03-4 | SCR-PUB-04 | CMP-04 "See pricing" | push | `/pricing` (push) | mặc định | back trình duyệt → SCR-PUB-03 | — | Web | Q-02 |
-| NAV-PUB-03-5 | external: trang nguồn hỗ trợ khủng hoảng | CMP-06 "Get support now" | external | tab mới | mặc định | đóng tab → SCR-PUB-03 | chỉ bài `sensitive` | Web | Q-06 |
+| NAV-PUB-03-5 | external: trang nguồn hỗ trợ khủng hoảng | CMP-06 "Get support now" | external | tab mới | mặc định | đóng tab → SCR-PUB-03 | chỉ bài `sensitive` | Web | Q-06 · Q-23 |
 | NAV-PUB-03-6 | SCR-PUB-02 | CMP-10 "Browse all tests" | push | `/tests` (push) | mặc định | back trình duyệt → SCR-PUB-03 | chỉ ở state Empty / Error / Locked | Web | in-house |
 
 ## 3. Layout & components
@@ -52,11 +53,11 @@ Trang đích SEO của từng bài: nói thật bài đo gì, dài bao lâu, ch�
 | CMP-ID | Component | Type / GC- | Behavior & rules | Basis (EV / Q / in-house) |
 |---|---|---|---|---|
 | CMP-01 | Header | GC-SiteHeader (public) | theo GC | SYS-NAV §1 |
-| CMP-02 | Hero bài | H1 + mô tả + chip | chip: "[n] questions" · "About [m] min" · "Free summary"; số từ API-CAT-02 (BR-PUB-05) | EV-TLW-053 · EV-TLW-014 |
+| CMP-02 | Hero bài | H1 + mô tả + chip | chip: "[n] questions" · "About [m] min" · "Free summary"; số từ API-CAT-02 (BR-PUB-05); tên bài không dùng tên thương hiệu bên khác (Q-07) | EV-TLW-053 · EV-TLW-014 · Q-07 |
 | CMP-03 | Nút "Start test" | button chính | bắt đầu attempt mới; nếu có attempt dở thì CMP-08 hiện trên nút | RS·F-13 |
 | CMP-04 | "What you'll get" | 2 cột: "Free summary" / "Full report" + link "See pricing" | free: điểm mọi thang + type + giải thích ngắn; full: danh sách chương thật + "About [N] pages" (số thật, TD-02) | RS·F-14 · F-23 |
 | CMP-05 | "How scoring works" | đoạn + danh sách | nêu thang đo, có câu đảo chiều, "Scored with version [v]" | BR-APP-07 · RS·F-14 |
-| CMP-06 | Thông báo bài nhạy cảm | GC-SensitiveNotice | "This is a self-reflection tool, not a diagnosis." + "Get support now" | Q-06 |
+| CMP-06 | Thông báo bài nhạy cảm | GC-SensitiveNotice | "This is a self-reflection tool, not a diagnosis." + "Get support now"; đủ danh sách nguồn hỗ trợ ra mắt của GC, không định vị người dùng (Q-23) | Q-06 · Q-23 |
 | CMP-07 | FAQ | accordion (mở nhiều mục được) + JSON-LD `FAQPage` | câu hỏi về thời gian, riêng tư, giá | tieu-chuan-chung §8 |
 | CMP-08 | Tiếp tục / kết quả gần nhất | thẻ phụ | "Continue where you left off · Question [k] of [n]" hoặc "See your latest result · [date]" | TK-04 · BR-APP-08 |
 | CMP-09 | Footer | GC-SiteFooter | theo GC | SYS-NAV §1 |
@@ -67,7 +68,7 @@ Trang đích SEO của từng bài: nói thật bài đo gì, dài bao lâu, ch�
 | State | Trigger | Hiển thị | EV / basis |
 |---|---|---|---|
 | Default | API-CAT-02 trả bài `published` | đủ CMP-01…09 theo loại bài | EV-TLW-053 |
-| Loading | điều hướng phía client (lần đầu SSR, không có loading) | skeleton hero + 2 khối | tieu-chuan-chung §3 |
+| Loading | điều hướng phía client (lần đầu là HTML render sẵn — SSG + revalidate, Q-09 — không có loading) | skeleton hero + 2 khối | tieu-chuan-chung §3 |
 | Empty | bài `unpublished` (đang cập nhật) | "This test is being updated. Try another test." + link "Browse all tests" | in-house |
 | Error | slug không tồn tại → 404; API lỗi khi điều hướng client | 404: "We couldn't find that test." + "Browse all tests" · lỗi mạng: "Couldn't load this test. Try again." | tieu-chuan-chung §2 |
 | Locked | bài bị tắt theo vùng (cong-nghe-loi §6 #3) | "This test isn't available in your region." + "Browse all tests"; ẩn CMP-03 | cong-nghe-loi §6 |
@@ -76,7 +77,7 @@ Trang đích SEO của từng bài: nói thật bài đo gì, dài bao lâu, ch�
 
 | API | Method | When called |
 |---|---|---|
-| API-CAT-02 | GET | render (SSR) + điều hướng client; trả tên, mô tả, số câu, thời gian median, cờ `sensitive`, trạng thái, danh sách chương report, số trang report, FAQ |
+| API-CAT-02 | GET | render sẵn lúc build + revalidate (SSG, Q-09) + điều hướng client; trả tên, mô tả, số câu, thời gian median, cờ `sensitive`, trạng thái, danh sách chương report, số trang report, FAQ |
 
 Lỗi riêng: 404 → state Error (404). Còn lại theo `00-quy-uoc-api` §4.
 
@@ -113,3 +114,5 @@ Không có ngoại lệ so với `tieu-chuan-chung §5`.
 
 ## 10. AI Notices
 - Nội dung "What you'll get" (chương, số trang) phụ thuộc nội dung report TD-02 của từng bài; số trang phải đo từ PDF thật, không ước lượng.
+- Tên bài, FAQ và JSON-LD theo Q-07 (đã chốt): không MBTI / Myers-Briggs, 16Personalities, CliftonStrengths / StrengthsFinder, DiSC, tên type Enneagram hệ Riso-Hudson; tên bài thật chờ legal review (`bang-quyet-dinh` §2 #5).
+- Trang render sẵn (SSG, Q-09); CMP-06 (GC-SensitiveNotice) giống nhau ở mọi nơi vì không định vị người dùng (Q-23), nên không cần cache theo vùng.

@@ -1,6 +1,7 @@
 # [FLOW-dang-ky-plus] — Đăng ký Plus từ bảng giá
 > Flow tiền thứ hai: user (khách hoặc tài khoản Free) đăng ký Plus (tháng hoặc năm, tự gia hạn) với giá gia hạn, chu kỳ và cách huỷ hiện rõ, consent bằng checkbox không tick sẵn, trả tiền ở checkout của provider và vào dashboard với thử thách 30 ngày đã mở. Màn chính: [SCR-PUB-04](../screens/SCR-PUB-04-bang-gia.md) · [SCR-PAY-02](../screens/SCR-PAY-02-xac-nhan-thanh-toan.md) · [SCR-APP-01](../screens/SCR-APP-01-trang-chu-member.md). Mục lục: [00-so-do-luong-tong](00-so-do-luong-tong.md).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · theo quyết định 2026-09-28: giá thật (Q-03), câu reseller Paddle + tên trên sao kê (Q-04 · Q-24), nhắc 21 / 7 ngày (Q-16), khoá giá (Q-27); thêm KB-7 đổi ý trong 14 ngày qua NAV-PAY-02-5 → SCR-PAY-05 (Q-18 · Q-25); gỡ notice Q-03 / Q-16 / Q-26 đang mở.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · cập nhật theo docs mới hơn: phiên sau checkout khách (SYS-AUTH · SCR-PAY-02 EC-07), 422 `already_entitled` (SCR-PUB-04 EC-06), copy pending cho Plus (cong-nghe-loi §3), API-MAIL-09 + FLOW-quan-ly-huy-gia-han; thêm Q-26 (mốc nhắc gói năm).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
@@ -8,7 +9,7 @@
 
 | code | role | screens spanned (SCR-IDs + route) | status | measured-by (funnel §5) | basis (RS path) |
 |---|---|---|---|---|---|
-| FLOW-dang-ky-plus | money | SCR-PUB-01 `/` · SCR-PUB-03 `/tests/:slug` · SCR-APP-01 `/app` · SCR-PAY-03 `/account/billing` · SCR-PUB-04 `/pricing` · checkout của provider (external) · SCR-PAY-02 `/checkout/return?session=<id>` (nhánh phụ SCR-PAY-01 `/unlock/:resultId` · SCR-PUB-05 `/legal/subscriptions` · SCR-PUB-02 `/tests`) | Draft | ft_unlock · start (`surface` = pricing / app_home) → ft_unlock · checkout_open → ft_unlock · purchase (§5) | `research/apps/testlibrary-web/teardown.md` §4.5 · F-05 · F-08 · F-17 · F-18 · F-29 · `research/research-synthesis.md` §K (K2) · P-02 · CS-09 · CS-10 · CS-21 · Q-02 · Q-03 |
+| FLOW-dang-ky-plus | money | SCR-PUB-01 `/` · SCR-PUB-03 `/tests/:slug` · SCR-APP-01 `/app` · SCR-PAY-03 `/account/billing` · SCR-PUB-04 `/pricing` · checkout của provider (external) · SCR-PAY-02 `/checkout/return?session=<id>` (nhánh phụ SCR-PAY-01 `/unlock/:resultId` · SCR-PUB-05 `/legal/subscriptions` · SCR-PUB-02 `/tests` · SCR-PAY-05 `/cancel`) | Draft | ft_unlock · start (`surface` = pricing / app_home) → ft_unlock · checkout_open → ft_unlock · purchase (§5) | `research/apps/testlibrary-web/teardown.md` §4.5 · F-05 · F-08 · F-17 · F-18 · F-29 · `research/research-synthesis.md` §K (K2) · P-02 · CS-09 · CS-10 · CS-21 · Q-02 · Q-03 · Q-04 · Q-16 · Q-18 · Q-24 · Q-25 · Q-27 |
 
 ## 1. Flow diagram
 
@@ -23,6 +24,7 @@ flowchart TD
     EXT_CHECKOUT -.->|"human trả xong hoặc huỷ · return URL, không phải NAV"| SCR_PAY_02{{"SCR-PAY-02 · Xác nhận thanh toán"}}
     SCR_PAY_02 -->|"paid, Plus: “Go to your dashboard” · replace"| SCR_APP_01
     SCR_PAY_02 -.->|"failed hoặc canceled: “Back to pricing” · push"| SCR_PUB_04
+    SCR_PAY_02 -.->|"paid: “Withdraw from contract here” · push"| SCR_PAY_05["SCR-PAY-05 · Huỷ hoặc rút"]
     SCR_PUB_04 -.->|"đã có Plus: “Manage plan” · push"| SCR_PAY_03
     SCR_PUB_04 -->|"“Subscription & refund terms” · push"| SCR_PUB_05["SCR-PUB-05 · Văn bản pháp lý"]
     SCR_PUB_04 -->|"“Take a free test” / “Take a test to unlock” · push"| SCR_PUB_02["SCR-PUB-02 · Thư viện bài test"]
@@ -32,11 +34,11 @@ flowchart TD
     classDef park fill:#fff3cd,stroke:#b8860b,stroke-width:1px,color:#000;
     classDef payext fill:#ffe6e6,stroke:#cc0000,stroke-width:2px,stroke-dasharray:5 5,color:#000;
     class SCR_PUB_04,SCR_PAY_01,SCR_PAY_02 pay;
-    class SCR_PAY_03 paid;
+    class SCR_PAY_03,SCR_PAY_05 paid;
     class EXT_CHECKOUT payext;
 ```
 
-SCR-PUB-04 là paywall **soft**: luôn có lối ra free liền nét ("Take a free test" / "Take a test to unlock" → SCR-PUB-02). Checkout của provider là bước chỉ human làm (viền đứt). SCR-PAY-01 là bề mặt Plus thứ hai (chi tiết ở FLOW-mo-khoa-report KB-2). Cạnh `return URL` là deep link (SYS-NAV §4), không phải NAV.
+SCR-PUB-04 là paywall **soft**: luôn có lối ra free liền nét ("Take a free test" / "Take a test to unlock" → SCR-PUB-02). Checkout của provider là bước chỉ human làm (viền đứt). SCR-PAY-01 là bề mặt Plus thứ hai (chi tiết ở FLOW-mo-khoa-report KB-2). Cạnh `return URL` là deep link (SYS-NAV §4), không phải NAV. Cạnh NAV-PAY-02-5 tới SCR-PAY-05 là lối đổi ý trong 14 ngày (KB-7); cùng đích còn có link "Withdraw from contract here" ở footer mọi trang (khung SYS-NAV §1, không vẽ).
 
 | SCR-ID | Route | NAV-ID đi qua | Vai trò trong flow |
 |---|---|---|---|
@@ -47,7 +49,8 @@ SCR-PUB-04 là paywall **soft**: luôn có lối ra free liền nét ("Take a fr
 | SCR-PUB-04 | `/pricing` | NAV-PUB-01-3 · NAV-PUB-03-4 · NAV-APP-01-4 · NAV-PAY-03-3 · NAV-PAY-02-4 (vào) · NAV-PUB-04-1 · NAV-PUB-04-2 · NAV-PUB-04-3 · NAV-PUB-04-4 · NAV-PUB-04-5 | paywall chính của Plus: toggle "Monthly" / "Annual", GC-RenewalDisclosure, checkbox consent |
 | SCR-PAY-01 | `/unlock/:resultId` | NAV-PAY-01-2 | bề mặt Plus thứ hai (từ một kết quả) |
 | — (external · checkout provider) | domain của provider (Q-04) | NAV-PUB-04-2 · NAV-PAY-01-2 | human nhập email + thẻ, 3-D Secure nếu có |
-| SCR-PAY-02 | `/checkout/return?session=<id>` | NAV-PAY-02-2 · NAV-PAY-02-4 | chờ webhook, báo kết quả, công bố ngày gia hạn |
+| SCR-PAY-02 | `/checkout/return?session=<id>` | NAV-PAY-02-2 · NAV-PAY-02-4 · NAV-PAY-02-5 | chờ webhook, báo kết quả, công bố ngày gia hạn, tên trên sao kê và hạn rút 14 ngày |
+| SCR-PAY-05 | `/cancel?mode=withdraw&order=<orderNumber>` | NAV-PAY-02-5 (vào) | đổi ý trong 14 ngày: rút, hoàn toàn bộ (KB-7; màn và API ở SCR-PAY-05) |
 | SCR-PUB-05 | `/legal/subscriptions` | NAV-PUB-04-4 | điều khoản gia hạn + hoàn tiền |
 | SCR-PUB-02 | `/tests` | NAV-PUB-04-1 · NAV-PUB-04-5 | lối ra free của paywall soft |
 
@@ -55,9 +58,9 @@ SCR-PUB-04 là paywall **soft**: luôn có lối ra free liền nét ("Take a fr
 
 **KB-1 · Happy — tài khoản Free mở thử thách bằng Plus (K2).**
 1. SCR-APP-01 → thẻ thử thách 30 ngày khoá, có mô tả thật, không popup (BR-DASH-03) → "Unlock with Plus" → SCR-PUB-04 · NAV-APP-01-4.
-2. SCR-PUB-04 → ba thẻ GC-PlanCard theo thứ tự "Free" → "One report" → "Plus"; toggle mặc định "Monthly" (BR-PUB-09) → chọn "Annual"; giá và chu kỳ từ API-PAY-01, giá = placeholder — Q-03 (BR-PUB-07); GC-RenewalDisclosure dưới thẻ Plus; không đồng hồ, không giá gạch (BR-PUB-08).
+2. SCR-PUB-04 → ba thẻ GC-PlanCard theo thứ tự "Free" → "One report" → "Plus"; toggle mặc định "Monthly" (BR-PUB-09) → chọn "Annual" (nhãn "Save 55%"); giá và chu kỳ từ API-PAY-01: "$69.99 per year" + dòng phụ "$5.83 per month, billed yearly" (00-overview §2 · BR-PUB-07); GC-RenewalDisclosure dưới thẻ Plus, câu nhắc với [n] = 21 (gói năm, Q-16); dưới nút: "Changed your mind? Withdraw within 14 days for a full refund."; dưới nhóm thẻ: câu reseller Paddle + "Charges will appear as [descriptor] on your statement." (BR-APP-12 · BR-APP-15); không đồng hồ, không giá gạch (BR-PUB-08).
 3. Tick "I understand Plus renews automatically at [price] per [period] until I cancel. I can cancel anytime in Account → Plan & billing." (mặc định không tick) → "Continue to secure checkout" bật (BR-PUB-10) → API-PAY-02 kèm `consent_version` → trang provider · NAV-PUB-04-2 (external, cùng tab).
-4. Provider (human): trả tiền → return → SCR-PAY-02 "Confirming your payment…" → webhook API-HOOK-01 đã verify → quyền `plus` (BR-APP-01) → "You're all set" + ngày gia hạn kế tiếp + giá gia hạn + cách huỷ (BR-PAY-09).
+4. Provider (human): trả tiền → return → SCR-PAY-02 "Confirming your payment…" → webhook API-HOOK-01 đã verify → quyền `plus` (BR-APP-01) → "You're all set" + ngày gia hạn kế tiếp + giá gia hạn + cách huỷ (BR-PAY-09) + mã đơn, tên trên sao kê (BR-APP-15) + "Changed your mind? You can withdraw until [date] for a full refund." (BR-APP-14).
 5. SCR-PAY-02 → "Go to your dashboard" → SCR-APP-01 · NAV-PAY-02-2 (replace, BR-PAY-10) → thẻ thử thách thành "Day 1 · [action title]" + "Mark as done" (tiếp ở FLOW-thoi-quen-hang-ngay).
 
 **KB-2 · Khách từ landing.**
@@ -78,30 +81,34 @@ SCR-PUB-04 là paywall **soft**: luôn có lối ra free liền nét ("Take a fr
 1. SCR-PUB-04 → "Take a free test" (thẻ Free) → SCR-PUB-02 · NAV-PUB-04-1; hoặc "Take a test to unlock" (thẻ One report — report lẻ luôn gắn với một kết quả, Q-02) → SCR-PUB-02 · NAV-PUB-04-5 → FLOW-lam-bai-mien-phi.
 2. Quốc gia provider không hỗ trợ → SCR-PUB-04 state Locked "Purchases aren't available in your country yet." (thẻ vẫn hiện giá, nút disable) → vẫn đi được bước 1.
 
+**KB-7 · Đổi ý trong 14 ngày.**
+1. SCR-PAY-02 (paid) → "Withdraw from contract here" → SCR-PAY-05 `?mode=withdraw&order=<orderNumber>` · NAV-PAY-02-5 (push). Về sau: cùng link ở footer mọi trang, trong email biên nhận (API-MAIL-02), hoặc "Withdraw and get a refund" ở Gói & thanh toán (NAV-PAY-03-6).
+2. SCR-PAY-05: email + mã đơn (điền sẵn khi có phiên) → "Confirm withdrawal" → API-PAY-08: hoàn toàn bộ qua Paddle, quyền Plus kết thúc ngay (BR-APP-14) → email API-MAIL-11 có ngày giờ nhận yêu cầu. Kỳ gia hạn tháng về sau không rút được, chỉ huỷ gia hạn (Q-18 (c)); mỗi lần gia hạn năm lại rút được trong 14 ngày.
+
 ## 3. Cover-case grid (web)
 
 | Case | Handling / N/A vì |
 |---|---|
-| Happy path | KB-1: NAV-APP-01-4 → NAV-PUB-04-2 → (provider, human) → return → NAV-PAY-02-2. Giá gia hạn, chu kỳ, "tự gia hạn", cách huỷ hiện ở pricing, xác nhận và email (BR-APP-02); consent tường minh (BR-APP-03). Khác đối thủ: chu kỳ tháng hoặc năm thay vì 4 tuần (F-05), consent ở mọi checkout thay vì chỉ một biến thể (F-08 · F-18) |
+| Happy path | KB-1: NAV-APP-01-4 → NAV-PUB-04-2 → (provider, human) → return → NAV-PAY-02-2. Giá gia hạn, chu kỳ, "tự gia hạn", cách huỷ hiện ở pricing, xác nhận và email (BR-APP-02); consent tường minh (BR-APP-03); câu reseller Paddle, tên trên sao kê và quyền rút 14 ngày hiện trước và sau khi mua (BR-APP-12 · BR-APP-15 · BR-APP-14). Khác đối thủ: chu kỳ tháng hoặc năm thay vì 4 tuần (F-05), consent ở mọi checkout thay vì chỉ một biến thể (F-08 · F-18) |
 | Hết quota / hết credits / free limit | Free: thử thách khoá (BR-DASH-03; quyền `challenge` = `plus`, SYS-ENTITLEMENT), report khoá theo từng kết quả. Plus mở mọi report + thử thách (00-overview §2). Đã có Plus → "Manage plan" (NAV-PUB-04-3), không mua trùng; CTA mua lẻ ẩn khi có Plus (SYS-ENTITLEMENT) |
 | Guest (chưa đăng nhập) chạm feature cần tài khoản | Trang giá public; khách checkout được (Q-11), webhook tạo tài khoản từ email provider (SYS-AUTH). "Manage plan" (NAV-PUB-04-3) và `/app` là route `account` → guard `/login?next=`. Khách vừa mua Plus bấm "Go to your dashboard": email mới → có phiên ngay; email đã có tài khoản → magic link (KB-2 · SYS-AUTH · SCR-PAY-02 EC-07) |
 | Rớt mạng giữa chừng | Theo `cong-nghe-loi §3`: API-PAY-01 lỗi → SCR-PUB-04 Error "We couldn't load prices. Please refresh." (nút disable); API-PAY-02 lỗi → ở lại trang, bấm lại được; mất mạng ở SCR-PAY-02 → giữ "Confirming your payment…", poll tiếp khi có mạng; quá 30 s → "still processing" + email biên nhận API-MAIL-02 khi webhook về. Không webhook thì không có subscription (BR-APP-01) |
-| User huỷ giữa chừng (Esc / đóng / rời trang) | Huỷ ở provider → return "Checkout canceled. You haven't been charged." → "Back to pricing" (NAV-PAY-02-4). Back trình duyệt từ provider → SCR-PUB-04 (NAV-PUB-04-2). Đóng tab ở provider → không thu tiền, không `plus`. Rời SCR-PUB-04 lúc nào cũng được, không popup giữ chân (BR-PUB-08) |
+| User huỷ giữa chừng (Esc / đóng / rời trang) | Huỷ ở provider → return "Checkout canceled. You haven't been charged." → "Back to pricing" (NAV-PAY-02-4). Back trình duyệt từ provider → SCR-PUB-04 (NAV-PUB-04-2). Đóng tab ở provider → không thu tiền, không `plus`. Rời SCR-PUB-04 lúc nào cũng được, không popup giữ chân (BR-PUB-08). Đã trả rồi đổi ý: rút trong 14 ngày, hoàn toàn bộ (KB-7 · BR-APP-14) |
 | Double-submit / retry (idempotent) | API-PAY-02 nhận `Idempotency-Key` UUID mỗi lần bấm → bấm đúp ra cùng một phiên checkout (00-quy-uoc-api §5); webhook idempotent theo `event.id` (API-HOOK-01). Sau khi có `plus` nút thành "Manage plan". Tab thứ hai vẫn bấm checkout được khi đã có `plus` → API-PAY-02 cần từ chối (gap, AI Notices) |
 | Reload / đóng tab rồi mở lại (state còn không?) | Theo `cong-nghe-loi §3`: reload SCR-PUB-04 → toggle về "Monthly", checkbox không tick (BR-PUB-09 · BR-APP-03) — consent phải tick lại, cố ý. Reload SCR-PAY-02 → poll lại API-PAY-03 theo `session`, trạng thái từ server (BR-PAY-07). Đóng tab lúc pending → email khi xong (BR-PAY-08) |
 | Mở thẳng URL / link chia sẻ / back-forward vào giữa flow | `/pricing` indexable, vào thẳng từ SEO bình thường. `/checkout/return` thiếu `session` → `/`; phiên của trình duyệt / tài khoản khác → Locked "This checkout isn't linked to this browser. Check your email for your receipt.". Back sau "Go to your dashboard" không về màn chờ (NAV-PAY-02-2 replace · BR-PAY-10). Tham số URL không mở `plus` (BR-PAY-07) |
 | Hai tab / hai thiết bị cùng lúc | Mua ở tab A → tab B (SCR-PUB-04) vẫn hiện nút checkout tới khi tải lại, sau đó thành "Manage plan". Thiết bị khác đăng nhập cùng tài khoản thấy `plus` ngay vì quyền ở server (SYS-ENTITLEMENT). Tab cũ bấm checkout khi đã có `plus` → 422 `already_entitled` → "Manage plan" (SCR-PUB-04 EC-06). Hai phiên checkout song song trước khi webhook về: 422 `purchase_pending` chỉ chặn cùng planKey trong 30 phút (SCR-PUB-04-api) → "Monthly" rồi "Annual" vẫn có thể thu hai lần (gap, AI Notices) |
-| Timezone / đổi giờ | "Next charge" và ngày gia hạn ở SCR-PAY-02 / SCR-PAY-03 hiện theo timezone tài khoản (BR-APP-09 · tieu-chuan-chung §4). Email nhắc (API-JOB-01) tính theo timezone tài khoản, mốc 7 ngày trước kỳ năm và 3 ngày trước kỳ tháng (Q-16, đề xuất). Tài khoản sinh từ webhook không có timezone trình duyệt (gap, FLOW-mo-khoa-report AI Notices) |
-| Config / giá đổi giữa phiên | Giá = placeholder — Q-03, luôn từ API-PAY-01, không hard-code (BR-PUB-07); số tiết kiệm của "Annual" tính từ 00-overview §2 (BR-PUB-09). Provider thu theo giá cấu hình tại checkout và SCR-PAY-02 hiện đúng số đã thu. Câu consent chứa [price] + [period] và gửi `consent_version` (BR-PUB-10); giá đổi giữa lúc tick và lúc bấm → chưa có rule kiểm ở API-PAY-02 (gap) |
+| Timezone / đổi giờ | "Next charge" và ngày gia hạn ở SCR-PAY-02 / SCR-PAY-03 hiện theo timezone tài khoản (BR-APP-09 · tieu-chuan-chung §4). Email nhắc (API-JOB-01) tính theo timezone tài khoản, mốc 21 ngày trước kỳ năm và 7 ngày trước kỳ tháng (Q-16). Hạn rút "withdraw until [date]" ở SCR-PAY-02 cũng hiện theo timezone tài khoản. Tài khoản sinh từ webhook không có timezone trình duyệt (gap, FLOW-mo-khoa-report AI Notices) |
+| Config / giá đổi giữa phiên | Giá hiện hành ở 00-overview §2 ($12.99 / month · $69.99 / year — Q-03), luôn từ API-PAY-01, không hard-code (BR-PUB-07); "Save 55%" và "$5.83 per month" do server tính (BR-PUB-09). Provider thu theo giá cấu hình tại checkout và SCR-PAY-02 hiện đúng số đã thu. Câu consent chứa [price] + [period] và gửi `consent_version` (BR-PUB-10); giá đổi giữa lúc tick và lúc bấm → chưa có rule kiểm ở API-PAY-02 (gap). Đổi bảng giá không đổi giá của subscriber đang có: giữ giá lúc mua (BR-APP-13 · Q-27) |
 | Pending / held (webhook chưa về, 3-D Secure) | 3-D Secure xảy ra ở trang provider trước return. Webhook chưa về → quyền `pending`, thử thách chưa mở (SYS-ENTITLEMENT); SCR-PAY-02 poll 2 s trong tối đa 30 s rồi báo đang xử lý + email (`cong-nghe-loi §3` · BR-PAY-08). Copy "still processing" của Plus: "Your payment is still processing. We'll email you as soon as your Plus plan is active." (cong-nghe-loi §3) |
 
 ## 4. BR references
 
 | BR | Tóm tắt | Định nghĩa tại |
 |---|---|---|
-| BR-PUB-07 | Giá / chu kỳ trên thẻ lấy từ API-PAY-01, không hard-code; placeholder tới Q-03 | SCR-PUB-04 §7 |
+| BR-PUB-07 | Giá / chu kỳ trên thẻ lấy từ API-PAY-01, không hard-code (giá hiện hành 00-overview §2, Q-03) | SCR-PUB-04 §7 |
 | BR-PUB-08 | Không đồng hồ, không "X just bought", không giá gạch, không logo "featured in" | SCR-PUB-04 §7 |
-| BR-PUB-09 | Toggle mặc định Monthly; số tiết kiệm của Annual tính từ 00-overview §2 | SCR-PUB-04 §7 |
+| BR-PUB-09 | Toggle mặc định Monthly; số tiết kiệm của Annual tính từ 00-overview §2 ("Save 55%") | SCR-PUB-04 §7 |
 | BR-PUB-10 | Nút checkout Plus disable tới khi tick consent; gửi `consent_version` | SCR-PUB-04 §7 |
 | BR-PAY-02 | Plus trên trang mở khoá: consent verbatim + `consent_version` | SCR-PAY-01 §7 |
 | BR-PAY-07 | Chỉ hiện "paid" khi webhook xác nhận; URL không mở quyền | SCR-PAY-02 §7 |
@@ -112,9 +119,12 @@ SCR-PUB-04 là paywall **soft**: luôn có lối ra free liền nét ("Take a fr
 | BR-DASH-03 | Free thấy thẻ thử thách khoá kèm mô tả thật, không popup | SCR-APP-01 §7 |
 | BR-APP-01 | Entitlement do server quyết qua webhook | 00-overview §5 |
 | BR-APP-02 | Công bố gia hạn ở mọi bề mặt tiền | 00-overview §5 |
-| BR-APP-03 | Consent gia hạn tường minh; email nhắc trước kỳ thu (Q-16) | 00-overview §5 |
-| BR-APP-04 | Huỷ một bước, dùng tới hết kỳ (được hứa trong câu consent) | 00-overview §5 |
-| BR-APP-12 | Giá theo currency của planKey; thuế tính ở checkout | 00-overview §5 |
+| BR-APP-03 | Consent gia hạn tường minh; email nhắc 21 ngày trước kỳ năm, 7 ngày trước kỳ tháng (Q-16) | 00-overview §5 |
+| BR-APP-04 | Huỷ một bước, dùng tới hết kỳ (được hứa trong câu consent); trong tài khoản hoặc không cần đăng nhập ở `/cancel` | 00-overview §5 |
+| BR-APP-12 | Giá theo currency của planKey; thuế do Paddle (MoR) tính ở checkout; câu reseller trên trang tiền | 00-overview §5 |
+| BR-APP-13 | Khoá giá: subscriber giữ giá lúc mua; tăng giá chỉ khi user đồng ý | 00-overview §5 |
+| BR-APP-14 | Rút trong 14 ngày = hoàn toàn bộ, quyền kết thúc ngay; "Withdraw from contract here" → SCR-PAY-05 | 00-overview §5 |
+| BR-APP-15 | Nói đúng tên trên sao kê trước và sau khi mua | 00-overview §5 |
 
 ## 5. Funnel
 
@@ -125,12 +135,14 @@ SCR-PUB-04 là paywall **soft**: luôn có lối ra free liền nét ("Take a fr
 | Mở checkout | ft_unlock · checkout_open (`plan_key` = plan.plus.monthly hoặc plan.plus.annual) |
 | Trạng thái cuối (goal) | ft_unlock · purchase (success / fail / pending) · `screen_active` · `checkout_return` |
 | Dùng Plus lần đầu | `screen_active` · `app_home` · ft_challenge · start (`day`) |
+| Đổi ý (sau mua, ngoài funnel) | ft_withdrawal · start (`from` = checkout_return / footer / email / billing) → ft_withdrawal · confirm |
 
-Tỉ lệ theo dõi: `pricing` → ft_unlock · checkout_open theo `plan_key` (tỉ trọng annual) · checkout_open → purchase success · tỉ lệ `pending` · purchase success → ft_challenge · start trong 24 giờ. Mọi event chỉ bắn sau consent analytics (tieu-chuan-chung §10); conversion quảng cáo phía server chưa có (Q-12).
+Tỉ lệ theo dõi: `pricing` → ft_unlock · checkout_open theo `plan_key` (tỉ trọng annual) · checkout_open → purchase success · tỉ lệ `pending` · purchase success → ft_challenge · start trong 24 giờ · tỉ lệ rút lần thanh toán đầu của Plus (đếm ở server, bảng đơn hàng) — > 15% trong 30 ngày liên tiếp thì mở lại Q-18 · Q-25 (bang-quyet-dinh §2). Mọi event chỉ bắn sau consent analytics (tieu-chuan-chung §10); conversion quảng cáo phía server chưa có (Q-12).
 
 ## 6. AI Notices
 - **Đã xử lý (2026-09-28) — copy pending cho Plus:** `cong-nghe-loi §3` đã có "Your payment is still processing. We'll email you as soon as your Plus plan is active." Còn lệch: SCR-PAY-02 CMP-02 vẫn ghi bản Plus là "đề xuất", và 422 `purchase_pending` ở SCR-PUB-04-api chỉ có copy nói về report.
 - **Đã xử lý một phần — chặn Plus trùng:** 422 `already_entitled` chặn khi tài khoản đã có `plus` (SCR-PUB-04 EC-06). Còn hở: `purchase_pending` chỉ chặn cùng planKey, nên hai phiên "Monthly" + "Annual" trước khi webhook về vẫn có thể thu hai lần.
 - **Đã xử lý (2026-09-28) — khách mua Plus vào `/app`:** SYS-AUTH "Phiên sau checkout khách" + SCR-PAY-02 EC-07 (v1.1): email mới có phiên ngay, email đã có tài khoản đi magic link (KB-2).
-- Thông báo đổi giá cho subscriber đang có: đã có BR-PUB-11 + API-MAIL-09; phần còn thiếu (job gửi, copy, giá áp từ kỳ nào, có phải đồng ý lại không) ở FLOW-quan-ly-huy-gia-han KB-10 · §6.
-- Mốc email nhắc (Q-16) và giá (Q-03) còn Mở; flow viết theo option đề xuất. Mốc 7 ngày trước kỳ năm lệch cửa sổ 15–45 ngày của CA / NY / NYC → Q-26 (Group D, `research/regulatory-landscape.md` §8).
+- **Đã xử lý (2026-09-28) — đổi giá:** khoá giá (Q-27 · BR-APP-13): subscriber giữ giá lúc mua; tăng giá với subscriber đang có chỉ khi user bấm đồng ý trong email báo 28 ngày trước, không đồng ý thì gói kết thúc cuối kỳ (chi tiết ở FLOW-quan-ly-huy-gia-han).
+- **Đã xử lý (2026-09-28) — mốc nhắc và giá:** Q-16 (21 ngày trước kỳ năm, 7 ngày trước kỳ tháng — giải quyết Q-26) · Q-03 (00-overview §2).
+- Câu reseller, chuỗi trên sao kê và phí Paddle lấy từ tài khoản Paddle thật (bang-quyet-dinh §2 #3); tới lúc đó `[descriptor]` chưa có giá trị.

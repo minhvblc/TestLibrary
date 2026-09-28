@@ -1,6 +1,7 @@
 # [SCR-TEST-01] API — Làm bài
 Refs: `docs/screens/SCR-TEST-01-lam-bai.md` · FLOW-lam-bai-mien-phi · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency — KHÔNG lặp lại ở đây)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): API-TEST-01 thêm `ageConfirmed` (bắt buộc true với bài `sensitive`, lưu vào attempt cùng consent) + lỗi 422 `age_confirmation_required`; 422 của bài `sensitive` không tạo attempt (Q-21 · BR-TEST-11); Q-10 đã chốt.
 - 2026-09-27 · v1 · claude-opus-5-5 · khởi tạo (proposal, exemplar API).
 
 ## 0. Endpoint overview
@@ -13,7 +14,7 @@ Refs: `docs/screens/SCR-TEST-01-lam-bai.md` · FLOW-lam-bai-mien-phi · `00-quy-
 
 ## API-TEST-01 · POST `/v1/attempts`
 
-Tạo attempt mới, hoặc trả attempt đang dở nếu `attemptId` đã tồn tại và thuộc cùng chủ (token khách / tài khoản). Side effect: gắn attempt với `tl_guest` (tạo cookie nếu chưa có) hoặc với user. Auth: khách được.
+Tạo attempt mới, hoặc trả attempt đang dở nếu `attemptId` đã tồn tại và thuộc cùng chủ (token khách / tài khoản). Side effect: gắn attempt với `tl_guest` (tạo cookie nếu chưa có) hoặc với user; bài `sensitive`: lưu `sensitiveConsent` (version + thời điểm) và `ageConfirmed` vào attempt làm bằng chứng consent (SYS-CONSENT). Auth: khách được.
 
 | Body field | Type | Required | Meaning | Basis |
 |---|---|---|---|---|
@@ -21,6 +22,7 @@ Tạo attempt mới, hoặc trả attempt đang dở nếu `attemptId` đã tồ
 | `testSlug` | string | có | bài cần làm | API-CAT-02 |
 | `locale` | string | không | mặc định `en-US` | Q-14 |
 | `sensitiveConsent` | object `{ version: string, grantedAt: ISO-8601 }` | có nếu bài `sensitive` | consent dữ liệu nhạy cảm (CMP-03) | BR-TEST-04 · BR-APP-06 |
+| `ageConfirmed` | boolean | có nếu bài `sensitive` (phải là `true`); bài thường bỏ qua | ô "I'm 18 or older." ở CMP-03 đã tick; không có ngày sinh | BR-TEST-11 · Q-21 |
 
 | Response `data` field | Type | Meaning | Basis |
 |---|---|---|---|
@@ -50,7 +52,8 @@ Tạo attempt mới, hoặc trả attempt đang dở nếu `attemptId` đã tồ
 | Lỗi RIÊNG màn | When | UI reaction (verbatim) |
 |---|---|---|
 | 403 `region_blocked` | bài bị tắt theo vùng | state Locked: "This test isn't available in your region." |
-| 422 `consent_required` | bài `sensitive` mà thiếu `sensitiveConsent` | hiện CMP-03 (không phải lỗi hiển thị) |
+| 422 `consent_required` | bài `sensitive` mà thiếu `sensitiveConsent`; không tạo attempt | hiện CMP-03 (không phải lỗi hiển thị) |
+| 422 `age_confirmation_required` | bài `sensitive` mà `ageConfirmed` không phải `true`; không tạo attempt | giữ CMP-03, focus ô "I'm 18 or older." + "Tick the box to confirm you're 18 or older." (chỉ gặp khi client bị qua mặt, vì nút đã khoá) |
 | 404 `test_not_found` | slug sai / bài gỡ | state Empty: "This test is being updated. Try another test." |
 
 ## API-TEST-02 · PUT `/v1/attempts/{attemptId}/answers`
@@ -73,7 +76,7 @@ Autosave cho tài khoản đã đăng nhập (khách chỉ lưu local). Ghi đè
 
 ## API-TEST-03 · POST `/v1/attempts/{attemptId}/submit`
 
-Nộp toàn bộ đáp án. Server chấm điểm theo `scoringVersion` của attempt (BR-APP-07) và tạo `result`. Side effect: attempt → `submitted`; kết quả gắn chủ; bài `sensitive` lưu cờ trên result (không vào analytics). Auth: khách được.
+Nộp toàn bộ đáp án. Server chấm điểm theo `scoringVersion` của attempt (BR-APP-07 · Q-10) và tạo `result`. Side effect: attempt → `submitted`; kết quả gắn chủ; bài `sensitive` lưu cờ trên result (không vào analytics). Auth: khách được.
 
 | Body field | Type | Required | Meaning | Basis |
 |---|---|---|---|---|

@@ -1,11 +1,12 @@
 # GC-ConsentBanner — banner hỏi consent cookie ở lần đầu (consent-first)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): GPC đã áp dụng theo SYS-CONSENT (Q-20) — banner không hiện khi trình duyệt gửi GPC, prop `gpcSignal`, `stored` thêm `source` · `gpc`; ft_consent save thêm `source` = banner; Q-12 · Q-13 đã chốt; AI Notices cập nhật. §5 thêm SCR-PAY-05.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · D-18: `consentId` đi trong header `Idempotency-Key` của API-CON-01 (schema ở SCR-PUB-07 §5).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
 ## 1. Anatomy (CMP con)
 
-Banner không chặn trang (kiểu `overlay`, SYS-NAV §2). Nó hiện trên mọi trang cho tới khi trình duyệt có một lựa chọn hợp lệ. Trước khi user chọn, chỉ cookie `necessary` được dùng: không tải SDK analytics, không có request bên thứ ba (SYS-CONSENT · BR-APP-05).
+Banner không chặn trang (kiểu `overlay`, SYS-NAV §2). Nó hiện trên mọi trang cho tới khi trình duyệt có một lựa chọn hợp lệ; trình duyệt gửi Global Privacy Control (GPC) thì không hiện (SYS-CONSENT "GPC"). Trước khi user chọn, chỉ cookie `necessary` được dùng: không tải SDK analytics, không có request bên thứ ba (SYS-CONSENT · BR-APP-05).
 
 | CMP con | Thành phần | Nội dung / copy verbatim (en-US) | Ghi chú |
 |---|---|---|---|
@@ -30,7 +31,8 @@ Khung: nền `color.surface`, viền `color.border`, `shadow.overlay`; ba nút c
 | Prop | Kiểu | Mặc định | Ý nghĩa |
 |---|---|---|---|
 | `consentVersion` | string | version hiện hành (cấu hình build) | so với version ghi trong cookie `tl_consent` |
-| `stored` | `{ version, analytics, marketing, decidedAt, consentId }` hoặc null | đọc từ cookie `tl_consent` | null hoặc version cũ → hiện banner |
+| `stored` | `{ version, analytics, marketing, decidedAt, consentId, source, gpc }` hoặc null | đọc từ cookie `tl_consent` | null hoặc version cũ → hiện banner (trừ khi `gpcSignal`); `source` = `banner` · `settings` · `gpc`; `gpc` = trình duyệt có gửi GPC lúc lưu |
+| `gpcSignal` | boolean | `navigator.globalPrivacyControl === true` | true → không render banner; consent manager tự lưu denied theo SYS-CONSENT ("GPC · lưu") |
 | `isSensitiveRoute` | boolean | false | true trên route của bài `sensitive` → vẫn lưu lựa chọn nhưng không tải SDK, không bắn event |
 | `suppressed` | boolean | true trên SCR-PUB-07 | trang cài đặt cookie tự là giao diện chọn nên không hiện banner |
 
@@ -40,7 +42,7 @@ Khung: nền `color.surface`, viền `color.border`, `shadow.overlay`; ba nút c
 |---|---|---|---|
 | Default | chưa có lựa chọn hợp lệ | banner đủ CMP con | SYS-CONSENT |
 | Loading | N/A — banner không chờ mạng: render từ cookie cục bộ; bấm nút thì ghi cookie ngay, API-CON-01 chạy nền | — | SYS-CONSENT |
-| Empty | đã có lựa chọn hợp lệ, hoặc đang ở SCR-PUB-07 | không render banner | SYS-CONSENT |
+| Empty | đã có lựa chọn hợp lệ, đang ở SCR-PUB-07, hoặc trình duyệt gửi GPC | không render banner | SYS-CONSENT · Q-20 |
 | Error | API-CON-01 lỗi; trình duyệt chặn cookie | API lỗi: không báo gì trên banner, thử lại ngầm ở lần tải trang sau (cùng `consentId`, idempotent). Chặn cookie: lựa chọn chỉ giữ trong bộ nhớ của trang hiện tại; lần tải sau banner hiện lại và không tải gì khi chưa được chọn lại | api-mapping (API-CON-01) · cong-nghe-loi §3 |
 | Locked | N/A — banner dành cho mọi người, không có nội dung khoá | — | Q-13 |
 | hover | con trỏ trên nút | cả ba nút đổi nền giống hệt nhau (`color.surface-muted`) để giữ ngang hàng | BR-PUB-13 |
@@ -53,17 +55,18 @@ GC hiện thực BR-APP-05 và các BR của SCR-PUB-07 (BR-PUB-13 · BR-PUB-14)
 
 | Rule | Mô tả | Basis |
 |---|---|---|
-| Khi nào hiện | chưa có cookie `tl_consent` hợp lệ, hoặc version cũ, hoặc đã quá 12 tháng; ở mọi vùng; mọi route trừ SCR-PUB-07 | Q-13 · SYS-CONSENT · cong-nghe-loi §4 |
+| Khi nào hiện | chưa có cookie `tl_consent` hợp lệ, hoặc version cũ, hoặc đã quá 12 tháng; ở mọi vùng; mọi route trừ SCR-PUB-07; trình duyệt không gửi GPC | Q-13 · Q-20 · SYS-CONSENT · cong-nghe-loi §4 |
+| GPC | `gpcSignal` = true → không render (kể cả variant `re-ask`); lựa chọn analytics + marketing = denied do consent manager tự lưu với `source` = `gpc` (API-CON-01 chạy nền); không SDK, không event. User muốn bật lại thì vào SCR-PUB-07 (footer "Cookie settings"). Rule đầy đủ (ghi đè, bật lại) chỉ ở SYS-CONSENT | Q-20 · SYS-CONSENT |
 | Mặc định tắt | trước khi chọn: chỉ `necessary`; analytics + marketing = denied; không tải SDK; 0 request bên thứ ba | BR-APP-05 · tieu-chuan-chung §9 · §10 · TD-04 |
 | Ngang hàng | "Accept all" và "Reject all" cùng kiểu, cùng kích thước, cùng độ đậm, cùng hàng; "Manage" cũng cùng kiểu; không nút nào được tô nổi hơn | BR-PUB-13 · tieu-chuan-chung §10 |
 | Không chặn trang | không scrim, không khoá cuộn, không `aria-modal`; trang vẫn dùng bình thường khi banner đang mở | SYS-NAV §2 |
 | Không có ✕ | không có nút đóng; bỏ qua banner = chưa đồng ý (vẫn denied), banner hiện lại ở trang sau | in-house |
-| "Accept all" | analytics + marketing = granted → ghi cookie `tl_consent` (12 tháng) → ẩn banner → gọi API-CON-01 chạy nền → `AppTracking` tải SDK (nếu route không phải bài `sensitive`) → bắn ft_consent start (`from` = banner) + save (`analytics` = granted, `marketing` = granted) → bắn screen_active cho route hiện tại một lần | BR-PUB-14 · SYS-CONSENT · tracking-events |
+| "Accept all" | analytics + marketing = granted → ghi cookie `tl_consent` (12 tháng) → ẩn banner → gọi API-CON-01 chạy nền → `AppTracking` tải SDK (nếu route không phải bài `sensitive`) → bắn ft_consent start (`from` = banner) + save (`analytics` = granted, `marketing` = granted, `source` = banner) → bắn screen_active cho route hiện tại một lần | BR-PUB-14 · SYS-CONSENT · tracking-events |
 | Không đệm event | không gom rồi phát lại event xảy ra trước consent | BR-APP-05 |
 | "Reject all" | analytics + marketing = denied → ghi cookie + API-CON-01 → ẩn banner; không SDK, không event nào (kể cả ft_consent) | tracking-events · BR-APP-05 |
 | "Manage" | push tới `/cookie-settings`; lưu ở trang đó thì banner hết ở mọi trang | SYS-CONSENT |
 | Route bài `sensitive` | vẫn hiện banner nếu chưa chọn; "Accept all" thì lưu lựa chọn nhưng KHÔNG tải SDK và KHÔNG bắn ft_consent trên route này (không hoãn sang route sau) | BR-APP-06 · SYS-CONSENT |
-| Lưu trước, đồng bộ sau | cookie ghi ngay nên lựa chọn có hiệu lực tức thì; API-CON-01 gửi `consentId` (UUID client, đi trong header `Idempotency-Key` — 00-quy-uoc-api §5; schema ở SCR-PUB-07 §5), version, lựa chọn, thời điểm, nguồn (`banner`) | API-CON-01 · SYS-CONSENT |
+| Lưu trước, đồng bộ sau | cookie ghi ngay nên lựa chọn có hiệu lực tức thì; API-CON-01 gửi `consentId` (UUID client, đi trong header `Idempotency-Key` — 00-quy-uoc-api §5; schema ở SCR-PUB-07 §5), version, lựa chọn, thời điểm, `source` = `banner`, `gpc` = false | API-CON-01 · SYS-CONSENT |
 | Thứ tự DOM & focus | banner đặt ở đầu DOM (ngay sau skip link của GC-SiteHeader), `role="region"` + accessible name "Cookie choices"; không tự lấy focus; chọn xong thì focus về đầu `<main>` và `live-region` đọc "Your cookie choices are saved." | tieu-chuan-chung §5 |
 | Không che nội dung | khi banner mở, trang chừa khoảng dưới bằng chiều cao banner và đặt `scroll-padding-bottom` tương ứng để phần tử đang focus không bị che; thanh dính đáy của màn (vd SCR-PUB-03 @390) nằm trên banner | tieu-chuan-chung §5 (WCAG 2.2 AA) |
 | First-party | banner là code của mình, không dùng CMP bên thứ ba; không tải font / ảnh từ domain khác | TD-04 · tieu-chuan-chung §9 |
@@ -78,7 +81,7 @@ GC hiện thực BR-APP-05 và các BR của SCR-PUB-07 (BR-PUB-13 · BR-PUB-14)
 | SCR-PUB-03 | có, tới khi chọn | bài `sensitive`: lưu lựa chọn, không tải SDK |
 | SCR-PUB-07 | không | trang tự là nơi chọn (CMP-03 … CMP-06) |
 | SCR-TEST-01 · SCR-TEST-02 | có, tới khi chọn | bài `sensitive`: không tải SDK, không event (BR-APP-06); ở 390 trang chừa khoảng dưới để banner không che 5 đáp án |
-| SCR-PAY-01 · SCR-PAY-02 · SCR-PAY-03 · SCR-PAY-04 | có, tới khi chọn | — |
+| SCR-PAY-01 · SCR-PAY-02 · SCR-PAY-03 · SCR-PAY-04 · SCR-PAY-05 | có, tới khi chọn | SCR-PAY-05 (`/cancel`, Q-25) là trang public mới |
 | SCR-AUTH-01 | có, tới khi chọn | — |
 | SCR-APP-01 · SCR-APP-02 · SCR-APP-03 | có, tới khi chọn | SCR-APP-03 của bài `sensitive`: như SCR-PUB-03 |
 | SCR-ACC-01 · SCR-ACC-02 | có, tới khi chọn | — |
@@ -103,12 +106,13 @@ GC hiện thực BR-APP-05 và các BR của SCR-PUB-07 (BR-PUB-13 · BR-PUB-14)
 | Route bài `sensitive` không tải analytics dù đã consent | BR-APP-06 · Q-06 |
 | Lưu cookie 12 tháng + bản ghi server | SYS-CONSENT · cong-nghe-loi §4 · API-CON-01 |
 | ft_consent chỉ khi analytics granted | tracking-events |
+| GPC = "Reject all": không hiện banner, lưu `source` = `gpc` | Q-20 · SYS-CONSENT |
 
 ## 8. AI Notices
 - Viết bởi claude (subagent) ở Phase 4 từ spec blueprint + SYS-CONSENT + tracking-events.
-- Copy banner là đề xuất. Câu chữ và danh mục cookie phải khớp `go-to-market/legal-consent.md` §2–3 khi file đó được viết (tieu-chuan-chung §10).
+- Copy banner ở §1 là nguồn duy nhất; `go-to-market/legal-consent.md` §3 chép nguyên văn, danh mục cookie ở legal-consent §2. Chờ legal review trước launch (`bang-quyet-dinh` §2 #2).
 - Link "Cookie policy" trong banner là một lối vào SCR-PUB-05 chưa có trong danh sách "Vào" của blueprint. SCR-PUB-05 nên ghi thêm "(+ GC-ConsentBanner 'Cookie policy')".
-- "Accept all" ghi cả marketing = granted dù MVP chưa có script marketing nào (Q-12), để khớp nút "Accept all" ở SCR-PUB-07. Trước khi thêm bất kỳ script marketing nào phải tăng version để hỏi lại.
+- "Accept all" ghi cả marketing = granted dù MVP chưa có script marketing nào (Q-12), để khớp nút "Accept all" ở SCR-PUB-07. Trước khi thêm bất kỳ script marketing nào phải tăng version để hỏi lại; khi có, conversion phía server không chạy khi trình duyệt gửi GPC (Q-12 · SYS-CONSENT).
 - Giả định: lựa chọn gắn theo trình duyệt (cookie), không đồng bộ theo tài khoản. Chưa owner doc nào nói điều này.
-- Đề xuất, chưa áp dụng: tôn trọng tín hiệu Global Privacy Control (có GPC thì marketing luôn denied). Cần human quyết cùng Q-13.
+- GPC đã áp dụng (Q-20, 2026-09-28): coi như "Reject all" cho analytics + marketing, banner không hiện, lựa chọn lưu với `source` = `gpc`. Rule nằm ở SYS-CONSENT; GC này chỉ đọc `gpcSignal`.
 - Font tự host (FND-tokens §2) là điều kiện để giữ 0 request bên thứ ba trước consent (tieu-chuan-chung §9). Đổi sang font CDN sẽ phá quy tắc "First-party" ở §4.

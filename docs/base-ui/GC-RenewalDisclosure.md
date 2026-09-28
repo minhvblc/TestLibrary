@@ -1,5 +1,6 @@
 # GC-RenewalDisclosure — công bố gia hạn dùng chung cho mọi bề mặt tiền và email
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · `reminderDays` = 7 (tháng) / 21 (năm) theo Q-16, bỏ 3 / 7 cũ; variant `email` thêm câu tên trên sao kê (Q-24) để đủ nội dung nhắc hằng năm; giá thật cite 00-overview §2 (Q-03); gỡ notice thuế (Q-04: giá chưa gồm thuế) và notice Q-16 đang mở.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
 ## 1. Anatomy (CMP con)
@@ -12,9 +13,9 @@ Một khối chữ nói rõ: giá, chu kỳ, việc tự gia hạn, ngày thu k�
 | `terms` | 1–4 câu, `type.body`, màu `color.text` | không dùng `type.caption`, không dùng màu nhạt, không in nghiêng |
 | `next-charge` | dòng số tiền + ngày | thiếu số liệu thì ẩn cả dòng; màn đã có dòng "Next charge" riêng thì tắt bằng `showNextCharge` |
 | `cancel-how` | câu chỉ đường huỷ | trên web là chữ chỉ dẫn, không phải link (xem §4) |
-| `reminder` | câu về email nhắc | `[n]` lấy từ `renewalReminderDays` của API-PAY-01 (Q-16) |
+| `reminder` | câu về email nhắc | `[n]` lấy từ `renewalReminderDays` (API-PAY-01; `post-purchase`: API-PAY-03): 7 với gói tháng, 21 với gói năm (Q-16) |
 
-Placeholder trong copy: `[price]` / `[amount]` = số tiền định dạng Intl en-US + currency của planKey; `[period]` = "month" hoặc "year"; `[date]` = kiểu "October 12, 2026" theo timezone tài khoản (khách: timezone trình duyệt); `[n]` = số ngày nhắc trước. Giá thật của mình = placeholder — Q-03.
+Placeholder trong copy: `[price]` / `[amount]` = số tiền định dạng Intl en-US + currency của planKey; `[period]` = "month" hoặc "year"; `[date]` = kiểu "October 12, 2026" theo timezone tài khoản (khách: timezone trình duyệt); `[n]` = số ngày nhắc trước (7 với gói tháng, 21 với gói năm — Q-16); `[descriptor]` = chuỗi trên sao kê (`statementDescriptor`, Q-24). Giá hiện hành ở 00-overview §2 (Plus: $12.99 per month · $69.99 per year — Q-03); copy luôn điền số từ API.
 
 ## 2. Props / variants
 
@@ -24,11 +25,11 @@ Copy dưới đây là verbatim (en-US). Số thứ tự chỉ để đếm câu
 |---|---|---|
 | `pre-purchase` · Plus | SCR-PUB-04 (trong thẻ Plus) · SCR-PAY-01 (khi chọn Plus); luôn nằm ngay trên checkbox consent | 1 "Plus renews automatically at [price] per [period] until you cancel." · 2 "If you subscribe today, your next payment will be on [date]." · 3 "Cancel anytime in Account → Plan & billing. You'll keep Plus until the end of the period you've paid for." · 4 "We'll email you a reminder [n] days before each renewal." |
 | `pre-purchase` · một lần | SCR-PAY-01 khi chọn "This report" (nếu màn muốn hiện) | "One-time payment. No subscription — nothing renews." |
-| `post-purchase` | SCR-PAY-02 ở trạng thái paid, khi mua Plus | 1 "Plus renews automatically every [period]." · 2 "Next charge: [amount] on [date]." · 3 "We'll email you a reminder [n] days before." · 4 "Cancel anytime in Account → Plan & billing. You'll keep Plus until the end of the period you've paid for." |
+| `post-purchase` | SCR-PAY-02 ở trạng thái paid, khi mua Plus (`[n]` = `renewalReminderDays` của API-PAY-03: 7 / 21) | 1 "Plus renews automatically every [period]." · 2 "Next charge: [amount] on [date]." · 3 "We'll email you a reminder [n] days before." · 4 "Cancel anytime in Account → Plan & billing. You'll keep Plus until the end of the period you've paid for." |
 | `billing` · Active | SCR-PAY-03 CMP-03 khi Plus đang tự gia hạn · SCR-PAY-04 CMP-03 (lần thu này sẽ dừng nếu huỷ) | nhãn "Active" · "Next charge: [amount] on [date]." · "Plus renews automatically every [period] until you cancel." |
 | `billing` · Cancels on | SCR-PAY-03 CMP-03 khi đã lên lịch huỷ, còn trong kỳ | nhãn "Cancels on [date]" · "No upcoming charges" · "You'll keep Plus until [date]. After that, you won't be charged again." |
 | `billing` · Free | SCR-PAY-03 CMP-03 khi không có gói trả phí | nhãn "Free" · "No upcoming charges" |
-| `email` · nhắc gia hạn | API-MAIL-03, gửi theo mốc Q-16 | tiêu đề "Your Plus plan renews on [date]" · 1 "Your Plus plan renews automatically on [date]." · 2 "We'll charge [amount] for another [period]." · 3 "Don't want to renew? Cancel renewal — you'll keep Plus until [date]." (link "Cancel renewal" → `/account/billing/cancel`, SCR-PAY-04) · 4 link "Manage your plan" → `/account/billing` (SCR-PAY-03) |
+| `email` · nhắc gia hạn | API-MAIL-03, gửi 21 ngày trước kỳ năm và 7 ngày trước mỗi kỳ tháng (Q-16); đủ nội dung nhắc hằng năm: tên gói, chu kỳ, số tiền, ngày thu, tên trên sao kê, cách huỷ | tiêu đề "Your Plus plan renews on [date]" · 1 "Your Plus plan renews automatically on [date]." · 2 "We'll charge [amount] for another [period]." · 3 "Charges will appear as [descriptor] on your statement." · 4 "Don't want to renew? Cancel renewal — you'll keep Plus until [date]." (link "Cancel renewal" → `/account/billing/cancel`, SCR-PAY-04) · 5 link "Manage your plan" → `/account/billing` (SCR-PAY-03) |
 
 | Prop | Kiểu | Mặc định | Ý nghĩa |
 |---|---|---|---|
@@ -39,7 +40,7 @@ Copy dưới đây là verbatim (en-US). Số thứ tự chỉ để đếm câu
 | `showNextCharge` | boolean | true | false khi màn đã có dòng "Next charge" riêng (SCR-PAY-02 CMP-03) |
 | `subscriptionStatus` | `active` · `canceled` · `past_due` · `none` | `none` | chỉ `billing`; `canceled` = đã lên lịch huỷ, còn trong kỳ |
 | `periodEnd` | ISO-8601 hoặc null | null | ngày hết quyền khi đã huỷ (dùng cho "Cancels on [date]") |
-| `reminderDays` | integer | theo `renewalReminderDays` của API-PAY-01 (`month` · `year`) | hiện là 3 và 7 theo đề xuất Q-16 (đang mở) |
+| `reminderDays` | integer | theo `renewalReminderDays` của API-PAY-01 (`month` · `year`); `post-purchase` theo API-PAY-03 | 7 với gói tháng, 21 với gói năm (Q-16) |
 | `id` | string | tự sinh | để checkbox consent của màn trỏ `aria-describedby` vào |
 
 ## 3. States (5) + hover / focus / disabled
@@ -69,7 +70,7 @@ GC hiện thực BR-APP-02 và BR-APP-03; không có BR riêng.
 | Hiện rõ, không phải chữ nhỏ | luôn hiện đủ, không accordion, tooltip hay "Read more"; `type.body` + `color.text`; đặt NGAY sau giá và TRƯỚC checkbox / nút mua, không đặt dưới nút | BR-APP-02 · tieu-chuan-chung §4 · RS·F-17 · F-18 |
 | Không link trong GC (web) | "Account → Plan & billing" là chữ chỉ đường; màn tự đặt nút / link của mình, để không sinh cạnh điều hướng chưa khai ở SCR §2.2. Riêng email thì có link (API-MAIL-03 → SCR-PAY-04 và SCR-PAY-03) | SYS-NAV §2 · api-mapping §2 |
 | Huỷ đúng như BR | câu huỷ khớp BR-APP-04: một bước, giữ quyền tới hết kỳ đã trả (khác đối thủ: "take effect immediately") | BR-APP-04 · Q-18 · RS·F-11 |
-| Email nhắc | `[n]` = 3 ngày với gói tháng, 7 ngày với gói năm (đề xuất Q-16); job API-JOB-01 gửi API-MAIL-03; vào từ email khi chưa đăng nhập thì đăng nhập bằng magic link rồi quay lại đúng trang | BR-APP-03 · Q-16 · API-JOB-01 · BR-PAY-16 |
+| Email nhắc | `[n]` = 7 ngày với gói tháng, 21 ngày với gói năm (Q-16); job API-JOB-01 gửi API-MAIL-03 qua Postmark; email có tên gói, chu kỳ, số tiền, ngày thu, tên trên sao kê và link huỷ (variant `email`); vào từ email khi chưa đăng nhập thì đăng nhập bằng magic link rồi quay lại đúng trang | BR-APP-03 · Q-16 · Q-24 · API-JOB-01 · BR-PAY-16 |
 | `past_due` | gia hạn thất bại, còn thời gian ân hạn: nhãn vẫn "Active", ẩn `next-charge` (lịch thu lại tuỳ provider); banner CMP-08 của SCR-PAY-03 giải thích | BR-PAY-13 · Q-04 |
 | Định dạng | tiền Intl en-US + currency của planKey; ngày kiểu "October 12, 2026" theo timezone tài khoản (khách: timezone trình duyệt) | tieu-chuan-chung §4 · BR-APP-09 · BR-APP-12 |
 | Không marketing | không "Best value", "Save", giảm giá hay emoji bên trong disclosure | RS·F-18 |
@@ -94,7 +95,7 @@ GC hiện thực BR-APP-02 và BR-APP-03; không có BR riêng.
 |---|---|---|---|
 | Bố cục | rộng hết khối chứa; câu tự xuống dòng, không cắt | như 390 | như 390, rộng theo thẻ / khối chứa |
 | Cỡ chữ | `type.body` ở mọi viewport (không thu nhỏ trên mobile) | như 390 | như 390 |
-| Email | một cột, chữ thường; bản plain-text có đủ 4 câu và URL đầy đủ | như 390 | như 390 |
+| Email | một cột, chữ thường; bản plain-text có đủ mọi câu của variant và URL đầy đủ | như 390 | như 390 |
 
 ## 7. Basis (EV / Q)
 
@@ -110,8 +111,8 @@ GC hiện thực BR-APP-02 và BR-APP-03; không có BR riêng.
 
 ## 8. AI Notices
 - Viết bởi claude (subagent) ở Phase 4 từ spec blueprint + BR-APP-02 · BR-APP-03, rồi chỉnh cho khớp `docs/api/SCR-PUB-04-api.md` (`renewalPrice`, `consent`, `renewalReminderDays`) và CMP của SCR-PUB-04 · SCR-PAY-01 · SCR-PAY-02 · SCR-PAY-03 · SCR-PAY-04.
-- Toàn bộ câu chữ là đề xuất AI. Cần review pháp lý (luật gia hạn tự động theo vùng, Q-05 · Q-18) trước FREEZE. Mỗi lần đổi câu phải tăng `consent.version`.
+- Câu chữ do AI viết. Q-05 · Q-16 · Q-18 đã chốt (một bộ bảo vệ cho mọi khách) nhưng vẫn cần legal review trước launch (bang-quyet-dinh §2 #2). Mỗi lần đổi câu phải tăng `consent.version`.
 - Ngày ở câu 2 của `pre-purchase` là ước tính phía client (hôm nay + 1 kỳ). Cuối tháng provider có thể lùi về ngày cuối của tháng sau, nên ngày đúng là ngày ở `post-purchase`. Nếu legal muốn tránh mọi sai lệch thì bỏ câu 2 hoặc để API-PAY-01 trả ngày.
-- `[n]` ngày nhắc phụ thuộc Q-16 (đang mở, AI đề xuất 3 / 7 ngày).
-- Không chắc `[price]` là giá trước hay sau thuế: phụ thuộc Q-04. Nếu là giá trước thuế thì màn phải có "Taxes calculated at checkout." ngay cạnh disclosure (SCR-PAY-01 đã có ở CMP-10; SCR-PUB-04 chưa có).
+- `[price]` là giá trước thuế (Q-03 · Q-04); "Taxes calculated at checkout." nằm trong câu reseller của màn (SCR-PUB-04 CMP-12 · SCR-PAY-01 CMP-10).
+- `[descriptor]` ở variant `email` lấy từ giao dịch thử thật; verify khi mở tài khoản Paddle (bang-quyet-dinh §2 #3).
 - Template email API-MAIL-02 / API-MAIL-04 chưa ghi là dùng GC này. Đây là gap so với BR-APP-02.

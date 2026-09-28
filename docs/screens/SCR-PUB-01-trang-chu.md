@@ -6,6 +6,7 @@
 | SCR-PUB-01 | PUB | Short | Web | `/` | public | index | 390 · 768 · 1280 | FLOW-lam-bai-mien-phi | Draft | (sau design) | `tracking-events.md` → `home` | §5 (inline) | **EV-TLW-013 · EV-TLW-014 · SC-TLW-01 · basis RS·F-03 · F-14 · CS-01** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice "science-based" cập nhật theo Q-07 đã chốt (2026-09-28). Bỏ chữ "SSR" (Q-09: route public render sẵn bằng SSG + revalidate).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose
@@ -62,7 +63,7 @@ Landing cho người mới: nói ngắn sản phẩm là gì (bài test chấm �
 | State | Trigger | Hiển thị | EV / basis |
 |---|---|---|---|
 | Default | API-CAT-01 trả ≥ 1 bài nổi bật | đủ CMP-01…07 | EV-TLW-013 |
-| Loading | điều hướng phía client (lần đầu SSR, không có loading) | hero hiện ngay; skeleton 6 card trong CMP-03 | tieu-chuan-chung §3 |
+| Loading | điều hướng phía client (lần đầu là HTML render sẵn, không có loading) | hero hiện ngay; skeleton 6 card trong CMP-03 | tieu-chuan-chung §3 |
 | Empty | API-CAT-01 trả 0 bài nổi bật | ẩn lưới CMP-03, hiện CMP-08 "Browse all tests" (NAV-PUB-01-5) | in-house |
 | Error | API-CAT-01 lỗi (mạng / 5xx) | hero vẫn hiện + "We couldn't load tests. Try again." (nút thử lại gọi lại API-CAT-01) | tieu-chuan-chung §2 |
 | Locked | N/A — trang public, không có nội dung khoá | — | 00-overview §3 |
@@ -71,7 +72,7 @@ Landing cho người mới: nói ngắn sản phẩm là gì (bài test chấm �
 
 | API | Method | When called |
 |---|---|---|
-| API-CAT-01 | GET | render (SSR) + điều hướng client; tham số `featured=true` · `limit=6`; trả `slug`, tên, mô tả ngắn, chủ đề, số câu, thời gian median, cờ `sensitive` |
+| API-CAT-01 | GET | lúc render sẵn trang (SSG + revalidate, Q-09) + điều hướng client; tham số `featured=true` · `limit=6`; trả `slug`, tên, mô tả ngắn, chủ đề, số câu, thời gian median, cờ `sensitive` |
 
 Lỗi riêng: không có. Lỗi mạng / 5xx → state Error. Còn lại theo `00-quy-uoc-api` §4.
 
@@ -94,7 +95,7 @@ Lỗi riêng: không có. Lỗi mạng / 5xx → state Error. Còn lại theo `0
 | EC-02 | Vào ngay sau khi xoá tài khoản (SCR-ACC-02) | toast (overlay, SYS-NAV §2) "Your account is scheduled for deletion. Sign in within 30 days to restore it."; cờ hiển thị là cờ một lần trong sessionStorage do SCR-ACC-02 đặt, không đưa lên URL | BR-APP-11 |
 | EC-03 | Vào sau "Sign out" | header public; các tab khác của site cũng về `/` | tieu-chuan-chung §1 · BR-APP-10 |
 | EC-04 | Có bài `sensitive` trong 6 bài nổi bật | card có nhãn "Wellbeing · Not a diagnosis"; không event nào của landing mang slug bài | BR-PUB-03 · BR-APP-05 |
-| EC-05 | JavaScript tắt | trang SSR đọc được đủ, mọi CTA là link thật | cong-nghe-loi §3 · tieu-chuan-chung §8 |
+| EC-05 | JavaScript tắt | trang render sẵn đọc được đủ, mọi CTA là link thật | cong-nghe-loi §3 · tieu-chuan-chung §8 |
 
 ## 8. Responsive deltas
 
@@ -112,5 +113,5 @@ Không có ngoại lệ so với `tieu-chuan-chung §5`.
 ## 10. AI Notices
 - Copy hero và "How it works" là đề xuất theo blueprint. Khi `go-to-market/landing-copy.md` có bản chốt thì copy ở đó là nguồn, file này cập nhật theo.
 - Link "Browse all tests" ở state Empty trỏ `/tests` nhưng chưa có cạnh NAV riêng (cùng đích với NAV-PUB-01-2). Cần thêm cạnh nếu giữ link này.
-- Câu phụ hero đã bỏ chữ "science-based" (chưa có basis tới khi Q-07 chốt nguồn thang đo) và đổi "Your full results, explained" thành "Every score explained" để không bị hiểu là report trả phí (review go-to-market).
+- Câu phụ hero đã bỏ chữ "science-based" (Q-07 đã chốt: chữ này chỉ dùng cho bài dựng trên thang đã kiểm định như IPIP, không cho bài tự soạn; hero nói về mọi bài nên không dùng) và đổi "Your full results, explained" thành "Every score explained" để không bị hiểu là report trả phí (review go-to-market).
 - SEO: meta lấy từ `go-to-market/seo-meta.md` (row `/`); JSON-LD `Organization` (tieu-chuan-chung §8).

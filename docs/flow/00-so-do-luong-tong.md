@@ -1,6 +1,7 @@
 # 00-so-do-luong-tong — master flow map (TestLib, web)
 > Bản đồ tổng của 20 màn + mục lục 7 flow. Nguồn sự thật của điều hướng là bảng cạnh §2.2 của từng màn (`NAV-…`) và graph sinh ở `docs/base-ui/SYS-NAV.md` §7; sơ đồ dưới đây chỉ minh hoạ và cite lại các cạnh đó.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.3 · claude-opus-5-5 · tên node SCR-PAY-05 theo `00-overview` §3 ("Huỷ hoặc rút"); bảng FLOW §2: SCR-PAY-05 là nhánh phụ của FLOW-mo-khoa-report và FLOW-dang-ky-plus (NAV-PAY-02-5).
 - 2026-09-28 · v1.2 · claude-opus-5-5 · quyết định 2026-09-28 (Q-18 · Q-25): thêm màn SCR-PAY-05 `/cancel` (huỷ / rút không cần đăng nhập) + 7 cạnh push (NAV-PUB-06-4 · NAV-PAY-02-5 · NAV-PAY-03-6 · NAV-PAY-04-3 · NAV-PAY-05-1 · NAV-PAY-05-2 · NAV-PAY-05-3) và 1 cạnh inline (NAV-PAY-05-4); 19 → 20 màn.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · vẽ thêm 7 cạnh push có trong §2.2 của màn nhưng thiếu ở sơ đồ (NAV-PUB-01-5 · NAV-PUB-03-6 · NAV-TEST-01-8 · NAV-TEST-02-8 · NAV-TEST-02-9 · NAV-AUTH-01-5 · NAV-ACC-02-4), thêm 2 cạnh inline vào danh sách không vẽ (NAV-APP-02-4 · NAV-TEST-02-10); FLOW-quyen-rieng-tu thêm nhánh phụ SCR-APP-02 · SCR-TEST-02; 3 file FLOW còn thiếu đã được viết.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
@@ -29,7 +30,7 @@ flowchart TD
         SCR_PAY_02{{"SCR-PAY-02 · Xác nhận thanh toán"}}
         SCR_PAY_03["SCR-PAY-03 · Gói & thanh toán"]
         SCR_PAY_04["SCR-PAY-04 · Huỷ gia hạn"]
-        SCR_PAY_05["SCR-PAY-05 · Huỷ hoặc rút không cần đăng nhập"]
+        SCR_PAY_05["SCR-PAY-05 · Huỷ hoặc rút"]
     end
     subgraph APPACC ["App / Account"]
         SCR_AUTH_01["SCR-AUTH-01 · Đăng nhập"]
@@ -149,8 +150,8 @@ Nhóm màn theo subgraph và cạnh đã vẽ:
 |---|---|---|---|---|
 | FLOW-lam-bai-mien-phi | Làm bài miễn phí → kết quả tóm tắt chấm thật (có nhánh consent bài `sensitive`) | activation | SCR-PUB-01 · SCR-PUB-02 · SCR-PUB-03 · SCR-TEST-01 · SCR-TEST-02 (nhánh phụ SCR-PUB-05 · SCR-PUB-06; lối ra SCR-PAY-01) | [FLOW-lam-bai-mien-phi.md](FLOW-lam-bai-mien-phi.md) |
 | FLOW-luu-ket-qua-dang-nhap | Lưu kết quả bằng email → magic link → đăng nhập, quay lại đúng trang | activation | SCR-TEST-02 · SCR-AUTH-01 · SCR-APP-01 · SCR-APP-02 (nhánh phụ SCR-APP-03 · SCR-PUB-05) | [FLOW-luu-ket-qua-dang-nhap.md](FLOW-luu-ket-qua-dang-nhap.md) |
-| FLOW-mo-khoa-report | Mở khoá report đầy đủ của một kết quả (mua lẻ hoặc Plus) | money | SCR-TEST-02 · SCR-PAY-01 · checkout provider · SCR-PAY-02 · SCR-APP-03 · SCR-APP-01 (nhánh phụ SCR-PUB-05) | [FLOW-mo-khoa-report.md](FLOW-mo-khoa-report.md) |
-| FLOW-dang-ky-plus | Đăng ký Plus từ bảng giá | money | SCR-PUB-01 · SCR-PUB-03 · SCR-APP-01 · SCR-PAY-03 · SCR-PUB-04 · checkout provider · SCR-PAY-02 (nhánh phụ SCR-PAY-01 · SCR-PUB-02 · SCR-PUB-05) | [FLOW-dang-ky-plus.md](FLOW-dang-ky-plus.md) |
+| FLOW-mo-khoa-report | Mở khoá report đầy đủ của một kết quả (mua lẻ hoặc Plus) | money | SCR-TEST-02 · SCR-PAY-01 · checkout provider · SCR-PAY-02 · SCR-APP-03 · SCR-APP-01 (nhánh phụ SCR-PUB-05 · SCR-PAY-05) | [FLOW-mo-khoa-report.md](FLOW-mo-khoa-report.md) |
+| FLOW-dang-ky-plus | Đăng ký Plus từ bảng giá | money | SCR-PUB-01 · SCR-PUB-03 · SCR-APP-01 · SCR-PAY-03 · SCR-PUB-04 · checkout provider · SCR-PAY-02 (nhánh phụ SCR-PAY-01 · SCR-PUB-02 · SCR-PUB-05 · SCR-PAY-05) | [FLOW-dang-ky-plus.md](FLOW-dang-ky-plus.md) |
 | FLOW-quan-ly-huy-gia-han | Nhắc gia hạn → huỷ một bước · tiếp tục gia hạn · cập nhật thẻ · huỷ / rút 14 ngày không cần đăng nhập | money · retention | SCR-PAY-03 · SCR-PAY-04 · SCR-PAY-05 · SCR-AUTH-01 · SCR-PUB-06 · SCR-ACC-01 · SCR-PUB-04 (nhánh phụ SCR-APP-03 · SCR-PUB-05) | [FLOW-quan-ly-huy-gia-han.md](FLOW-quan-ly-huy-gia-han.md) |
 | FLOW-thoi-quen-hang-ngay | Check-in hằng ngày + streak · thử thách 30 ngày (Free thấy thẻ khoá) | retention | SCR-APP-01 · SCR-PUB-04 · SCR-PAY-02 (nhánh phụ SCR-PUB-03 · SCR-APP-03 · SCR-PAY-01 · SCR-ACC-01) | [FLOW-thoi-quen-hang-ngay.md](FLOW-thoi-quen-hang-ngay.md) |
 | FLOW-quyen-rieng-tu | Consent cookie · export dữ liệu · xoá tài khoản (khôi phục trong 30 ngày) | trust | SCR-PUB-07 · SCR-PUB-05 · SCR-ACC-01 · SCR-ACC-02 · SCR-PUB-01 (nhánh phụ SCR-AUTH-01 · SCR-APP-01 · SCR-APP-02 · SCR-TEST-02) | [FLOW-quyen-rieng-tu.md](FLOW-quyen-rieng-tu.md) |

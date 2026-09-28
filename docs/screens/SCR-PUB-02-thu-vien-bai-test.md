@@ -6,6 +6,7 @@
 | SCR-PUB-02 | PUB | Short | Web | `/tests` · `/tests?topic=<topic>` | public | index | 390 · 768 · 1280 | FLOW-lam-bai-mien-phi | Draft | (sau design) | `tracking-events.md` → `test_library` | §5 (inline) | **EV-TLW-050 · EV-TLW-051 · EV-TLW-052 · SC-TLW-11 · basis RS·F-03 · F-04 · CS-02** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): AI Notice chủ đề theo nguồn nội dung đã chốt (Q-07); thêm notice trang chủ đề `?topic=` với route render sẵn (Q-09). Không đổi hành vi.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose
@@ -105,5 +106,6 @@ Lỗi riêng: `topic` không hợp lệ → server xử lý như "All" (EC-01). 
 Nhóm chip là `role="radiogroup"`: Tab vào nhóm, ←/→ đổi chip và lọc ngay. Sau khi lọc, dòng "[n] tests" được đọc qua `aria-live="polite"`. Còn lại theo `tieu-chuan-chung §5`.
 
 ## 10. AI Notices
-- Năm chủ đề là đề xuất. Nguồn thật là trường `topic` của từng bài (nội dung bài, Q-07). Thêm chủ đề = thêm chip, không đổi layout.
+- Bốn chủ đề (cộng chip "All") khớp nguồn nội dung đã chốt ở Q-07: "Personality" (IPIP) · "Career" (RIASEC tự soạn) · "Relationships" (tự soạn) · "Wellbeing" (bài `sensitive`). Nguồn thật vẫn là trường `topic` của từng bài; thêm chủ đề = thêm chip, không đổi layout.
+- Q-09 chốt route public render sẵn (SSG + revalidate), nhưng trang chủ đề `?topic=` có title / canonical riêng (seo-meta §1) và EC-03 cần HTML đúng theo `topic`; Next.js render theo request khi trang đọc query. Cách làm chờ owner Q-09 / seo-meta xác nhận (seo-meta §5).
 - Thứ tự bài lấy theo thứ tự biên tập mà API-CAT-01 trả về; MVP chưa có sắp xếp nào khác.
