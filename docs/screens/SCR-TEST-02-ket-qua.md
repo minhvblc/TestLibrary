@@ -7,6 +7,7 @@
 | SCR-TEST-02 | TEST | Full | Web | `/results/:resultId` | guest | noindex | 390 · 768 · 1280 | FLOW-lam-bai-mien-phi · FLOW-mo-khoa-report · FLOW-luu-ket-qua-dang-nhap | Draft | (sau design) | `tracking-events.md` → `result` · ft_result | `docs/api/SCR-TEST-02-api.md` | **EV-TLW-079 · EV-TLW-138 · EV-TLW-159 · EV-TLW-108 · SC-TLW-14 · basis RS·F-14 · F-15 · F-17 · F-23 · CS-07 · P-04** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.4 · claude-opus-5-5 · footer: dùng `compact` (GC-SiteFooter §5), không có footer `full`.
 - 2026-09-28 · v1.3 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): xoá kết quả ở CMP-13 là cách khách tự xoá dữ liệu (Q-28), copy xoá giữ nguyên (khớp SCR-APP-02); tên type / dải theo Q-07; GC-SensitiveNotice theo Q-23; Q-05 · Q-11 đã chốt ở AI Notices. Không đổi hành vi khác.
 - 2026-09-28 · v1.2 · claude-opus-5-5 · D-16: guard của NAV-TEST-02-9 gồm cả sau khi xoá; xác nhận xoá thêm câu mất report đã mua lẻ.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: `from` của ft_result start đã có test_page · unlock.
@@ -62,7 +63,7 @@ flowchart TD
 ## 3. Layout & UI components
 
 - **Design brief @390 (top→bottom):**
-  - thanh trên funnel: chỉ logo "TestLib" bên trái, không menu, không footer site;
+  - thanh trên funnel: chỉ logo "TestLib" bên trái, không menu; cuối trang là footer `compact` (GC-SiteFooter §5: có "Cookie settings" và hai link huỷ / rút), không có footer `full`;
   - (bài `sensitive`) GC-SensitiveNotice đầy đủ ngay dưới thanh trên, TRƯỚC kết quả;
   - headline "Your result: [Type]", phần [Type] dùng chữ lớn (`type.result`), dưới là 1 câu mô tả;
   - GC-ScoreBars: mọi thang, xếp từ cao xuống thấp, % luôn hiện;

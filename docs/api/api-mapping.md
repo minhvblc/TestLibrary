@@ -1,6 +1,7 @@
 # api-mapping — API ↔ screen matrix
 > Registry API-ID (định nghĩa DUY NHẤT ở đây). Chi tiết schema ở `SCR-*-api.md`; quy ước chung ở `00-quy-uoc-api.md`.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.5 · claude-opus-5-5 · §1 định danh API-PAY-08 · 09: email + mã đơn luôn dùng được (kể cả khi đang đăng nhập tài khoản khác), body có `name`; API-MAIL-03 thêm link huỷ không cần đăng nhập → SCR-PAY-05; API-MAIL-11 in lại tên người yêu cầu.
 - 2026-09-28 · v1.4 · claude-opus-5-5 · API-JOB-06 · API-MAIL-10 chỉ gửi khi check-in đang chạy (BR-ACC-08, Q-22).
 - 2026-09-28 · v1.3 · claude-opus-5-5 · API-MAIL-02 ghi rõ nội dung: câu đổi ý có hạn rút + link "Withdraw from contract here", câu tên trên sao kê, mã đơn, và với Plus thêm câu công bố gia hạn GC-RenewalDisclosure `post-purchase`.
 - 2026-09-28 · v1.2 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): thêm API-PAY-08 (rút trong 14 ngày) · API-PAY-09 (huỷ không cần đăng nhập) · API-MAIL-11 (xác nhận rút); API-JOB-01 theo mốc 21 / 7 ngày (Q-16); API-MAIL-02 · 03 · 04 · 09 theo Q-24 · Q-25 · Q-27; API-ME-02 thêm SCR-APP-01 (bật check-in có consent, Q-22); API-PAY-04 thêm SCR-PAY-05; API-CON-01 thêm `source` (GPC, Q-20); provider = Paddle, vendor email = Postmark.
@@ -50,7 +51,7 @@
 
 > Row **Money = có** → phải có **human review** trước API-FREEZE.
 >
-> **API-PAY-08 · API-PAY-09 — định danh:** có phiên thì khoản / gói phải thuộc tài khoản đó; không có phiên thì cần `email` + `orderNumber` (mã đơn in trên email biên nhận), giới hạn 5 lần / giờ / IP và 5 lần / giờ / email. Schema ở `SCR-PAY-05-api.md`.
+> **API-PAY-08 · API-PAY-09 — định danh:** cặp `email` + `orderNumber` (mã đơn in trên email biên nhận) luôn dùng được, kể cả khi đang đăng nhập tài khoản khác; có phiên và email trùng email tài khoản thì dùng phiên (khoản phải thuộc tài khoản). Không dùng phiên thì giới hạn 5 lần / giờ / IP và 5 lần / giờ / email. Body luôn có `name` (tên người yêu cầu, chỉ ghi vào bản ghi yêu cầu — chức năng rút EU). Schema ở `SCR-PAY-05-api.md`.
 >
 > **API-CAT-01 — bộ tham số hợp nhất** (mỗi màn dùng một tập con): `topic` (SCR-PUB-02) · `featured` + `limit` (SCR-PUB-01) · `limit` + `excludeTaken` + `includeSensitive=false` (SCR-APP-01, gợi ý bài). Mặc định `includeSensitive=true`. Item trả về: `slug` · `title` · `description` · `topic` · `questionCount` · `medianMinutes` · `sensitive` (props của GC-TestCard); `meta.total`.
 
@@ -66,7 +67,7 @@
 | API-JOB-05 | queue | worker render PDF bằng Playwright (TD-03) | todo |
 | API-MAIL-01 | email giao dịch | magic link đăng nhập / lưu kết quả | todo |
 | API-MAIL-02 | email giao dịch | biên nhận + "report đã mở khoá" (link SCR-APP-03); mã đơn ("Order number"); "Charges will appear as [descriptor] on your statement." (BR-APP-15); "Changed your mind? You can withdraw until [date] for a full refund." + link "Withdraw from contract here" → SCR-PAY-05 `?mode=withdraw&order=<orderNumber>` (BR-APP-14); mua Plus: thêm 4 câu GC-RenewalDisclosure `post-purchase` (BR-APP-02) | todo |
-| API-MAIL-03 | email giao dịch | nhắc gia hạn: tên gói, chu kỳ, số tiền, ngày thu, tên trên sao kê, link huỷ (link SCR-PAY-04 + SCR-PAY-03) — đủ nội dung nhắc hằng năm (Q-16) | todo |
+| API-MAIL-03 | email giao dịch | nhắc gia hạn: tên gói, chu kỳ, số tiền, ngày thu, tên trên sao kê, link huỷ (link SCR-PAY-04 + SCR-PAY-03, và "Cancel without signing in" → SCR-PAY-05 `?order=<orderNumber>`) — đủ nội dung nhắc hằng năm (Q-16) | todo |
 | API-MAIL-04 | email giao dịch | xác nhận huỷ gia hạn (BR-APP-04); huỷ không cần đăng nhập (API-PAY-09) thêm link "Resume renewal" để chủ gói hoàn tác nếu không phải mình yêu cầu | todo |
 | API-MAIL-05 | email giao dịch | thanh toán gia hạn thất bại (link cập nhật thẻ) | todo |
 | API-MAIL-06 | email giao dịch | file export dữ liệu sẵn sàng | todo |
@@ -75,7 +76,7 @@
 | API-JOB-06 | cron hằng tuần | gửi nhắc check-in hằng tuần cho user bật tuỳ chọn "Weekly check-in reminder" (SCR-ACC-01), chỉ khi check-in đang chạy (đã đồng ý, không chờ đồng ý lại — BR-ACC-08 · Q-22) | todo |
 | API-MAIL-10 | email giao dịch | nhắc check-in hằng tuần (chỉ khi user bật tuỳ chọn và check-in đang chạy — BR-ACC-08; link tới SCR-APP-01) | todo |
 | API-MAIL-09 | email giao dịch | báo thay đổi trọng yếu của điều khoản **28 ngày trước ngày áp dụng** (cửa sổ 21–30), gửi subscriber đang active (BR-PUB-11). Không dùng để tăng giá subscriber đang có (khoá giá, BR-APP-13); ngoại lệ tăng giá phải kèm nút đồng ý, chưa đặc tả vì không có trong MVP | todo |
-| API-MAIL-11 | email giao dịch | xác nhận rút hợp đồng, gửi ngay (≤ 5 phút): ngày giờ nhận yêu cầu, khoản đã rút, số tiền hoàn, thời gian tiền về, quyền đã kết thúc (BR-APP-14 · Q-25) | todo |
+| API-MAIL-11 | email giao dịch | xác nhận rút hợp đồng, gửi ngay (≤ 5 phút): ngày giờ nhận yêu cầu, tên người yêu cầu, khoản đã rút, số tiền hoàn, thời gian tiền về, quyền đã kết thúc (BR-APP-14 · Q-25) | todo |
 | API-JOB-07 | cron mỗi giờ | đối soát quyền hết kỳ: `plus` / `challenge` / `report.full` có nhờ Plus mà `accessEndsAt` đã qua nhưng chưa nhận webhook kết thúc → thu hồi + ghi log để theo dõi webhook trễ; không bao giờ cấp quyền (SYS-ENTITLEMENT · BR-APP-01) | todo |
 
 ## 3. AI Notices

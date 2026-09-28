@@ -6,6 +6,7 @@
 | SCR-AUTH-01 | AUTH | Short | Web | `/login` · `/login?next=<route>` · `/login/callback?token=…` | public | noindex | 390 · 768 · 1280 | FLOW-luu-ket-qua-dang-nhap | Draft | (sau design) | `tracking-events.md` → `login` · ft_auth | `docs/api/SCR-AUTH-01-api.md` | **EV-TLW-006 · SC-TLW-02 · basis RS·F-20 · Q-11 · SYS-AUTH** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.3 · claude-opus-5-5 · §2.1 thêm lối vào NAV-PAY-05-1 ("Sign in to manage your plan" ở SCR-PAY-05); footer: dùng `compact` (GC-SiteFooter §5), không có footer `full`.
 - 2026-09-28 · v1.2 · claude-opus-5-5 · Q-11 (magic link + Google, không mật khẩu) và Q-16 (Postmark gửi API-MAIL-01) đã chốt 2026-09-28: bỏ notice "Chưa FREEZE", ghi vendor email ở §1. Notice cũ về SYS-NAV §4 sửa (đã ghi cả hai biến thể callback).
 - 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: link "Privacy" đã có NAV-AUTH-01-5.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
@@ -18,11 +19,12 @@
 
 ### 2.1 Vào
 
-Một cạnh NAV tới màn này; các đường vào còn lại là shell, guard hoặc link ngoài:
+Hai cạnh NAV tới màn này; các đường vào còn lại là shell, guard hoặc link ngoài:
 
 | Vào qua | Từ | Trigger |
 |---|---|---|
 | NAV-TEST-02-8 | SCR-TEST-02 | "Sign in" (state Error / Locked, `next=/results/:resultId`) |
+| NAV-PAY-05-1 | SCR-PAY-05 | "Sign in to manage your plan" (chưa đăng nhập, `next=/account/billing`) |
 | shell | mọi trang public | "Sign in" ở header public / drawer @390 (SYS-NAV §1) |
 | guard | route `account` / `entitled` khi chưa có phiên | redirect `/login?next=<route>` (tieu-chuan-chung §1 · SYS-AUTH) |
 | email | link trong email API-MAIL-01: đăng nhập, hoặc "View your results" khi lưu kết quả ở SCR-TEST-02 | mở `/login/callback?token=…` (SYS-NAV §4) |
@@ -48,7 +50,7 @@ Một cạnh NAV tới màn này; các đường vào còn lại là shell, guar
   - nút "Continue with Google" (full width);
   - ghi chú pháp lý + link "Terms" · "Privacy".
   - Sau khi gửi link: panel "Check your inbox" (CMP-06) thay chỗ form.
-  - Không nav, không footer site (layout `minimal`, SYS-NAV §4).
+  - Không nav; footer `compact` (GC-SiteFooter §5: có "Cookie settings" và hai link huỷ / rút), không có footer `full` (layout `minimal`, SYS-NAV §4).
 
 | CMP-ID | Component | Type / GC- | Behavior & rules | Basis (EV / Q / in-house) |
 |---|---|---|---|---|

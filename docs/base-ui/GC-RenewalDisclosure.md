@@ -1,5 +1,6 @@
 # GC-RenewalDisclosure — công bố gia hạn dùng chung cho mọi bề mặt tiền và email
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · variant `email` (API-MAIL-03) thêm link "Cancel without signing in" → `/cancel?order=[orderNumber]` (SCR-PAY-05, Q-25): huỷ từ email nhắc không cần magic link.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · `reminderDays` = 7 (tháng) / 21 (năm) theo Q-16, bỏ 3 / 7 cũ; variant `email` thêm câu tên trên sao kê (Q-24) để đủ nội dung nhắc hằng năm; giá thật cite 00-overview §2 (Q-03); gỡ notice thuế (Q-04: giá chưa gồm thuế) và notice Q-16 đang mở.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
@@ -29,7 +30,7 @@ Copy dưới đây là verbatim (en-US). Số thứ tự chỉ để đếm câu
 | `billing` · Active | SCR-PAY-03 CMP-03 khi Plus đang tự gia hạn · SCR-PAY-04 CMP-03 (lần thu này sẽ dừng nếu huỷ) | nhãn "Active" · "Next charge: [amount] on [date]." · "Plus renews automatically every [period] until you cancel." |
 | `billing` · Cancels on | SCR-PAY-03 CMP-03 khi đã lên lịch huỷ, còn trong kỳ | nhãn "Cancels on [date]" · "No upcoming charges" · "You'll keep Plus until [date]. After that, you won't be charged again." |
 | `billing` · Free | SCR-PAY-03 CMP-03 khi không có gói trả phí | nhãn "Free" · "No upcoming charges" |
-| `email` · nhắc gia hạn | API-MAIL-03, gửi 21 ngày trước kỳ năm và 7 ngày trước mỗi kỳ tháng (Q-16); đủ nội dung nhắc hằng năm: tên gói, chu kỳ, số tiền, ngày thu, tên trên sao kê, cách huỷ | tiêu đề "Your Plus plan renews on [date]" · 1 "Your Plus plan renews automatically on [date]." · 2 "We'll charge [amount] for another [period]." · 3 "Charges will appear as [descriptor] on your statement." · 4 "Don't want to renew? Cancel renewal — you'll keep Plus until [date]." (link "Cancel renewal" → `/account/billing/cancel`, SCR-PAY-04) · 5 link "Manage your plan" → `/account/billing` (SCR-PAY-03) |
+| `email` · nhắc gia hạn | API-MAIL-03, gửi 21 ngày trước kỳ năm và 7 ngày trước mỗi kỳ tháng (Q-16); đủ nội dung nhắc hằng năm: tên gói, chu kỳ, số tiền, ngày thu, tên trên sao kê, cách huỷ | tiêu đề "Your Plus plan renews on [date]" · 1 "Your Plus plan renews automatically on [date]." · 2 "We'll charge [amount] for another [period]." · 3 "Charges will appear as [descriptor] on your statement." · 4 "Don't want to renew? Cancel renewal — you'll keep Plus until [date]." (link "Cancel renewal" → `/account/billing/cancel`, SCR-PAY-04; ngay sau là link "Cancel without signing in" → `/cancel?order=[orderNumber]`, SCR-PAY-05) · 5 link "Manage your plan" → `/account/billing` (SCR-PAY-03) |
 
 | Prop | Kiểu | Mặc định | Ý nghĩa |
 |---|---|---|---|

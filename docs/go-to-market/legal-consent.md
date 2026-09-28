@@ -1,6 +1,7 @@
 # legal-consent — TestLib (tên tạm, Q-01) · dữ liệu, cookie, consent, văn bản pháp lý
 > Nguồn: `cong-nghe-loi §4` (dữ liệu rời trình duyệt) + `tracking-events.md` (event nào bắn, chỉ sau consent) + SYS-CONSENT. File này là **yêu cầu sản phẩm + khung khai báo**, KHÔNG phải tư vấn pháp lý; mọi văn bản phải qua legal review trước khi ra mắt (Q-05). Đối thủ chỉ được nhắc để nêu điều cần TRÁNH (`research/apps/testlibrary-web/legal-extract.md`).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.6 · claude-opus-5-5 · §1 mirror `cong-nghe-loi` §4: yêu cầu huỷ / rút lưu cả tên người yêu cầu.
 - 2026-09-28 · v1.5 · claude-opus-5-5 · §1 mirror `cong-nghe-loi` §4 (19 hàng): thêm bản ghi consent check-in; file export còn hạn bị xoá ngay khi user xoá dữ liệu có trong file.
 - 2026-09-28 · v1.4 · claude-opus-5-5 · khớp docs đã lan quyết định: `tl_consent` có trường `gpc` (SYS-CONSENT); bằng chứng consent bài `sensitive` gồm `ageConfirmed` (Q-21).
 - 2026-09-28 · v1.3 · claude-opus-5-5 · quyết định 2026-09-28 (AI · uỷ quyền human): §1 mirror lại `cong-nghe-loi` §4 (18 hàng: thêm xác nhận 18+ và yêu cầu huỷ / rút; check-in sang consent — Q-22; thời hạn consent gia hạn + chứng từ — Q-05 (f); Paddle · Postmark · AWS `eu-central-1`); §2 · §3 GPC (Q-20); §3b ô 18+ (Q-21); thêm §3d consent check-in; §3c mốc nhắc 21 / 7 ngày (Q-16), huỷ không cần đăng nhập, thêm #9–#11 (rút 14 ngày, sao kê, khoá giá); §4 · §5 theo các Q đã chốt.
@@ -31,7 +32,7 @@ Mirror 1-1 `cong-nghe-loi §4` (19 hàng, cùng thứ tự, cùng giá trị). M
 | Đánh giá report (1–5) | chất lượng nội dung report | server của mình | tới khi xoá tài khoản; không gửi analytics | hợp đồng | SCR-APP-03 · BR-APP-05 |
 | Bản ghi consent gia hạn (`consent_version`, thời điểm, IP, giá + câu gia hạn đã hiện, planKey) | chứng minh đồng ý tự gia hạn | server của mình + Paddle | 3 năm, hoặc 1 năm sau khi hợp đồng kết thúc (lấy mốc dài hơn); giữ cả khi xoá tài khoản | nghĩa vụ pháp lý | BR-APP-03 · Q-05 (f) |
 | Đơn hàng + event webhook thanh toán (gồm mã đơn) | chứng từ, entitlement | server của mình + Paddle (Q-04) | 7 năm, tới khi kế toán nơi đăng ký xác nhận mốc khác (Q-05 (f)) | hợp đồng + nghĩa vụ pháp lý | API-HOOK-01 · SYS-ENTITLEMENT |
-| Yêu cầu huỷ / rút (email, mã đơn, việc chọn, thời điểm nhận, IP) | xử lý và chứng minh đã nhận yêu cầu huỷ / rút | server của mình + Paddle (khi hoàn tiền) | như đơn hàng (7 năm) | nghĩa vụ pháp lý | Q-25 · BR-APP-14 · API-PAY-08 · API-PAY-09 |
+| Yêu cầu huỷ / rút (tên, email, mã đơn, việc chọn, thời điểm nhận, IP) | xử lý và chứng minh đã nhận yêu cầu huỷ / rút | server của mình + Paddle (khi hoàn tiền) | như đơn hàng (7 năm) | nghĩa vụ pháp lý | Q-25 · BR-APP-14 · API-PAY-08 · API-PAY-09 |
 | File export dữ liệu | quyền truy cập dữ liệu | object storage của mình | link + file xoá sau 7 ngày, hoặc ngay khi user xoá dữ liệu có trong file (tắt check-in, xoá kết quả, xoá tài khoản) | thực hiện yêu cầu của user | BR-APP-11 |
 
 **Không bao giờ rời hệ thống của mình:** câu trả lời, điểm, type kết quả, giá trị check-in và slug của bài `sensitive` — không tới analytics, không tới quảng cáo, không bán / chia sẻ (BR-APP-05 · Q-12). Khớp `tracking-events.md`: không event nào trước consent, không event nào trên route bài `sensitive`, không param chứa email / tên / câu trả lời.
