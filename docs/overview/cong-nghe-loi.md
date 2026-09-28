@@ -1,6 +1,7 @@
 # Công nghệ cốt lõi — TestLib (web)
 > Basis: `research/core-tech.md` (TC-01 · TC-02). Đây là SPEC: nêu đích danh framework / vendor. Số nào chưa chốt → `Q-xx`, KHÔNG ghi như đã quyết. Stack BE theo chuẩn team: NestJS + TypeORM + PostgreSQL `postgres:16-alpine`, một schema `public` (basis in-house).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · D-07: thời hạn lưu lý do huỷ thống nhất — tách khỏi danh tính sau 90 ngày, xoá luôn nếu tài khoản bị xoá trước đó. D-19: thêm 3 hàng lỗi cho gói & thanh toán (§3) mà SCR-PAY-03 / SCR-PAY-04 đang trích.
 - 2026-09-27 · v1.1 · claude-opus-5-5 · §4 thêm 7 loại dữ liệu (log, liên hệ, lý do huỷ, đánh giá report, consent gia hạn, đơn hàng/webhook, file export) theo review của writer go-to-market.
 - 2026-09-27 · v1 · claude-opus-5-5 · TD-01..TD-04 từ core-tech §7 + quyết định Q-08 (human).
 
@@ -34,6 +35,9 @@
 | Chưa có quyền đọc report | state Locked + CTA mở khoá | "Unlock the full report to read every chapter." | không | SCR-APP-03 · SCR-PAY-01 |
 | Webhook thanh toán chưa về | màn chờ; hỏi lại trạng thái 2 s/lần trong 30 s, sau đó báo sẽ gửi email | "Confirming your payment…" → mua lẻ: "Your payment is still processing. We'll email you as soon as your report is unlocked." · Plus: "Your payment is still processing. We'll email you as soon as your Plus plan is active." | có (poll) | SCR-PAY-02 · FLOW-mo-khoa-report · FLOW-dang-ky-plus (case pending) |
 | Thanh toán thất bại / huỷ ở provider | quay về với lỗi + nút thử lại, không mở quyền | "Your payment didn't go through. You haven't been charged." | có (user bấm) | SCR-PAY-02 |
+| Không tải được gói & thanh toán (API-PAY-04 lỗi / timeout / 5xx) | state Error, không đoán trạng thái gói ở client | "We couldn't load your plan. Please refresh." | user tải lại | SCR-PAY-03 · SCR-PAY-04 |
+| Huỷ gia hạn lỗi (API-PAY-05 lỗi / timeout 10 s / 5xx) | ở lại trang, giữ lý do đã gõ, mở lại nút; gia hạn giữ nguyên | "We couldn't cancel right now. Please try again, or email support@[domain]." | có (user bấm lại; dùng lại `Idempotency-Key` của lần lỗi, server còn kiểm trạng thái) | SCR-PAY-04 · FLOW-quan-ly-huy-gia-han |
+| Tiếp tục gia hạn / mở cổng provider lỗi (API-PAY-06 · API-PAY-07 lỗi / 5xx) | giữ trạng thái cũ; với cổng provider thì đóng tab trống vừa mở | "Something went wrong on our side. Please try again." | có (user bấm) | SCR-PAY-03 · FLOW-quan-ly-huy-gia-han |
 | Tạo PDF lỗi / quá 10 s | chuyển sang trạng thái "đang tạo" + email link khi xong; fallback in trình duyệt | "Your PDF is taking longer than usual. We'll email it to you — or use Print → Save as PDF." | có | SCR-APP-03 |
 | JavaScript tắt | trang public (SSR) vẫn đọc được; trang làm bài báo cần JS | "Please enable JavaScript to take this test." | không | SCR-PUB-03 · SCR-TEST-01 |
 | Quá rate limit (429) | báo chờ, không thử lại liên tục | "Too many requests. Please wait a moment and try again." | sau `Retry-After` | mọi màn (tieu-chuan-chung §2) |
@@ -53,7 +57,7 @@
 | File PDF report | có | object storage của mình (cùng region) | cache 30 ngày, tạo lại khi cần | không | legal-consent §1 | TD-03 |
 | Log máy chủ / bảo mật (IP, user agent, thời điểm) | có | server của mình (+ CDN/WAF nếu dùng, Q-09) | 30 ngày | không (lợi ích hợp pháp: bảo mật, chống lạm dụng, rate limit) | legal-consent §1 | in-house |
 | Tin nhắn liên hệ (email, chủ đề, nội dung) | có | server của mình | 24 tháng sau khi đóng yêu cầu | không (trả lời yêu cầu của user) | legal-consent §1 | API-HELP-01 |
-| Lý do huỷ gia hạn (tuỳ chọn, chữ tự do) | có | server của mình | tách khỏi danh tính sau 90 ngày | không (tuỳ chọn) | legal-consent §1 | SCR-PAY-04 |
+| Lý do huỷ gia hạn (tuỳ chọn, chữ tự do) | có | server của mình | tách khỏi danh tính sau 90 ngày; xoá luôn nếu tài khoản bị xoá trước mốc đó | không (tuỳ chọn) | legal-consent §1 | SCR-PAY-04 |
 | Đánh giá report (1–5) | có | server của mình | tới khi xoá tài khoản; không gửi analytics | không | legal-consent §1 | SCR-APP-03 · BR-APP-05 |
 | Bản ghi consent gia hạn (`consent_version`, thời điểm, IP) | có | server của mình + provider | theo thời hạn chứng từ (Q-05) | không (nghĩa vụ pháp lý: chứng minh đồng ý tự gia hạn) | legal-consent §1 | BR-APP-03 |
 | Đơn hàng + event webhook thanh toán (email, planKey, số tiền, trạng thái) | có | server của mình + provider/MoR (Q-04) | theo luật kế toán của pháp nhân bán (Q-05) | không (hợp đồng + nghĩa vụ pháp lý) | legal-consent §1 | API-HOOK-01 · SYS-ENTITLEMENT |

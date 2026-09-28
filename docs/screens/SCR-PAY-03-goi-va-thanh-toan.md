@@ -7,6 +7,7 @@
 | SCR-PAY-03 | PAY | Full | Web | `/account/billing` | account | noindex | 390 · 768 · 1280 | FLOW-quan-ly-huy-gia-han | Draft | (sau design) | `tracking-events.md` → `billing` · ft_subscription | `docs/api/SCR-PAY-03-api.md` | **EV-TLW-247 · EV-TLW-046 · SC-TLW-27 · basis RS·F-11 · F-24 · BR-APP-02 · BR-APP-04** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · D-06: khoá idempotency của huỷ / tiếp tục gia hạn = UUID cho mỗi thao tác mới + server kiểm trạng thái hiện tại (thay khoá cố định `subscriptionId` + hành động). D-15: Default gồm cả Free có lịch sử thanh toán (vẫn thấy "View invoices"); Empty chỉ khi chưa từng thanh toán.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose & context
@@ -80,9 +81,9 @@ flowchart TD
 
 | State | Trigger cụ thể | Frame | EV / basis |
 |---|---|---|---|
-| Default | API-PAY-04 trả subscription (`active` · `canceled` còn trong kỳ · `past_due`) hoặc Free có mua lẻ | CMP-01…07 theo trạng thái (+ CMP-08 khi `past_due`) | EV-TLW-247 (đối lập) · BR-PAY-11 |
+| Default | API-PAY-04 trả subscription (`active` · `canceled` còn trong kỳ · `past_due`), hoặc Free có lịch sử thanh toán (`hasBillingHistory` = true: từng có Plus hoặc có mua lẻ) | CMP-01…07 theo trạng thái (+ CMP-08 khi `past_due`); Free thì CMP-03 "Free", CMP-04 "Upgrade to Plus", CMP-06 "View invoices" vẫn hiện | EV-TLW-247 (đối lập) · BR-PAY-11 |
 | Loading | tải API-PAY-04 > 300 ms; bấm "Resume renewal" | skeleton thẻ gói; spinner trong nút CMP-04 | tieu-chuan-chung §3 |
-| Empty | Free, chưa mua gì | "You're on Free. Test summaries are always free." + CMP-04 "Upgrade to Plus" | Q-02 |
+| Empty | Free, chưa từng thanh toán (`hasBillingHistory` = false) | "You're on Free. Test summaries are always free." + CMP-04 "Upgrade to Plus" | Q-02 |
 | Error | API-PAY-04 lỗi / timeout / 5xx | "We couldn't load your plan. Please refresh." | tieu-chuan-chung §2 |
 | Locked | chưa đăng nhập | không render; guard redirect `/login?next=/account/billing` | SYS-NAV §4 · SYS-AUTH |
 
@@ -105,7 +106,7 @@ stateDiagram-v2
 | Hành động | Kết quả |
 |---|---|
 | "Cancel renewal" | NAV-PAY-03-1; không gọi API ở màn này |
-| "Resume renewal" | API-PAY-06 (`Idempotency-Key` = `subscriptionId` + resume, kèm `consent.version` của câu công bố đang hiện); nút spinner + khoá; OK → CMP-03 về "Active" + toast "Plus will renew on [date]." (NAV-PAY-03-2) |
+| "Resume renewal" | API-PAY-06 (`Idempotency-Key` = UUID cho mỗi thao tác mới, 00-quy-uoc-api §5, kèm `consent.version` của câu công bố đang hiện); nút spinner + khoá; OK → CMP-03 về "Active" + toast "Plus will renew on [date]." (NAV-PAY-03-2) |
 | "Upgrade to Plus" | NAV-PAY-03-3 |
 | "Update payment method" / "View invoices" | mở tab trống NGAY trong sự kiện click (tránh popup blocker) → API-PAY-07 (`purpose`) → gán `portalUrl` cho tab đó (NAV-PAY-03-4); lỗi → đóng tab trống, hiện lỗi |
 | "Read" (CMP-07) | NAV-PAY-03-5 |
@@ -158,7 +159,7 @@ planKey hiện tại; subscription: trạng thái, lên lịch huỷ hay chưa, 
 |---|---|---|---|
 | EC-01 | Vừa huỷ ở SCR-PAY-04 (vào bằng replace) | CMP-03 "Cancels on [date]" + toast "Your plan won't renew. You have Plus until [date]." — toast truyền qua state của router, không qua URL, nên reload không hiện lại | BR-PAY-15 · BR-APP-04 |
 | EC-02 | "Resume renewal" đúng lúc kỳ vừa hết | 422 `not_resumable` → tải lại, CMP-03 hiện "Free", CMP-04 thành "Upgrade to Plus" | BR-PAY-12 |
-| EC-03 | Bấm "Resume renewal" ở 2 tab | idempotent theo `subscriptionId` + resume → cả hai nhận trạng thái hiện tại | 00-quy-uoc-api §5 |
+| EC-03 | Bấm "Resume renewal" ở 2 tab | server kiểm trạng thái hiện tại (đã `active`) → cả hai nhận trạng thái hiện tại, không gọi provider lần hai | 00-quy-uoc-api §5 |
 | EC-04 | Trình duyệt vẫn chặn tab mới | fallback mở cổng provider ngay trong tab này; cổng có return URL cố định về `/account/billing` | Q-04 |
 | EC-05 | API-PAY-07 lỗi | đóng tab trống, hiện "Something went wrong on our side. Please try again." | tieu-chuan-chung §2 |
 | EC-06 | Đã cập nhật thẻ nhưng webhook chưa về | banner CMP-08 giữ nguyên tới khi API-PAY-04 hết `past_due`; client không tự ẩn | BR-APP-01 |

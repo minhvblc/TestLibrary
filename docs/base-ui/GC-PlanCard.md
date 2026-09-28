@@ -1,5 +1,6 @@
 # GC-PlanCard — thẻ gói trên trang giá và trang mở khoá report
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · D-10: thêm CMP con `status` ("Current plan") + prop `isCurrent` mà SCR-PUB-04 EC-01 đang dùng.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
 ## 1. Anatomy (CMP con)
@@ -13,6 +14,7 @@ Một thẻ = một lựa chọn mua (hoặc gói Free), bọc trong `<section>`
 | `price` | giá, `type.price` | `kind` = `free`: "No payment needed" (không hiện số) · `one_time`: "[price] one-time" · `subscription`: "[price] per month" hoặc "[price] per year" | `[price]` định dạng Intl en-US theo currency của planKey (USD); giá thật = placeholder — Q-03 |
 | `summary` | 1 câu, `type.body`, tuỳ chọn | do màn truyền — SCR-PUB-04 "One report": "Full report and PDF for one test result. Never renews." · SCR-PAY-01 "This report": "Full report and PDF for this result. Never renews." · SCR-PAY-01 "Plus": "Every full report and PDF, plus the 30-day challenge. Renews automatically until you cancel." | |
 | `features` | danh sách bullet, `type.body`, luôn mở | lấy nguyên từ `plans[].features` của API-PAY-01 | nội dung = cột "Giới hạn / quyền" của 00-overview §2; SCR-PUB-04 dùng cho "Free" và "Plus" |
+| `status` | nhãn chữ, `type.label`, `color.text`, chỉ variant `action` | "Current plan" | hiện khi `isCurrent` = true (SCR-PUB-04 EC-01: Plus active, đã lên lịch huỷ còn trong kỳ, hoặc đang ân hạn); đặt ngay dưới `name`, không đổi nền hay viền thẻ, không phải badge bán hàng (khác "Most popular" / "Best value", BR-PUB-08) |
 | `select-control` | radio, chỉ variant `selectable` | accessible name = `name` + chữ trong `price` | cả thẻ là vùng chọn |
 | `footer` | slot do màn đặt | SCR-PUB-04: nút của thẻ ("Take a free test" · "Take a test to unlock"); thẻ Plus: GC-RenewalDisclosure → checkbox consent → "Continue to secure checkout" (hoặc "Manage plan" khi đã có Plus) | checkbox và nút là CMP của màn (BR-PUB-10 · BR-PAY-02); GC không tự tạo nút mua |
 
@@ -36,6 +38,7 @@ Thẻ: nền `color.surface`, viền `color.border`, `radius.lg`, đệm `space.
 | `features` | danh sách string từ `plans[].features` | rỗng | rỗng thì không render danh sách |
 | `selected` | boolean | `report.single` = true ở SCR-PAY-01 | chỉ `selectable` |
 | `purchasable` | boolean | true | false khi quốc gia của người mua chưa được provider hỗ trợ (state Locked) |
+| `isCurrent` | boolean | false | true khi tài khoản đang có quyền của thẻ này (hiện nay chỉ thẻ Plus, theo entitlement `plus` — SYS-ENTITLEMENT); bật `status` |
 
 ## 3. States (5) + hover / focus / disabled
 

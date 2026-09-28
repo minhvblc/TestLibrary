@@ -1,6 +1,7 @@
 # Quy ước API chung (web client)
 > BE: NestJS + TypeORM, PostgreSQL `postgres:16-alpine`, một schema `public`; migration sinh bằng `typeorm migration:generate` (basis in-house). Endpoint ở đây là SPEC MỚI của mình, không lấy từ network log của đối thủ.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · D-06: khoá idempotency của huỷ / tiếp tục gia hạn = UUID cho mỗi thao tác mới + server kiểm trạng thái hiện tại (thay khoá cố định `subscriptionId` + hành động). D-18: thêm hàng idempotency cho API-CON-01 (`consentId`) và API-RES-03.
 - 2026-09-27 · v1 · claude-opus-5-5 · khởi tạo (proposal).
 
 ## 1. Base URL & environments
@@ -54,12 +55,14 @@ Versioning: tiền tố `/v1`; thay đổi phá vỡ → `/v2`, giữ `/v1` ít 
 | Nộp bài (API-TEST-03) | `attemptId` | nộp lặp → 409 → trả `resultId` cũ |
 | Lưu kết quả bằng email (API-RES-02) | `resultId` + email chuẩn hoá | gửi lại magic link tối đa 3 lần/giờ |
 | Tạo phiên checkout (API-PAY-02) | UUID sinh mỗi lần bấm CTA | bấm 2 lần → cùng phiên checkout |
-| Huỷ / tiếp tục gia hạn (API-PAY-05 · API-PAY-06) | `subscriptionId` + hành động | lặp → trạng thái hiện tại |
+| Huỷ / tiếp tục gia hạn (API-PAY-05 · API-PAY-06) | UUID sinh cho mỗi thao tác mới của user (bấm lại sau lỗi / timeout thì dùng lại khoá của lần đó) | server còn kiểm trạng thái hiện tại: huỷ khi đã lên lịch huỷ, hoặc tiếp tục khi đang `active` → 200 trạng thái hiện tại, không gọi provider, không gửi email lần hai. Nhờ vậy huỷ → tiếp tục → huỷ lại trong 24 giờ vẫn có hiệu lực |
 | Check-in (API-APP-02) | `userId` + ngày nghiệp vụ (BR-APP-09) | mỗi ngày tối đa 1 bản; gửi lại = cập nhật giá trị |
 | Hoàn thành ngày thử thách (API-APP-03) | `userId` + `day` | |
 | Tạo PDF (API-REP-03) | `reportId` + `contentVersion` + locale | trả job/URL đã có |
 | Export dữ liệu (API-ME-03) | `userId` + ngày | tối đa 1 export/ngày |
 | Xoá tài khoản (API-ME-04) | `userId` | |
+| Lưu lựa chọn cookie (API-CON-01) | `consentId` (UUID client sinh cho mỗi lần lưu, gửi trong header `Idempotency-Key`; gửi lại ngầm dùng lại giá trị đó) | schema ở SCR-PUB-07 §5; banner (GC-ConsentBanner) và trang cài đặt dùng chung |
+| Xoá một kết quả (API-RES-03) | `resultId` (DELETE) | xoá lặp → 404, UI coi như đã xoá |
 | Webhook thanh toán (API-HOOK-01) | `event.id` của provider | bảng `payment_events` unique theo `event_id` |
 
 ## 6. Payment webhook

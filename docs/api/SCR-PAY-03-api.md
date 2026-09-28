@@ -1,6 +1,7 @@
 # [SCR-PAY-03] API — Gói & thanh toán
 Refs: `docs/screens/SCR-PAY-03-goi-va-thanh-toan.md` · FLOW-quan-ly-huy-gia-han · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency, webhook — KHÔNG lặp lại ở đây). File này sở hữu schema đầy đủ của API-PAY-04; `SCR-PAY-04-api.md` chỉ ghi phần dùng ở màn huỷ.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · D-06: khoá idempotency của huỷ / tiếp tục gia hạn = UUID cho mỗi thao tác mới + server kiểm trạng thái hiện tại (thay khoá cố định `subscriptionId` + hành động).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 0. Endpoint overview
@@ -8,7 +9,7 @@ Refs: `docs/screens/SCR-PAY-03-goi-va-thanh-toan.md` · FLOW-quan-ly-huy-gia-han
 | ID | Endpoint | Method | When called | Idempotent (key) | Contract status |
 |---|---|---|---|---|---|
 | API-PAY-04 | `/v1/billing/subscription` | GET | mở SCR-PAY-03; quay lại tab sau khi dùng cổng provider; sau API-PAY-06 | n/a (GET) | proposal |
-| API-PAY-06 | `/v1/billing/subscription/resume` | POST | bấm CMP-04 "Resume renewal" | có — `Idempotency-Key` = `subscriptionId` + `resume` | proposal |
+| API-PAY-06 | `/v1/billing/subscription/resume` | POST | bấm CMP-04 "Resume renewal" | có — `Idempotency-Key` = UUID cho mỗi thao tác mới (bấm lại sau lỗi dùng lại khoá đó); server kiểm trạng thái hiện tại (00-quy-uoc-api §5) | proposal |
 | API-PAY-07 | `/v1/billing/portal-sessions` | POST | bấm CMP-05 "Update payment method" / CMP-06 "View invoices" | có — `Idempotency-Key` = UUID sinh mỗi lần bấm | proposal |
 
 ## API-PAY-04 · GET `/v1/billing/subscription`

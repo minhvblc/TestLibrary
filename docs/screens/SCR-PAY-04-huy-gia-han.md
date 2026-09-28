@@ -7,6 +7,7 @@
 | SCR-PAY-04 | PAY | Full | Web | `/account/billing/cancel` | account | noindex | 390 · 768 · 1280 | FLOW-quan-ly-huy-gia-han | Draft | (sau design) | `tracking-events.md` → `cancel_renewal` · ft_subscription | `docs/api/SCR-PAY-04-api.md` | **EV-TLW-046 · EV-TLW-247 · SC-TLW-07 · basis RS·F-11 · F-24 · BR-APP-04 · Q-18** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · D-06: khoá idempotency của huỷ / tiếp tục gia hạn = UUID cho mỗi thao tác mới + server kiểm trạng thái hiện tại (thay khoá cố định `subscriptionId` + hành động). D-07: thời hạn lưu lý do huỷ thống nhất — tách khỏi danh tính sau 90 ngày, xoá luôn nếu tài khoản bị xoá trước đó.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose & context
@@ -91,7 +92,7 @@ stateDiagram-v2
 
 | Hành động | Kết quả |
 |---|---|
-| Bấm CMP-04 "Cancel renewal" | API-PAY-05 (`Idempotency-Key` = `subscriptionId` + cancel; body có `reason` nếu đã gõ); spinner, khoá 2 nút; OK → NAV-PAY-04-1 (replace) + toast trên SCR-PAY-03 (BR-PAY-15) |
+| Bấm CMP-04 "Cancel renewal" | API-PAY-05 (`Idempotency-Key` = UUID cho mỗi thao tác mới, 00-quy-uoc-api §5; body có `reason` nếu đã gõ); spinner, khoá 2 nút; OK → NAV-PAY-04-1 (replace) + toast trên SCR-PAY-03 (BR-PAY-15) |
 | Bấm CMP-05 "Keep my plan" | NAV-PAY-04-2; không gọi API |
 | Mở / gõ CMP-06 | không validate bắt buộc; bộ đếm ký tự khi còn ≤ 50; `Enter` xuống dòng, không submit |
 | Back trình duyệt | về trang trước (SCR-PAY-03 hoặc trang trước khi mở link email) |
@@ -139,7 +140,7 @@ Gói (Plus tháng / năm), trạng thái, đã lên lịch huỷ chưa, ngày m�
 
 | EC-xx | Case | Kết quả xác định (kể cả khi fail) | Basis |
 |---|---|---|---|
-| EC-01 | Bấm 2 lần / 2 tab cùng huỷ | idempotent theo `subscriptionId` + cancel: lần sau nhận trạng thái hiện tại (đã lên lịch huỷ) → vẫn NAV-PAY-04-1 | 00-quy-uoc-api §5 |
+| EC-01 | Bấm 2 lần / 2 tab cùng huỷ | nút khoá sau lần bấm đầu; tab thứ hai gửi khoá khác nhưng server kiểm trạng thái hiện tại (đã lên lịch huỷ) → 200, không gọi provider, không gửi email lần hai → vẫn NAV-PAY-04-1 | 00-quy-uoc-api §5 |
 | EC-02 | Mở link email khi đã huỷ từ trước | state Empty (BR-PAY-17) | BR-PAY-17 |
 | EC-03 | Mở link email khi chưa đăng nhập | guard `/login?next=/account/billing/cancel` → magic link → quay lại trang này | BR-PAY-16 · SYS-AUTH |
 | EC-04 | Đăng nhập bằng email khác email đã mua | tài khoản này không có gia hạn → Empty; không lộ thông tin của tài khoản khác | SYS-AUTH |
@@ -179,5 +180,5 @@ Gói (Plus tháng / năm), trạng thái, đã lên lịch huỷ chưa, ngày m�
 - Hoàn tiền khi huỷ phụ thuộc Q-18 (đang Mở).
 - Blueprint có link "Plan & billing" ở state Empty nhưng không có NAV riêng: file này dùng lại CMP-05 (đổi nhãn) trên cạnh NAV-PAY-04-2 để không thêm NAV ngoài blueprint.
 - BR-APP-02 yêu cầu trang huỷ có công bố gia hạn, nhưng blueprint không có CMP riêng cho GC-RenewalDisclosure ở màn này: đã gộp vào CMP-03.
-- Lý do huỷ là dữ liệu tự do (có thể chứa thông tin cá nhân): chỉ lưu nội bộ, xoá cùng tài khoản (BR-APP-11), không vào analytics.
+- Lý do huỷ là dữ liệu tự do (có thể chứa thông tin cá nhân): chỉ lưu nội bộ, tách khỏi danh tính sau 90 ngày (cong-nghe-loi §4), xoá luôn nếu tài khoản bị xoá trước mốc đó (BR-APP-11); không vào analytics.
 - Copy mới không có trong blueprint (đề xuất): "After [date], you'll no longer have:" và 2 dòng liệt kê.

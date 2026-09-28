@@ -1,5 +1,6 @@
 # GC-ConsentBanner — banner hỏi consent cookie ở lần đầu (consent-first)
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · D-18: `consentId` đi trong header `Idempotency-Key` của API-CON-01 (schema ở SCR-PUB-07 §5).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
 ## 1. Anatomy (CMP con)
@@ -62,7 +63,7 @@ GC hiện thực BR-APP-05 và các BR của SCR-PUB-07 (BR-PUB-13 · BR-PUB-14)
 | "Reject all" | analytics + marketing = denied → ghi cookie + API-CON-01 → ẩn banner; không SDK, không event nào (kể cả ft_consent) | tracking-events · BR-APP-05 |
 | "Manage" | push tới `/cookie-settings`; lưu ở trang đó thì banner hết ở mọi trang | SYS-CONSENT |
 | Route bài `sensitive` | vẫn hiện banner nếu chưa chọn; "Accept all" thì lưu lựa chọn nhưng KHÔNG tải SDK và KHÔNG bắn ft_consent trên route này (không hoãn sang route sau) | BR-APP-06 · SYS-CONSENT |
-| Lưu trước, đồng bộ sau | cookie ghi ngay nên lựa chọn có hiệu lực tức thì; API-CON-01 gửi `consentId` (UUID client), version, lựa chọn, thời điểm, nguồn (`banner`) | API-CON-01 · SYS-CONSENT |
+| Lưu trước, đồng bộ sau | cookie ghi ngay nên lựa chọn có hiệu lực tức thì; API-CON-01 gửi `consentId` (UUID client, đi trong header `Idempotency-Key` — 00-quy-uoc-api §5; schema ở SCR-PUB-07 §5), version, lựa chọn, thời điểm, nguồn (`banner`) | API-CON-01 · SYS-CONSENT |
 | Thứ tự DOM & focus | banner đặt ở đầu DOM (ngay sau skip link của GC-SiteHeader), `role="region"` + accessible name "Cookie choices"; không tự lấy focus; chọn xong thì focus về đầu `<main>` và `live-region` đọc "Your cookie choices are saved." | tieu-chuan-chung §5 |
 | Không che nội dung | khi banner mở, trang chừa khoảng dưới bằng chiều cao banner và đặt `scroll-padding-bottom` tương ứng để phần tử đang focus không bị che; thanh dính đáy của màn (vd SCR-PUB-03 @390) nằm trên banner | tieu-chuan-chung §5 (WCAG 2.2 AA) |
 | First-party | banner là code của mình, không dùng CMP bên thứ ba; không tải font / ảnh từ domain khác | TD-04 · tieu-chuan-chung §9 |

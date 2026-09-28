@@ -3,6 +3,7 @@
 > **Consent:** không event nào bắn trước khi user đồng ý analytics (mọi vùng, Q-13; BR-APP-05). Route của bài `sensitive` (SCR-PUB-03 · SCR-TEST-01 · SCR-TEST-02 · SCR-PAY-01 · SCR-PAY-02 · SCR-APP-03 khi kết quả/report thuộc bài `sensitive`) **không bắn event nào** (BR-APP-06). **Cấm** gửi câu trả lời, điểm, type kết quả, email, tên.
 > **Che URL:** `AppTracking` tự đặt `page_location` / `page_referrer` về dạng không có id và che slug bài `sensitive` (vd `/tests/[sensitive]`, `/results/[id]`); không gửi query string. Nhờ đó trang kế tiếp sau một bài nhạy cảm không làm lộ slug qua referrer.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · ft_consent start: thêm trường hợp cho phép lần đầu ở SCR-PUB-07 (bắn ngay trước save). D-14: `from` của ft_test start (app_home mang qua SCR-PUB-03) và ft_report start (thêm app_home · billing).
 - 2026-09-27 · v1 · claude-opus-5-5 · khởi tạo.
 
 ## Params chung
@@ -55,7 +56,7 @@
 #### ft_test
 | action_type | action_name | feature_target | status | from | Fires when | Extra param | Status |
 |---|---|---|---|---|---|---|---|
-| start | — | — | — | test_page / app_home / result (làm lại) | attempt mới được tạo (API-TEST-01 OK) | `test_slug` · `question_count` | Chưa gắn |
+| start | — | — | — | test_page / app_home / result (làm lại) — `app_home` được router state mang qua SCR-PUB-03 khi vào bằng NAV-APP-01-1 (không đưa lên URL) | attempt mới được tạo (API-TEST-01 OK) | `test_slug` · `question_count` | Chưa gắn |
 | action | resume | FALSE | null | reload / return | mở lại bài đang dở từ tiến độ lưu | `test_slug` · `answered_count` | Chưa gắn |
 | action | submit | TRUE | success / fail | — | API-TEST-03 trả kết quả hoặc hết lượt thử lại | `test_slug` · `duration_ms` · `offline_queued` (true/false) | Chưa gắn |
 
@@ -106,7 +107,7 @@
 #### ft_report
 | action_type | action_name | feature_target | status | from | Fires when | Extra param | Status |
 |---|---|---|---|---|---|---|---|
-| start | — | — | — | my_reports / email / result / checkout_return | report hiện (không bắn cho bài `sensitive`) | — | Chưa gắn |
+| start | — | — | — | my_reports / email / result / checkout_return / app_home (NAV-APP-01-2) / billing (NAV-PAY-03-5) | report hiện (không bắn cho bài `sensitive`) | — | Chưa gắn |
 | action | pdf_download | TRUE | success / fail / queued | — | file PDF bắt đầu tải hoặc chuyển sang gửi email | `duration_ms` | Chưa gắn |
 | action | rate | FALSE | success / fail | — | API-REP-05 trả về (KHÔNG bắn với bài `sensitive`) | `rating` (1–5) | Chưa gắn |
 
@@ -125,7 +126,7 @@
 #### ft_consent
 | action_type | action_name | feature_target | status | from | Fires when | Extra param | Status |
 |---|---|---|---|---|---|---|---|
-| start | — | — | — | banner / cookie_settings | chỉ bắn được khi analytics đã được cho phép | — | Chưa gắn |
+| start | — | — | — | banner / cookie_settings | chỉ bắn được khi analytics đã được cho phép: mở SCR-PUB-07 khi đã granted, hoặc ngay sau khi SDK tải do vừa cho phép (banner "Accept all" · lưu lần đầu ở SCR-PUB-07), luôn trước save | — | Chưa gắn |
 | action | save | TRUE | success | — | lưu lựa chọn có analytics = granted (từ chối thì không có event nào) | `analytics` · `marketing` (granted / denied) | Chưa gắn |
 
 #### ft_contact

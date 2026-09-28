@@ -1,6 +1,7 @@
 # pricing-page — TestLib (tên tạm, Q-01) · trang giá `/pricing` (SCR-PUB-04)
 > Giá CITE `00-overview §2` (placeholder — Q-03), không định nghĩa lại ở đây; màn lấy giá từ API-PAY-01. Copy en-US verbatim (Q-14); chuỗi đã có ở SCR-PUB-04 giữ nguyên từng chữ. FAQ §4 phải khớp landing-copy (FAQ A6) · legal-consent §3c · `/legal/subscriptions`.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · D-09: câu công bố gia hạn trước khi mua lấy nguyên văn GC-RenewalDisclosure §2 `pre-purchase` · Plus.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice: FAQ gia hạn lệch luật CA / NY (Q-26) và quy tắc đổi giá.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
@@ -20,7 +21,7 @@ Dưới thẻ Plus và cuối trang:
 
 | Element | Copy VERBATIM (en) | Basis |
 |---|---|---|
-| Công bố gia hạn (GC-RenewalDisclosure, bản trước khi mua) | "Renews automatically at [price] per [period] until you cancel. If you subscribe today, your next charge is on [date]. We'll email you before every renewal. Cancel anytime in Account → Plan & billing." | BR-APP-02 · Q-16 · giá placeholder — Q-03 |
+| Công bố gia hạn (GC-RenewalDisclosure `pre-purchase` · Plus, nguyên văn — sửa ở GC trước) | "Plus renews automatically at [price] per [period] until you cancel." · "If you subscribe today, your next payment will be on [date]." · "Cancel anytime in Account → Plan & billing. You'll keep Plus until the end of the period you've paid for." · "We'll email you a reminder [n] days before each renewal." | BR-APP-02 · Q-16 · giá placeholder — Q-03 · GC-RenewalDisclosure §2 |
 | Checkbox consent (mặc định KHÔNG tick) | "I understand Plus renews automatically at [price] per [period] until I cancel. I can cancel anytime in Account → Plan & billing." | BR-APP-03 (trùng SCR-PUB-04 CMP-06; `consent_version` gửi trong API-PAY-02) |
 | Gợi ý khi chưa tick | "Tick the box above to continue." | BR-APP-03 (trùng SCR-PUB-04 CMP-07) |
 | Dòng người bán | "Sold by [legal entity]. Taxes calculated at checkout." | Q-05 · Q-04 · BR-APP-12 (trùng blueprint SCR-PAY-01 CMP-10) |

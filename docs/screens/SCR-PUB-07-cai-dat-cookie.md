@@ -6,6 +6,7 @@
 | SCR-PUB-07 | PUB | Short | Web | `/cookie-settings` | public | noindex | 390 · 768 · 1280 | FLOW-quyen-rieng-tu | Draft | (sau design) | `tracking-events.md` → `cookie_settings` · ft_consent | §5 (inline) | **EV-TLW-002 · EV-TLW-015 · basis RS·F-02 · Q-13 · SYS-CONSENT** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · D-05: cho phép analytics lần đầu tại trang này bắn ft_consent start (`from` = cookie_settings) ngay trước save. D-18: API-CON-01 dùng `consentId` làm `Idempotency-Key`; mục §5 sở hữu schema.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose
@@ -65,7 +66,7 @@ Trang để xem và đổi lựa chọn cookie bất kỳ lúc nào: bật/tắt
 
 | API | Method | When called |
 |---|---|---|
-| API-CON-01 | POST | bấm CMP-04 / CMP-05 / CMP-06; body `analytics` · `marketing` (`granted` / `denied`) · `consentVersion` · `source` = `settings`; `Idempotency-Key` = UUID mỗi lần lưu; đã đăng nhập thì server gắn tài khoản từ `tl_session` |
+| API-CON-01 | POST | bấm CMP-04 / CMP-05 / CMP-06; body `analytics` · `marketing` (`granted` / `denied`) · `consentVersion` · `source` = `settings`; `Idempotency-Key` = `consentId` (UUID client mới cho mỗi lần lưu, gửi lại ngầm dùng lại giá trị đó; cùng quy ước với GC-ConsentBanner — 00-quy-uoc-api §5). Mục này là nơi sở hữu schema API-CON-01; đã đăng nhập thì server gắn tài khoản từ `tl_session` |
 
 Lỗi riêng: không có copy riêng — mọi lỗi đi vào state Error (lưu local trước, gửi server sau). Còn lại theo `00-quy-uoc-api` §4.
 
@@ -74,7 +75,7 @@ Lỗi riêng: không có copy riêng — mọi lỗi đi vào state Error (lưu 
 | Event | Note |
 |---|---|
 | `screen_active` · `cookie_settings` | chỉ bắn khi analytics đã granted từ trước lúc mở trang |
-| ft_consent · start | mở trang khi analytics đã granted (tracking-events: chỉ bắn được khi analytics đã được cho phép) |
+| ft_consent · start | mở trang khi analytics đã granted; hoặc, khi cho phép analytics lần đầu tại trang này, bắn ngay sau khi SDK tải và trước save (EC-04). Chỉ bắn được khi analytics đã được cho phép (tracking-events) |
 | ft_consent · save | lưu với analytics = granted; param `analytics` · `marketing`; lưu với analytics = denied thì không có event nào |
 
 ## 7. Business rules & edge cases
@@ -89,7 +90,7 @@ Lỗi riêng: không có copy riêng — mọi lỗi đi vào state Error (lưu 
 | EC-01 | Đổi switch rồi rời trang mà không bấm lưu | không lưu gì; quay lại thấy giá trị đã lưu trước đó | in-house |
 | EC-02 | Chưa trả lời banner, vào trang từ footer | switch mặc định tắt; lưu ở đây coi như đã trả lời banner, banner không hiện lại tới khi đổi version | SYS-CONSENT |
 | EC-03 | Rút analytics khi SDK đang chạy | `AppTracking` ngừng gửi ngay lúc lưu; gỡ SDK + xoá cookie analytics ở lần tải trang kế | BR-PUB-14 · SYS-CONSENT |
-| EC-04 | Cho phép analytics lần đầu tại trang này | tải SDK ngay, không cần reload, rồi bắn ft_consent save; không bắn bù `screen_active` cho trang hiện tại | TD-04 · tracking-events |
+| EC-04 | Cho phép analytics lần đầu tại trang này | tải SDK ngay, không cần reload, rồi bắn ft_consent start (`from` = cookie_settings) + save; không bắn bù `screen_active` cho trang hiện tại | TD-04 · tracking-events |
 | EC-05 | Analytics = granted nhưng user đang ở route bài `sensitive` | vẫn không tải analytics trên route đó | BR-APP-06 |
 | EC-06 | Hai tab mở cùng lúc | tab còn lại áp dụng lựa chọn mới ở lần điều hướng kế tiếp (đọc lại `tl_consent`) | in-house |
 

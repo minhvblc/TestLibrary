@@ -7,7 +7,7 @@
 | SCR-TEST-02 | TEST | Full | Web | `/results/:resultId` | guest | noindex | 390 · 768 · 1280 | FLOW-lam-bai-mien-phi · FLOW-mo-khoa-report · FLOW-luu-ket-qua-dang-nhap | Draft | (sau design) | `tracking-events.md` → `result` · ft_result | `docs/api/SCR-TEST-02-api.md` | **EV-TLW-079 · EV-TLW-138 · EV-TLW-159 · EV-TLW-108 · SC-TLW-14 · basis RS·F-14 · F-15 · F-17 · F-23 · CS-07 · P-04** |
 
 **Changelog** (mới nhất trước)
-- 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: `from` của ft_result start đã có test_page · unlock.
+- 2026-09-28 · v1.1 · claude-opus-5-5 · AI Notice cũ: `from` của ft_result start đã có test_page · unlock. D-16: guard của NAV-TEST-02-9 gồm cả sau khi xoá; xác nhận xoá thêm câu mất report đã mua lẻ.
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose & context
@@ -38,8 +38,8 @@ Màn kết quả tóm tắt miễn phí, hiện ngay sau khi nộp bài. Server 
 | NAV-TEST-02-6 | SCR-PUB-06 · `#scoring` | CMP-10 "How scoring works" | push | `/help#scoring` (push) | mặc định | back trình duyệt → SCR-TEST-02 | — | Web | RS·F-14 |
 | NAV-TEST-02-7 | external: trang nguồn hỗ trợ khủng hoảng | CMP-09 "Get support now" | external | tab mới | mặc định | đóng tab → SCR-TEST-02 | bài `sensitive` | Web | Q-06 |
 | NAV-TEST-02-8 | SCR-AUTH-01 · `next=/results/:resultId` | CMP-11 "Sign in" | push | `/login?next=/results/:resultId` (push) | mặc định | back trình duyệt → SCR-TEST-02 | chỉ ở state Error (410) / Locked (403) | Web | SYS-AUTH |
-| NAV-TEST-02-9 | SCR-PUB-02 | CMP-12 "Browse all tests" | push | `/tests` (push) | mặc định | back trình duyệt → SCR-TEST-02 | chỉ ở state Error (410) / Locked (403) | Web | in-house |
-| NAV-TEST-02-10 | (cùng màn) xoá kết quả | CMP-13 "Delete this result" → xác nhận tại chỗ "Delete this result and your answers? This can't be undone." · "Delete" / "Cancel" | inline | không đổi URL; xoá xong → thay nội dung bằng "Result deleted." + CMP-12 | mặc định | — | chủ sở hữu kết quả | Web | BR-APP-11 · SYS-CONSENT |
+| NAV-TEST-02-9 | SCR-PUB-02 | CMP-12 "Browse all tests" | push | `/tests` (push) | mặc định | back trình duyệt → SCR-TEST-02 | ở state Error (410) / Locked (403), và sau khi xoá kết quả (NAV-TEST-02-10) | Web | in-house |
+| NAV-TEST-02-10 | (cùng màn) xoá kết quả | CMP-13 "Delete this result" → xác nhận tại chỗ "Delete this result and your answers? This can't be undone." (+ "You'll also lose the full report you unlocked for this result." nếu đã mua lẻ) · "Delete" / "Cancel" | inline | không đổi URL; xoá xong → thay nội dung bằng "Result deleted." + CMP-12 | mặc định | — | chủ sở hữu kết quả | Web | BR-APP-11 · SYS-CONSENT |
 
 ### 2.3 Diagram
 
@@ -85,7 +85,7 @@ flowchart TD
 | CMP-09 | Thông báo bài nhạy cảm | bài `sensitive` | GC-SensitiveNotice biến thể `full`: "This is a self-reflection tool, not a diagnosis." + "Get support now" (phần còn lại theo GC); đặt trước CMP-02 và trước khối mở khoá CMP-05 | Q-06 · BR-APP-06 |
 | CMP-11 | Link "Sign in" | state Error (410) / Locked (403) | "Sign in" (NAV-TEST-02-8) | SYS-AUTH |
 | CMP-12 | Link "Browse all tests" | state Error / Locked; sau khi xoá kết quả | "Browse all tests" (NAV-TEST-02-9) | in-house |
-| CMP-13 | Xoá kết quả | Default, cuối trang, cỡ chữ nhỏ | "Delete this result" → API-RES-03; với bài `sensitive` đây là cách rút consent | BR-APP-11 · SYS-CONSENT |
+| CMP-13 | Xoá kết quả | Default, cuối trang, cỡ chữ nhỏ | "Delete this result" → xác nhận tại chỗ (thêm "You'll also lose the full report you unlocked for this result." khi kết quả đã mua lẻ, cùng câu với SCR-APP-02 CMP-05) → API-RES-03; với bài `sensitive` đây là cách rút consent | BR-APP-11 · SYS-CONSENT |
 | CMP-10 | Chú thích chấm điểm | Default | "Scored with version [v] of this test." + link "How scoring works" | BR-APP-07 · RS·F-14 |
 
 ## 4. Screen states

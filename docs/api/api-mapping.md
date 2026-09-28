@@ -1,6 +1,7 @@
 # api-mapping — API ↔ screen matrix
 > Registry API-ID (định nghĩa DUY NHẤT ở đây). Chi tiết schema ở `SCR-*-api.md`; quy ước chung ở `00-quy-uoc-api.md`.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · D-06: khoá idempotency của huỷ / tiếp tục gia hạn = UUID cho mỗi thao tác mới + server kiểm trạng thái hiện tại (thay khoá cố định `subscriptionId` + hành động). D-08: thêm API-JOB-07 (đối soát quyền hết kỳ). D-18: API-CON-01 dùng `consentId`, schema ở SCR-PUB-07 §5.
 - 2026-09-27 · v1 · claude-opus-5-5 · khởi tạo (proposal).
 
 ## 1. Matrix
@@ -19,8 +20,8 @@
 | API-PAY-02 | `/v1/checkout-sessions` | POST | SCR-PUB-04 · SCR-PAY-01 | có (UUID mỗi lần bấm) | **có** | todo | proposal |
 | API-PAY-03 | `/v1/checkout-sessions/{sessionId}` | GET | SCR-PAY-02 | n/a (GET) | **có** | todo | proposal |
 | API-PAY-04 | `/v1/billing/subscription` | GET | SCR-PAY-03 · SCR-PAY-04 | n/a (GET) | **có** | todo | proposal |
-| API-PAY-05 | `/v1/billing/subscription/cancel` | POST | SCR-PAY-04 | có (`subscriptionId` + cancel) | **có** | todo | proposal |
-| API-PAY-06 | `/v1/billing/subscription/resume` | POST | SCR-PAY-03 | có (`subscriptionId` + resume) | **có** | todo | proposal |
+| API-PAY-05 | `/v1/billing/subscription/cancel` | POST | SCR-PAY-04 | có (UUID cho mỗi thao tác mới + kiểm trạng thái) | **có** | todo | proposal |
+| API-PAY-06 | `/v1/billing/subscription/resume` | POST | SCR-PAY-03 | có (UUID cho mỗi thao tác mới + kiểm trạng thái) | **có** | todo | proposal |
 | API-PAY-07 | `/v1/billing/portal-sessions` | POST | SCR-PAY-03 | có (UUID mỗi lần bấm) | **có** | todo | proposal |
 | API-AUTH-01 | `/v1/auth/magic-links` | POST | SCR-AUTH-01 · SCR-TEST-02 (qua API-RES-02) | có (email chuẩn hoá + bộ đếm `resend`; tối đa 3 lần/giờ/email, 20 lần/giờ/IP) | không | todo | proposal |
 | API-AUTH-02 | `/v1/auth/magic-links/verify` | POST | SCR-AUTH-01 | token dùng 1 lần | không | todo | proposal |
@@ -39,7 +40,7 @@
 | API-REP-03 | `/v1/reports/{reportId}/pdf` | POST | SCR-APP-03 | có (`reportId` + `contentVersion` + locale) | không | todo | proposal |
 | API-REP-04 | `/v1/reports/{reportId}/pdf` | GET | SCR-APP-03 | n/a (GET) | không | todo | proposal |
 | API-REP-05 | `/v1/reports/{reportId}/rating` | PUT | SCR-APP-03 | có (PUT theo `userId` + `reportId`, ghi đè) | không | todo | proposal |
-| API-CON-01 | `/v1/consents` | POST | SCR-PUB-07 · GC-ConsentBanner | có (UUID client) | không | todo | proposal |
+| API-CON-01 | `/v1/consents` | POST | SCR-PUB-07 · GC-ConsentBanner | có (`consentId` UUID client; schema ở SCR-PUB-07 §5) | không | todo | proposal |
 | API-HELP-01 | `/v1/contact-messages` | POST | SCR-PUB-06 | có (UUID client) | không | todo | proposal |
 
 > Row **Money = có** → phải có **human review** trước API-FREEZE.
@@ -67,6 +68,7 @@
 | API-JOB-06 | cron hằng tuần | gửi nhắc check-in hằng tuần cho user bật tuỳ chọn "Weekly check-in reminder" (SCR-ACC-01) | todo |
 | API-MAIL-10 | email giao dịch | nhắc check-in hằng tuần (chỉ khi user bật; link tới SCR-APP-01) | todo |
 | API-MAIL-09 | email giao dịch | báo trước ≥ 30 ngày khi điều khoản/giá thay đổi trọng yếu, gửi subscriber đang active (BR-PUB-11) | todo |
+| API-JOB-07 | cron mỗi giờ | đối soát quyền hết kỳ: `plus` / `challenge` / `report.full` có nhờ Plus mà `accessEndsAt` đã qua nhưng chưa nhận webhook kết thúc → thu hồi + ghi log để theo dõi webhook trễ; không bao giờ cấp quyền (SYS-ENTITLEMENT · BR-APP-01) | todo |
 
 ## 3. AI Notices
 - Mọi contract ở trạng thái proposal. API-PAY-* và API-ME-04 cần human review (Money).

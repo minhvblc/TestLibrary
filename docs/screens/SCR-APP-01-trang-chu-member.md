@@ -6,6 +6,7 @@
 | SCR-APP-01 | APP | Short | Web | `/app` | account | noindex | 390 · 768 · 1280 | FLOW-thoi-quen-hang-ngay | Draft | (sau design) | `tracking-events.md` → `app_home` · ft_checkin · ft_challenge · ft_unlock | `docs/api/SCR-APP-01-api.md` | **EV-TLW-209 · EV-TLW-210 · EV-TLW-212 · EV-TLW-213 · EV-TLW-214 · SC-TLW-03 · basis RS·F-21 · Q-15** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · D-17: overlay khôi phục tài khoản do shell app hiện, trang đích nào cũng có (SYS-AUTH).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose
@@ -107,7 +108,7 @@ Chi tiết schema và lỗi riêng màn → `docs/api/SCR-APP-01-api.md`.
 | EC-08 | Plus hết kỳ giữa thử thách | CMP-06 về biến thể Free, tiến độ giữ nguyên; có Plus lại thì làm tiếp từ ngày đang dở | SYS-ENTITLEMENT |
 | EC-09 | Xong 30/30 ngày | "You finished the 30-day challenge."; MVP không có vòng mới | in-house |
 | EC-10 | Đã thanh toán nhưng webhook chưa về | CMP-04 hiện "Confirming your payment…", không có nút mua để tránh mua trùng | SYS-ENTITLEMENT · cong-nghe-loi §3 |
-| EC-11 | Vào ngay sau khi đăng nhập đã khôi phục tài khoản chờ xoá (`accountRestored` / `restored=1`) | hiện một lần overlay "Welcome back — your account has been restored." (kiểu `overlay`, SYS-NAV §2), không chặn thao tác | BR-ACC-06 · SYS-AUTH |
+| EC-11 | Vào ngay sau khi đăng nhập đã khôi phục tài khoản chờ xoá (`accountRestored` / `restored=1`) | hiện một lần overlay "Welcome back — your account has been restored." (kiểu `overlay`, SYS-NAV §2), không chặn thao tác; overlay do shell app hiện nên trang đích khác (khi có `next`) cũng có (SYS-AUTH) | BR-ACC-06 · SYS-AUTH |
 
 ## 8. Responsive deltas
 

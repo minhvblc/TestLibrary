@@ -1,5 +1,6 @@
 # SYS-AUTH — khách, tài khoản, phiên
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · D-17: banner khôi phục do shell app hiện ở trang đích đầu tiên (mọi `next`), dựa trên `accountRestored` (API-AUTH-02) hoặc `restored=1` (API-AUTH-04).
 - 2026-09-27 · v1 · claude-opus-5-5 · theo đề xuất Q-11 (magic link + Google, checkout khách được).
 
 ## 1. Mục đích
@@ -18,7 +19,7 @@ Một cơ chế thống nhất cho **khách** (guest: làm bài, xem tóm tắt,
 | Google | OAuth (API-AUTH-03 · API-AUTH-04); email đã tồn tại thì gộp vào tài khoản đó | Q-11 |
 | Phiên | cookie `tl_session` trượt 30 ngày; đăng xuất xoá phiên của thiết bị hiện tại | BR-APP-10 |
 | Guard | route `account`/`entitled` khi chưa có phiên → `/login?next=<route>` (tieu-chuan-chung §1) | SYS-NAV §4 |
-| Khôi phục tài khoản | đăng nhập trong 30 ngày sau yêu cầu xoá → huỷ lịch xoá; trang đích ĐẦU TIÊN sau đăng nhập (bất kể `next`) hiện banner một lần "Welcome back — your account has been restored." (cờ `restored=1` từ callback) | BR-APP-11 |
+| Khôi phục tài khoản | đăng nhập trong 30 ngày sau yêu cầu xoá → huỷ lịch xoá; trang đích ĐẦU TIÊN sau đăng nhập (bất kể `next`) hiện một lần overlay "Welcome back — your account has been restored." — do shell app hiện (SYS-NAV §1 · §2 kiểu `overlay`), không phải từng màn; cờ `accountRestored` từ API-AUTH-02 (magic link) hoặc query `restored=1` từ API-AUTH-04 (Google). SCR-APP-01 EC-11 là trường hợp không có `next` | BR-APP-11 |
 
 ## 3. Màn liên quan
 

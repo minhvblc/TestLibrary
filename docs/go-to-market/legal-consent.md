@@ -1,6 +1,7 @@
 # legal-consent — TestLib (tên tạm, Q-01) · dữ liệu, cookie, consent, văn bản pháp lý
 > Nguồn: `cong-nghe-loi §4` (dữ liệu rời trình duyệt) + `tracking-events.md` (event nào bắn, chỉ sau consent) + SYS-CONSENT. File này là **yêu cầu sản phẩm + khung khai báo**, KHÔNG phải tư vấn pháp lý; mọi văn bản phải qua legal review trước khi ra mắt (Q-05). Đối thủ chỉ được nhắc để nêu điều cần TRÁNH (`research/apps/testlibrary-web/legal-extract.md`).
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · D-04: câu banner lấy nguyên văn từ GC-ConsentBanner §1 (nguồn duy nhất). D-07: thời hạn lưu lý do huỷ thống nhất — tách khỏi danh tính sau 90 ngày, xoá luôn nếu tài khoản bị xoá trước đó.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · gap cũ đã có lời giải: rút consent từng kết quả (API-RES-03 · BR-REP-07), tuổi tối thiểu (Q-21), nguồn hỗ trợ khủng hoảng (Q-23); trỏ tới research pháp lý 2026-09-28 (Q-24 · Q-25 · Q-26).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo.
 
@@ -21,7 +22,7 @@ Mirror 1-1 `cong-nghe-loi §4` (16 hàng, cùng thứ tự, cùng giá trị). M
 | File PDF report | tải PDF của report đã có quyền | object storage của mình (cùng region) | cache 30 ngày, tạo lại khi cần | không cần consent | TD-03 |
 | Log máy chủ / bảo mật (IP, user agent, thời điểm) | bảo mật, chống lạm dụng, rate limit | server của mình (+ CDN/WAF nếu dùng, Q-09) | 30 ngày | lợi ích hợp pháp (không cần consent) | cong-nghe-loi §4 |
 | Tin nhắn liên hệ (email, chủ đề, nội dung) | trả lời yêu cầu hỗ trợ | server của mình | 24 tháng sau khi đóng yêu cầu | thực hiện yêu cầu của user | API-HELP-01 |
-| Lý do huỷ gia hạn (tuỳ chọn) | cải thiện sản phẩm | server của mình | tách khỏi danh tính sau 90 ngày | tuỳ chọn, user tự nhập | SCR-PAY-04 |
+| Lý do huỷ gia hạn (tuỳ chọn) | cải thiện sản phẩm | server của mình | tách khỏi danh tính sau 90 ngày; xoá luôn nếu tài khoản bị xoá trước mốc đó | tuỳ chọn, user tự nhập | SCR-PAY-04 |
 | Đánh giá report (1–5) | chất lượng nội dung report | server của mình | tới khi xoá tài khoản; không gửi analytics | hợp đồng | SCR-APP-03 · BR-APP-05 |
 | Bản ghi consent gia hạn (`consent_version`, thời điểm, IP) | chứng minh đồng ý tự gia hạn | server của mình + provider | theo thời hạn chứng từ (Q-05) | nghĩa vụ pháp lý | BR-APP-03 |
 | Đơn hàng + event webhook thanh toán | chứng từ, entitlement | server của mình + provider/MoR (Q-04) | theo luật kế toán (Q-05) | hợp đồng + nghĩa vụ pháp lý | API-HOOK-01 · SYS-ENTITLEMENT |
@@ -51,7 +52,7 @@ Mirror 1-1 `cong-nghe-loi §4` (16 hàng, cùng thứ tự, cùng giá trị). M
 
 | Element | Copy VERBATIM (en) | Basis |
 |---|---|---|
-| Nội dung | "We use necessary cookies to run TestLib. With your permission, we'd also like to use analytics cookies to see how the site is used. We never send your test answers to analytics or advertisers." | BR-APP-05 · TD-04 |
+| Nội dung | "We use necessary cookies to make this site work. With your permission, we'd also like to use analytics cookies to understand how the site is used. We don't use marketing cookies yet. Your answers never go to advertisers. You can change your choice anytime in Cookie settings." (nguồn: GC-ConsentBanner §1 `body`; sửa ở đó trước rồi chép sang đây) | BR-APP-05 · TD-04 · GC-ConsentBanner |
 | Nút | "Accept all" · "Reject all" · "Manage" | Q-13 · SYS-CONSENT |
 | Link → `/legal/cookies` | "Cookie policy" | §4 |
 

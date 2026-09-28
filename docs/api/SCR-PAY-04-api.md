@@ -1,6 +1,7 @@
 # [SCR-PAY-04] API — Huỷ gia hạn
 Refs: `docs/screens/SCR-PAY-04-huy-gia-han.md` · FLOW-quan-ly-huy-gia-han · `00-quy-uoc-api.md` (envelope, lỗi chung, idempotency — KHÔNG lặp lại ở đây) · schema đầy đủ của API-PAY-04 ở `docs/api/SCR-PAY-03-api.md`.
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.2 · claude-opus-5-5 · D-06: khoá idempotency của huỷ / tiếp tục gia hạn = UUID cho mỗi thao tác mới + server kiểm trạng thái hiện tại (thay khoá cố định `subscriptionId` + hành động). D-07: thời hạn lưu `reason` theo cong-nghe-loi §4.
 - 2026-09-28 · v1.1 · claude-opus-5-5 · định dạng ngày theo tieu-chuan-chung §4 ("October 27, 2026").
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
@@ -9,7 +10,7 @@ Refs: `docs/screens/SCR-PAY-04-huy-gia-han.md` · FLOW-quan-ly-huy-gia-han · `0
 | ID | Endpoint | Method | When called | Idempotent (key) | Contract status |
 |---|---|---|---|---|---|
 | API-PAY-04 | `/v1/billing/subscription` | GET | mở SCR-PAY-04 | n/a (GET) | proposal |
-| API-PAY-05 | `/v1/billing/subscription/cancel` | POST | bấm CMP-04 "Cancel renewal" | có — `Idempotency-Key` = `subscriptionId` + `cancel` | proposal |
+| API-PAY-05 | `/v1/billing/subscription/cancel` | POST | bấm CMP-04 "Cancel renewal" | có — `Idempotency-Key` = UUID cho mỗi thao tác mới (bấm lại sau lỗi dùng lại khoá đó); server kiểm trạng thái hiện tại (00-quy-uoc-api §5) | proposal |
 
 ## API-PAY-04 · GET `/v1/billing/subscription` (phần dùng ở màn này)
 
@@ -31,7 +32,7 @@ Schema, nguồn dữ liệu và auth: `SCR-PAY-03-api.md`. Màn này chỉ quy�
 
 ## API-PAY-05 · POST `/v1/billing/subscription/cancel`
 
-Huỷ gia hạn cuối kỳ bằng một request. Side effect: gọi provider đặt huỷ cuối kỳ (mức nghiệp vụ, Q-04); bản sao DB → `cancelAtPeriodEnd = true`, `status = canceled`; entitlement `plus` giữ tới `accessEndsAt` (SYS-ENTITLEMENT); đưa email xác nhận API-MAIL-04 vào hàng đợi, gửi trong 5 phút (BR-PAY-15); lưu `reason` nội bộ (không gửi analytics, xoá cùng tài khoản theo BR-APP-11). Không hoàn tiền tự động (Q-18). Gọi lại khi đã `canceled` → 200 với trạng thái hiện tại, không gửi email lần hai. Auth: `tl_session` bắt buộc (401 → `/login?next=/account/billing/cancel`). Header: `Idempotency-Key`, `X-CSRF-Token`.
+Huỷ gia hạn cuối kỳ bằng một request. Side effect: gọi provider đặt huỷ cuối kỳ (mức nghiệp vụ, Q-04); bản sao DB → `cancelAtPeriodEnd = true`, `status = canceled`; entitlement `plus` giữ tới `accessEndsAt` (SYS-ENTITLEMENT); đưa email xác nhận API-MAIL-04 vào hàng đợi, gửi trong 5 phút (BR-PAY-15); lưu `reason` nội bộ (không gửi analytics; tách khỏi danh tính sau 90 ngày, xoá luôn nếu tài khoản bị xoá trước mốc đó — cong-nghe-loi §4 · BR-APP-11). Không hoàn tiền tự động (Q-18). Gọi lại khi đã `canceled` → 200 với trạng thái hiện tại, không gửi email lần hai. Auth: `tl_session` bắt buộc (401 → `/login?next=/account/billing/cancel`). Header: `Idempotency-Key`, `X-CSRF-Token`.
 
 | Body field | Type | Required | Meaning | Basis |
 |---|---|---|---|---|

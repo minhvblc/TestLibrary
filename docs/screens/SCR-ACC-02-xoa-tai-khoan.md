@@ -7,6 +7,7 @@
 | SCR-ACC-02 | ACC | Full | Web | `/account/delete` | account | noindex | 390 · 768 · 1280 | FLOW-quyen-rieng-tu | Draft | (sau design) | `tracking-events.md` → `delete_account` · ft_account_delete | `docs/api/SCR-ACC-02-api.md` | **EV-TLW-246 (đối thủ không có xoá tài khoản) · màn in-house · basis BR-APP-11 · Q-05 · Q-18** |
 
 **Changelog** (mới nhất trước)
+- 2026-09-28 · v1.1 · claude-opus-5-5 · D-17: overlay khôi phục do shell app hiện ở mọi trang đích (SYS-AUTH).
 - 2026-09-27 · v1 · claude (subagent) · khởi tạo từ blueprint.
 
 ## 1. Purpose & context
@@ -167,6 +168,6 @@ Không có dữ liệu riêng của user trên trang: nội dung là copy tĩnh.
 
 ## 13. AI Notices
 - "Subscriptions & refunds" giờ là link (CMP-08 · NAV-ACC-02-4), đã bổ sung theo review.
-- Banner "Welcome back — your account has been restored." dựa trên cờ `accountRestored` / query `restored=1` mô tả ở `SCR-AUTH-01-api.md`, hiện ở trang đích sau đăng nhập (SCR-APP-01 EC-11 khi không có `next`). Trang đích là `next` khác thì mỗi màn đó cần hiện cùng overlay; hiện chỉ SCR-APP-01 ghi rõ.
+- Banner "Welcome back — your account has been restored." dựa trên cờ `accountRestored` / query `restored=1` mô tả ở `SCR-AUTH-01-api.md`, hiện ở trang đích sau đăng nhập (SCR-APP-01 EC-11 khi không có `next`). Trang đích là `next` khác cũng hiện vì overlay do shell app hiện (SYS-AUTH, 2026-09-28).
 - Bản ghi giao dịch mà luật thuế/kế toán buộc giữ lại sau khi xoá cứng phụ thuộc pháp nhân và vùng bán (Q-05); cần chốt ở `legal-consent.md`.
 - Có nên bắt đăng nhập lại gần đây trước khi xoá hay không: MVP không yêu cầu (vì xoá khôi phục được trong 30 ngày). Human xem lại nếu muốn chặt hơn.
